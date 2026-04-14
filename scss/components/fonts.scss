@@ -232,16 +232,19 @@
   font-style: italic;
   font-display: swap;
 }
-
+$breakpoint0: "uxxl";
 $breakpoint1: "uxl";
 $breakpoint2: "md";
 
 body, .p-normal{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 18px;
+  font-size: 22px;
   line-height: 150%;
   font-family: 'Inter', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 18px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 16px;
   }
@@ -252,10 +255,13 @@ body, .p-normal{
 
 h1,
 .h1 {
-  font-size: 68px;
+  font-size: 72px;
   font-weight: 200;
   line-height: normal;
   font-family: 'IBMPlexSans', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 68px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 52px;
   }
@@ -266,10 +272,13 @@ h1,
 
 h2,
 .h2 {
-  font-size: 60px;
+  font-size: 64px;
   font-weight: 400;
   line-height: normal;
   font-family: 'IBMPlexSans', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 60px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 48px;
   }
@@ -280,10 +289,13 @@ h2,
 
 h3,
 .h3 {
-  font-size: 46px;
+  font-size: 52px;
   font-weight: 400;
   line-height: normal;
   font-family: 'IBMPlexSans', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 46px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 38px;
   }
@@ -294,10 +306,13 @@ h3,
 
 h4,
 .h4 {
-  font-size: 40px;
+  font-size: 44px;
   font-weight: 400;
   line-height: 130%;
   font-family: 'IBMPlexSans', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 40px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 32px;
   }
@@ -308,10 +323,13 @@ h4,
 
 h5,
 .h5 {
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 400;
   line-height: normal;
   font-family: 'IBMPlexSans', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 32px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 28px;
   }
@@ -322,10 +340,13 @@ h5,
 
 h6,
 .h6 {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 400;
   line-height: normal;
   font-family: 'IBMPlexSans', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 28px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 24px;
   }
@@ -336,10 +357,13 @@ h6,
 
 h7,
 .h7 {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 400;
   line-height: normal;
   font-family: 'IBMPlexSans', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 24px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 20px;
   }
@@ -349,10 +373,13 @@ h7,
 }
 
 .subtitle-1{
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 400;
   line-height: normal;
   font-family: 'IBMPlexSans', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 20px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 18px;
   }
@@ -362,10 +389,13 @@ h7,
 }
 
 .subtitle-2{
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 400;
   line-height: normal;
   font-family: 'IBMPlexSans', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 18px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 16px;
   }
@@ -375,10 +405,13 @@ h7,
 }
 
 .subtitle-3{
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 400;
   line-height: normal;
   font-family: 'IBMPlexSans', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 14px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 13px;
   }
@@ -388,10 +421,13 @@ h7,
 }
 
 .subtitle-4{
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 400;
   line-height: normal;
   font-family: 'IBMPlexSans', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 13px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 12px;
   }
@@ -401,9 +437,12 @@ h7,
 }
 
 .p-bigger{
-  font-size: 24px;
+  font-size: 28px;
   line-height: 140%;
   font-family: 'Inter', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 24px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 20px;
   }
@@ -413,9 +452,12 @@ h7,
 }
 
 .p-big{
-  font-size: 20px;
+  font-size: 24px;
   line-height: 140%;
   font-family: 'Inter', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 20px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 18px;
   }
@@ -425,9 +467,12 @@ h7,
 }
 
 .p-small{
-  font-size: 16px;
+  font-size: 18px;
   line-height: 150%;
   font-family: 'Inter', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 16px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 14px;
   }
@@ -437,10 +482,13 @@ h7,
 }
 
 .p-smaller{
-  font-size: 14px;
+  font-size: 16px;
   line-height: 100%;
   letter-spacing: 150%;
   font-family: 'Inter', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 14px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 12px;
   }
@@ -450,10 +498,13 @@ h7,
 }
 
 .h0{
-  font-size: 80px;
+  font-size: 88px;
   font-weight: 400;
   line-height: normal;
   font-family: 'IBMPlexSans', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 80px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 60px;
   }
@@ -511,9 +562,12 @@ h7,
 }
 
 .number-1 {
-  font-size: 140px;
+  font-size: 160px;
   line-height: normal;
   font-family: 'IBMPlexMono', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 140px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 120px;
   }
@@ -523,9 +577,12 @@ h7,
 }
 
 .number-2 {
-  font-size: 44px;
+  font-size: 48px;
   line-height: normal;
   font-family: 'IBMPlexMono', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 44px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 40px;
   }
@@ -535,9 +592,12 @@ h7,
 }
 
 .number-3 {
-  font-size: 16px;
+  font-size: 18px;
   line-height: normal;
   font-family: 'IBMPlexMono', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 16px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 14px;
   }
@@ -547,9 +607,12 @@ h7,
 }
 
 .product-1 {
-  font-size: 46px;
+  font-size: 52px;
   line-height: normal;
   font-family: 'obvia-wide', sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 46px;
+  }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 38px;
   }
