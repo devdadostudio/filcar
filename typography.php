@@ -97,46 +97,6 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="table-3 mt-5">
-                        Table 3<br>
-                        <table class="w-100 mt-5">
-                            <tr>
-                                <th>Column 1</th>
-                                <th>Column 2</th>
-                                <th>Column 3</th>
-                            </tr>
-                            <tr>
-                                <td>Cell 1</td>
-                                <td>Cell 2</td>
-                                <td>Cell 3</td>
-                            </tr>
-                            <tr>
-                                <td>Cell 4</td>
-                                <td>Cell 5</td>
-                                <td>Cell 6</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="table-4 mt-5">
-                        Table 4<br>
-                        <table class="w-100 mt-5">
-                            <tr>
-                                <th>Column 1</th>
-                                <th>Column 2</th>
-                                <th>Column 3</th>
-                            </tr>
-                            <tr>
-                                <td>Cell 1</td>
-                                <td>Cell 2</td>
-                                <td>Cell 3</td>
-                            </tr>
-                            <tr>
-                                <td>Cell 4</td>
-                                <td>Cell 5</td>
-                                <td>Cell 6</td>
-                            </tr>
-                        </table>
-                    </div>
                 </div>
                 <hr class="my-4">
                 <div class="col-12">

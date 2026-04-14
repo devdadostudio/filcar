@@ -6,17 +6,25 @@ body {
   min-height: 100% !important;
   height: auto !important;
 }
-.container {
-    max-width: calc(100vw - 10px);
+
+.container-fluid{
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     @include media-breakpoint-up(md) {
-        width: 760px;
-        max-width: calc(100vw - 60px);
+        padding-left: 3rem;
+        padding-right: 3rem;
     }
-    @include media-breakpoint-up(llg) {
-        width: 1000px;
+    @include media-breakpoint-up(lg) {
+        padding-left: 5rem;
+        padding-right: 5rem;
     }
     @include media-breakpoint-up(sxl) {
-        width: 1310px;
+        padding-left: 6rem;
+        padding-right: 6rem;
+    }
+    @include media-breakpoint-up(uxl) {
+        padding-left: 10.5rem;
+        padding-right: 10.5rem;
     }
 }
 
@@ -161,4 +169,7 @@ body {
 }
 .pointer-evemts-none{
     pointer-events: none;
+}
+.h-100vh-header{
+    height: calc(100vh - #{$header-bar-height});
 }

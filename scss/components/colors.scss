@@ -15,5 +15,11 @@
 }
 
 .text-grey-300 {
-    color: #9D9D9D !important;
+    color: $grey300 !important;
+}
+.text-grey-500 {
+    color: $grey500 !important;
+}
+.text-grey-600 {
+    color: $grey600 !important;
 }

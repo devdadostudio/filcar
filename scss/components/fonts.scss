@@ -483,8 +483,7 @@ h7,
 
 .p-smaller{
   font-size: 16px;
-  line-height: 100%;
-  letter-spacing: 150%;
+  line-height: 130%;
   font-family: 'Inter', sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 14px;

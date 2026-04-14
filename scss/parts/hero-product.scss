@@ -1,0 +1,43 @@
+.section-hero-product{
+    .breadcrumbs {
+        position: absolute;
+        top: 1.5rem;
+        width: 100%;
+        @include media-breakpoint-down(lg) {
+            position: relative;
+            top: 0;
+            padding: 1rem 0;
+            background: #EBEBEB;
+        }
+        .breadcrumb_last{
+            font-weight: 600;
+        }
+        a{
+            color: inherit;
+        }
+    }
+    @include media-breakpoint-down(lg) { 
+        flex-direction: column;
+        .text-container{
+            flex-grow: 1;
+            align-items: center;
+            display: flex;
+        }
+    }
+    .image-container-section{
+        @include media-breakpoint-down(lg) {
+            position: relative !important;
+            height: auto !important;
+            min-height: 60vh;
+        }
+        .column-img-bg-product{
+            background-image: url('/flcsite/wp-content/themes/filcar/img/bg_prod.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            .img-container{
+                max-width: 70%;
+            }
+        }
+    }
+}

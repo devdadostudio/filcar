@@ -49,6 +49,7 @@ function create_product_post_type() {
         'hierarchical' => false,
         'menu_position' => null,
         'supports' => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments'),
+        'show_in_rest' => true
     );
     register_post_type('product', $args);
 }

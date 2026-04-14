@@ -56,7 +56,7 @@
             $headerBg = 'home';
         }
         ?>
-        <header class="flc-main-nav <?php echo $headerBg; ?> w-100vw">
+        <!-- <header class="flc-main-nav <?php echo $headerBg; ?> w-100vw">
             <div class="flc-main-nav-container">
                 <div class="flc-main-nav-inner">
                     <nav class="flc-main-header">
@@ -83,6 +83,6 @@
                     </div>
                 </div>
             </div>
-        </header>
+        </header> -->
         
         <?php //endif; ?> 
