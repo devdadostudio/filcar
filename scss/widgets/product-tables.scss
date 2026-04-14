@@ -1,0 +1,55 @@
+.table-scroll {
+  width: 100%;
+  max-height: 240px;
+  overflow: auto;
+  border: 1px solid #ddd;
+  position: relative;
+  background: #fff;
+}
+
+.fake-table {
+  --first-col-width: 220px;
+  --other-col-width: 180px;
+
+  display: grid;
+  grid-template-columns: var(--first-col-width) repeat(
+      calc(var(--cols) - 1),
+      var(--other-col-width)
+    );
+  width: max-content;
+  min-width: 100%;
+}
+
+.cell {
+  padding: 14px 16px;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+.head {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #f5f5f5;
+  font-weight: 600;
+}
+
+.first-col {
+  position: sticky;
+  left: 0;
+  z-index: 10;
+  background: #fff;
+  font-weight: 600;
+}
+
+.corner {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  background: #e9e9e9;
+  font-weight: 700;
+}

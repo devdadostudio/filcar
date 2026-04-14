@@ -20,14 +20,36 @@ function filcar_header_scripts()
         wp_enqueue_script('jquery');
         wp_register_script('bootstrap-js', get_template_directory_uri() . '/js/lib/bootstrap.bundle.min.js', array(), '5.3.2');
         wp_enqueue_script('bootstrap-js'); // Enqueue it!
+        wp_enqueue_script(
+            'gsap',
+            'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
+            array(),
+            '3.12.5',
+            true
+        );
+
+        wp_enqueue_script(
+            'scrollTrigger',
+            'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js',
+            array(),
+            '3.12.5',
+            true
+        );
+        wp_enqueue_script(
+            'scrollToPlugin',
+            get_template_directory_uri() . '/js/lib/ScrollToPlugin.min.js',
+            array(),
+            '3.12.2',
+            true
+        );
         wp_register_script('swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js', '', null, true);
-        wp_enqueue_script('swiper');
+        //wp_enqueue_script('swiper');
         wp_register_script('aos', 'https://unpkg.com/aos@next/dist/aos.js', '', null, true);
-        wp_enqueue_script('aos');
+        //wp_enqueue_script('aos');
         wp_register_script('owl-carousel', get_template_directory_uri() . '/js/lib/owl.carousel.min.js', '', null, true);
-        wp_enqueue_script('owl-carousel');
+        //wp_enqueue_script('owl-carousel');
         wp_register_script('text-aligner', get_template_directory_uri() . '/js/lib/jquery.verticalTextAligner.js', '', null, true);
-        wp_enqueue_script('text-aligner');
+        //wp_enqueue_script('text-aligner');
     }
     wp_register_script('filcarscripts', get_template_directory_uri() . '/js/scripts.js', '', null, true);
     wp_enqueue_script('filcarscripts');
@@ -85,12 +107,12 @@ add_filter('script_loader_tag', 'add_defer_attribute_to_scripts', 10, 3);
 function filcar_styles()
 {
     wp_register_style('aoscss', 'https://unpkg.com/aos@2.3.1/dist/aos.css', array(), '1.0', 'all');
-    wp_enqueue_style('aoscss'); // Enqueue it!
+    //wp_enqueue_style('aoscss'); // Enqueue it!
     wp_register_style('filcarcss', get_template_directory_uri() . '/style.min.css', array(), '1.0', 'all');
     wp_enqueue_style('filcarcss'); // Enqueue it!
     wp_register_style('swipercss', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css', array(), '1.0', 'all');
-    wp_enqueue_style('swipercss'); // Enqueue it!
-    wp_enqueue_style('fancybox-css', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@4/dist/fancybox.css');
+    //wp_enqueue_style('swipercss'); // Enqueue it!
+    //wp_enqueue_style('fancybox-css', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@4/dist/fancybox.css');
 }
 
 // Remove the <div> surrounding the dynamic navigation to cleanup markup

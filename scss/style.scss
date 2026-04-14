@@ -15,6 +15,8 @@ Version: 1.0
 @import "parts/header";
 @import "parts/footer";
 
+@import "parts/scroll-navigation";
+
 @import "components/fonts";
 @import "components/accordion";
 @import "components/buttons";
@@ -28,6 +30,7 @@ Version: 1.0
 @import "components/grid";
 
 @import "widgets/hero";
+@import "widgets/product-tables";
 @import "widgets/owl-carousel/core";
 @import "widgets/owl-carousel/animate";
 @import "widgets/owl-carousel/autoheight";
