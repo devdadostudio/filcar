@@ -1,0 +1,35 @@
+/*
+Theme Name: Filcar theme
+Author: Dadostudio
+Author URI: https://dadostudio.com
+Description: Filcar wordpress theme
+Version: 1.0
+*/
+
+//variables
+
+@import "components/variables";
+
+@import "bootstrap/bootstrap";
+
+@import "parts/header";
+@import "parts/footer";
+
+@import "components/fonts";
+@import "components/accordion";
+@import "components/buttons";
+@import "components/colors";
+@import "components/forms";
+@import "components/hamburger";
+@import "components/mixins";
+@import "components/custom-spacing";
+@import "components/commons";
+@import "components/figure";
+@import "components/grid";
+
+@import "widgets/hero";
+@import "widgets/owl-carousel/core";
+@import "widgets/owl-carousel/animate";
+@import "widgets/owl-carousel/autoheight";
+@import "widgets/owl-carousel/lazyload";
+@import "widgets/owl-carousel/video";

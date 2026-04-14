@@ -1,0 +1,157 @@
+$custom_spacers: () !default;
+$custom_spacers: map-merge((
+  0: 0,
+  1: ($spacer / 4),
+  2: ($spacer / 2),
+  3: $spacer,
+  4: ($spacer * 1.5),
+  5: ($spacer * 2),
+  6: ($spacer * 2.5),
+  7: ($spacer * 3),
+  8: ($spacer * 3.5),
+  9: ($spacer * 4),
+  10: ($spacer * 4.5),
+  11: ($spacer * 5),
+  12: ($spacer * 5.5),
+  13: ($spacer * 6),
+  14: ($spacer * 6.5),
+  15: ($spacer * 7),
+  16: ($spacer * 7.5),
+  17: ($spacer * 8),
+  18: ($spacer * 8.5),
+  19: ($spacer * 9),
+  20: ($spacer * 9.5),
+  21: ($spacer * 10),
+  22: ($spacer * 10.5),
+  23: ($spacer * 11),
+), $custom_spacers);
+
+// 2. Usa i breakpoint di Bootstrap
+@use "sass:map";
+
+// 3. Genera classi sp-*
+// --- BASE (tutte le classi senza breakpoint) ---
+@each $key, $value in $custom_spacers {
+  .sp-m-#{$key} {
+    margin: $value !important;
+  }
+  .sp-mt-#{$key} {
+    margin-top: $value !important;
+  }
+  .sp-mr-#{$key} {
+    margin-right: $value !important;
+  }
+  .sp-mb-#{$key} {
+    margin-bottom: $value !important;
+  }
+  .sp-ml-#{$key} {
+    margin-left: $value !important;
+  }
+  .sp-mx-#{$key} {
+    margin-left: $value !important;
+    margin-right: $value !important;
+  }
+  .sp-my-#{$key} {
+    margin-top: $value !important;
+    margin-bottom: $value !important;
+  }
+
+  .sp-p-#{$key} {
+    padding: $value !important;
+  }
+  .sp-pt-#{$key} {
+    padding-top: $value !important;
+  }
+  .sp-pr-#{$key} {
+    padding-right: $value !important;
+  }
+  .sp-pb-#{$key} {
+    padding-bottom: $value !important;
+  }
+  .sp-pl-#{$key} {
+    padding-left: $value !important;
+  }
+  .sp-px-#{$key} {
+    padding-left: $value !important;
+    padding-right: $value !important;
+  }
+  .sp-py-#{$key} {
+    padding-top: $value !important;
+    padding-bottom: $value !important;
+  }
+  .sp-gap-#{$key} {
+    gap: $value !important;
+  }
+  .sp-row-gap-#{$key} {
+    row-gap: $value !important;
+  }
+  .sp-column-gap-#{$key} {
+    column-gap: $value !important;
+  }
+}
+
+// --- RESPONSIVE (dopo le base: vincono a parità di specificità) ---
+@each $breakpoint, $min in $grid-breakpoints {
+  @if $breakpoint != xs {
+    @include media-breakpoint-up($breakpoint) {
+      @each $key, $value in $custom_spacers {
+        .sp-#{$breakpoint}-m-#{$key} {
+          margin: $value !important;
+        }
+        .sp-#{$breakpoint}-mt-#{$key} {
+          margin-top: $value !important;
+        }
+        .sp-#{$breakpoint}-mr-#{$key} {
+          margin-right: $value !important;
+        }
+        .sp-#{$breakpoint}-mb-#{$key} {
+          margin-bottom: $value !important;
+        }
+        .sp-#{$breakpoint}-ml-#{$key} {
+          margin-left: $value !important;
+        }
+        .sp-#{$breakpoint}-mx-#{$key} {
+          margin-left: $value !important;
+          margin-right: $value !important;
+        }
+        .sp-#{$breakpoint}-my-#{$key} {
+          margin-top: $value !important;
+          margin-bottom: $value !important;
+        }
+
+        .sp-#{$breakpoint}-p-#{$key} {
+          padding: $value !important;
+        }
+        .sp-#{$breakpoint}-pt-#{$key} {
+          padding-top: $value !important;
+        }
+        .sp-#{$breakpoint}-pr-#{$key} {
+          padding-right: $value !important;
+        }
+        .sp-#{$breakpoint}-pb-#{$key} {
+          padding-bottom: $value !important;
+        }
+        .sp-#{$breakpoint}-pl-#{$key} {
+          padding-left: $value !important;
+        }
+        .sp-#{$breakpoint}-px-#{$key} {
+          padding-left: $value !important;
+          padding-right: $value !important;
+        }
+        .sp-#{$breakpoint}-py-#{$key} {
+          padding-top: $value !important;
+          padding-bottom: $value !important;
+        }
+        .sp-#{$breakpoint}-gap-#{$key} {
+          gap: $value !important;
+        }
+        .sp-#{$breakpoint}-row-gap-#{$key} {
+          row-gap: $value !important;
+        }
+        .sp-#{$breakpoint}-column-gap-#{$key} {
+          column-gap: $value !important;
+        }
+      }
+    }
+  }
+}

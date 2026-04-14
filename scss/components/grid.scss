@@ -1,0 +1,13 @@
+.grid{
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+    @include media-breakpoint-down(llg){
+        grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    }
+    img{
+        height: auto;
+    }
+    *{
+        max-width: 100%;
+    }
+}

@@ -1,0 +1,28 @@
+.accordion {
+  .accordion-button{
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .accordion-button:not(.collapsed) {
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+    color: initial;
+    &:after{
+      color: initial;
+    }
+  }
+  .accordion-button:focus {
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow: none;
+  }
+  .accordion-body {
+    padding: 0;
+  }
+  .accordion-item{
+    border: none;
+    border-bottom: 1px solid #000;
+    border-radius: 0;
+  }
+}

@@ -1,0 +1,62 @@
+body {
+  --bs-body-bg: #ffffff;
+  background-color: var(--bs-body-bg) !important;
+}
+
+$primary: #17191B;
+$secondary: #0085DD;
+$light: #fff;
+
+$grey900: #23272B;
+$grey800: #47474B;
+$grey600: #707479;
+$grey500: #8E9195;
+$grey400: #B2B4B7;
+$grey300: #CACACC;
+$grey200: #EBEBEB;
+
+$blue400: #CCE7FF;
+$blue200: #E6F3FC;
+
+$grey-disabled: #797A79;
+$grey: $grey200;
+$blog-txt: #17191B;
+$black-opacity: rgba(33, 33, 33, 0.95);
+
+$btn-border-radius: 0;
+$btn-padding-x: 2.5rem;
+$btn-padding-x-lg: 1.5rem;
+$btn-padding-y: 1rem;
+$btn-border-width: 2px;
+$btn-padding-x-mobile: $btn-padding-x / 2.5;
+$btn-padding-y-mobile: $btn-padding-y / 2;
+
+//inputs
+
+$input-border-radius: 3px;
+$input-padding-y: 0.875rem;
+$input-border-color: rgba(46, 48, 50, 0.4);
+
+$header-bar-desktop: 76px;
+$header-bar-mobile: 70px;
+
+// modified breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 959px,
+  llg: 1024px,
+  xl: 1200px,
+  xxl: 1400px,
+  sxl: 1535px,
+  uxl: 1920px,
+) !default;
+
+//new grid gutter width
+$grid-gutter-width: 24px;
+
+// accordion
+$accordion-bg: transparent;
+$accordion-button-focus-border-color: transparent;
+$accordion-active-bg: transparent;

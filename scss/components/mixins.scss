@@ -1,0 +1,211 @@
+// Usa un nome personalizzato per evitare conflitti
+$custom-aspect-ratios: (
+  "1x1": (
+    1,
+    1,
+  ),
+  "4x3": (
+    4,
+    3,
+  ),
+  "3x2": (
+    3,
+    2,
+  ),
+  "16x9": (
+    16,
+    9,
+  ),
+  "21x9": (
+    21,
+    9,
+  ),
+  "3x4": (
+    3,
+    4,
+  ),
+  "9x10": (
+    9,
+    10,
+  ),
+  "9x16": (
+    9,
+    16,
+  ),
+  "8x3": (
+    8,
+    3,
+  ),
+);
+
+@mixin aspect-ratio($width, $height) {
+  aspect-ratio: #{$width} / #{$height};
+}
+
+@each $name, $ratio in $custom-aspect-ratios {
+  .aspect-ratio-#{$name} {
+    $w: nth($ratio, 1);
+    $h: nth($ratio, 2);
+    @include aspect-ratio($w, $h);
+  }
+}
+
+@each $breakpoint, $min in $grid-breakpoints {
+  @if $breakpoint != xs {
+    @include media-breakpoint-up($breakpoint) {
+      @each $name, $ratio in $custom-aspect-ratios {
+        .aspect-ratio-#{$breakpoint}-#{$name} {
+          $w: nth($ratio, 1);
+          $h: nth($ratio, 2);
+          @include aspect-ratio($w, $h);
+        }
+      }
+    }
+  }
+}
+
+
+$vh-values: (
+  15: 15vh,
+  25: 25vh,
+  30: 30vh,
+  35: 35vh,
+  40: 40vh,
+  45: 45vh,
+  50: 50vh,
+  55: 55vh,
+  60: 60vh,
+  65: 65vh,
+  75: 75vh,
+  80: 80vh,
+  85: 85vh,
+  90: 90vh,
+  100: 100vh,
+  unset: unset,
+);
+$vw-values: (
+  15: 15vw,
+  25: 25vw,
+  30: 30vw,
+  35: 35vw,
+  40: 40vw,
+  45: 45vw,
+  50: 50vw,
+  55: 55vw,
+  60: 60vw,
+  65: 65vw,
+  75: 75vw,
+  80: 80vw,
+  85: 85vw,
+  90: 90vw,
+  100: 100vw,
+  unset: unset,
+);
+// Genera le classi base senza breakpoint
+
+// es. classi: vh-50 - responsive vh-lg-50
+// to unset classes vh-lg-unset
+
+// Funzione per generare le classi vh con breakpoints
+@mixin generate-vh-classes($breakpoint: null) {
+  @each $key, $value in $vh-values {
+    @if $breakpoint {
+      .h-#{$breakpoint}-#{$key}vh {
+        height: $value !important;
+      }
+      .mh-#{$breakpoint}-#{$key}vh {
+        min-height: $value !important;
+      }
+    } @else {
+      .h-#{$key}vh {
+        height: $value !important;
+      }
+      .mh-#{$key}vh {
+        min-height: $value !important;
+      }
+    }
+  }
+}
+
+@mixin generate-vw-classes($breakpoint: null) {
+  @each $key, $value in $vw-values {
+    @if $breakpoint {
+      .w-#{$breakpoint}-#{$key}vw {
+        width: $value !important;
+      }
+      .mw-#{$breakpoint}-#{$key}vw {
+        max-width: $value !important;
+      }
+    } @else {
+      .w-#{$key}vw {
+        width: $value !important;
+      }
+      .mw-#{$key}vw {
+        max-width: $value !important;
+      }
+    }
+  }
+}
+
+// Genera le classi base senza breakpoint
+@include generate-vh-classes();
+@include generate-vw-classes();
+
+// Genera le classi per ogni breakpoint
+@each $breakpoint, $min-width in $grid-breakpoints {
+  @if $breakpoint != "xs" {
+    @media (min-width: $min-width) {
+      @include generate-vh-classes($breakpoint);
+      @include generate-vw-classes($breakpoint);
+    }
+  }
+}
+
+// Opzionale: classi per min-height
+@mixin generate-min-vh-classes($breakpoint: null) {
+  @each $key, $value in $vh-values {
+    @if $breakpoint {
+      .min-h-#{$breakpoint}-#{$key}vh {
+        min-height: $value !important;
+      }
+    } @else {
+      .min-h-#{$key}vh {
+        min-height: $value !important;
+      }
+    }
+  }
+}
+
+// Genera le classi min-height
+@include generate-min-vh-classes();
+
+@each $breakpoint, $min-width in $grid-breakpoints {
+  @if $breakpoint != "xs" {
+    @media (min-width: $min-width) {
+      @include generate-min-vh-classes($breakpoint);
+    }
+  }
+}
+
+@mixin rounded-image($border-radius: 10px) {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 84.2857%;
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  border-radius: $border-radius;
+  overflow: hidden;
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+} 
