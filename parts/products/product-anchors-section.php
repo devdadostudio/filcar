@@ -43,7 +43,7 @@
                     <div class="subtitle-header">
                         <h2 class="h6 text-secondary text-uppercase semibold">Caratteristiche</h2>
                     </div>
-                    <div class="border-top sp-py-3 sp-lg-py-6">
+                    <div class="sp-py-3 sp-lg-py-6">
                         <div class="row">
                             <div class="col-llg-6">
                                 <!-- TODO - COLORI!! -->
@@ -53,7 +53,32 @@
                             </div>
                             <div class="col-llg-6">
                                 <!-- Icons -->
-                                Icone blocco
+                                <div class="fit-block">
+                                    <div class="fit-item">
+                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/icons-cilindrate/moto-aligned-left.svg" alt="" srcset="">
+                                        <span class="table-2 medium">Motoveicoli</span>
+                                    </div>
+                                    <div class="fit-item">
+                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/icons-cilindrate/auto-aligned-left.svg" alt="" srcset="">
+                                        <span class="table-2 medium">Veicoli piccola cilindata</span>
+                                    </div>
+                                    <div class="fit-item">
+                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/icons-cilindrate/supercar-aligned-left.svg" alt="" srcset="">
+                                        <span class="table-2 medium">Veicoli grande cilindata</span>
+                                    </div>
+                                    <div class="fit-item">
+                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/icons-cilindrate/supercar-aligned-left.svg" alt="" srcset="">
+                                        <span class="table-2 medium">Autobus e autosnodati</span>
+                                    </div>
+                                    <div class="fit-item">
+                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/icons-cilindrate/articolato-aligned-left.svg" alt="" srcset="">
+                                        <span class="table-2 medium">Veicoli Autoarticolati</span>
+                                    </div>
+                                    <div class="fit-item">
+                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/icons-cilindrate/mezzi-pesanti-aligned-left.svg" alt="" srcset="">
+                                        <span class="table-2 medium">Macchine movimento terra</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -423,7 +448,7 @@
             <!-- DIMENSIONI -->
             <section id="dimensioni" class="section js-section" data-anchor="dimensioni">
                 <div class="section-inner container-fluid">
-                    <div class="subtitle-header border-bottom sp-pb-6">
+                    <div class="subtitle-header sp-pb-6">
                         <h2 class="h6 text-secondary text-uppercase semibold">Dimensioni</h2>
                     </div>
 
