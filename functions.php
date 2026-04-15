@@ -47,7 +47,7 @@ function filcar_header_scripts()
         wp_register_script('aos', 'https://unpkg.com/aos@next/dist/aos.js', '', null, true);
         //wp_enqueue_script('aos');
         wp_register_script('owl-carousel', get_template_directory_uri() . '/js/lib/owl.carousel.min.js', '', null, true);
-        //wp_enqueue_script('owl-carousel');
+        wp_enqueue_script('owl-carousel');
         wp_register_script('text-aligner', get_template_directory_uri() . '/js/lib/jquery.verticalTextAligner.js', '', null, true);
         //wp_enqueue_script('text-aligner');
     }
