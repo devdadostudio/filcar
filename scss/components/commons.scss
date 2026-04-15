@@ -171,5 +171,5 @@ body {
     pointer-events: none;
 }
 .h-100vh-header{
-    height: calc(100vh - #{$header-bar-height});
+    min-height: calc(100vh - #{$header-bar-height});
 }
