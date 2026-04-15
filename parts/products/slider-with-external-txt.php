@@ -1,5 +1,8 @@
-<section class="section-slider-text-ext">
-    <div class="container-fluid position-relative">
+<section id="dettagli" class="section js-section section-slider-text-ext" data-anchor="dettagli">
+    <div class="section-inner container-fluid">
+        <div class="subtitle-header">
+            <h2 class="h6 text-secondary text-uppercase semibold">DETTAGLI</h2>
+        </div>
         <div class="row">
             <div class="col-8">
                 <div class="single-slider-carousel-txt-ext owl-carousel">
