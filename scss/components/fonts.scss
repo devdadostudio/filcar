@@ -17,6 +17,22 @@
 }
 @font-face {
   font-family: 'IBMPlexSans';
+  src: url('fonts/woff2/IBMPlexSans-Light.woff2') format('woff2'),
+       url('fonts/ttf/IBMPlexSans-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IBMPlexSans';
+  src: url('fonts/woff2/IBMPlexSans-LightItalic.woff2') format('woff2'),
+       url('fonts/ttf/IBMPlexSans-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IBMPlexSans';
   src: url('fonts/woff2/IBMPlexSans-Regular.woff2') format('woff2'),
        url('fonts/ttf/IBMPlexSans-Regular.ttf') format('truetype');
   font-weight: 400;
@@ -183,7 +199,22 @@
 }
 
 /* Inter - REGULAR - ITALIC - MEDIUM - MEDIUM ITALIC - BOLD - BOLD ITALIC */
-
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/woff2/Inter-Light.woff2') format('woff2'),
+       url('fonts/ttf/Inter-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/woff2/Inter-LightItalic.woff2') format('woff2'),
+       url('fonts/ttf/Inter-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
 @font-face {
   font-family: 'Inter';
   src: url('fonts/woff2/Inter-Regular.woff2') format('woff2'),
