@@ -1,7 +1,7 @@
-<section class="h-100vh-header bg-primary d-flex align-items-center">
+<section class="bg-primary d-flex align-items-center sp-py-18">
     <div class="container-fluid position-relative">
         <div class="row">
-            <div class="col-lg-10 offset-lg-1 col-12 text-center">
+            <div class="col-lg-10 offset-lg-1 col-12 col-lg-8 offset-lg-2 col-uxl-6 offset-xl-3 text-center">
                 <div class="product-3 text-secondary">
                     ARMTEL
                 </div>

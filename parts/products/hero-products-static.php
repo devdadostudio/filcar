@@ -16,7 +16,7 @@
     $thumb_id = get_post_thumbnail_id();
     ?>
     <div class="row bg-container position-absolute w-100 h-100 sp-m-0 image-container-section">
-        <div class="offset-lg-5 col-12 col-lg-7 sp-pl-0 h-100 sp-pr-0 d-flex align-items-center justify-content-center column-img-bg-product">
+        <div class="offset-lg-5 col-12 col-lg-7 sp-pl-0 mh-100 sp-pr-0 d-flex align-items-center justify-content-center column-img-bg-product">
             <figure class="respimg sp-mb-0 img-container">
                 <img src="<?php echo wp_get_attachment_image_url($thumb_id, 'full'); ?>" alt="<?php echo get_the_title(); ?>">
             </figure>
