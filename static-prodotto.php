@@ -30,24 +30,24 @@ if (have_posts()) {
                         <nav class="anchor-nav" aria-label="Navigazione sezioni">
                             <a
                                 href="#panoramica"
-                                class="anchor-link is-active subtitle-4"
+                                class="anchor-link is-active subtitle-4 user-select-none"
                                 data-target="#panoramica"
-                                ><span class="text-secondary number-3 anchor-number text-white">01</span>Panoramica</a
+                                ><span class="number-3 anchor-number text-white">01</span>Panoramica</a
                             >
-                            <a href="#caratteristiche" class="anchor-link subtitle-4" data-target="#caratteristiche"
-                                ><span class="text-secondary number-3 anchor-number text-white">02</span>Caratteristiche</a
+                            <a href="#caratteristiche" class="anchor-link subtitle-4 user-select-none" data-target="#caratteristiche"
+                                ><span class="number-3 anchor-number text-white">02</span>Caratteristiche</a
                             >
-                            <a href="#dimensioni" class="anchor-link subtitle-4" data-target="#dimensioni"
-                                ><span class="text-secondary number-3 anchor-number text-white">03</span>Dimensioni</a
+                            <a href="#dimensioni" class="anchor-link subtitle-4 user-select-none" data-target="#dimensioni"
+                                ><span class="number-3 anchor-number text-white">03</span>Dimensioni</a
                             >
-                            <a href="#dettagli" class="anchor-link subtitle-4" data-target="#dettagli"
-                                ><span class="text-secondary number-3 anchor-number text-white">04</span>Dettagli</a
+                            <a href="#dettagli" class="anchor-link subtitle-4 user-select-none" data-target="#dettagli"
+                                ><span class="number-3 anchor-number text-white">04</span>Dettagli</a
                             >
-                            <a href="#accessori" class="anchor-link subtitle-4" data-target="#accessori"
-                                ><span class="text-secondary number-3 anchor-number text-white">05</span>Optional</a
+                            <a href="#accessori" class="anchor-link subtitle-4 user-select-none" data-target="#accessori"
+                                ><span class="number-3 anchor-number text-white">05</span>Optional</a
                             >
-                            <a href="#correlati" class="anchor-link subtitle-4" data-target="#correlati"
-                                ><span class="text-secondary number-3 anchor-number text-white">06</span>Correlati</a
+                            <a href="#correlati" class="anchor-link subtitle-4 user-select-none" data-target="#correlati"
+                                ><span class="number-3 anchor-number text-white">06</span>Correlati</a
                             >
                         </nav>
                     </div>

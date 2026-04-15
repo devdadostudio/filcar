@@ -7,71 +7,72 @@ body {
   height: auto !important;
 }
 
-.container-fluid{
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    @include media-breakpoint-up(md) {
-        padding-left: 3rem;
-        padding-right: 3rem;
-    }
-    @include media-breakpoint-up(lg) {
-        padding-left: 5rem;
-        padding-right: 5rem;
-    }
-    @include media-breakpoint-up(sxl) {
-        padding-left: 6rem;
-        padding-right: 6rem;
-    }
-    @include media-breakpoint-up(uxl) {
-        padding-left: 10.5rem;
-        padding-right: 10.5rem;
-    }
+.container-fluid {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  @include media-breakpoint-up(md) {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  @include media-breakpoint-up(lg) {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+  @include media-breakpoint-up(sxl) {
+    padding-left: 6rem;
+    padding-right: 6rem;
+  }
+  @include media-breakpoint-up(uxl) {
+    padding-left: 10.5rem;
+    padding-right: 10.5rem;
+  }
 }
 
-.d-flex > *{
-    min-width: 0;
+.d-flex > * {
+  min-width: 0;
 }
 .rounded-image {
-    @include rounded-image(); 
+  @include rounded-image();
 }
 
 .respimg {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    > img, > video{
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  > img,
+  > video {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .cursor-pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .white-space-nowrap {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
-.mb-0-p{
-    > p:last-of-type{
-        margin-bottom: 0;
-    }
+.mb-0-p {
+  > p:last-of-type {
+    margin-bottom: 0;
+  }
 }
 
 %label-before-base {
-  content: '';
+  content: "";
   width: 32px;
   min-width: 32px;
   height: 8px;
   @extend %clip-path-left;
 }
-.label-primary-centered{
-  &:before{
+.label-primary-centered {
+  &:before {
     @extend %label-before-base;
   }
-  &.text-primary:before{
+  &.text-primary:before {
     background: $primary;
   }
 }
@@ -85,91 +86,107 @@ body {
     transform: translate(-100%, -50%);
     background: $blog-txt;
   }
-  &.text-primary:before{
+  &.text-primary:before {
     background: $primary;
   }
-  &.label-primary-orange{
-    &:before{
+  &.label-primary-orange {
+    &:before {
       background: $primary;
     }
   }
 }
-.h2-as-label{
-    position: relative;
-    &:before{
-        @extend %label-before-base;
-        position: absolute;
-        left: -20px;
-        top: 50%;
-        transform: translate(-100%, -50%);
-        background: $primary;
+.h2-as-label {
+  position: relative;
+  &:before {
+    @extend %label-before-base;
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translate(-100%, -50%);
+    background: $primary;
+  }
+  &.h3:before {
+    top: 20px;
+  }
+  &-right {
+    &:before {
+      right: -20px;
+      left: initial;
+      transform: translate(100%, -50%);
+      @extend %clip-path-right;
     }
-    &.h3:before {
-        top: 20px;
+  }
+}
+.otgs-development-site-front-end {
+  display: none;
+}
+.bg-black-50 {
+  background: linear-gradient(
+    90deg,
+    rgba(33, 33, 33, 1) 0%,
+    rgba(33, 33, 33, 1) 50%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    background: #212121;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    width: 50px;
+    transform: translateX(-1px);
+    clip-path: polygon(0 0, 100% 100%, 0 100%, 0% 0%);
+    @include media-breakpoint-down(llg) {
+      content: none;
     }
-    &-right{
-        &:before{
-            right: -20px;
-            left: initial;
-            transform: translate(100%, -50%);
-            @extend %clip-path-right;
-        }
-    }
+  }
 }
-.otgs-development-site-front-end{
-    display: none;
+.translate-middle-y-p {
+  transform: translateY(50%);
 }
-.bg-black-50{
-    background: linear-gradient(90deg, rgba(33, 33, 33, 1) 0%, rgba(33, 33, 33, 1) 50%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0) 100%);
-    position: relative;
-    &:after {
-        content: "";
-        position: absolute;
-        background: #212121;
-        height: 100%;
-        top: 0;
-        left: 50%;
-        width: 50px;
-        transform: translateX(-1px);
-        clip-path: polygon(0 0, 100% 100%, 0 100%, 0% 0%);
-        @include media-breakpoint-down(llg) {
-            content: none;
-        }
-    }
+%clip-path-left {
+  clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
-.translate-middle-y-p{
-    transform: translateY(50%);
+%clip-path-right {
+  clip-path: polygon(0% 0%, 90% 0%, 100% 100%, 0% 100%);
 }
-%clip-path-left{
-    clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
+%clip-path-left-20 {
+  clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
-%clip-path-right{
-    clip-path: polygon(0% 0%, 90% 0%, 100% 100%, 0% 100%);
+%clip-path-right-20 {
+  clip-path: polygon(0% 0%, 80% 0%, 100% 100%, 0% 100%);
 }
-%clip-path-left-20{
-    clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+.clip-path-left {
+  @extend %clip-path-left;
 }
-%clip-path-right-20{
-    clip-path: polygon(0% 0%, 80% 0%, 100% 100%, 0% 100%);
+.clip-path-right {
+  @extend %clip-path-right;
 }
-.clip-path-left{
-    @extend %clip-path-left;
+.clip-path-left-20 {
+  @extend %clip-path-left-20;
 }
-.clip-path-right{
-    @extend %clip-path-right;
+.clip-path-right-20 {
+  @extend %clip-path-right-20;
 }
-.clip-path-left-20{
-    @extend %clip-path-left-20;
+.b-bottom-primary {
+  border-bottom: 1px solid $primary;
 }
-.clip-path-right-20{
-    @extend %clip-path-right-20;
+.pointer-evemts-none {
+  pointer-events: none;
 }
-.b-bottom-primary{
-    border-bottom: 1px solid $primary;
+.h-100vh-header {
+  min-height: calc(100vh - #{$header-bar-height});
 }
-.pointer-evemts-none{
-    pointer-events: none;
-}
-.h-100vh-header{
-    min-height: calc(100vh - #{$header-bar-height});
+
+.user-select-none {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
