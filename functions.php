@@ -70,6 +70,7 @@ if (function_exists('add_theme_support')) {
     add_image_size('hero-1024', 1024, 99999, false);
     add_image_size('hero-768', 768, 99999, false);
     add_image_size('hero-400', 400, 99999, false);
+    add_image_size('slide-img-ext', 705, 530, false);
     
     // Enables post and comment RSS feed links to head
     add_theme_support('automatic-feed-links');

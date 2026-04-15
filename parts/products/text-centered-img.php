@@ -15,7 +15,7 @@
             </div>
             <div class="col-lg-10 offset-lg-1 col-12 sp-mt-5">
                 <figure class="respimg sp-mb-0 aspect-ratio-16x7">
-                    <img src="http://localhost/flcsite/wp-content/uploads/2026/04/immagine-armtel.png" alt="Armtel Aspiratore Fumi Braccio Telescopico" class="w-100">
+                    <img src="<?php echo wp_get_upload_dir()['baseurl']; ?>/2026/04/immagine-armtel.png" alt="Armtel Aspiratore Fumi Braccio Telescopico" class="w-100">
                 </figure>
             </div>
         </div>
