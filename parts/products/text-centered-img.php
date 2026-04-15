@@ -1,5 +1,5 @@
-<section class="h-100vh-header bg-primary d-flex align-items-center">
-    <div class="container-fluid position-relative">
+<section id="panoramica" class="h-100vh-header bg-primary d-flex align-items-center section js-section" data-anchor="panoramica">
+    <div class="container-fluid position-relative section-inner">
         <div class="row">
             <div class="col-lg-10 offset-lg-1 col-12 text-center">
                 <div class="product-3 text-secondary">
