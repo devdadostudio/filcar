@@ -11,13 +11,13 @@
                     </div>
                     <div class="">
                         <figure class="respimg sp-mb-0 aspect-ratio-1x1 rounded-3 overflow-hidden position-relative bg-white">
-                            <img src="<?php echo wp_get_upload_dir()['baseurl']; ?>/2026/04/prodotto-armtel-filcar-scaled.jpg" alt="Related Product 2" class="w-100">
+                            <img src="<?php echo wp_get_upload_dir()['baseurl']; ?>/2026/04/saldatura-armtel-filcar.jpg" alt="Related Product 3" class="w-100">
                         </figure>
                         <div class="fw-medium sp-mt-2 sp-md-mt-4 text-white">Posizione aperta del braccio lorem ipsum dolor sit amet, consectet</div>
                     </div>
                     <div class="">
                         <figure class="respimg sp-mb-0 aspect-ratio-1x1 rounded-3 overflow-hidden position-relative bg-white">
-                            <img src="<?php echo wp_get_upload_dir()['baseurl']; ?>/2026/04/saldatura-armtel-filcar.jpg" alt="Related Product 3" class="w-100">
+                            <img src="<?php echo wp_get_upload_dir()['baseurl']; ?>/2026/04/prodotto-armtel-filcar-scaled.jpg" alt="Related Product 2" class="w-100">
                         </figure>
                         <div class="fw-medium sp-mt-2 sp-md-mt-4 text-white">Posizione chiusa lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidunt ut la</div>
                     </div>
