@@ -58,7 +58,7 @@ if (have_posts()) {
 
                     <!-- PANORAMICA -->
                     <section id="panoramica" class="section js-section" data-anchor="panoramica">
-                        <div class="section-inner">
+                        <div class="section-inner container-fluid">
                             <div class="product-overview">
                                 <div class="product-overview__grid">
 
@@ -113,7 +113,7 @@ if (have_posts()) {
 
                     <!-- CARATTERISTICHE -->
                     <section id="caratteristiche" class="section js-section" data-anchor="caratteristiche">
-                        <div class="section-inner">
+                        <div class="section-inner container-fluid">
                             <h2>Caratteristiche</h2>
 
                             <p>
@@ -147,6 +147,22 @@ if (have_posts()) {
                                 <div class="cell">Alta</div>
                                 <div class="cell">Plus</div>
 
+                                <div class="cell first-col">ARMTEL 03</div>
+                                <div class="cell">125 mm</div>
+                                <div class="cell">3 m</div>
+                                <div class="cell">1400 m³/h</div>
+                                <div class="cell">180°C</div>
+                                <div class="cell">Alta</div>
+                                <div class="cell">Plus</div>
+
+                                <div class="cell first-col">ARMTEL 04</div>
+                                <div class="cell">125 mm</div>
+                                <div class="cell">3 m</div>
+                                <div class="cell">1400 m³/h</div>
+                                <div class="cell">180°C</div>
+                                <div class="cell">Alta</div>
+                                <div class="cell">Plus</div>
+
                                 </div>
                             </div>
                         </div>
@@ -155,7 +171,7 @@ if (have_posts()) {
 
                     <!-- DIMENSIONI -->
                     <section id="dimensioni" class="section js-section" data-anchor="dimensioni">
-                        <div class="section-inner">
+                        <div class="section-inner container-fluid">
                             <h2>Dimensioni</h2>
 
                             <div class="product-dimensions__grid">
@@ -212,7 +228,7 @@ if (have_posts()) {
 
                     <!-- DETTAGLI -->
                     <section id="dettagli" class="section js-section" data-anchor="dettagli">
-                        <div class="section-inner">
+                        <div class="section-inner container-fluid">
                             <h2>Dettagli</h2>
 
                             <div class="product-details-slider">
@@ -240,7 +256,7 @@ if (have_posts()) {
 
                     <!-- ACCESSORI -->
                     <section id="accessori" class="section js-section" data-anchor="accessori">
-                        <div class="section-inner">
+                        <div class="section-inner container-fluid">
                             <h2>Accessori</h2>
 
                             <table class="product-accessories-table">
@@ -273,7 +289,7 @@ if (have_posts()) {
 
                     <!-- CORRELATI -->
                     <section id="correlati" class="section js-section" data-anchor="correlati">
-                        <div class="section-inner">
+                        <div class="section-inner container-fluid">
                             <h2>Correlati</h2>
 
                             <div class="product-related-grid">
