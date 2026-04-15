@@ -65,13 +65,13 @@
     transition: all 0.25s ease;
 
     /* default: tra md+1 e sotto lg */
-    flex: 0 0 25vw;
+    flex: 0 0 23vw;
     width: 25vw;
 
     /* mobile fino a md */
     @include media-breakpoint-down(md) {
-      flex: 0 0 50vw;
-      width: 50vw;
+      flex: 0 0 48vw;
+      width: 48vw;
     }
 
     .anchor-number {
