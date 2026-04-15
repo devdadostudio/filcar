@@ -11,3 +11,7 @@
 *.log
 .DS_Store
 /img
+style.css
+style.css.map
+style.min.css
+style.min.css.map
