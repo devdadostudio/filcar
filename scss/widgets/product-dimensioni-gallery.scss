@@ -1,0 +1,126 @@
+$dimensionFrameBg: #f7d7da;
+
+.dimensions-gallery-shell {
+  margin-bottom: 24px;
+}
+
+/* scroll mobile */
+.dimensions-gallery-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dimensions-gallery-track {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  min-width: 100%;
+}
+
+/* CARD */
+.dimensions-gallery-item {
+  flex: 0 0 85%;
+}
+
+/* BOX ROSA */
+.dimensions-gallery-frame {
+  width: 100%;
+  height: 180px; // 👈 più basso = più rettangolare
+  background: $dimensionFrameBg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* IMG */
+.dimensions-gallery-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; // 👈 fondamentale
+  object-position: center;
+  display: block;
+}
+
+/* tablet */
+@include media-breakpoint-up(sm) {
+  .dimensions-gallery-item {
+    flex-basis: 70%;
+  }
+
+  .dimensions-gallery-frame {
+    height: 200px;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .dimensions-gallery-item {
+    flex-basis: 55%;
+  }
+
+  .dimensions-gallery-frame {
+    height: 220px;
+  }
+}
+
+/* desktop */
+@include media-breakpoint-up(lg) {
+  .dimensions-gallery-scroll {
+    overflow: visible;
+  }
+
+  .dimensions-gallery-track {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+  }
+
+  .dimensions-gallery-item {
+    min-width: 0;
+  }
+
+  .dimensions-gallery-frame {
+    height: 260px; // 👈 rettangolare desktop
+  }
+}
+
+/* xl */
+@include media-breakpoint-up(xl) {
+  .dimensions-gallery-frame {
+    height: 280px;
+  }
+}
+
+/* ===== CASO 1 IMMAGINE ===== */
+.dimensions-gallery-track.is-1 {
+  display: flex;
+  justify-content: center;
+}
+
+/* mobile */
+.dimensions-gallery-track.is-1 .dimensions-gallery-item {
+  flex: 0 0 90%;
+}
+
+/* desktop */
+@include media-breakpoint-up(lg) {
+  .dimensions-gallery-track.is-1 {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .dimensions-gallery-track.is-1 .dimensions-gallery-item {
+    width: 70%; // 👈 non full width, più elegante
+  }
+}
+
+.dimensions-gallery-track.is-1 {
+  width: 100%;
+}
+
+.dimensions-gallery-track.is-1 ~ .dimensions-gallery-scroll {
+  overflow: visible;
+}

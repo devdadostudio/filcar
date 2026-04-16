@@ -4,12 +4,51 @@
             <h2 class="h6 text-secondary text-uppercase semibold">Dimensioni</h2>
         </div>
 
-        <div class="product-dimensions__grid">
-            <img src="" alt="">
-            <img src="" alt="">
-            <img src="" alt="">
-            <img src="" alt="">
+        <?php
+        $dimension_images = [
+            [
+                'src' => 'https://placehold.co/900x1200/F7D7DA/333333?text=Dimensione+1',
+                'alt' => 'Schema dimensionale 1',
+            ],
+            [
+                'src' => 'https://placehold.co/900x1200/F7D7DA/333333?text=Dimensione+2',
+                'alt' => 'Schema dimensionale 2',
+            ],
+        ];
+
+        $dimension_images = array_slice($dimension_images, 0, 2);
+        $count = count($dimension_images);
+        ?>
+
+        <?php if (!empty($dimension_images)) : ?>
+        <?php if ($count > 0) : ?>
+        <div class="dimensions-gallery-shell row">
+            
+            <div class="col-12 col-xl-10 offset-xl-1">
+                
+                <div class="dimensions-gallery-scroll">
+                    <div class="dimensions-gallery-track is-<?php echo $count; ?>">
+
+                        <?php foreach ($dimension_images as $image) : ?>
+                            <div class="dimensions-gallery-item">
+                                <div class="dimensions-gallery-frame">
+                                    <img
+                                        src="<?php echo esc_url($image['src']); ?>"
+                                        alt="<?php echo esc_attr($image['alt']); ?>"
+                                        class="dimensions-gallery-image"
+                                    >
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+                    </div>
+                </div>
+
+            </div>
+
         </div>
+        <?php endif; 
+        endif; ?>
 
         <?php
         /*
