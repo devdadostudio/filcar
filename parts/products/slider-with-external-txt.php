@@ -4,7 +4,7 @@
             <h2 class="h6 text-secondary text-uppercase semibold">DETTAGLI</h2>
         </div>
         <div class="row">
-            <div class="col-8">
+            <div class="col-lg-8 col-12">
                 <div class="single-slider-carousel-txt-ext owl-carousel">
                     <div class="slider-item">
                         <figure class="sp-mb-0 rounded-3 overflow-hidden position-relative">
@@ -23,19 +23,19 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-lg-3 col-12">
                 <div class="position-relative sp-py-4 sp-md-py-12 sp-lg-py-5">
                     <div class="text-slide-0 active w-100">
                         <div class="ts-title h7 fw-light">Distanza minima di lavoro</div>
-                        <div class="fw-light sp-mt-2 sp-md-mt-4">30,5 cm</div>
+                        <div class="ts-txt fw-light sp-mt-4">30,5 cm</div>
                     </div>
                     <div class="text-slide-1 w-100">
                         <div class="ts-title h7 fw-light">Montaggio</div>
-                        <div class="fw-light sp-mt-2 sp-md-mt-4">A = 3,2 m misura da centro canalina a centro ponte. Indicativamente per auto lunghe da 2,7 a 5,10 m</div>
+                        <div class="ts-txt fw-light sp-mt-4">A = 3,2 m misura da centro canalina a centro ponte. Indicativamente per auto lunghe da 2,7 a 5,10 m</div>
                     </div>
                     <div class="text-slide-2 w-100">
                         <div class="ts-title h7 fw-light">Dettaglio componenti</div>
-                        <div class="fw-light sp-mt-2 sp-md-mt-4">
+                        <div class="ts-txt fw-light sp-mt-4">
                             <ol>
                                 <li>Carrello</li>
                                 <li>Tubo fisso di AL anodizzato</li>
