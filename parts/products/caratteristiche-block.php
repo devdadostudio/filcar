@@ -272,135 +272,227 @@
             <div class="sp-mb-8">
                 <span class="text-uppercase subtitle-2">Specifiche tecniche</span>
             </div>
-            <div class="table-scroll">
-                <div
-                class="fake-table tech-table"
-                style="
-                    --grid-mobile: <?php echo esc_attr($grid_template_columns_mobile); ?>;
-                    --grid-desktop: <?php echo esc_attr($grid_template_columns_desktop); ?>;
-                "
-                >
+            <div class="table-shell">
+                <div class="table-scroll">
+                    <div
+                        class="fake-table tech-table"
+                        style="
+                            --grid-mobile: <?php echo esc_attr($grid_template_columns_mobile); ?>;
+                            --grid-desktop: <?php echo esc_attr($grid_template_columns_desktop); ?>;
+                        "
+                    >
 
-                    <?php
-                    /*
-                    |--------------------------------------------------------------------------
-                    | HEADER - RIGA 1
-                    |--------------------------------------------------------------------------
-                    */
+                        <?php
+                        /*
+                        |--------------------------------------------------------------------------
+                        | HEADER - RIGA 1
+                        |--------------------------------------------------------------------------
+                        */
+                        ?>
 
-                    // Mod: sempre rowspan 2
-                    ?>
-                    <div class="cell corner table-2 head-rowspan-2" style="grid-row: span 2;">Mod</div>
-
-                    <?php if (!empty($cilindrate_columns)) : ?>
-                        <div class="cell head-l1 table-2" style="grid-column: span <?php echo count($cilindrate_columns); ?>;">
-                            Adatto alle cilindrate
+                        <div class="cell corner table-2 head-rowspan-2 has-separator" style="grid-row: span 2;">
+                            Mod
                         </div>
-                    <?php endif; ?>
 
-                    <div class="cell head-rowspan-2 table-2" style="grid-row: span 2;">
-                        Diametro interno<br>del tubo
-                    </div>
-
-                    <div class="cell head-rowspan-2 table-2" style="grid-row: span 2;">
-                        Temperatura<br>massima di esercizio
-                    </div>
-
-                    <div class="cell head-rowspan-2 table-2" style="grid-row: span 2;">
-                        Potenza<br>motore
-                    </div>
-
-                    <?php if (!empty($canaline_columns)) : ?>
-                        <div class="cell head-l1 table-2" style="grid-column: span <?php echo count($canaline_columns); ?>;">
-                            Canaline compatibili
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if (!empty($accessori_columns)) : ?>
-                        <div class="cell head-l1 table-2" style="grid-column: span <?php echo count($accessori_columns); ?>;">
-                            Accessori disponibili
-                        </div>
-                    <?php endif; ?>
-
-                    <?php
-                    /*
-                    |--------------------------------------------------------------------------
-                    | HEADER - RIGA 2
-                    |--------------------------------------------------------------------------
-                    */
-
-                    foreach ($cilindrate_columns as $col) : ?>
-                        <div class="cell head-l2"><?php echo esc_html($col['label']); ?></div>
-                    <?php endforeach; ?>
-
-                    <?php foreach ($canaline_columns as $col) : ?>
-                        <div class="cell head-l2 table-2"><?php echo esc_html($col['label']); ?></div>
-                    <?php endforeach; ?>
-
-                    <?php foreach ($accessori_columns as $col) : ?>
-                        <div class="cell head-l2 table-2"><?php echo esc_html($col['label']); ?></div>
-                    <?php endforeach; ?>
-
-                    <?php
-                    /*
-                    |--------------------------------------------------------------------------
-                    | BODY
-                    |--------------------------------------------------------------------------
-                    */
-
-                    foreach ($rows as $row) :
-                    ?>
-                        <div class="table-row">
-                            
-                            <div class="cell first-col table-2 medium text-secondary">
-                                <?php echo esc_html($row['mod']); ?>
+                        <?php if (!empty($cilindrate_columns)) : ?>
+                            <div class="cell head-l1 table-2 has-separator" style="grid-column: span <?php echo count($cilindrate_columns); ?>;">
+                                Adatto alle cilindrate
                             </div>
+                        <?php endif; ?>
 
-                            <?php foreach ($cilindrate_columns as $col) :
-                                $key = $col['key'];
-                                $value = $row['cilindrate'][$key] ?? false;
+                        <div class="cell head-rowspan-2 table-2 has-separator" style="grid-row: span 2;">
+                            Diametro interno<br>del tubo
+                        </div>
+
+                        <div class="cell head-rowspan-2 table-2 has-separator" style="grid-row: span 2;">
+                            Temperatura<br>massima di esercizio
+                        </div>
+
+                        <div class="cell head-rowspan-2 table-2 has-separator" style="grid-row: span 2;">
+                            Potenza<br>motore
+                        </div>
+
+                        <?php if (!empty($canaline_columns)) : ?>
+                            <div class="cell head-l1 table-2 has-separator" style="grid-column: span <?php echo count($canaline_columns); ?>;">
+                                Canaline compatibili
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if (!empty($accessori_columns)) : ?>
+                            <div class="cell head-l1 table-2" style="grid-column: span <?php echo count($accessori_columns); ?>;">
+                                Accessori disponibili
+                            </div>
+                        <?php endif; ?>
+
+                        <?php
+                        /*
+                        |--------------------------------------------------------------------------
+                        | HEADER - RIGA 2
+                        |--------------------------------------------------------------------------
+                        */
+                        ?>
+
+                        <?php foreach ($cilindrate_columns as $i => $col) :
+                            $separator_class = '';
+
+                            if ($i < count($cilindrate_columns) - 1) {
+                                $separator_class = 'has-separator-lighter';
+                            } elseif ($i === count($cilindrate_columns) - 1) {
+                                $separator_class = 'has-separator';
+                            }
+                        ?>
+                            <div class="cell head-l2 <?php echo $separator_class; ?>">
+                                <?php echo esc_html($col['label']); ?>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php foreach ($canaline_columns as $i => $col) :
+                            $separator_class = '';
+
+                            if ($i < count($canaline_columns) - 1) {
+                                $separator_class = 'has-separator-lighter';
+                            } elseif ($i === count($canaline_columns) - 1) {
+                                $separator_class = 'has-separator';
+                            }
+                        ?>
+                            <div class="cell head-l2 table-2 <?php echo $separator_class; ?>">
+                                <?php echo esc_html($col['label']); ?>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php foreach ($accessori_columns as $i => $col) :
+                            $separator_class = $i < count($accessori_columns) - 1 ? 'has-separator-lighter' : '';
+                        ?>
+                            <div class="cell head-l2 table-2 <?php echo $separator_class; ?>">
+                                <?php echo esc_html($col['label']); ?>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php
+                        /*
+                        |--------------------------------------------------------------------------
+                        | SPACER ROW
+                        |--------------------------------------------------------------------------
+                        | Riga tecnica vuota tra intestazione e body
+                        */
+                        ?>
+
+                        <div class="table-row table-row-spacer" aria-hidden="true">
+
+                            <!-- prima colonna -->
+                            <div class="cell first-col table-spacer-cell"></div>
+
+                            <!-- tutte le altre colonne -->
+                            <?php
+                            $total_cols =
+                                count($cilindrate_columns) +
+                                count($canaline_columns) +
+                                count($accessori_columns) +
+                                3; // diametro + temperatura + potenza
                             ?>
-                                <div class="cell table-2">
-                                    <?php if ($value) : ?>
-                                        <span class="is-check">✓</span>
-                                    <?php endif; ?>
-                                </div>
-                            <?php endforeach; ?>
 
-                            <div class="cell table-2"><?php echo esc_html($row['diametro'] ?? ''); ?></div>
-                            <div class="cell table-2"><?php echo esc_html($row['temperatura'] ?? ''); ?></div>
-                            <div class="cell table-2"><?php echo esc_html($row['potenza'] ?? ''); ?></div>
-
-                            <?php foreach ($canaline_columns as $col) :
-                                $key = $col['key'];
-                                $value = $row['canaline'][$key] ?? false;
-                            ?>
-                                <div class="cell table-2">
-                                    <?php if ($value) : ?>
-                                        <span class="is-check">✓</span>
-                                    <?php endif; ?>
-                                </div>
-                            <?php endforeach; ?>
-
-                            <?php foreach ($accessori_columns as $col) :
-                                $key = $col['key'];
-                                $value = $row['accessori'][$key] ?? false;
-                            ?>
-                                <div class="cell table-2">
-                                    <?php if ($value === 'dot') : ?>
-                                        <span class="is-dot">■</span>
-                                    <?php elseif ($value === true) : ?>
-                                        <span class="is-check">✓</span>
-                                    <?php endif; ?>
-                                </div>
-                            <?php endforeach; ?>
+                            <?php for ($i = 0; $i < $total_cols; $i++) : ?>
+                                <div class="cell table-spacer-cell"></div>
+                            <?php endfor; ?>
 
                         </div>
-                    <?php endforeach; ?>
 
+                        <?php
+                        /*
+                        |--------------------------------------------------------------------------
+                        | BODY
+                        |--------------------------------------------------------------------------
+                        */
+                        ?>
+
+                        <?php foreach ($rows as $row) : ?>
+                            <div class="table-row">
+
+                                <div class="cell first-col table-2 medium text-secondary has-separator">
+                                    <?php echo esc_html($row['mod']); ?>
+                                </div>
+
+                                <?php foreach ($cilindrate_columns as $i => $col) :
+                                    $key = $col['key'];
+                                    $value = $row['cilindrate'][$key] ?? false;
+
+                                    $separator_class = '';
+
+                                    if ($i < count($cilindrate_columns) - 1) {
+                                        $separator_class = 'has-separator-lighter';
+                                    } elseif ($i === count($cilindrate_columns) - 1) {
+                                        $separator_class = 'has-separator';
+                                    }
+                                ?>
+                                    <div class="cell table-2 <?php echo $separator_class; ?>">
+                                        <?php if ($value) : ?>
+                                            <span class="is-check">
+                                                <?php echo get_icon('check'); ?>
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endforeach; ?>
+
+                                <div class="cell table-2 has-separator">
+                                    <?php echo esc_html($row['diametro'] ?? ''); ?>
+                                </div>
+
+                                <div class="cell table-2 has-separator">
+                                    <?php echo esc_html($row['temperatura'] ?? ''); ?>
+                                </div>
+
+                                <div class="cell table-2 has-separator">
+                                    <?php echo esc_html($row['potenza'] ?? ''); ?>
+                                </div>
+
+                                <?php foreach ($canaline_columns as $i => $col) :
+                                    $key = $col['key'];
+                                    $value = $row['canaline'][$key] ?? false;
+
+                                    $separator_class = '';
+
+                                    if ($i < count($canaline_columns) - 1) {
+                                        $separator_class = 'has-separator-lighter';
+                                    } elseif ($i === count($canaline_columns) - 1) {
+                                        $separator_class = 'has-separator';
+                                    }
+                                ?>
+                                    <div class="cell table-2 <?php echo $separator_class; ?>">
+                                        <?php if ($value) : ?>
+                                            <span class="is-check">
+                                                <?php echo get_icon('check'); ?>
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endforeach; ?>
+
+                                <?php foreach ($accessori_columns as $i => $col) :
+                                    $key = $col['key'];
+                                    $value = $row['accessori'][$key] ?? false;
+
+                                    $separator_class = $i < count($accessori_columns) - 1 ? 'has-separator-lighter' : '';
+                                ?>
+                                    <div class="cell table-2 <?php echo $separator_class; ?>">
+                                        <?php if ($value === 'dot') : ?>
+                                            <span class="is-dot">■</span>
+                                        <?php elseif ($value === true) : ?>
+                                            <span class="is-check">
+                                                <?php echo get_icon('check'); ?>
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endforeach; ?>
+
+                            </div>
+                        <?php endforeach; ?>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
 </section>
+
+
+    

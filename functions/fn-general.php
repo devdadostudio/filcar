@@ -53,4 +53,13 @@ function create_product_post_type() {
     );
     register_post_type('product', $args);
 }
-?>
+
+function get_icon($name) {
+    $icons = [
+        'check' => '<svg width="9" height="7" viewBox="0 0 9 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 3.33333L3.43478 6L8 1" stroke="#0085DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>',
+    ];
+
+    return $icons[$name] ?? '';
+}

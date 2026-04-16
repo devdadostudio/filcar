@@ -16,8 +16,6 @@
         |--------------------------------------------------------------------------
         | CONFIGURAZIONE "SIMULAZIONE ACF"
         |--------------------------------------------------------------------------
-        | Qui definisci le colonne reali della tabella dimensioni.
-        | Puoi aggiungerle o toglierle liberamente.
         */
 
         $dimension_columns = [
@@ -46,8 +44,6 @@
         |--------------------------------------------------------------------------
         | RIGHE
         |--------------------------------------------------------------------------
-        | 'mod' = prima colonna sticky
-        | 'values' = valori agganciati alle key delle colonne sopra
         */
 
         $dimension_rows = [
@@ -113,12 +109,6 @@
         |--------------------------------------------------------------------------
         | COSTRUZIONE AUTOMATICA GRID TEMPLATE
         |--------------------------------------------------------------------------
-        */
-
-        /*
-        |--------------------------------------------------------------------------
-        | COSTRUZIONE AUTOMATICA GRID TEMPLATE
-        |--------------------------------------------------------------------------
         | mobile/tablet = px + scroll
         | desktop >= 1200 = fr + no scroll orizzontale
         */
@@ -126,14 +116,11 @@
         $dimension_grid_parts_mobile = [];
         $dimension_grid_parts_desktop = [];
 
-        /* prima colonna Mod */
         $dimension_grid_parts_mobile[] = $dimension_mod_width;
         $dimension_grid_parts_desktop[] = str_replace('px', 'fr', $dimension_mod_width);
 
-        /* colonne dati */
         foreach ($dimension_columns as $col) {
             $col_width = $col['width'] ?? '40px';
-
             $dimension_grid_parts_mobile[] = $col_width;
             $dimension_grid_parts_desktop[] = str_replace('px', 'fr', $col_width);
         }
@@ -142,39 +129,82 @@
         $dimension_grid_template_desktop = implode(' ', $dimension_grid_parts_desktop);
         ?>
 
-        <div class="table-scroll">
-            <div
-            class="fake-table dimension-table"
-            style="
-                --grid-mobile: <?php echo esc_attr($dimension_grid_template_mobile); ?>;
-                --grid-desktop: <?php echo esc_attr($dimension_grid_template_desktop); ?>;
-            "
-            >
+        <div class="table-shell">
+            <div class="table-scroll">
+                <div
+                    class="fake-table dimension-table"
+                    style="
+                        --grid-mobile: <?php echo esc_attr($dimension_grid_template_mobile); ?>;
+                        --grid-desktop: <?php echo esc_attr($dimension_grid_template_desktop); ?>;
+                    "
+                >
 
-                <!-- HEADER -->
-                <div class="cell corner table-2 head-l1">Mod</div>
+                    <?php
+                    /*
+                    |--------------------------------------------------------------------------
+                    | HEADER
+                    |--------------------------------------------------------------------------
+                    */
+                    ?>
 
-                <?php foreach ($dimension_columns as $col) : ?>
-                    <div class="cell head-l1 table-2">
-                        <?php echo wp_kses($col['label'], ['br' => []]); ?>
+                    <div class="cell corner table-2 head-l1 has-separator">
+                        Mod
                     </div>
-                <?php endforeach; ?>
 
-                <!-- BODY -->
-                <?php foreach ($dimension_rows as $row) : ?>
-                    <div class="cell first-col table-2 medium text-secondary"><?php echo esc_html($row['mod']); ?></div>
-
-                    <?php foreach ($dimension_columns as $col) :
-                        $key = $col['key'];
-                        $value = $row['values'][$key] ?? '';
-                        ?>
-                        <div class="cell table-2"><?php echo esc_html($value); ?></div>
+                    <?php foreach ($dimension_columns as $i => $col) :
+                        $separator_class = $i < count($dimension_columns) - 1 ? 'has-separator-lighter' : '';
+                    ?>
+                        <div class="cell head-l1 table-2 <?php echo $separator_class; ?>">
+                            <?php echo wp_kses($col['label'], ['br' => []]); ?>
+                        </div>
                     <?php endforeach; ?>
 
-                <?php endforeach; ?>
+                    <?php
+                    /*
+                    |--------------------------------------------------------------------------
+                    | SPACER ROW
+                    |--------------------------------------------------------------------------
+                    */
+                    ?>
 
+                    <div class="table-row table-row-spacer" aria-hidden="true">
+                        <div class="cell first-col table-spacer-cell"></div>
+
+                        <?php for ($i = 0; $i < count($dimension_columns); $i++) : ?>
+                            <div class="cell table-spacer-cell"></div>
+                        <?php endfor; ?>
+                    </div>
+
+                    <?php
+                    /*
+                    |--------------------------------------------------------------------------
+                    | BODY
+                    |--------------------------------------------------------------------------
+                    */
+                    ?>
+
+                    <?php foreach ($dimension_rows as $row) : ?>
+                        <div class="table-row">
+
+                            <div class="cell first-col table-2 medium text-secondary has-separator">
+                                <?php echo esc_html($row['mod']); ?>
+                            </div>
+
+                            <?php foreach ($dimension_columns as $i => $col) :
+                                $key = $col['key'];
+                                $value = $row['values'][$key] ?? '';
+                                $separator_class = $i < count($dimension_columns) - 1 ? 'has-separator-lighter' : '';
+                            ?>
+                                <div class="cell table-2 <?php echo $separator_class; ?>">
+                                    <?php echo esc_html($value); ?>
+                                </div>
+                            <?php endforeach; ?>
+
+                        </div>
+                    <?php endforeach; ?>
+
+                </div>
             </div>
         </div>
     </div>
-
 </section>
