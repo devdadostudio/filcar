@@ -1,3 +1,7 @@
+<?php
+    $subtitle_hero = get_field('subtitle_hero');
+    $txt_hero = get_field('txt_hero');
+?>
 <section class="position-relative section-hero-product d-flex align-items-center h-100vh-header">
     <div class="breadcrumbs">
         <div class="container-fluid">
@@ -28,13 +32,17 @@
                 <div class="product-hero__content text-grey-500">
                     <?php the_title('<h1 class="product-1 fw-normal sp-mb-3 sp-sxl-mb-4 sp-uxl-mb-5">', '</h1>'); ?>
                     <!-- subtitle -->
-                    <div class="h5 fw-light sp-mb-3 sp-sxl-mb-5 sp-uxl-mb-7">
-                        Braccio telescopico per l’aspirazione dei gas di scarico.
-                        Efficienza, design e massima flessibilità per ambienti professionali.
-                    </div>
-                    <div class="p-big fw-normal">
-                        Scopri Armtel, l’aspiratore fumi a braccio telescopico progettato per aspirare i gas di scarico di auto e moto. Efficace, sicuro e ideale per ogni officina.
-                    </div>
+                    <?php if ($subtitle_hero) : ?>
+                        <div class="h5 fw-light sp-mb-3 sp-sxl-mb-5 sp-uxl-mb-7">
+                            <?php echo $subtitle_hero; ?>
+                        </div>
+                    <?php endif; ?>
+                    <!-- testo -->
+                    <?php if ($txt_hero) : ?>
+                        <div class="p-big fw-normal">
+                            <?php echo $txt_hero; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
