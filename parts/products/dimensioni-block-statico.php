@@ -1,4 +1,4 @@
-<div id="dimensioni" class="js-section section" data-anchor="dimensioni">
+<div id="dimensioni" class="section js-section" data-anchor="dimensioni">
     <div class="section-inner container-fluid">
         <div class="subtitle-header sp-pb-6">
             <h2 class="h6 text-secondary text-uppercase semibold">Dimensioni</h2>
@@ -44,25 +44,25 @@
 
         <?php
         $dimension_columns = [
-            ['key' => 'a',    'label' => 'A<br>mm',     'width' => '74px'],
-            ['key' => 'b',    'label' => 'B (Ø)<br>mm', 'width' => '74px'],
-            ['key' => 'c',    'label' => 'C (Ø)<br>mm', 'width' => '74px'],
-            ['key' => 'd',    'label' => 'D<br>mm',     'width' => '74px'],
-            ['key' => 'e',    'label' => 'E<br>mm',     'width' => '74px'],
-            ['key' => 'f',    'label' => 'F (Ø)<br>mm', 'width' => '74px'],
-            ['key' => 'g',    'label' => 'G<br>mm',     'width' => '74px'],
-            ['key' => 'h',    'label' => 'H<br>mm',     'width' => '74px'],
-            ['key' => 'i',    'label' => 'I<br>mm',     'width' => '74px'],
-            ['key' => 'l',    'label' => 'L (Ø)<br>mm', 'width' => '74px'],
-            ['key' => 'm',    'label' => 'M (Ø)<br>mm', 'width' => '74px'],
-            ['key' => 'n',    'label' => 'N<br>mm',     'width' => '74px'],
-            ['key' => 'o',    'label' => 'O (Ø)<br>mm', 'width' => '74px'],
-            ['key' => 'p',    'label' => 'P<br>mm',     'width' => '74px'],
-            ['key' => 'q',    'label' => 'Q<br>mm',     'width' => '74px'],
-            ['key' => 'r',    'label' => 'R (Ø)<br>mm', 'width' => '74px'],
-            ['key' => 's',    'label' => 'S<br>mm',     'width' => '74px'],
-            ['key' => 'peso', 'label' => 'Peso<br>kg',  'width' => '90px'],
-            ['key' => 'hp',   'label' => 'HP',          'width' => '90px'],
+            ['key' => 'a',    'label' => 'A<br>mm',     'width' => 'minmax(74px, 1fr)'],
+            ['key' => 'b',    'label' => 'B (Ø)<br>mm', 'width' => 'minmax(74px, 1fr)'],
+            ['key' => 'c',    'label' => 'C (Ø)<br>mm', 'width' => 'minmax(74px, 1fr)'],
+            ['key' => 'd',    'label' => 'D<br>mm',     'width' => 'minmax(74px, 1fr)'],
+            ['key' => 'e',    'label' => 'E<br>mm',     'width' => 'minmax(74px, 1fr)'],
+            ['key' => 'f',    'label' => 'F (Ø)<br>mm', 'width' => 'minmax(74px, 1fr)'],
+            ['key' => 'g',    'label' => 'G<br>mm',     'width' => 'minmax(74px, 1fr)'],
+            ['key' => 'h',    'label' => 'H<br>mm',     'width' => 'minmax(74px, 1fr)'],
+            ['key' => 'i',    'label' => 'I<br>mm',     'width' => 'minmax(74px, 1fr)'],
+            ['key' => 'l',    'label' => 'L (Ø)<br>mm', 'width' => 'minmax(74px, 1fr)'],
+            ['key' => 'm',    'label' => 'M (Ø)<br>mm', 'width' => 'minmax(74px, 1fr)'],
+            ['key' => 'n',    'label' => 'N<br>mm',     'width' => 'minmax(74px, 1fr)'],
+            ['key' => 'o',    'label' => 'O (Ø)<br>mm', 'width' => 'minmax(74px, 1fr)'],
+            ['key' => 'p',    'label' => 'P<br>mm',     'width' => 'minmax(74px, 1fr)'],
+            ['key' => 'q',    'label' => 'Q<br>mm',     'width' => 'minmax(74px, 1fr)'],
+            ['key' => 'r',    'label' => 'R (Ø)<br>mm', 'width' => 'minmax(74px, 1fr)'],
+            ['key' => 's',    'label' => 'S<br>mm',     'width' => 'minmax(74px, 1fr)'],
+            ['key' => 'peso', 'label' => 'Peso<br>kg',  'width' => 'minmax(90px, 1fr)'],
+            ['key' => 'hp',   'label' => 'HP',          'width' => 'minmax(90px, 1fr)'],
         ];
 
         $dimension_rows = [
@@ -116,13 +116,13 @@
             ],
         ];
 
-        $dimension_mod_width = '120px';
+        $dimension_mod_width = 'minmax(120px, 1.4fr)';
 
         $dimension_grid_parts = [];
         $dimension_grid_parts[] = $dimension_mod_width;
 
         foreach ($dimension_columns as $col) {
-            $col_width = $col['width'] ?? '40px';
+            $col_width = $col['width'] ?? 'minmax(40px, 1fr)';
             $dimension_grid_parts[] = $col_width;
         }
 
