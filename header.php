@@ -46,6 +46,7 @@
             $headerBg = 'home';
         }
         ?>
+        <header class="header-placehold"></header>
         <!-- <header class="flc-main-nav <?php echo $headerBg; ?> w-100vw">
             <div class="flc-main-nav-container">
                 <div class="flc-main-nav-inner">

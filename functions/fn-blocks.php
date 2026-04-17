@@ -56,5 +56,23 @@ add_action('acf/init', function () {
             'mode' => 'edit',
             'post_types' => ['page', 'product'],
         ]);
+        acf_register_block_type([
+            'name' => 'dimensioni-block',
+            'title' => __('BLOCCO DIMENSIONI'),
+            'render_template' => get_template_directory() . '/parts/products/dimensioni-block.php',
+            'category' => 'layout',
+            'icon' => 'format-gallery',
+            'mode' => 'edit',
+            'post_types' => ['page', 'product'],
+        ]);
+        acf_register_block_type([
+            'name' => 'block-anchors-static',
+            'title' => __('BLOCCO ANCHORS STATICI'),
+            'render_template' => get_template_directory() . '/parts/products/block-anchors-static.php',
+            'category' => 'layout',
+            'icon' => 'format-gallery',
+            'mode' => 'edit',
+            'post_types' => ['page', 'product'],
+        ]);
     }
 });

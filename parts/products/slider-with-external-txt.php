@@ -14,7 +14,7 @@
                             <div class="single-slider-carousel-txt-ext owl-carousel">
                                 <?php for($i = 0; $i < $slide_c; $i++) : ?>
                                     <div class="slider-item">
-                                        <figure class="sp-mb-0 rounded-3 overflow-hidden position-relative">
+                                        <figure class="sp-mb-0 rounded-3 overflow-hidden position-relative respimg">
                                             <?php
                                             echo wp_get_attachment_image($slides[$i]['img_slide']['ID'], 'slide-img-ext', false, ['class' => 'w-100']);
                                             ?>

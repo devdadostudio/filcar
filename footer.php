@@ -1,6 +1,6 @@
-        <?php get_template_part('parts/contact-form'); ?>
-        <?php get_template_part('parts/section-newsletter'); ?>
-        <footer class="flc-main-footer sp-pt-9 sp-pb-3 sp-sxl-pt-8 sp-sxl-pb-4 bg-blog text-white">
+        <?php //get_template_part('parts/contact-form'); ?>
+        <?php //get_template_part('parts/section-newsletter'); ?>
+        <!-- <footer class="flc-main-footer sp-pt-9 sp-pb-3 sp-sxl-pt-8 sp-sxl-pb-4 bg-blog text-white">
             <div class="container-fluid">
                 <div class="row sp-md-gap-7 sp-llg-gap-0">
                     <div class="col-12 col-md-4 col-llg-2 first-column-container">
@@ -63,7 +63,7 @@
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer> -->
 		<?php wp_footer(); ?>
 	</body>
 </html>
