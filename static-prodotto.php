@@ -20,7 +20,7 @@ if (have_posts()) {
         <?php get_template_part('parts/products/hero-products', 'static'); ?>
 
         <!-- SEZIONE CON NAV + CONTENUTI -->
-        <?php get_template_part('parts/products/product-anchors', 'section'); ?>
+        <?php get_template_part('parts/products/product-anchors', 'section-statico'); ?>
 
     </main>
     
