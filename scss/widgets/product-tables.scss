@@ -55,7 +55,6 @@ $tableHeight: 80px;
 
 .fake-table {
   display: grid;
-  grid-template-columns: var(--grid-mobile);
   width: max-content;
   min-width: 100%;
   position: relative;
