@@ -4,7 +4,7 @@
         $slide_c = count($slides);
         if ($slide_c > 0) :
 ?>
-            <section id="dettagli" class="js-section section-slider-text-ext section" data-anchor="dettagli">
+            <section id="dettagli" class="js-section section-slider-text-ext" data-anchor="dettagli">
                 <div class="section-inner container-fluid">
                     <div class="subtitle-header">
                         <h2 class="h6 text-secondary text-uppercase semibold">DETTAGLI</h2>
@@ -14,7 +14,7 @@
                             <div class="single-slider-carousel-txt-ext owl-carousel">
                                 <?php for($i = 0; $i < $slide_c; $i++) : ?>
                                     <div class="slider-item">
-                                        <figure class="sp-mb-0 rounded-3 overflow-hidden position-relative respimg">
+                                        <figure class="sp-mb-0 rounded-3 overflow-hidden position-relative">
                                             <?php
                                             echo wp_get_attachment_image($slides[$i]['img_slide']['ID'], 'slide-img-ext', false, ['class' => 'w-100']);
                                             ?>

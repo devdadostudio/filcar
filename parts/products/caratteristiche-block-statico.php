@@ -1,4 +1,4 @@
-<section id="caratteristiche" class="section js-section" data-anchor="caratteristiche">
+<div id="caratteristiche" class="js-section" data-anchor="caratteristiche">
     <div class="section-inner container-fluid">
         <div class="subtitle-header">
             <h2 class="h6 text-secondary text-uppercase semibold">Caratteristiche</h2>
@@ -535,7 +535,7 @@
         </div>
     </div>
 
-</section>
+</div>
 
 
     

@@ -1,4 +1,4 @@
-<section class="bg-primary d-flex align-items-center sp-py-18 overflow-hidden slider-txt">
+<div class="bg-primary d-flex align-items-center sp-py-18 overflow-hidden slider-txt">
     <div class="container-fluid position-relative">
         <div class="row">
             <div class="col-lg-10 offset-lg-1 col-12 sp-mt-5">
@@ -31,4 +31,4 @@
             </div>
         </div>
     </div>
-</section>
+</div>
