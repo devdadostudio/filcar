@@ -35,13 +35,13 @@
         <div class="product-anchor-content">
 
             <!-- PANORAMICA -->
-            <section id="panoramica" class="bg-primary d-flex align-items-center sp-py-18 js-section" data-anchor="panoramica">
+            <div id="panoramica" class="bg-primary d-flex align-items-center sp-py-18 js-section" data-anchor="panoramica">
                 <div class="container-fluid position-relative">
                     <?php get_template_part('parts/products/text-centered-img', 'statico'); ?>
                     <?php get_template_part('parts/products/video-section', 'statico'); ?>
                     <?php get_template_part('parts/products/slider-text', 'statico'); ?>
                 </div>
-            </section>
+            </div>
             <!-- CARATTERISTICHE -->
             <?php get_template_part('parts/products/caratteristiche-block', 'statico'); ?>
             <!-- DIMENSIONI -->

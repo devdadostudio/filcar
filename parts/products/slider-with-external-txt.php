@@ -4,7 +4,7 @@
         $slide_c = count($slides);
         if ($slide_c > 0) :
 ?>
-            <section id="dettagli" class="js-section section-slider-text-ext" data-anchor="dettagli">
+            <section id="dettagli" class="js-section section-slider-text-ext section" data-anchor="dettagli">
                 <div class="section-inner container-fluid">
                     <div class="subtitle-header">
                         <h2 class="h6 text-secondary text-uppercase semibold">DETTAGLI</h2>

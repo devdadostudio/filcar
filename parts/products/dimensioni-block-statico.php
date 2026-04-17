@@ -1,4 +1,4 @@
-<div id="dimensioni" class="js-section" data-anchor="dimensioni">
+<div id="dimensioni" class="js-section section" data-anchor="dimensioni">
     <div class="section-inner container-fluid">
         <div class="subtitle-header sp-pb-6">
             <h2 class="h6 text-secondary text-uppercase semibold">Dimensioni</h2>

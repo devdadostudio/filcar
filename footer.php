@@ -64,6 +64,7 @@
                 </div>
             </div>
         </footer> -->
+        <footer class="footer-placeholder"></footer>
 		<?php wp_footer(); ?>
 	</body>
 </html>
