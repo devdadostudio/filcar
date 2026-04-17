@@ -1,47 +1,64 @@
+<?php
+$adapt_to = get_field('adapt_to');
+$compatibility = $adapt_to['compatibility'];
+$compatibility_c = count($compatibility);
+?>
 <section id="caratteristiche" class="section js-section" data-anchor="caratteristiche">
     <div class="section-inner container-fluid">
         <div class="subtitle-header">
             <h2 class="h6 text-secondary text-uppercase semibold">Caratteristiche</h2>
         </div>
-        <div class="sp-py-3 sp-lg-py-6">
-            <div class="row">
-                <div class="col-llg-4">
-                    <!-- TODO - COLORI!! -->
-                    <div class="">
-                        <span class="text-uppercase subtitle-2">Adatto a</span>
+        <?php if ($compatibility_c > 0) : ?>
+            <div class="sp-py-3 sp-lg-py-6">
+                <div class="row">
+                    <div class="col-llg-4">
+                        <!-- TODO - COLORI!! -->
+                        <div class="">
+                            <span class="text-uppercase subtitle-2">Adatto a</span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-llg-8">
-                    <!-- Icons -->
-                    <div class="fit-block">
-                        <div class="fit-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/icons-cilindrate/moto-aligned-left.svg" alt="" srcset="">
-                            <span class="table-2 medium">Motoveicoli</span>
-                        </div>
-                        <div class="fit-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/icons-cilindrate/auto-aligned-left.svg" alt="" srcset="">
-                            <span class="table-2 medium">Veicoli piccola cilindata</span>
-                        </div>
-                        <div class="fit-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/icons-cilindrate/supercar-aligned-left.svg" alt="" srcset="">
-                            <span class="table-2 medium">Veicoli grande cilindata</span>
-                        </div>
-                        <div class="fit-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/icons-cilindrate/supercar-aligned-left.svg" alt="" srcset="">
-                            <span class="table-2 medium">Autobus e autosnodati</span>
-                        </div>
-                        <div class="fit-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/icons-cilindrate/articolato-aligned-left.svg" alt="" srcset="">
-                            <span class="table-2 medium">Veicoli Autoarticolati</span>
-                        </div>
-                        <div class="fit-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/icons-cilindrate/mezzi-pesanti-aligned-left.svg" alt="" srcset="">
-                            <span class="table-2 medium">Macchine movimento terra</span>
+                    <div class="col-llg-8">
+                        <!-- Icons -->
+                        <div class="fit-block">
+                            <?php
+                            for($i = 0; $i < $compatibility_c; $i++) {
+                                $comp = $compatibility[$i];
+                            ?>
+                            <div class="fit-item">
+                                <?php
+                                    switch ($comp) {
+                                        case 'Motoveicoli':
+                                            echo '<img src="' . get_template_directory_uri() . '/assets/icons-cilindrate/moto-aligned-left.svg" alt="Compatibilità ' . $comp . '" srcset="">';
+                                            break;
+                                        case 'Veicoli piccola cilindrata':
+                                            echo '<img src="' . get_template_directory_uri() . '/assets/icons-cilindrate/auto-aligned-left.svg" alt="Compatibilità ' . $comp . '" srcset="">';
+                                            break;
+                                        case 'Veicoli grande cilindrata':
+                                            echo '<img src="' . get_template_directory_uri() . '/assets/icons-cilindrate/supercar-aligned-left.svg" alt="Compatibilità ' . $comp . '" srcset="">';
+                                            break;
+                                        case 'Autobus e autosnodati':
+                                            echo '<img src="' . get_template_directory_uri() . '/assets/icons-cilindrate/autobus-aligned-left.svg" alt="Compatibilità ' . $comp . '" srcset="">';
+                                            break;
+                                        case 'Veicoli Autoarticolati':
+                                            echo '<img src="' . get_template_directory_uri() . '/assets/icons-cilindrate/articolato-aligned-left.svg" alt="Compatibilità ' . $comp . '" srcset="">';
+                                            break;
+                                        case 'Macchine movimento terra':
+                                            echo '<img src="' . get_template_directory_uri() . '/assets/icons-cilindrate/mezzi-pesanti-aligned-left.svg" alt="Compatibilità ' . $comp . '" srcset="">';
+                                            break;
+                                    }
+                                ?>
+                                <span class="table-2 medium"><?php echo $comp; ?></span>
+                            </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php
+        endif;
+        $description = get_field('description');
+        if ($description) :
+        ?>
         <div class="border-top sp-py-3 sp-lg-py-5">
             <div class="row">
                 <div class="col-llg-4">
@@ -51,15 +68,14 @@
                     </div>
                 </div>
                 <div class="col-llg-8 sp-my-6 sp-lg-my-0">
-                    <div class="p-big">
-                        <p>Il braccio telescopico consente l’aspirazione dei gas di scarico senza la necessità di agganciare la bocchetta alla marmitta o alla carrozzeria, eliminando il rischio di danneggiamenti accidentali durante le operazioni di manutenzione. Grazie alla sua elevata flessibilità e alla struttura telescopica, può essere utilizzato sia con veicoli posizionati sul ponte sollevatore sia a terra, senza dover sostituire la bocchetta in base alla configurazione di lavoro.</p>
-                        <p>Il sistema di movimentazione, oggetto di due brevetti, è progettato per non entrare mai in contatto diretto con i gas aspirati. Questa soluzione tecnica preserva nel tempo l’efficienza del meccanismo, riduce l’usura dei componenti e garantisce affidabilità costante anche in condizioni di utilizzo intensivo. Il braccio è dotato di una serranda integrata che si apre automaticamente durante l’abbassamento, ottimizzando il flusso di aspirazione e migliorando la gestione operativa.</p>
-                        <p>Installabile a soffitto o a parete, il sistema è compatibile con tutte le canaline esistenti Filcar, permettendo un’integrazione semplice e immediata all’interno di impianti già operativi. Una soluzione professionale progettata per aumentare sicurezza, protezione del veicolo e continuità produttiva in officina.</p>
+                    <div class="">
+                        <?php echo $description; ?>
                     </div>
                 </div>
             </div>
         </div>
         <?php
+        endif;
         /*
         |--------------------------------------------------------------------------
         | CONFIGURAZIONE "SIMULAZIONE ACF"

@@ -18,23 +18,22 @@
   border-left: 1px solid $secondary;
   box-sizing: border-box;
   text-align: left;
-}
-
-.fit-item img {
-  display: block;
-  width: auto;
-  max-width: 100%;
-  height: 48px;
-  object-fit: contain;
-  margin-bottom: 16px;
-  flex-shrink: 0;
-}
-
-.fit-item span {
-  display: block;
-  width: 100%;
-  margin: 0;
-  overflow-wrap: break-word;
+  img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: 48px;
+    object-fit: contain;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+    align-self: flex-start;
+  }
+  span {
+    display: block;
+    width: 100%;
+    margin: 0;
+    overflow-wrap: break-word;
+  }
 }
 
 @include media-breakpoint-down(md) {
