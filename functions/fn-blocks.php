@@ -68,7 +68,7 @@ add_action('acf/init', function () {
         acf_register_block_type([
             'name' => 'block-anchors-static',
             'title' => __('BLOCCO ANCHORS STATICI'),
-            'render_template' => get_template_directory() . '/parts/products/block-anchors-static.php',
+            'render_template' => get_template_directory() . '/parts/products/product-anchors-section-statico.php',
             'category' => 'layout',
             'icon' => 'format-gallery',
             'mode' => 'edit',

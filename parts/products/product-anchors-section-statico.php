@@ -35,32 +35,16 @@
         <div class="product-anchor-content">
 
             <!-- PANORAMICA -->
-            <?php get_template_part('parts/products/text-centered', 'img'); ?>
+            <?php get_template_part('parts/products/text-centered-img', 'statico'); ?>
+            <?php get_template_part('parts/products/video-section', 'statico'); ?>
+            <?php get_template_part('parts/products/slider-text', 'statico'); ?>
             <!-- CARATTERISTICHE -->
-            <?php get_template_part('parts/products/caratteristiche', 'block-statico'); ?>
+            <?php get_template_part('parts/products/caratteristiche-block', 'statico'); ?>
             <!-- DIMENSIONI -->
             <?php get_template_part('parts/products/dimensioni', 'block-statico'); ?>
-            <!-- CORRELATI -->
-            <!-- <section id="correlati" class="section js-section" data-anchor="correlati">
-                <div class="section-inner container-fluid">
-                    <h2>Correlati</h2>
-
-                    <div class="product-related-grid">
-
-                        <div class="product-related-card">
-                        <img src="" alt="">
-                        <h3>Prodotto correlato 1</h3>
-                        </div>
-
-                        <div class="product-related-card">
-                        <img src="" alt="">
-                        <h3>Prodotto correlato 2</h3>
-                        </div>
-
-                    </div>
-                </div>
-            </section> -->
-
+            <!-- DETTAGLI -->
+            <?php get_template_part('parts/products/slider-with-external-txt', 'statico'); ?>
+        
         </div>
     </div>
 </section>
