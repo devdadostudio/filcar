@@ -50,9 +50,9 @@ function filcar_header_scripts()
         wp_enqueue_script('owl-carousel');
         wp_register_script('text-aligner', get_template_directory_uri() . '/js/lib/jquery.verticalTextAligner.js', '', null, true);
         //wp_enqueue_script('text-aligner');
+        wp_register_script('filcarscripts', get_template_directory_uri() . '/js/scripts.js', '', null, true);
+        wp_enqueue_script('filcarscripts');
     }
-    wp_register_script('filcarscripts', get_template_directory_uri() . '/js/scripts.js', '', null, true);
-    wp_enqueue_script('filcarscripts');
 }
 if (function_exists('add_theme_support')) {
     // Add Menu Support
@@ -410,3 +410,57 @@ function flc_fix_archive_sorting($q) {
 include_once get_template_directory() . '/functions/fn-general.php';
 include_once get_template_directory() . '/functions/fn-menu.php';
 include_once get_template_directory() . '/functions/fn-blocks.php';
+
+// Sincronizza il tipo di colonna della riga con il tipo di colonna dell'header
+add_filter('acf/load_value/name=rows_inner', function($value, $post_id, $field) {
+    // Se il valore è vuoto (nuova riga), proviamo a popolarlo in base agli headings
+    if (empty($value)) {
+        $headings = get_field('table_features', $post_id)['headings'] ?? [];
+        $new_value = [];
+
+        foreach ($headings as $heading) {
+            $type = $heading['heading_type']; // title-normal, title-advanced, title-sub
+            
+            // Mappatura tipo header -> tipo riga
+            $row_type = str_replace('title-', 'row-', $type);
+
+            $new_value[] = [
+                'field_69e2030f944f1' => $row_type, // column_type
+                'field_69e2030f944f2' => '',        // column_value
+            ];
+        }
+        return $new_value;
+    }
+    return $value;
+}, 10, 3);
+
+
+add_action('enqueue_block_editor_assets', function() {
+    // Carichiamo lo script solo nell'area admin
+    if ( !is_admin() ) return;
+
+    wp_enqueue_script(
+        'acf-table-sync', 
+        get_template_directory_uri() . '/js/acf-table-sync.js', 
+        array('acf-input', 'jquery'), 
+        time(), // Anti-cache per sviluppo
+        true 
+    );
+}, 100);
+
+/**
+ * Applica CSS personalizzato solo nell'editor dei Prodotti (WooCommerce)
+ */
+add_action('enqueue_block_editor_assets', function() {
+    if ( !is_admin() ) return;
+
+    // Applichiamo la regola solo se siamo nell'edit di un prodotto
+    echo '
+    <style>
+        /* Forza i blocchi Gutenberg a occupare tutta la larghezza disponibile */
+        html .post-type-product :where(.wp-block) {
+            max-width: 100% !important;
+        }
+    </style>
+    ';
+});
