@@ -232,3 +232,79 @@ $tableHeight: 80px;
   top: 8px;
   bottom: 8px;
 }
+
+.accessories-table {
+  grid-template-columns: var(--grid-mobile);
+
+  @include media-breakpoint-up(md) {
+    grid-template-columns: var(--grid-desktop);
+  }
+
+  .cell {
+    min-width: 0;
+    padding: 10px 8px;
+  }
+
+  .accessory-mod {
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .accessory-image-cell {
+    justify-content: center;
+  }
+
+  .accessory-img {
+    max-width: 56px;
+    max-height: 56px;
+    object-fit: contain;
+
+    @include media-breakpoint-up(md) {
+      max-width: 90px;
+      max-height: 90px;
+    }
+  }
+
+  .accessory-desc {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    text-align: left;
+    justify-content: flex-start;
+  }
+
+  .accessory-cta-cell {
+    justify-content: center;
+  }
+
+  .accessory-btn {
+    white-space: nowrap;
+    padding: 8px 10px;
+    font-size: 12px;
+
+    @include media-breakpoint-up(md) {
+      padding: 10px 16px;
+      font-size: inherit;
+    }
+  }
+
+  /* su mobile questa tabella non deve avere first-col sticky */
+  .first-col {
+    position: static;
+    left: auto;
+    z-index: auto;
+  }
+
+  @include media-breakpoint-up(md) {
+    .first-col {
+      position: sticky;
+      left: 0;
+      z-index: 15;
+    }
+
+    .cell {
+      padding: 16px 18px;
+    }
+  }
+}

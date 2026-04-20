@@ -48,6 +48,8 @@
             <?php get_template_part('parts/products/dimensioni', 'block-statico'); ?>
             <!-- DETTAGLI -->
             <?php get_template_part('parts/products/slider-with-external-txt', 'statico'); ?>
+            <!-- ACCESSORI -->
+            <?php get_template_part('parts/products/accessori-block', 'statico'); ?>
         
         </div>
     </div>
