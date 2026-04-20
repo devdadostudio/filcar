@@ -63,7 +63,7 @@
                             </div>
 
                             <div class="cell accessory-cta-cell">
-                                <a href="<?php echo esc_url($row['link']); ?>" class="btn btn-secondary-1 w-icon accessory-btn">
+                                <a href="<?php echo esc_url($row['link']); ?>" class="btn btn-secondary-1 w-icon accessory-btn text-capitalize">
                                     <span>
                                         Vedi prodotto
                                         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
