@@ -3,7 +3,7 @@ $adapt_to = get_field('adapt_to');
 $compatibility = $adapt_to['compatibility'];
 $compatibility_c = count($compatibility);
 ?>
-<section id="caratteristiche" class="section js-section sp-pt-16 sp-pb-8" data-anchor="caratteristiche">
+<section id="caratteristiche" class="section js-section sp-pt-11 sp-lg-pt-16 sp-lg-pb-8 sp-pb-6" data-anchor="caratteristiche">
     <div class="section-inner container-fluid">
         <div class="subtitle-header sp-mb-5">
             <h2 class="h6 text-secondary text-uppercase semibold">Caratteristiche</h2>

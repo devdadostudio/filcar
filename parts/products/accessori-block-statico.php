@@ -1,4 +1,4 @@
-<section id="accessori" class="section js-section sp-py-8" data-anchor="accessori">
+<section id="accessori" class="section js-section sp-py-6 sp-lg-py-8" data-anchor="accessori">
     <div class="section-inner container-fluid">
         <div class="subtitle-header">
             <h2 class="h6 text-secondary text-uppercase semibold">Accessori</h2>

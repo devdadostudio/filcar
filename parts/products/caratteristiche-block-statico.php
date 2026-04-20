@@ -1,4 +1,4 @@
-<div id="caratteristiche" class="js-section section sp-pt-16 sp-pb-8" data-anchor="caratteristiche">
+<div id="caratteristiche" class="js-section section sp-pt-11 sp-lg-pt-16 sp-lg-pb-8 sp-pb-6" data-anchor="caratteristiche">
 
     <div class="section-inner container-fluid">
         <div class="subtitle-header sp-mb-5">
