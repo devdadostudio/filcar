@@ -33,12 +33,12 @@
 
         <!-- CONTENUTO -->
         <div class="product-anchor-content">
-
+            <div class="button-sticky-container">
+                <a class="button-sticky button-cta btn text-capitalize">Richiedi info</a>
+            </div>
             <!-- PANORAMICA -->
             <div id="panoramica" class="bg-primary d-flex align-items-center sp-pt-10 js-section" data-anchor="panoramica">
-                <div class="button-sticky-container">
-                    <a class="button-sticky button-cta btn">Richiedi info</a>
-                </div>
+                
                 <div class="container-fluid position-relative">
                     <?php get_template_part('parts/products/text-centered-img', 'statico'); ?>
                     <?php get_template_part('parts/products/video-section', 'statico'); ?>

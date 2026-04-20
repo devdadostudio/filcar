@@ -1,0 +1,31 @@
+.button-sticky-container {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+  @include media-breakpoint-down(md) {
+    left: 20px;
+    .button-sticky {
+      display: flex;
+      justify-content: center;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
+      &:after {
+        position: absolute;
+        right: 1em;
+      }
+    }
+  }
+}
+
+.button-sticky-container.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
