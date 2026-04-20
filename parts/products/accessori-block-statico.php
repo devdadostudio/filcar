@@ -1,4 +1,4 @@
-<section id="accessori" class="section js-section" data-anchor="accessori">
+<section id="accessori" class="section js-section sp-py-8" data-anchor="accessori">
     <div class="section-inner container-fluid">
         <div class="subtitle-header">
             <h2 class="h6 text-secondary text-uppercase semibold">Accessori</h2>
@@ -62,12 +62,13 @@
                             </div>
 
                             <div class="cell accessory-cta-cell">
-                                <a href="<?php echo esc_url($row['link']); ?>"
-                                   class="btn btn-outline-dark w-icon accessory-btn">
-                                    Vedi prodotto
-                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M9.50776 9.47764L9.48096 1.50006C9.4791 0.947778 9.02988 0.500066 8.4776 0.500065L0.499996 0.500065M0.514397 9.49194L8.80709 1.18472" stroke="#17191B" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
+                                <a href="<?php echo esc_url($row['link']); ?>" class="btn btn-secondary-1 w-icon accessory-btn">
+                                    <span>
+                                        Vedi prodotto
+                                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.50776 9.47764L9.48096 1.50006C9.4791 0.947778 9.02988 0.500066 8.4776 0.500065L0.499996 0.500065M0.514397 9.49194L8.80709 1.18472" stroke="#17191B" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
                                 </a>
                             </div>
 

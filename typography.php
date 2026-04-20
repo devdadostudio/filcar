@@ -100,11 +100,6 @@
                 </div>
                 <hr class="my-4">
                 <div class="col-12">
-                    <a href="#" class="btn btn-primary"><span>Primary Button</span></a>
-                    <a href="#" class="btn btn-secondary"><span>Secondary Button</span></a>
-                </div>
-                <hr class="my-4">
-                <div class="col-12">
                     <div class="number-1 mt-5">
                         Number 1<br>
                         <p class="number-1">01</p>
@@ -129,6 +124,13 @@
                     <div class="product-3 mt-5">
                         <p class="product-3">Product 3</p>
                     </div>
+                </div>
+                <hr class="my-4">
+                <div class="col-12 bg-grey">
+                    <a href="#" class="btn btn-primary-1"><span>Primary Button 1</span></a>
+                    <a href="#" class="btn btn-primary-2"><span>Primary Button 2</span></a>
+                    <a href="#" class="btn btn-secondary-1"><span>Secondary Button 1</span></a>
+                    <a href="#" class="btn btn-secondary-2"><span>Secondary Button 2</span></a>
                 </div>
             </div>
         </div>

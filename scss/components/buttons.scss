@@ -46,7 +46,54 @@
       }
     }
   }
-  &.btn-primary {
+  &.btn-primary-1 {
+    --bs-btn-color: #{$white};
+    --bs-btn-bg: #{$primary};
+    --bs-btn-border-color: #{$primary};
+
+    --bs-btn-hover-color: #{$white};
+    --bs-btn-hover-bg: #{$secondary};
+    --bs-btn-hover-border-color: #{$secondary};
+
+    --bs-btn-active-color: #{$white};
+    --bs-btn-active-bg: #{$secondary};
+    --bs-btn-active-border-color: #{$secondary};
+
+    --bs-btn-disabled-color: #{$white};
+    --bs-btn-disabled-bg: #{$grey-disabled};
+    --bs-btn-disabled-border-color: #{$grey-disabled};
+    &::before {
+      background-color: #{$secondary};
+    }
+    &:hover svg > path{
+      stroke: #{$white};
+    }
+  }
+  &.btn-primary-2 {
+    --bs-btn-color: #{$primary};
+    --bs-btn-bg: #{$white};
+    --bs-btn-border-color: #{$white};
+
+    --bs-btn-hover-color: #{$white};
+    --bs-btn-hover-bg: #{$secondary};
+    --bs-btn-hover-border-color: #{$secondary};
+
+    --bs-btn-active-color: #{$white};
+    --bs-btn-active-bg: #{$secondary};
+    --bs-btn-active-border-color: #{$secondary};
+
+    --bs-btn-disabled-color: #{$white};
+    --bs-btn-disabled-bg: #{$grey-disabled};
+    --bs-btn-disabled-border-color: #{$grey-disabled};
+    &::before {
+      background-color: #{$secondary};
+    }
+    &:hover svg > path{
+      stroke: #{$white};
+    }
+  }
+
+  &.btn-secondary-1 {
     --bs-btn-color: #{$primary};
     --bs-btn-bg: transparent;
     --bs-btn-border-color: #{$primary};
@@ -65,15 +112,36 @@
     &::before {
       background-color: #{$primary};
     }
-  }
-  &.btn-secondary {
-    --bs-btn-color: #{$white};
-    --bs-btn-bg: #{$primary};
-    --bs-btn-border-color: #{$primary};
-    &:hover {
-      color: #{$primary};
-      background-color: #{$white};
-      border-color: #{$white};
+    &:hover svg > path{
+      stroke: #{$white};
     }
+  }
+  &.btn-secondary-2 {
+    --bs-btn-color: #{$white};
+    --bs-btn-bg: transparent;
+    --bs-btn-border-color: #{$white};
+
+    --bs-btn-hover-color: #{$primary};
+    --bs-btn-hover-bg: #{$white};
+    --bs-btn-hover-border-color: #{$white};
+
+    --bs-btn-active-color: #{$primary};
+    --bs-btn-active-bg: #{$white};
+    --bs-btn-active-border-color: #{$white};
+
+    --bs-btn-disabled-color: #{$white};
+    --bs-btn-disabled-bg: #{$grey-disabled};
+    --bs-btn-disabled-border-color: #{$grey-disabled};
+    &::before {
+      background-color: #{$white};
+    }
+    &:hover svg > path{
+      stroke: #{$primary};
+    }
+  }
+  &.w-icon > span{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 }
