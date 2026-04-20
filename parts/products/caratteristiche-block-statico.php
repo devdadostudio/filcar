@@ -3,15 +3,15 @@
         <div class="subtitle-header sp-mb-5">
             <h2 class="h6 text-secondary text-uppercase semibold">Caratteristiche</h2>
         </div>
-        <div class="sp-py-0 sp-lg-py-6">
+        <div class="sp-pb-5 sp-lg-py-6">
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-4 sp-pb-5 sp-lg-pb-0">
                     <!-- TODO - COLORI!! -->
                     <div class="">
                         <span class="text-uppercase subtitle-2">Adatto a</span>
                     </div>
                 </div>
-                <div class="col-llg-8">
+                <div class="col-lg-8">
                     <!-- Icons -->
                     <div class="fit-block">
                         <div class="fit-item">
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div class="border-top sp-py-3 sp-lg-py-5">
+        <div class="border-top sp-py-5">
             <div class="row">
                 <div class="col-lg-4">
                     <!-- TODO - COLORI!! -->
@@ -50,7 +50,7 @@
                         <span class="text-uppercase subtitle-2">Descrizione</span>
                     </div>
                 </div>
-                <div class="col-llg-8 sp-my-6 sp-lg-my-0">
+                <div class="col-lg-8 sp-mt-6 sp-lg-my-0">
                     <div class="p-big">
                         <p>Il braccio telescopico consente l’aspirazione dei gas di scarico senza la necessità di agganciare la bocchetta alla marmitta o alla carrozzeria, eliminando il rischio di danneggiamenti accidentali durante le operazioni di manutenzione. Grazie alla sua elevata flessibilità e alla struttura telescopica, può essere utilizzato sia con veicoli posizionati sul ponte sollevatore sia a terra, senza dover sostituire la bocchetta in base alla configurazione di lavoro.</p>
                         <p>Il sistema di movimentazione, oggetto di due brevetti, è progettato per non entrare mai in contatto diretto con i gas aspirati. Questa soluzione tecnica preserva nel tempo l’efficienza del meccanismo, riduce l’usura dei componenti e garantisce affidabilità costante anche in condizioni di utilizzo intensivo. Il braccio è dotato di una serranda integrata che si apre automaticamente durante l’abbassamento, ottimizzando il flusso di aspirazione e migliorando la gestione operativa.</p>
@@ -310,8 +310,8 @@
                 $accessori_columns = $table_config['accessori_group']['columns'] ?? [];
                 ?>
                 
-                <div class="border-top sp-py-3 sp-lg-py-5">
-                    <div class="sp-mb-8">
+                <div class="border-top sp-py-5">
+                    <div class="sp-mb-5">
                         <span class="text-uppercase subtitle-2"><?php echo esc_html($title); ?></span>
                     </div>
 
