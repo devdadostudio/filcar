@@ -282,13 +282,6 @@ $tableHeight: 80px;
     white-space: nowrap;
   }
 
-  /* su mobile questa tabella non deve avere first-col sticky */
-  .first-col {
-    position: static;
-    left: auto;
-    z-index: auto;
-  }
-
   @include media-breakpoint-up(md) {
     .first-col {
       position: sticky;
