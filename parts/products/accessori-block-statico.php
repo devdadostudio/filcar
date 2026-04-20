@@ -3,7 +3,7 @@
         <div class="subtitle-header">
             <h2 class="h6 text-secondary text-uppercase semibold">Accessori</h2>
         </div>
-
+    </div>
         <?php
         $accessori_rows = [
             [
@@ -23,6 +23,7 @@
         $grid_template_mobile = '90px 90px minmax(220px,1fr) 130px';
         $grid_template_desktop = 'minmax(110px,1fr) minmax(110px,1fr) minmax(260px,2fr) minmax(150px,1fr)';
         ?>
+    <div class="container-fluid-left">
 
         <div class="table-shell sp-mt-4 sp-xl-mt-6">
             <div class="table-scroll">

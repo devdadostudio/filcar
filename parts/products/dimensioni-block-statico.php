@@ -3,7 +3,7 @@
         <div class="subtitle-header sp-mb-5">
             <h2 class="h6 text-secondary text-uppercase semibold">Dimensioni</h2>
         </div>
-
+    </div>
         <?php
         $dimension_images = [
             [
@@ -19,7 +19,7 @@
         $dimension_images = array_slice($dimension_images, 0, 2);
         $count = count($dimension_images);
         ?>
-
+    <div class="container-fluid-left">
         <?php if (!empty($dimension_images) && $count > 0) : ?>
             <div class="dimensions-gallery-shell row">
                 <div class="col-12 col-xl-10 offset-xl-1">
