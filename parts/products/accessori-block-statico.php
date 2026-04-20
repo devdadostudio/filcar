@@ -20,7 +20,7 @@
             ],
         ];
 
-        $grid_template_mobile = '90px 90px minmax(220px,1fr) 130px';
+        $grid_template_mobile = '180px 180px 200px 230px';
         $grid_template_desktop = 'minmax(110px,1fr) minmax(110px,1fr) minmax(260px,2fr) minmax(150px,1fr)';
         ?>
     <div class="container-fluid-left">
