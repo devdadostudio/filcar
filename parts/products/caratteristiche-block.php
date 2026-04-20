@@ -3,15 +3,15 @@ $adapt_to = get_field('adapt_to');
 $compatibility = $adapt_to['compatibility'];
 $compatibility_c = count($compatibility);
 ?>
-<section id="caratteristiche" class="section js-section" data-anchor="caratteristiche">
+<section id="caratteristiche" class="section js-section sp-pt-16 sp-pb-8" data-anchor="caratteristiche">
     <div class="section-inner container-fluid">
-        <div class="subtitle-header">
+        <div class="subtitle-header sp-mb-5">
             <h2 class="h6 text-secondary text-uppercase semibold">Caratteristiche</h2>
         </div>
         <?php if ($compatibility_c > 0) : ?>
-            <div class="sp-py-3 sp-lg-py-6">
+            <div class="sp-py-0 sp-lg-py-6">
                 <div class="row">
-                    <div class="col-llg-4">
+                    <div class="col-lg-4">
                         <!-- TODO - COLORI!! -->
                         <div class="">
                             <span class="text-uppercase subtitle-2">Adatto a</span>
@@ -61,7 +61,7 @@ $compatibility_c = count($compatibility);
         ?>
         <div class="border-top sp-py-3 sp-lg-py-5">
             <div class="row">
-                <div class="col-llg-4">
+                <div class="col-lg-4">
                     <!-- TODO - COLORI!! -->
                     <div class="">
                         <span class="text-uppercase subtitle-2">Descrizione</span>

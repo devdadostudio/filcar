@@ -2,10 +2,10 @@
   $video = get_field('video');
   $video_desc = get_field('video_desc');
 ?>
-<section class="bg-primary d-flex align-items-center sp-py-18">
-    <div class="container-fluid position-relative">
+<section class="bg-primary d-flex align-items-center sp-py-10">
+    <div class="container-fluid position-relative sp-px-0">
         <div class="row">
-            <div class="col-lg-10 offset-lg-1 col-12 sp-mt-5">
+            <div class="col-lg-10 offset-lg-1 col-12">
                 <?php if ($video) : ?>
                 <figure class="respimg sp-mb-0 aspect-ratio-16x7 rounded-3 overflow-hidden position-relative">
                     <video>

@@ -4,10 +4,10 @@
         $slide_c = count($slides);
         if ($slide_c > 0) :
 ?>
-        <section class="bg-primary d-flex align-items-center sp-py-18 overflow-hidden slider-txt">
-            <div class="container-fluid position-relative">
+        <section class="bg-primary d-flex align-items-center sp-py-10 overflow-hidden slider-txt">
+            <div class="container-fluid position-relative sp-px-0">
                 <div class="row">
-                    <div class="col-lg-10 offset-lg-1 col-12 sp-mt-5">
+                    <div class="col-lg-10 offset-lg-1 col-12">
                         <div class="carousel-text-2 owl-carousel">
                             <?php for($i = 0; $i < $slide_c; $i++) : ?>
                                 <div class="">

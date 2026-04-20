@@ -3,8 +3,8 @@
     $txt_section = get_field('txt_section');
     $img_section = get_field('img_section');
 ?>
-<section id="panoramica" class="bg-primary d-flex align-items-center sp-py-18 js-section" data-anchor="panoramica">
-    <div class="container-fluid position-relative">
+<section id="panoramica" class="bg-primary d-flex align-items-center sp-py-10 js-section" data-anchor="panoramica">
+    <div class="container-fluid position-relative sp-px-0">
         <div class="row">
             <div class="col-12 col-lg-8 offset-lg-2 col-uxl-6 offset-uxl-3 text-center">
                 <div class="product-3 text-secondary">

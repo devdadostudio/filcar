@@ -1,6 +1,6 @@
-<div id="dettagli" class="js-section section-slider-text-ext section" data-anchor="dettagli">
+<div id="dettagli" class="js-section section-slider-text-ext section sp-py-8" data-anchor="dettagli">
     <div class="section-inner container-fluid">
-        <div class="subtitle-header">
+        <div class="subtitle-header sp-mb-5">
             <h2 class="h6 text-secondary text-uppercase semibold">DETTAGLI</h2>
         </div>
         <div class="row">

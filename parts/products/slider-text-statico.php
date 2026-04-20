@@ -1,7 +1,7 @@
-<div class="bg-primary d-flex align-items-center sp-py-18 overflow-hidden slider-txt">
-    <div class="container-fluid position-relative">
+<div class="bg-primary d-flex align-items-center sp-py-10 overflow-hidden slider-txt">
+    <div class="container-fluid position-relative sp-px-0">
         <div class="row">
-            <div class="col-lg-10 offset-lg-1 col-12 sp-mt-5">
+            <div class="col-lg-10 offset-lg-1 col-12">
                 <div class="carousel-text-2 owl-carousel owl-loaded owl-drag">                                                                                    
                     <div class="">
                         <figure class="respimg sp-mb-0 aspect-ratio-1x1 rounded-3 overflow-hidden position-relative bg-white">

@@ -1,6 +1,6 @@
-<div id="dimensioni" class="section js-section" data-anchor="dimensioni">
+<div id="dimensioni" class="section js-section sp-py-8" data-anchor="dimensioni">
     <div class="section-inner container-fluid">
-        <div class="subtitle-header sp-pb-6">
+        <div class="subtitle-header sp-mb-5">
             <h2 class="h6 text-secondary text-uppercase semibold">Dimensioni</h2>
         </div>
 

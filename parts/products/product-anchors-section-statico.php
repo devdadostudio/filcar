@@ -35,7 +35,7 @@
         <div class="product-anchor-content">
 
             <!-- PANORAMICA -->
-            <div id="panoramica" class="bg-primary d-flex align-items-center sp-py-18 js-section" data-anchor="panoramica">
+            <div id="panoramica" class="bg-primary d-flex align-items-center sp-pt-10 js-section" data-anchor="panoramica">
                 <div class="container-fluid position-relative">
                     <?php get_template_part('parts/products/text-centered-img', 'statico'); ?>
                     <?php get_template_part('parts/products/video-section', 'statico'); ?>
