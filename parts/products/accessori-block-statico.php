@@ -24,7 +24,7 @@
         $grid_template_desktop = 'minmax(110px,1fr) minmax(110px,1fr) minmax(260px,2fr) minmax(150px,1fr)';
         ?>
 
-        <div class="table-shell">
+        <div class="table-shell sp-mt-4 sp-xl-mt-6">
             <div class="table-scroll">
                 <div class="fake-table accessories-table"
                     style="
@@ -32,7 +32,7 @@
                         --grid-desktop: <?php echo esc_attr($grid_template_desktop); ?>;
                     ">
 
-                    <div class="cell head-l1 corner table-2 has-separator">Mod</div>
+                    <div class="cell head-l1 corner table-2 has-separator text-secondary">Mod</div>
                     <div class="cell head-l1 table-2 has-separator">Immagine</div>
                     <div class="cell head-l1 table-2 has-separator">Descrizione</div>
                     <div class="cell head-l1 table-2">Visualizzazione</div>
