@@ -1,4 +1,4 @@
-<section id="correlati" class="section js-section sp-py-8" data-anchor="correlati">
+<section id="correlati" class="section js-section sp-py-6 sp-lg-py-8" data-anchor="correlati">
     <div class="section-inner container-fluid">
         <div class="subtitle-header sp-mb-4 sp-xl-mb-6">
             <h2 class="h6 text-secondary text-uppercase semibold">Correlati</h2>

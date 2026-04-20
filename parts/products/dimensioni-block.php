@@ -1,4 +1,4 @@
-<section id="dimensioni" class="section js-section sp-py-8" data-anchor="dimensioni">
+<section id="dimensioni" class="section js-section sp-py-6 sp-lg-py-8" data-anchor="dimensioni">
     <div class="section-inner container-fluid">
         <div class="subtitle-header sp-mb-5">
             <h2 class="h6 text-secondary text-uppercase semibold">Dimensioni</h2>
