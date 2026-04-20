@@ -9,15 +9,15 @@ $compatibility_c = count($compatibility);
             <h2 class="h6 text-secondary text-uppercase semibold">Caratteristiche</h2>
         </div>
         <?php if ($compatibility_c > 0) : ?>
-            <div class="sp-py-0 sp-lg-py-6">
+            <div class="sp-pb-5 sp-lg-py-6">
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 sp-pb-5 sp-lg-pb-0">
                         <!-- TODO - COLORI!! -->
                         <div class="">
                             <span class="text-uppercase subtitle-2">Adatto a</span>
                         </div>
                     </div>
-                    <div class="col-llg-8">
+                    <div class="col-lg-8">
                         <!-- Icons -->
                         <div class="fit-block">
                             <?php
@@ -59,7 +59,7 @@ $compatibility_c = count($compatibility);
         $description = get_field('description');
         if ($description) :
         ?>
-        <div class="border-top sp-py-3 sp-lg-py-5">
+        <div class="border-top sp-py-5">
             <div class="row">
                 <div class="col-lg-4">
                     <!-- TODO - COLORI!! -->
@@ -67,7 +67,7 @@ $compatibility_c = count($compatibility);
                         <span class="text-uppercase subtitle-2">Descrizione</span>
                     </div>
                 </div>
-                <div class="col-llg-8 sp-my-6 sp-lg-my-0">
+                <div class="col-lg-8 sp-my-6 sp-lg-my-0">
                     <div class="">
                         <?php echo $description; ?>
                     </div>
@@ -284,8 +284,8 @@ $compatibility_c = count($compatibility);
         $grid_template_columns_mobile = implode(' ', $grid_parts_mobile);
         $grid_template_columns_desktop = implode(' ', $grid_parts_desktop);
         ?>
-        <div class="border-top sp-py-3 sp-lg-py-5">
-            <div class="sp-mb-8">
+        <div class="border-top sp-py-5">
+            <div class="sp-mb-5">
                 <span class="text-uppercase subtitle-2">Specifiche tecniche</span>
             </div>
             <div class="table-shell">
