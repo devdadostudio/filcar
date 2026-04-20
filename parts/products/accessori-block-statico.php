@@ -1,7 +1,7 @@
 <section id="accessori" class="section js-section" data-anchor="accessori">
     <div class="section-inner container-fluid">
         <div class="subtitle-header">
-            <h2 class="h6 text-secondary text-uppercase semibold">Caratteristiche</h2>
+            <h2 class="h6 text-secondary text-uppercase semibold">Accessori</h2>
         </div>
 
         <?php

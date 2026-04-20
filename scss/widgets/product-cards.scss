@@ -1,0 +1,58 @@
+.product-card {
+  //width: 100%;
+}
+
+.product-card-inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 411 / 470;
+
+  border-radius: 20px;
+  overflow: hidden;
+
+  background-image: url("assets/img/sfondo-card.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+/* titolo */
+.card-title {
+  margin: 0;
+  color: $grey500;
+}
+
+/* subtitle */
+.card-subtitle {
+  display: block;
+  color: $grey500;
+}
+
+.product-card-content {
+  padding: 24px 24px 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 2;
+}
+
+.product-card-image {
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  min-height: 0;
+}
+
+.product-card-image img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}

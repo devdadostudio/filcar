@@ -50,6 +50,8 @@
             <?php get_template_part('parts/products/slider-with-external-txt', 'statico'); ?>
             <!-- ACCESSORI -->
             <?php get_template_part('parts/products/accessori-block', 'statico'); ?>
+            <!-- CORRELATI -->
+            <?php get_template_part('parts/products/related', 'statico'); ?>
         
         </div>
     </div>
