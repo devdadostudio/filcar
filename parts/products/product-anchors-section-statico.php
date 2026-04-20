@@ -1,6 +1,6 @@
 <section class="product-anchors-section js-anchors-layout">
 
-    <div class="product-anchors-section__inner">
+    <div class="product-anchors-section__inner bg-primary">
 
         <!-- NAV ANCORE -->
         <aside class="page-header js-page-header">
