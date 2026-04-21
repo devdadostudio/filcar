@@ -3,7 +3,8 @@
         <div class="subtitle-header sp-mb-5">
             <h2 class="h6 text-secondary text-uppercase semibold">Dimensioni</h2>
         </div>
-
+    </div>
+    <div class="container-fluid-left">
         <?php
         $dimension_images = get_field('imgs_section_dimensions');
         ?>
@@ -32,6 +33,7 @@
                         </div>
                     </div>
                 </div>
+        
             <?php endif; ?>
         <?php endif; ?>
 

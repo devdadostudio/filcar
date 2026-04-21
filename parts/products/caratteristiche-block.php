@@ -8,24 +8,23 @@ $compatibility_c = count($compatibility);
         <div class="subtitle-header sp-mb-5">
             <h2 class="h6 text-secondary text-uppercase semibold">Caratteristiche</h2>
         </div>
+
         <?php if ($compatibility_c > 0) : ?>
             <div class="sp-pb-5 sp-lg-py-6">
                 <div class="row">
                     <div class="col-lg-4 sp-pb-5 sp-lg-pb-0">
-                        <!-- TODO - COLORI!! -->
                         <div class="">
                             <span class="text-uppercase subtitle-2">Adatto a</span>
                         </div>
                     </div>
                     <div class="col-lg-8">
-                        <!-- Icons -->
                         <div class="fit-block">
                             <?php
-                            for($i = 0; $i < $compatibility_c; $i++) {
+                            for ($i = 0; $i < $compatibility_c; $i++) {
                                 $comp = $compatibility[$i];
                             ?>
-                            <div class="fit-item">
-                                <?php
+                                <div class="fit-item">
+                                    <?php
                                     switch ($comp) {
                                         case 'Motoveicoli':
                                             echo '<img src="' . get_template_directory_uri() . '/assets/icons-cilindrate/moto-aligned-left.svg" alt="Compatibilità ' . $comp . '" srcset="">';
@@ -46,9 +45,9 @@ $compatibility_c = count($compatibility);
                                             echo '<img src="' . get_template_directory_uri() . '/assets/icons-cilindrate/mezzi-pesanti-aligned-left.svg" alt="Compatibilità ' . $comp . '" srcset="">';
                                             break;
                                     }
-                                ?>
-                                <span class="table-2 medium"><?php echo $comp; ?></span>
-                            </div>
+                                    ?>
+                                    <span class="table-2 medium"><?php echo $comp; ?></span>
+                                </div>
                             <?php } ?>
                         </div>
                     </div>
@@ -56,27 +55,29 @@ $compatibility_c = count($compatibility);
             </div>
         <?php
         endif;
+
         $description = get_field('description_features_block');
         if ($description) :
         ?>
-        <div class="border-top sp-py-5">
-            <div class="row">
-                <div class="col-lg-4">
-                    <!-- TODO - COLORI!! -->
-                    <div class="">
-                        <span class="text-uppercase subtitle-2">Descrizione</span>
+            <div class="border-top sp-py-5">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="">
+                            <span class="text-uppercase subtitle-2">Descrizione</span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-8 sp-my-6 sp-lg-my-0">
-                    <div class="">
-                        <?php echo $description; ?>
+                    <div class="col-lg-8 sp-my-6 sp-lg-my-0">
+                        <div class="">
+                            <?php echo $description; ?>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
         <?php
-        endif; ?>
+        endif;
+        ?>
+
         <?php
         $table_features = get_field('table_features_features_block');
 
@@ -295,183 +296,250 @@ $compatibility_c = count($compatibility);
         }
 
         if (!function_exists('map_features_table_from_acf')) {
-            function map_features_table_from_acf($table_features) {
-                $headings = $table_features['headings'] ?? [];
-                $rows_raw = $table_features['rows'] ?? [];
+    function map_features_table_from_acf($table_features) {
 
-                if (empty($headings)) {
-                    return [null, []];
-                }
+        $headings = $table_features['headings'] ?? [];
+        $rows_raw = $table_features['rows'] ?? [];
 
-                $fit_group = [
-                    'title' => '',
-                    'columns' => [],
-                ];
+        if (empty($headings)) {
+            return [null, []];
+        }
 
-                $spec_columns = [];
-                $canaline_group = [
-                    'title' => '',
-                    'columns' => [],
-                ];
-                $accessori_group = [
-                    'title' => '',
-                    'columns' => [],
-                ];
+        $fit_group = [
+            'title' => '',
+            'columns' => [],
+        ];
 
-                $sub_group_order = [];
+        $spec_columns = [];
 
-                foreach ($headings as $index => $heading) {
-                    if ($index === 0) {
-                        continue;
-                    }
+        $canaline_group = [
+            'title' => '',
+            'columns' => [],
+        ];
 
-                    $type = $heading['heading_type'] ?? '';
-                    $label = $heading['lable_title'] ?? '';
+        $accessori_group = [
+            'title' => '',
+            'columns' => [],
+        ];
 
-                    if ($type === 'title-advanced') {
-                        $fit_group['title'] = $label;
-                        $advanced_select = $heading['advanced_select'] ?? '';
+        $sub_group_order = [];
 
-                        if ($advanced_select === 'Cilindrate') {
-                            $items = $heading['displacements'] ?? [];
-                            foreach ($items as $item) {
-                                $k = $item['displacement_type'] ?? '';
-                                $map = [
-                                    'Motoveicoli'                => ['key' => 'moto', 'label' => '🏍'],
-                                    'Veicoli piccola cilindrata' => ['key' => 'auto', 'label' => '🚗'],
-                                    'Veicoli grande cilindrata'  => ['key' => 'suv', 'label' => '🚙'],
-                                    'Autobus e autosnodati'      => ['key' => 'van', 'label' => '🚐'],
-                                    'Veicoli Autoarticolati'     => ['key' => 'truck', 'label' => '🚚'],
-                                    'Macchine movimento terra'   => ['key' => 'tractor', 'label' => '🚜'],
-                                ];
-                                if (isset($map[$k])) {
-                                    $fit_group['columns'][] = $map[$k];
-                                }
-                            }
-                        } elseif ($advanced_select === 'Fluidi') {
-                            $items = $heading['fluids'] ?? [];
-                            foreach ($items as $idx => $item) {
-                                $fluid_type = $item['fluid_type'] ?? ('fluido_' . ($idx + 1));
-                                $fit_group['columns'][] = [
-                                    'key' => sanitize_title($fluid_type),
-                                    'label' => $fluid_type,
-                                ];
-                            }
+        /*
+        |--------------------------------------------------------------------------
+        | HEADERS → CONFIG
+        |--------------------------------------------------------------------------
+        */
+
+        foreach ($headings as $index => $heading) {
+
+            if ($index === 0) continue;
+
+            $type  = $heading['heading_type'] ?? '';
+            $label = $heading['lable_title'] ?? '';
+
+            /* ---------------- ADVANCED ---------------- */
+
+            if ($type === 'title-advanced') {
+
+                $fit_group['title'] = $label;
+                $advanced_select = $heading['advanced_select'] ?? '';
+
+                /* CILINDRATE */
+                if ($advanced_select === 'Cilindrate') {
+
+                    $items = $heading['displacements'] ?? [];
+
+                    foreach ($items as $item) {
+
+                        $k = $item['displacement_type'] ?? '';
+
+                        $map = [
+                            'Motoveicoli'                => ['key' => 'moto',    'label' => '🏍'],
+                            'Veicoli piccola cilindrata' => ['key' => 'auto',    'label' => '🚗'],
+                            'Veicoli grande cilindrata'  => ['key' => 'suv',     'label' => '🚙'],
+                            'Autobus e autosnodati'      => ['key' => 'van',     'label' => '🚐'],
+                            'Veicoli Autoarticolati'     => ['key' => 'truck',   'label' => '🚚'],
+                            'Macchine movimento terra'   => ['key' => 'tractor', 'label' => '🚜'],
+                        ];
+
+                        if (isset($map[$k])) {
+                            $fit_group['columns'][] = $map[$k];
                         }
                     }
+                }
 
-                    if ($type === 'title-normal') {
-                        $spec_columns[] = [
-                            'key' => sanitize_title($label),
-                            'label' => $label,
+                /* FLUIDI → GENERICO DINAMICO */
+                elseif ($advanced_select === 'Fluidi') {
+
+                    $items = $heading['fluids'] ?? [];
+
+                    foreach ($items as $idx => $item) {
+
+                        $fit_group['columns'][] = [
+                            'key'   => 'fluido_' . ($idx + 1),
+                            'label' => '💧 ' . ($idx + 1), // 👈 QUI
                         ];
                     }
-
-                    if ($type === 'title-sub') {
-                        $subtitles = $heading['subtitles'] ?? [];
-                        $group_key = sanitize_title($label);
-                        $sub_group_order[] = $group_key;
-
-                        $mapped = [];
-                        foreach ($subtitles as $sub) {
-                            $subtitle = $sub['subtitle'] ?? '';
-                            $mapped[] = [
-                                'key' => sanitize_title($subtitle),
-                                'label' => $subtitle,
-                            ];
-                        }
-
-                        if ($label === 'Canaline compatibili') {
-                            $canaline_group['title'] = $label;
-                            $canaline_group['columns'] = $mapped;
-                        } else {
-                            $accessori_group['title'] = $label;
-                            $accessori_group['columns'] = $mapped;
-                        }
-                    }
                 }
+            }
 
-                $table_config = [
-                    'fit_group' => $fit_group,
-                    'spec_columns' => $spec_columns,
-                    'canaline_group' => $canaline_group,
-                    'accessori_group' => $accessori_group,
+            /* ---------------- NORMAL ---------------- */
+
+            if ($type === 'title-normal') {
+
+                $spec_columns[] = [
+                    'key'   => sanitize_title($label),
+                    'label' => $label,
                 ];
+            }
 
-                $rows = [];
+            /* ---------------- SUB ---------------- */
 
-                foreach ($rows_raw as $row) {
-                    $columns = $row['columns'] ?? [];
-                    if (empty($columns)) {
-                        continue;
-                    }
+            if ($type === 'title-sub') {
 
-                    $mapped_row = [
-                        'mod' => '',
-                        'fit_group' => [],
-                        'specs' => [],
-                        'canaline_group' => [],
-                        'accessori_group' => [],
+                $subtitles = $heading['subtitles'] ?? [];
+                $group_key = sanitize_title($label);
+
+                $sub_group_order[] = $group_key;
+
+                $mapped = [];
+
+                foreach ($subtitles as $sub) {
+
+                    $subtitle = $sub['subtitle'] ?? '';
+
+                    $mapped[] = [
+                        'key'   => sanitize_title($subtitle),
+                        'label' => $subtitle,
                     ];
-
-                    $spec_index = 0;
-                    $sub_index = 0;
-
-                    foreach ($columns as $col_index => $column) {
-                        $type = $column['column_type'] ?? '';
-
-                        if ($col_index === 0) {
-                            $mapped_row['mod'] = $column['column_value'] ?? '';
-                            continue;
-                        }
-
-                        if ($type === 'row-advanced') {
-                            $advanced_values = $column['advanced_values'] ?? [];
-                            foreach ($fit_group['columns'] as $i => $fit_col) {
-                                $mapped_row['fit_group'][$fit_col['key']] = !empty($advanced_values[$i]['value']);
-                            }
-                        }
-
-                        if ($type === 'row-normal') {
-                            if (!empty($spec_columns[$spec_index])) {
-                                $mapped_row['specs'][$spec_columns[$spec_index]['key']] = $column['column_value'] ?? '';
-                            }
-                            $spec_index++;
-                        }
-
-                        if ($type === 'row-sub') {
-                            $values_subtitles = $column['values_subtitles'] ?? [];
-                            $current_group = $sub_group_order[$sub_index] ?? '';
-
-                            if ($current_group === sanitize_title($canaline_group['title'])) {
-                                foreach ($canaline_group['columns'] as $i => $sub_col) {
-                                    $mapped_row['canaline_group'][$sub_col['key']] = !empty($values_subtitles[$i]['value']);
-                                }
-                            } else {
-                                foreach ($accessori_group['columns'] as $i => $sub_col) {
-                                    $value = $values_subtitles[$i]['value'] ?? false;
-                                    $type_check = $values_subtitles[$i]['type_check'] ?? '';
-
-                                    if ($value && $type_check === 'dot') {
-                                        $mapped_row['accessori_group'][$sub_col['key']] = 'dot';
-                                    } elseif ($value && $type_check === 'check') {
-                                        $mapped_row['accessori_group'][$sub_col['key']] = true;
-                                    } else {
-                                        $mapped_row['accessori_group'][$sub_col['key']] = false;
-                                    }
-                                }
-                            }
-
-                            $sub_index++;
-                        }
-                    }
-
-                    $rows[] = $mapped_row;
                 }
 
-                return [$table_config, $rows];
+                if ($label === 'Canaline compatibili') {
+
+                    $canaline_group['title']   = $label;
+                    $canaline_group['columns'] = $mapped;
+
+                } else {
+
+                    $accessori_group['title']   = $label;
+                    $accessori_group['columns'] = $mapped;
+                }
             }
         }
+
+        /*
+        |--------------------------------------------------------------------------
+        | CONFIG FINALE
+        |--------------------------------------------------------------------------
+        */
+
+        $table_config = [
+            'fit_group'        => $fit_group,
+            'spec_columns'     => $spec_columns,
+            'canaline_group'   => $canaline_group,
+            'accessori_group'  => $accessori_group,
+        ];
+
+        /*
+        |--------------------------------------------------------------------------
+        | ROWS
+        |--------------------------------------------------------------------------
+        */
+
+        $rows = [];
+
+        foreach ($rows_raw as $row) {
+
+            $columns = $row['columns'] ?? [];
+
+            if (empty($columns)) continue;
+
+            $mapped_row = [
+                'mod'              => '',
+                'fit_group'        => [],
+                'specs'            => [],
+                'canaline_group'   => [],
+                'accessori_group'  => [],
+            ];
+
+            $spec_index = 0;
+            $sub_index  = 0;
+
+            foreach ($columns as $col_index => $column) {
+
+                $type = $column['column_type'] ?? '';
+
+                /* MOD */
+                if ($col_index === 0) {
+                    $mapped_row['mod'] = $column['column_value'] ?? '';
+                    continue;
+                }
+
+                /* ADVANCED */
+                if ($type === 'row-advanced') {
+
+                    $advanced_values = $column['advanced_values'] ?? [];
+
+                    foreach ($fit_group['columns'] as $i => $fit_col) {
+                        $mapped_row['fit_group'][$fit_col['key']] =
+                            !empty($advanced_values[$i]['value']);
+                    }
+                }
+
+                /* NORMAL */
+                if ($type === 'row-normal') {
+
+                    if (!empty($spec_columns[$spec_index])) {
+                        $mapped_row['specs'][$spec_columns[$spec_index]['key']] =
+                            $column['column_value'] ?? '';
+                    }
+
+                    $spec_index++;
+                }
+
+                /* SUB */
+                if ($type === 'row-sub') {
+
+                    $values_subtitles = $column['values_subtitles'] ?? [];
+                    $current_group = $sub_group_order[$sub_index] ?? '';
+
+                    /* CANALINE */
+                    if ($current_group === sanitize_title($canaline_group['title'])) {
+
+                        foreach ($canaline_group['columns'] as $i => $sub_col) {
+                            $mapped_row['canaline_group'][$sub_col['key']] =
+                                !empty($values_subtitles[$i]['value']);
+                        }
+                    }
+
+                    /* ACCESSORI */
+                    else {
+
+                        foreach ($accessori_group['columns'] as $i => $sub_col) {
+
+                            $value      = $values_subtitles[$i]['value'] ?? false;
+                            $type_check = $values_subtitles[$i]['type_check'] ?? '';
+
+                            if ($value && $type_check === 'dot') {
+                                $mapped_row['accessori_group'][$sub_col['key']] = 'dot';
+                            } elseif ($value && $type_check === 'check') {
+                                $mapped_row['accessori_group'][$sub_col['key']] = true;
+                            } else {
+                                $mapped_row['accessori_group'][$sub_col['key']] = false;
+                            }
+                        }
+                    }
+
+                    $sub_index++;
+                }
+            }
+
+            $rows[] = $mapped_row;
+        }
+
+        return [$table_config, $rows];
+    }
+}
 
         [$table_config_dynamic, $rows_dynamic] = map_features_table_from_acf($table_features);
 
@@ -485,6 +553,3 @@ $compatibility_c = count($compatibility);
         <!-- end table -->
     
 </section>
-
-
-    
