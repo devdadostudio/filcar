@@ -21,9 +21,9 @@
 
                         <?php foreach ($dimension_images as $image) : ?>
                             <div class="dimensions-gallery-item">
-                                <div class="dimensions-gallery-frame">
+                                <div class="dimensions-gallery-frame aspect-ratio-4x3 respimg">
                                     <img
-                                        src="<?php echo esc_url($image['src']); ?>"
+                                        src="<?php echo esc_url($image['url']); ?>"
                                         alt="<?php echo esc_attr($image['alt']); ?>"
                                         class="dimensions-gallery-image"
                                     >

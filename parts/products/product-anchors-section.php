@@ -51,7 +51,7 @@
             <!-- DETTAGLI -->
             <?php get_template_part('parts/products/slider-with-external-txt', ''); ?>
             <!-- ACCESSORI -->
-            <?php //get_template_part('parts/products/accessori-block', 'statico'); ?>
+            <?php get_template_part('parts/products/accessori-block', ''); ?>
             <!-- CORRELATI -->
             <?php //get_template_part('parts/products/related', 'statico'); ?>
         </div>

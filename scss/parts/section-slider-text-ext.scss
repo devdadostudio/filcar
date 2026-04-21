@@ -6,6 +6,9 @@
             justify-content: center;
             figure{
                 max-width: 60%;
+                > img{
+                    height: auto;
+                }
             }
         }
         .owl-nav{

@@ -26,19 +26,19 @@ $dimensionFrameBg: #f7d7da;
 /* BOX ROSA */
 .dimensions-gallery-frame {
   width: 100%;
-  height: 180px; // 👈 più basso = più rettangolare
   background: $dimensionFrameBg;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  height: 200px;
 }
 
 /* IMG */
 .dimensions-gallery-image {
   width: 100%;
   height: 100%;
-  object-fit: contain; // 👈 fondamentale
+  object-fit: contain !important; // 👈 fondamentale
   object-position: center;
   display: block;
 }
@@ -80,16 +80,11 @@ $dimensionFrameBg: #f7d7da;
   .dimensions-gallery-item {
     min-width: 0;
   }
-
   .dimensions-gallery-frame {
-    height: 260px; // 👈 rettangolare desktop
-  }
-}
-
-/* xl */
-@include media-breakpoint-up(xl) {
-  .dimensions-gallery-frame {
-    height: 280px;
+    height: auto;
+    .dimensions-gallery-image {
+      object-fit: cover !important;
+    }
   }
 }
 
