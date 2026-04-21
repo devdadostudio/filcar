@@ -35,7 +35,7 @@ $contactFormRadius: 6px;
     position: absolute;
     bottom: -22%;
     right: -22%;
-    max-width: 60%;
+    max-width: 70%;
   }
 }
 
@@ -293,13 +293,25 @@ $contactFormRadius: 6px;
   }
   .contact-form-block__media,
   .contact-form-block__figure {
-    aspect-ratio: 718 / 244;
     min-height: 0;
     height: auto;
+    > .contact-form-block__img{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 
   .contact-form-block__figure {
     background: linear-gradient(90deg, #d4d4d4 0%, #efefef 45%, #c9c9c9 100%);
+    .filcar-simbol {
+      position: absolute;
+      bottom: -25%;
+      right: -8%;
+      max-width: none;
+      max-height: 90%;
+    }
   }
 
   .contact-form-block__img {
@@ -310,6 +322,7 @@ $contactFormRadius: 6px;
 
   .contact-form-block__overlay {
     padding: 22px;
+    position: relative;
   }
 }
 
