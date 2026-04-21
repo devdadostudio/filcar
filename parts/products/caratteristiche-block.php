@@ -74,427 +74,416 @@ $compatibility_c = count($compatibility);
                 </div>
             </div>
         </div>
+    </div>
         <?php
         endif; ?>
         <?php
         $table_features = get_field('table_features_features_block');
-        $table_features_headings = $table_features['headings'] ?? [];
-        $table_features_rows = $table_features['rows'] ?? [];
 
-        /*
-        |--------------------------------------------------------------------------
-        | HELPERS
-        |--------------------------------------------------------------------------
-        */
+        if (!function_exists('build_tech_table_grid_template')) {
+            function build_tech_table_grid_template($table_config) {
+                $w_mod       = 'minmax(140px, 1.6fr)';
+                $w_fit       = 'minmax(44px, 0.55fr)';
+                $w_spec      = 'minmax(110px, 1.2fr)';
+                $w_canalina  = 'minmax(60px, 0.8fr)';
+                $w_accessory = 'minmax(40px, 0.55fr)';
 
-        if (!function_exists('features_get_advanced_icon')) {
-            function features_get_advanced_icon($item, $mode = 'Cilindrate') {
-                if ($mode === 'Fluidi') {
-                    $label = trim($item['fluid_type'] ?? '');
-                    $map = [
-                        'Fluido 1' => '💧',
-                        'Fluido 2' => '🌬',
-                        'Fluido 3' => '🛢',
-                        'Fluido 4' => '♨️',
-                        'Fluido 5' => '🔥',
-                    ];
+                $grid_parts = [];
+                $grid_parts[] = $w_mod;
 
-                    return $map[$label] ?? $label;
+                if (!empty($table_config['fit_group']['columns'])) {
+                    $grid_parts[] = 'repeat(' . count($table_config['fit_group']['columns']) . ', ' . $w_fit . ')';
                 }
 
-                $label = trim($item['displacement_type'] ?? '');
-                $map = [
-                    'Motoveicoli'                => '🏍',
-                    'Veicoli piccola cilindrata' => '🚗',
-                    'Veicoli grande cilindrata'  => '🚙',
-                    'Autobus e autosnodati'      => '🚐',
-                    'Veicoli Autoarticolati'     => '🚚',
-                    'Macchine movimento terra'   => '🚜',
-                ];
+                if (!empty($table_config['spec_columns'])) {
+                    $grid_parts[] = 'repeat(' . count($table_config['spec_columns']) . ', ' . $w_spec . ')';
+                }
 
-                return $map[$label] ?? $label;
+                if (!empty($table_config['canaline_group']['columns'])) {
+                    $grid_parts[] = 'repeat(' . count($table_config['canaline_group']['columns']) . ', ' . $w_canalina . ')';
+                }
+
+                if (!empty($table_config['accessori_group']['columns'])) {
+                    $grid_parts[] = 'repeat(' . count($table_config['accessori_group']['columns']) . ', ' . $w_accessory . ')';
+                }
+
+                return implode(' ', $grid_parts);
             }
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | GRID DINAMICA DA ACF (ORDINE REALE ACF)
-        |--------------------------------------------------------------------------
-        */
+        if (!function_exists('render_tech_table_v2')) {
+            function render_tech_table_v2($table_config, $rows, $title = 'Specifiche tecniche') {
+                $grid_template_columns = build_tech_table_grid_template($table_config);
 
-        $grid_parts_mobile = [];
-        $grid_parts_desktop = [];
+                $fit_columns       = $table_config['fit_group']['columns'] ?? [];
+                $spec_columns      = $table_config['spec_columns'] ?? [];
+                $canaline_columns  = $table_config['canaline_group']['columns'] ?? [];
+                $accessori_columns = $table_config['accessori_group']['columns'] ?? [];
+                ?>
+                <div class="border-top sp-py-5">
+                    <div class="sp-mb-5">
+                        <span class="text-uppercase subtitle-2"><?php echo esc_html($title); ?></span>
+                    </div>
 
-        foreach ($table_features_headings as $i => $heading) {
-            $type = $heading['heading_type'] ?? '';
-            $label = trim($heading['lable_title'] ?? '');
+                    <div class="table-shell">
+                        <div class="table-scroll">
+                            <div
+                                class="fake-table tech-table"
+                                style="grid-template-columns: <?php echo esc_attr($grid_template_columns); ?>;"
+                            >
 
-            if ($i === 0) {
-                $grid_parts_mobile[] = '120px';
-                $grid_parts_desktop[] = 'minmax(120px,1.4fr)';
-                continue;
-            }
-
-            if ($type === 'title-advanced') {
-                $sub = [];
-
-                if (($heading['advanced_select'] ?? '') === 'Cilindrate') {
-                    $sub = $heading['displacements'] ?? [];
-                } elseif (($heading['advanced_select'] ?? '') === 'Fluidi') {
-                    $sub = $heading['fluids'] ?? [];
-                }
-
-                foreach ($sub as $s) {
-                    $grid_parts_mobile[] = '44px';
-                    $grid_parts_desktop[] = 'minmax(44px,0.55fr)';
-                }
-
-                continue;
-            }
-
-            if ($type === 'title-normal') {
-                $grid_parts_mobile[] = '95px';
-                $grid_parts_desktop[] = 'minmax(95px,1fr)';
-                continue;
-            }
-
-            if ($type === 'title-sub') {
-                $sub = $heading['subtitles'] ?? [];
-
-                if ($label === 'Canaline compatibili') {
-                    foreach ($sub as $s) {
-                        $grid_parts_mobile[] = '60px';
-                        $grid_parts_desktop[] = 'minmax(60px,0.8fr)';
-                    }
-                } else {
-                    foreach ($sub as $s) {
-                        $grid_parts_mobile[] = '40px';
-                        $grid_parts_desktop[] = 'minmax(40px,0.55fr)';
-                    }
-                }
-            }
-        }
-
-        $grid_template_columns_mobile = implode(' ', $grid_parts_mobile);
-        $grid_template_columns_desktop = implode(' ', $grid_parts_desktop);
-
-        /*
-        |--------------------------------------------------------------------------
-        | CONTEGGI ATTESI PER NORMALIZZARE IL BODY
-        |--------------------------------------------------------------------------
-        */
-
-        $expected_advanced_counts = [];
-        $expected_sub_counts = [];
-        $expected_sub_group_labels = [];
-
-        foreach ($table_features_headings as $heading) {
-            $heading_type = $heading['heading_type'] ?? '';
-
-            if ($heading_type === 'title-advanced') {
-                $advanced_select = $heading['advanced_select'] ?? '';
-                $sub_rows = [];
-
-                if ($advanced_select === 'Cilindrate') {
-                    $sub_rows = $heading['displacements'] ?? [];
-                } elseif ($advanced_select === 'Fluidi') {
-                    $sub_rows = $heading['fluids'] ?? [];
-                }
-
-                $expected_advanced_counts[] = count($sub_rows);
-            }
-
-            if ($heading_type === 'title-sub') {
-                $expected_sub_counts[] = count($heading['subtitles'] ?? []);
-                $expected_sub_group_labels[] = trim($heading['lable_title'] ?? '');
-            }
-        }
-        ?>
-
-        <div class="border-top sp-py-5">
-            <div class="sp-mb-5">
-                <span class="text-uppercase subtitle-2">Specifiche tecniche</span>
-            </div>
-
-            <div class="table-shell">
-                <div class="table-scroll">
-                    <div
-                        class="fake-table tech-table"
-                        style="
-                            --grid-mobile: <?php echo esc_attr($grid_template_columns_mobile); ?>;
-                            --grid-desktop: <?php echo esc_attr($grid_template_columns_desktop); ?>;
-                        "
-                    >
-
-                        <?php
-                        /*
-                        |--------------------------------------------------------------------------
-                        | HEADER - RIGA 1
-                        |--------------------------------------------------------------------------
-                        */
-                        ?>
-
-                        <?php foreach ($table_features_headings as $i => $heading) :
-                            $heading_type = $heading['heading_type'] ?? '';
-                            $label = $heading['lable_title'] ?? '';
-                            $separator_class = $i < count($table_features_headings) - 1 ? 'has-separator' : '';
-
-                            if ($i === 0) : ?>
                                 <div class="cell corner table-2 head-rowspan-2 has-separator" style="grid-row: span 2;">
-                                    <?php echo esc_html($label); ?>
+                                    Mod
                                 </div>
-                            <?php else : ?>
 
-                                <?php if ($heading_type === 'title-normal') : ?>
-                                    <div class="cell head-rowspan-2 table-2 <?php echo $separator_class; ?>" style="grid-row: span 2;">
-                                        <?php echo esc_html($label); ?>
+                                <?php if (!empty($fit_columns)) : ?>
+                                    <div class="cell head-l1 table-2 has-separator" style="grid-column: span <?php echo count($fit_columns); ?>;">
+                                        <?php echo esc_html($table_config['fit_group']['title']); ?>
                                     </div>
-
-                                <?php elseif ($heading_type === 'title-advanced') :
-                                    $advanced_select = $heading['advanced_select'] ?? '';
-                                    $sub_rows = [];
-
-                                    if ($advanced_select === 'Cilindrate') {
-                                        $sub_rows = $heading['displacements'] ?? [];
-                                    } elseif ($advanced_select === 'Fluidi') {
-                                        $sub_rows = $heading['fluids'] ?? [];
-                                    }
-
-                                    if (!empty($sub_rows)) : ?>
-                                        <div class="cell head-l1 table-2 <?php echo $separator_class; ?>" style="grid-column: span <?php echo count($sub_rows); ?>;">
-                                            <?php echo esc_html($label); ?>
-                                        </div>
-                                    <?php endif; ?>
-
-                                <?php elseif ($heading_type === 'title-sub') :
-                                    $sub_rows = $heading['subtitles'] ?? [];
-                                    if (!empty($sub_rows)) : ?>
-                                        <div class="cell head-l1 table-2 <?php echo $separator_class; ?>" style="grid-column: span <?php echo count($sub_rows); ?>;">
-                                            <?php echo esc_html($label); ?>
-                                        </div>
-                                    <?php endif; ?>
-
                                 <?php endif; ?>
 
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-
-                        <?php
-                        /*
-                        |--------------------------------------------------------------------------
-                        | HEADER - RIGA 2
-                        |--------------------------------------------------------------------------
-                        */
-                        ?>
-
-                        <?php foreach ($table_features_headings as $heading) :
-                            $heading_type = $heading['heading_type'] ?? '';
-
-                            if ($heading_type === 'title-advanced') :
-                                $advanced_select = $heading['advanced_select'] ?? '';
-                                $sub_rows_2 = [];
-
-                                if ($advanced_select === 'Cilindrate') {
-                                    $sub_rows_2 = $heading['displacements'] ?? [];
-                                } elseif ($advanced_select === 'Fluidi') {
-                                    $sub_rows_2 = $heading['fluids'] ?? [];
-                                }
-
-                                for ($j = 0; $j < count($sub_rows_2); $j++) :
-                                    $separator_class = '';
-                                    if ($j < count($sub_rows_2) - 1) {
-                                        $separator_class = 'has-separator-lighter';
-                                    } elseif ($j === count($sub_rows_2) - 1) {
-                                        $separator_class = 'has-separator';
-                                    }
-                                    ?>
-                                    <div class="cell head-l2 <?php echo $separator_class; ?>">
-                                        <?php echo esc_html(features_get_advanced_icon($sub_rows_2[$j], $advanced_select)); ?>
+                                <?php foreach ($spec_columns as $spec) : ?>
+                                    <div class="cell head-rowspan-2 table-2 has-separator" style="grid-row: span 2;">
+                                        <?php echo wp_kses($spec['label'], ['br' => []]); ?>
                                     </div>
-                                <?php endfor;
-                            endif;
+                                <?php endforeach; ?>
 
-                            if ($heading_type === 'title-sub') :
-                                $sub_rows_2 = $heading['subtitles'] ?? [];
+                                <?php if (!empty($canaline_columns)) : ?>
+                                    <div class="cell head-l1 table-2 has-separator" style="grid-column: span <?php echo count($canaline_columns); ?>;">
+                                        <?php echo esc_html($table_config['canaline_group']['title']); ?>
+                                    </div>
+                                <?php endif; ?>
 
-                                for ($k = 0; $k < count($sub_rows_2); $k++) :
+                                <?php if (!empty($accessori_columns)) : ?>
+                                    <div class="cell head-l1 table-2" style="grid-column: span <?php echo count($accessori_columns); ?>;">
+                                        <?php echo esc_html($table_config['accessori_group']['title']); ?>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php foreach ($fit_columns as $i => $col) :
                                     $separator_class = '';
-                                    if ($k < count($sub_rows_2) - 1) {
+                                    if ($i < count($fit_columns) - 1) {
                                         $separator_class = 'has-separator-lighter';
-                                    } elseif ($k === count($sub_rows_2) - 1) {
+                                    } elseif ($i === count($fit_columns) - 1) {
                                         $separator_class = 'has-separator';
                                     }
                                     ?>
                                     <div class="cell head-l2 table-2 <?php echo $separator_class; ?>">
-                                        <?php echo esc_html($sub_rows_2[$k]['subtitle'] ?? ''); ?>
+                                        <?php echo esc_html($col['label']); ?>
                                     </div>
-                                <?php endfor;
-                            endif;
-                        endforeach; ?>
+                                <?php endforeach; ?>
 
-                        <?php
-                        /*
-                        |--------------------------------------------------------------------------
-                        | SPACER ROW
-                        |--------------------------------------------------------------------------
-                        */
-                        ?>
-
-                        <div class="table-row table-row-spacer" aria-hidden="true">
-                            <div class="cell first-col table-spacer-cell"></div>
-
-                            <?php
-                            $total_cols = 0;
-                            foreach ($table_features_headings as $index => $heading) {
-                                if ($index === 0) {
-                                    continue;
-                                }
-
-                                $type = $heading['heading_type'] ?? '';
-
-                                if ($type === 'title-normal') {
-                                    $total_cols += 1;
-                                } elseif ($type === 'title-advanced') {
-                                    $advanced_select = $heading['advanced_select'] ?? '';
-                                    $sub_rows_tc = [];
-
-                                    if ($advanced_select === 'Cilindrate') {
-                                        $sub_rows_tc = $heading['displacements'] ?? [];
-                                    } elseif ($advanced_select === 'Fluidi') {
-                                        $sub_rows_tc = $heading['fluids'] ?? [];
+                                <?php foreach ($canaline_columns as $i => $col) :
+                                    $separator_class = '';
+                                    if ($i < count($canaline_columns) - 1) {
+                                        $separator_class = 'has-separator-lighter';
+                                    } elseif ($i === count($canaline_columns) - 1) {
+                                        $separator_class = 'has-separator';
                                     }
+                                    ?>
+                                    <div class="cell head-l2 table-2 <?php echo $separator_class; ?>">
+                                        <?php echo esc_html($col['label']); ?>
+                                    </div>
+                                <?php endforeach; ?>
 
-                                    $total_cols += count($sub_rows_tc);
-                                } elseif ($type === 'title-sub') {
-                                    $total_cols += count($heading['subtitles'] ?? []);
-                                }
-                            }
-                            ?>
+                                <?php foreach ($accessori_columns as $i => $col) :
+                                    $separator_class = $i < count($accessori_columns) - 1 ? 'has-separator-lighter' : '';
+                                    ?>
+                                    <div class="cell head-l2 table-2 <?php echo $separator_class; ?>">
+                                        <?php echo esc_html($col['label']); ?>
+                                    </div>
+                                <?php endforeach; ?>
 
-                            <?php for ($i = 0; $i < $total_cols; $i++) : ?>
-                                <div class="cell table-spacer-cell"></div>
-                            <?php endfor; ?>
-                        </div>
+                                <div class="table-row table-row-spacer" aria-hidden="true">
+                                    <div class="cell first-col table-spacer-cell"></div>
 
-                        <?php
-                        /*
-                        |--------------------------------------------------------------------------
-                        | BODY
-                        |--------------------------------------------------------------------------
-                        */
-                        ?>
+                                    <?php
+                                    $total_cols =
+                                        count($fit_columns) +
+                                        count($spec_columns) +
+                                        count($canaline_columns) +
+                                        count($accessori_columns);
+                                    ?>
 
-                        <?php if (!empty($table_features_rows)) :
-                            foreach ($table_features_rows as $row) :
-                                $columns = $row['columns'] ?? [];
-                                $advanced_group_index = 0;
-                                $sub_group_index = 0;
-                                ?>
-                                <div class="table-row">
-
-                                    <?php foreach ($columns as $j => $column) :
-                                        $column_type = $column['column_type'] ?? '';
-
-                                        if ($j === 0) : ?>
-                                            <div class="cell first-col table-2 medium text-secondary has-separator">
-                                                <?php echo esc_html($column['column_value'] ?? ''); ?>
-                                            </div>
-
-                                        <?php elseif ($column_type === 'row-normal') : ?>
-                                            <div class="cell table-2 has-separator">
-                                                <?php echo esc_html($column['column_value'] ?? ''); ?>
-                                            </div>
-
-                                        <?php elseif ($column_type === 'row-advanced') :
-                                            $advanced_values = $column['advanced_values'] ?? [];
-                                            $expected_count = $expected_advanced_counts[$advanced_group_index] ?? count($advanced_values);
-
-                                            $advanced_values = array_slice($advanced_values, 0, $expected_count);
-                                            while (count($advanced_values) < $expected_count) {
-                                                $advanced_values[] = ['value' => false];
-                                            }
-
-                                            for ($k = 0; $k < $expected_count; $k++) :
-                                                $separator_class = '';
-                                                if ($k < $expected_count - 1) {
-                                                    $separator_class = 'has-separator-lighter';
-                                                } elseif ($k === $expected_count - 1) {
-                                                    $separator_class = 'has-separator';
-                                                }
-                                                $value = $advanced_values[$k]['value'] ?? false;
-                                                ?>
-                                                <div class="cell table-2 <?php echo $separator_class; ?>">
-                                                    <?php if ($value) : ?>
-                                                        <span class="is-check">
-                                                            <?php echo get_icon('check'); ?>
-                                                        </span>
-                                                    <?php endif; ?>
-                                                </div>
-                                            <?php endfor;
-
-                                            $advanced_group_index++;
-                                            ?>
-
-                                        <?php elseif ($column_type === 'row-sub') :
-                                            $values_subtitles = $column['values_subtitles'] ?? [];
-                                            $expected_count = $expected_sub_counts[$sub_group_index] ?? count($values_subtitles);
-                                            $sub_group_label = $expected_sub_group_labels[$sub_group_index] ?? '';
-
-                                            $values_subtitles = array_slice($values_subtitles, 0, $expected_count);
-                                            while (count($values_subtitles) < $expected_count) {
-                                                $values_subtitles[] = [
-                                                    'value' => false,
-                                                    'type_check' => '',
-                                                ];
-                                            }
-
-                                            for ($sb = 0; $sb < $expected_count; $sb++) :
-                                                $separator_class = '';
-
-                                                if ($sb < $expected_count - 1) {
-                                                    $separator_class = 'has-separator-lighter';
-                                                } else {
-                                                    if ($sub_group_label === 'Canaline compatibili') {
-                                                        $separator_class = 'has-separator';
-                                                    } else {
-                                                        $separator_class = '';
-                                                    }
-                                                }
-
-                                                $value = $values_subtitles[$sb]['value'] ?? false;
-                                                $type_check = $values_subtitles[$sb]['type_check'] ?? '';
-                                                ?>
-                                                <div class="cell table-2 <?php echo $separator_class; ?>">
-                                                    <?php if ($value) : ?>
-                                                        <?php if ($type_check === 'dot') : ?>
-                                                            <span class="is-dot">■</span>
-                                                        <?php elseif ($type_check === 'check') : ?>
-                                                            <span class="is-check">
-                                                                <?php echo get_icon('check'); ?>
-                                                            </span>
-                                                        <?php endif; ?>
-                                                    <?php endif; ?>
-                                                </div>
-                                            <?php endfor;
-
-                                            $sub_group_index++;
-                                            ?>
-
-                                        <?php endif; ?>
-
-                                    <?php endforeach; ?>
-
+                                    <?php for ($i = 0; $i < $total_cols; $i++) : ?>
+                                        <div class="cell table-spacer-cell"></div>
+                                    <?php endfor; ?>
                                 </div>
-                            <?php endforeach;
-                        endif; ?>
 
+                                <?php foreach ($rows as $row) : ?>
+                                    <div class="table-row">
+
+                                        <div class="cell first-col table-2 medium text-secondary has-separator">
+                                            <?php echo esc_html($row['mod']); ?>
+                                        </div>
+
+                                        <?php foreach ($fit_columns as $i => $col) :
+                                            $key = $col['key'];
+                                            $value = $row['fit_group'][$key] ?? false;
+
+                                            $separator_class = '';
+                                            if ($i < count($fit_columns) - 1) {
+                                                $separator_class = 'has-separator-lighter';
+                                            } elseif ($i === count($fit_columns) - 1) {
+                                                $separator_class = 'has-separator';
+                                            }
+                                            ?>
+                                            <div class="cell table-2 <?php echo $separator_class; ?>">
+                                                <?php if ($value) : ?>
+                                                    <span class="is-check">
+                                                        <?php echo get_icon('check'); ?>
+                                                    </span>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endforeach; ?>
+
+                                        <?php foreach ($spec_columns as $spec) :
+                                            $key = $spec['key'];
+                                            $value = $row['specs'][$key] ?? '';
+                                            ?>
+                                            <div class="cell table-2 has-separator">
+                                                <?php echo esc_html($value); ?>
+                                            </div>
+                                        <?php endforeach; ?>
+
+                                        <?php foreach ($canaline_columns as $i => $col) :
+                                            $key = $col['key'];
+                                            $value = $row['canaline_group'][$key] ?? false;
+
+                                            $separator_class = '';
+                                            if ($i < count($canaline_columns) - 1) {
+                                                $separator_class = 'has-separator-lighter';
+                                            } elseif ($i === count($canaline_columns) - 1) {
+                                                $separator_class = 'has-separator';
+                                            }
+                                            ?>
+                                            <div class="cell table-2 <?php echo $separator_class; ?>">
+                                                <?php if ($value) : ?>
+                                                    <span class="is-check">
+                                                        <?php echo get_icon('check'); ?>
+                                                    </span>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endforeach; ?>
+
+                                        <?php foreach ($accessori_columns as $i => $col) :
+                                            $key = $col['key'];
+                                            $value = $row['accessori_group'][$key] ?? false;
+
+                                            $separator_class = $i < count($accessori_columns) - 1 ? 'has-separator-lighter' : '';
+                                            ?>
+                                            <div class="cell table-2 <?php echo $separator_class; ?>">
+                                                <?php if ($value === 'dot') : ?>
+                                                    <span class="is-dot">■</span>
+                                                <?php elseif ($value === true) : ?>
+                                                    <span class="is-check">
+                                                        <?php echo get_icon('check'); ?>
+                                                    </span>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endforeach; ?>
+
+                                    </div>
+                                <?php endforeach; ?>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <?php
+            }
+        }
+
+        if (!function_exists('map_features_table_from_acf')) {
+            function map_features_table_from_acf($table_features) {
+                $headings = $table_features['headings'] ?? [];
+                $rows_raw = $table_features['rows'] ?? [];
+
+                if (empty($headings)) {
+                    return [null, []];
+                }
+
+                $fit_group = [
+                    'title' => '',
+                    'columns' => [],
+                ];
+
+                $spec_columns = [];
+                $canaline_group = [
+                    'title' => '',
+                    'columns' => [],
+                ];
+                $accessori_group = [
+                    'title' => '',
+                    'columns' => [],
+                ];
+
+                $sub_group_order = [];
+
+                foreach ($headings as $index => $heading) {
+                    if ($index === 0) {
+                        continue;
+                    }
+
+                    $type = $heading['heading_type'] ?? '';
+                    $label = $heading['lable_title'] ?? '';
+
+                    if ($type === 'title-advanced') {
+                        $fit_group['title'] = $label;
+                        $advanced_select = $heading['advanced_select'] ?? '';
+
+                        if ($advanced_select === 'Cilindrate') {
+                            $items = $heading['displacements'] ?? [];
+                            foreach ($items as $item) {
+                                $k = $item['displacement_type'] ?? '';
+                                $map = [
+                                    'Motoveicoli'                => ['key' => 'moto', 'label' => '🏍'],
+                                    'Veicoli piccola cilindrata' => ['key' => 'auto', 'label' => '🚗'],
+                                    'Veicoli grande cilindrata'  => ['key' => 'suv', 'label' => '🚙'],
+                                    'Autobus e autosnodati'      => ['key' => 'van', 'label' => '🚐'],
+                                    'Veicoli Autoarticolati'     => ['key' => 'truck', 'label' => '🚚'],
+                                    'Macchine movimento terra'   => ['key' => 'tractor', 'label' => '🚜'],
+                                ];
+                                if (isset($map[$k])) {
+                                    $fit_group['columns'][] = $map[$k];
+                                }
+                            }
+                        } elseif ($advanced_select === 'Fluidi') {
+                            $items = $heading['fluids'] ?? [];
+                            foreach ($items as $idx => $item) {
+                                $fluid_type = $item['fluid_type'] ?? ('fluido_' . ($idx + 1));
+                                $fit_group['columns'][] = [
+                                    'key' => sanitize_title($fluid_type),
+                                    'label' => $fluid_type,
+                                ];
+                            }
+                        }
+                    }
+
+                    if ($type === 'title-normal') {
+                        $spec_columns[] = [
+                            'key' => sanitize_title($label),
+                            'label' => $label,
+                        ];
+                    }
+
+                    if ($type === 'title-sub') {
+                        $subtitles = $heading['subtitles'] ?? [];
+                        $group_key = sanitize_title($label);
+                        $sub_group_order[] = $group_key;
+
+                        $mapped = [];
+                        foreach ($subtitles as $sub) {
+                            $subtitle = $sub['subtitle'] ?? '';
+                            $mapped[] = [
+                                'key' => sanitize_title($subtitle),
+                                'label' => $subtitle,
+                            ];
+                        }
+
+                        if ($label === 'Canaline compatibili') {
+                            $canaline_group['title'] = $label;
+                            $canaline_group['columns'] = $mapped;
+                        } else {
+                            $accessori_group['title'] = $label;
+                            $accessori_group['columns'] = $mapped;
+                        }
+                    }
+                }
+
+                $table_config = [
+                    'fit_group' => $fit_group,
+                    'spec_columns' => $spec_columns,
+                    'canaline_group' => $canaline_group,
+                    'accessori_group' => $accessori_group,
+                ];
+
+                $rows = [];
+
+                foreach ($rows_raw as $row) {
+                    $columns = $row['columns'] ?? [];
+                    if (empty($columns)) {
+                        continue;
+                    }
+
+                    $mapped_row = [
+                        'mod' => '',
+                        'fit_group' => [],
+                        'specs' => [],
+                        'canaline_group' => [],
+                        'accessori_group' => [],
+                    ];
+
+                    $spec_index = 0;
+                    $sub_index = 0;
+
+                    foreach ($columns as $col_index => $column) {
+                        $type = $column['column_type'] ?? '';
+
+                        if ($col_index === 0) {
+                            $mapped_row['mod'] = $column['column_value'] ?? '';
+                            continue;
+                        }
+
+                        if ($type === 'row-advanced') {
+                            $advanced_values = $column['advanced_values'] ?? [];
+                            foreach ($fit_group['columns'] as $i => $fit_col) {
+                                $mapped_row['fit_group'][$fit_col['key']] = !empty($advanced_values[$i]['value']);
+                            }
+                        }
+
+                        if ($type === 'row-normal') {
+                            if (!empty($spec_columns[$spec_index])) {
+                                $mapped_row['specs'][$spec_columns[$spec_index]['key']] = $column['column_value'] ?? '';
+                            }
+                            $spec_index++;
+                        }
+
+                        if ($type === 'row-sub') {
+                            $values_subtitles = $column['values_subtitles'] ?? [];
+                            $current_group = $sub_group_order[$sub_index] ?? '';
+
+                            if ($current_group === sanitize_title($canaline_group['title'])) {
+                                foreach ($canaline_group['columns'] as $i => $sub_col) {
+                                    $mapped_row['canaline_group'][$sub_col['key']] = !empty($values_subtitles[$i]['value']);
+                                }
+                            } else {
+                                foreach ($accessori_group['columns'] as $i => $sub_col) {
+                                    $value = $values_subtitles[$i]['value'] ?? false;
+                                    $type_check = $values_subtitles[$i]['type_check'] ?? '';
+
+                                    if ($value && $type_check === 'dot') {
+                                        $mapped_row['accessori_group'][$sub_col['key']] = 'dot';
+                                    } elseif ($value && $type_check === 'check') {
+                                        $mapped_row['accessori_group'][$sub_col['key']] = true;
+                                    } else {
+                                        $mapped_row['accessori_group'][$sub_col['key']] = false;
+                                    }
+                                }
+                            }
+
+                            $sub_index++;
+                        }
+                    }
+
+                    $rows[] = $mapped_row;
+                }
+
+                return [$table_config, $rows];
+            }
+        }
+
+        [$table_config_dynamic, $rows_dynamic] = map_features_table_from_acf($table_features);
+
+        if (!empty($table_config_dynamic) && !empty($rows_dynamic)) :
+        ?>
+            <div class="container-fluid-left">
+                <?php render_tech_table_v2($table_config_dynamic, $rows_dynamic, 'Specifiche tecniche'); ?>
             </div>
-        </div>
+        <?php endif; ?>
         <!-- start table -->
         <!-- end table -->
-    </div>
+    
 </section>
 
 
