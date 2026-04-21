@@ -1,13 +1,16 @@
 .page-header {
   position: sticky;
-  top: 20px;
+  top: calc(
+    var(--admin-offset) + var(--fake-header-offset) + var(--page-header-gap)
+  );
   z-index: 100;
   padding: 1em 0;
+  transition: top 0.35s ease;
 }
 
 .admin-bar {
   .page-header {
-    top: 40px;
+    //top: 40px;
   }
 }
 
@@ -119,4 +122,3 @@
 .section {
   background-color: $grey200;
 }
- 

@@ -1,7 +1,47 @@
-.header-placehold {
-  height: $header-bar-height;
-  background-color: #000000;
+:root {
+  --fake-header-height: 76px;
+  --fake-header-offset: 76px;
+  --page-header-gap: 20px;
+  --admin-offset: 0px;
 }
+
+.admin-bar {
+  --admin-offset: 20px;
+}
+
+/* HEADER FAKE */
+.header-placehold {
+  position: fixed;
+  top: var(--admin-offset);
+  left: 0;
+  width: 100%;
+  height: var(--fake-header-height);
+  background-color: $primary;
+  border: 1px solid #fff;
+  z-index: 999;
+  transform: translateY(0);
+  transition: transform 0.35s ease;
+  will-change: transform;
+}
+
+.header-placehold.is-hidden {
+  transform: translateY(-100%);
+}
+
+/* stato body */
+body.fake-header-visible {
+  --fake-header-offset: var(--fake-header-height);
+}
+
+body.fake-header-hidden {
+  --fake-header-offset: 0px;
+}
+
+/* spazio globale per il contenuto pagina */
+body {
+  padding-top: calc(var(--admin-offset) + var(--fake-header-offset));
+}
+
 .admin-bar .flc-main-nav {
   margin-top: 32px;
 }
@@ -192,7 +232,7 @@
     //pointer-events: none;
     z-index: 1;
     //align-items: center;
-    .nav-link{
+    .nav-link {
       color: $primary;
     }
   }
@@ -217,34 +257,34 @@
 .flc-logo-mobile {
   width: auto;
 }
-.wpml-ls-menu-item{
-  > .sub-menu{
+.wpml-ls-menu-item {
+  > .sub-menu {
     position: absolute;
     list-style: none;
     background: transparent;
     padding-top: 10px;
     display: none;
-    transition: .5s;
+    transition: 0.5s;
     padding-left: 0;
-    .wpml-submenu-wrapper{
+    .wpml-submenu-wrapper {
       background-color: $black-opacity;
       padding: 10px;
-      a{
+      a {
         color: #fff;
       }
     }
   }
 }
-.flc-right-nav{
-  .flc-headmenu{
-    > .wpml-ls-item{
+.flc-right-nav {
+  .flc-headmenu {
+    > .wpml-ls-item {
       position: relative;
-      > a{
-        &:hover::after{
+      > a {
+        &:hover::after {
           background-color: transparent;
           right: initial;
         }
-        :after{
+        :after {
           content: "\e313";
           font-family: "Material Symbols Outlined";
           top: 50%;
@@ -255,7 +295,7 @@
           height: auto;
         }
       }
-      .sub-menu{
+      .sub-menu {
         width: 100%;
         right: 0;
         @include media-breakpoint-down(md) {
@@ -266,8 +306,8 @@
           transform: translateX(-50%);
           padding-top: 8px !important;
         }
-        .wpml-ls-item{
-          a{
+        .wpml-ls-item {
+          a {
             justify-content: center;
             text-decoration: none;
           }
@@ -280,25 +320,25 @@
   border: 1px solid #ffffff;
   border-radius: 8px;
   padding: 0 1rem !important;
-  &:hover{
+  &:hover {
     background-color: #fff;
-    > a{
+    > a {
       color: #000 !important;
-      &::after{
+      &::after {
         background-color: transparent !important;
       }
     }
   }
-  a{
+  a {
     padding: 7.5px 0;
     display: flex !important;
     align-items: center;
     gap: 1rem;
-    &:after{
-      content: '\f8ce' !important;
-      font-family: 'Material Symbols Outlined';
+    &:after {
+      content: "\f8ce" !important;
+      font-family: "Material Symbols Outlined";
       position: relative !important;
-      height: auto !important;      
+      height: auto !important;
     }
-  } 
+  }
 }

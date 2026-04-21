@@ -9,33 +9,14 @@ jQuery(document).ready(function () {
       '<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg"><foreignObject x="-59.2095" y="-59.2095" width="168.419" height="168.418"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(29.6px);clip-path:url(#bgblur_0_3675_10916_clip_path);height:100%;width:100%"></div></foreignObject><rect data-figma-bg-blur-radius="59.2095" x="50" y="49.9992" width="49.9992" height="49.9992" rx="7.8946" transform="rotate(-180 50 49.9992)" fill="#B2B4B7"/><path d="M21.4836 35.4918L30.6445 26.331C31.1596 25.8159 31.1596 24.979 30.6445 24.4639L21.4813 15.3007" stroke="white" stroke-width="1.31577" stroke-linecap="round" stroke-linejoin="round"/><defs><clipPath id="bgblur_0_3675_10916_clip_path" transform="translate(59.2095 59.2095)"><rect x="50" y="49.9992" width="49.9992" height="49.9992" rx="7.8946" transform="rotate(-180 50 49.9992)"/></clipPath></defs></svg>',
     ],
     responsive: {
-      0: {
-        items: 1,
-        margin: 25,
-        stagePadding: 15,
-      },
-      767: {
-        items: 1,
-        margin: 25,
-        stagePadding: 120,
-      },
-      992: {
-        items: 2,
-        margin: 25,
-        stagePadding: 70,
-      },
-      1536: {
-        items: 2,
-        margin: 40,
-        stagePadding: 100,
-      },
-      1920: {
-        items: 2,
-        margin: 55,
-        stagePadding: 100,
-      },
+      0: { items: 1, margin: 25, stagePadding: 15 },
+      767: { items: 1, margin: 25, stagePadding: 120 },
+      992: { items: 2, margin: 25, stagePadding: 70 },
+      1536: { items: 2, margin: 40, stagePadding: 100 },
+      1920: { items: 2, margin: 55, stagePadding: 100 },
     },
   });
+
   jQuery(".single-slider-carousel-txt-ext").owlCarousel({
     loop: false,
     margin: 0,
@@ -46,14 +27,15 @@ jQuery(document).ready(function () {
       '<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg"><foreignObject x="-59.2095" y="-59.2095" width="168.419" height="168.418"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(29.6px);clip-path:url(#bgblur_0_3675_10916_clip_path);height:100%;width:100%"></div></foreignObject><rect data-figma-bg-blur-radius="59.2095" x="50" y="49.9992" width="49.9992" height="49.9992" rx="7.8946" transform="rotate(-180 50 49.9992)" fill="#B2B4B7"/><path d="M21.4836 35.4918L30.6445 26.331C31.1596 25.8159 31.1596 24.979 30.6445 24.4639L21.4813 15.3007" stroke="white" stroke-width="1.31577" stroke-linecap="round" stroke-linejoin="round"/><defs><clipPath id="bgblur_0_3675_10916_clip_path" transform="translate(59.2095 59.2095)"><rect x="50" y="49.9992" width="49.9992" height="49.9992" rx="7.8946" transform="rotate(-180 50 49.9992)"/></clipPath></defs></svg>',
     ],
   });
+
   jQuery(".single-slider-carousel-txt-ext").on(
     "initialized.owl.carousel changed.owl.carousel",
     function (e) {
       if (!e.namespace) return;
 
       var index = e.item.index;
-
       jQuery('[class^="text-slide-"]').removeClass("active");
+
       setTimeout(function () {
         jQuery(".text-slide-" + index).addClass("active");
       }, 500);
@@ -63,209 +45,264 @@ jQuery(document).ready(function () {
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-const header = document.querySelector(".product-header");
-const navWrap = document.querySelector(".js-anchor-nav-wrap");
-const navLinks = gsap.utils.toArray(".anchor-link");
-const sections = gsap.utils.toArray(".js-section");
-
-const smoother = window.ScrollSmoother ? ScrollSmoother.get() : null;
-
-let currentActiveId = null;
-
-function getHeaderHeight() {
-  return header ? header.offsetHeight : 0;
-}
-
-function getScrollTop() {
-  if (smoother) {
-    return smoother.scrollTop();
-  }
-  return window.pageYOffset || window.scrollY || 0;
-}
-
-function getActivationY() {
-  return getScrollTop() + getHeaderHeight() + 12;
-}
-
-function centerNavItem(activeLink) {
-  if (!navWrap || !activeLink) return;
-
-  const wrapWidth = navWrap.clientWidth;
-  const itemLeft = activeLink.offsetLeft;
-  const itemWidth = activeLink.offsetWidth;
-
-  const targetX = itemLeft - wrapWidth / 2 + itemWidth / 2;
-  const maxX = navWrap.scrollWidth - wrapWidth;
-  const finalX = Math.max(0, Math.min(targetX, maxX));
-
-  navWrap.scrollTo({
-    left: finalX,
-    behavior: "smooth",
-  });
-}
-
-function setActiveLink(targetId) {
-  if (!targetId || currentActiveId === targetId) return;
-
-  currentActiveId = targetId;
-
-  navLinks.forEach((link) => {
-    const isActive = link.dataset.target === `#${targetId}`;
-    link.classList.toggle("is-active", isActive);
-
-    if (isActive) {
-      centerNavItem(link);
-    }
-  });
-}
-
-function updateActiveSection() {
-  if (!sections.length) return;
-
-  const activationY = getActivationY();
-  let activeSection = sections[0];
-
-  sections.forEach((section) => {
-    if (section.offsetTop <= activationY) {
-      activeSection = section;
-    }
-  });
-
-  if (activeSection) {
-    setActiveLink(activeSection.id);
-  }
-}
-
-function scrollToSection(targetSelector) {
-  const target = document.querySelector(targetSelector);
-  if (!target) return;
-
-  const offset = getHeaderHeight() + 8;
-
-  const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-
-  window.scrollTo({
-    top,
-    behavior: "smooth",
-  });
-}
-
-navLinks.forEach((link) => {
-  link.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    const targetSelector = link.dataset.target;
-    if (!targetSelector) return;
-
-    const targetId = targetSelector.replace("#", "");
-
-    setActiveLink(targetId);
-    scrollToSection(targetSelector);
-  });
-});
-
-ScrollTrigger.create({
-  start: 0,
-  end: "max",
-  onUpdate: updateActiveSection,
-});
-
-window.addEventListener("load", () => {
-  const hash = window.location.hash;
-  const offset = getHeaderHeight() + 8;
-
-  if (hash && document.querySelector(hash)) {
-    if (smoother) {
-      smoother.scrollTo(hash, false, `top top+=${offset}`);
-    } else {
-      gsap.set(window, {
-        scrollTo: {
-          y: hash,
-          offsetY: offset,
-        },
-      });
-    }
-  }
-
-  updateActiveSection();
-  ScrollTrigger.refresh();
-});
-
-window.addEventListener("resize", updateActiveSection);
-
 document.addEventListener("DOMContentLoaded", () => {
+  const fakeHeader = document.querySelector(".header-placehold");
+  const navWrap = document.querySelector(".js-anchor-nav-wrap");
+  const navLinks = gsap.utils.toArray(".anchor-link");
+  const sections = gsap.utils.toArray(".js-section");
   const stickyButton = document.querySelector(".button-sticky-container");
   const panoramica = document.querySelector("#panoramica");
   const correlati = document.querySelector("#correlati");
 
-  if (!stickyButton || !panoramica || !correlati) return;
+  const smoother = window.ScrollSmoother ? ScrollSmoother.get() : null;
 
-  const showButton = () => {
-    stickyButton.classList.add("is-visible");
-  };
+  let currentActiveId = null;
+  let fakeHeaderVisible = true;
 
-  const hideButton = () => {
-    stickyButton.classList.remove("is-visible");
-  };
+  if (fakeHeader) {
+    document.body.classList.add("fake-header-visible");
+    document.body.classList.remove("fake-header-hidden");
+  }
 
-  // stato iniziale
-  hideButton();
+  function getScrollTop() {
+    if (smoother) return smoother.scrollTop();
+    return window.pageYOffset || window.scrollY || 0;
+  }
 
-  // compare al 20% di #panoramica
-  ScrollTrigger.create({
-    trigger: panoramica,
-    start: "top 20%",
-    onEnter: showButton,
-    onLeaveBack: hideButton,
+  function getHeaderHeight() {
+    if (!fakeHeader) return 0;
+    return fakeHeaderVisible ? fakeHeader.offsetHeight : 0;
+  }
+
+  function getActivationY() {
+    return getScrollTop() + getHeaderHeight() + 12;
+  }
+
+  function showFakeHeader() {
+    if (!fakeHeader || fakeHeaderVisible) return;
+
+    fakeHeaderVisible = true;
+    fakeHeader.classList.remove("is-hidden");
+    document.body.classList.remove("fake-header-hidden");
+    document.body.classList.add("fake-header-visible");
+  }
+
+  function hideFakeHeader() {
+    if (!fakeHeader || !fakeHeaderVisible) return;
+
+    fakeHeaderVisible = false;
+    fakeHeader.classList.add("is-hidden");
+    document.body.classList.remove("fake-header-visible");
+    document.body.classList.add("fake-header-hidden");
+  }
+
+  function centerNavItem(activeLink) {
+    if (!navWrap || !activeLink) return;
+
+    const wrapWidth = navWrap.clientWidth;
+    const itemLeft = activeLink.offsetLeft;
+    const itemWidth = activeLink.offsetWidth;
+
+    const targetX = itemLeft - wrapWidth / 2 + itemWidth / 2;
+    const maxX = navWrap.scrollWidth - wrapWidth;
+    const finalX = Math.max(0, Math.min(targetX, maxX));
+
+    navWrap.scrollTo({
+      left: finalX,
+      behavior: "smooth",
+    });
+  }
+
+  function setActiveLink(targetId) {
+    if (!targetId || currentActiveId === targetId) return;
+
+    currentActiveId = targetId;
+
+    navLinks.forEach((link) => {
+      const isActive = link.dataset.target === `#${targetId}`;
+      link.classList.toggle("is-active", isActive);
+
+      if (isActive) {
+        centerNavItem(link);
+      }
+    });
+  }
+
+  function updateActiveSection() {
+    if (!sections.length) return;
+
+    const activationY = getActivationY();
+    let activeSection = sections[0];
+
+    sections.forEach((section) => {
+      if (section.offsetTop <= activationY) {
+        activeSection = section;
+      }
+    });
+
+    if (activeSection) {
+      setActiveLink(activeSection.id);
+    }
+  }
+
+  function scrollToSection(targetSelector) {
+    const target = document.querySelector(targetSelector);
+    if (!target) return;
+
+    const offset = getHeaderHeight() + 8;
+
+    if (smoother) {
+      smoother.scrollTo(target, true, `top top+=${offset}`);
+    } else {
+      const top =
+        target.getBoundingClientRect().top + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top,
+        behavior: "smooth",
+      });
+    }
+  }
+
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const targetSelector = link.dataset.target;
+      if (!targetSelector) return;
+
+      const targetId = targetSelector.replace("#", "");
+      setActiveLink(targetId);
+      scrollToSection(targetSelector);
+    });
   });
 
-  // scompare alla fine di #correlati
   ScrollTrigger.create({
-    trigger: correlati,
-    start: "bottom bottom",
-    onEnter: hideButton,
-    onLeaveBack: showButton,
+    start: 0,
+    end: "max",
+    onUpdate: updateActiveSection,
+  });
+
+  // scroll down -> hide
+  // scroll up   -> show
+  ScrollTrigger.create({
+    start: 0,
+    end: "max",
+    onUpdate: (self) => {
+      const currentY = getScrollTop();
+
+      if (currentY <= 10) {
+        showFakeHeader();
+        return;
+      }
+
+      if (self.direction === 1) {
+        hideFakeHeader();
+      } else if (self.direction === -1) {
+        showFakeHeader();
+      }
+    },
+  });
+
+  if (stickyButton) {
+    stickyButton.classList.remove("is-visible");
+  }
+
+  if (stickyButton && panoramica && correlati) {
+    const showButton = () => stickyButton.classList.add("is-visible");
+    const hideButton = () => stickyButton.classList.remove("is-visible");
+
+    ScrollTrigger.create({
+      trigger: panoramica,
+      start: "top 20%",
+      onEnter: showButton,
+      onLeaveBack: hideButton,
+    });
+
+    ScrollTrigger.create({
+      trigger: correlati,
+      start: "bottom bottom",
+      onEnter: hideButton,
+      onLeaveBack: showButton,
+    });
+  }
+
+  window.addEventListener("load", () => {
+    const hash = window.location.hash;
+    const offset = getHeaderHeight() + 8;
+
+    if (hash && document.querySelector(hash)) {
+      if (smoother) {
+        smoother.scrollTo(hash, false, `top top+=${offset}`);
+      } else {
+        gsap.set(window, {
+          scrollTo: {
+            y: hash,
+            offsetY: offset,
+          },
+        });
+      }
+    }
+
+    updateActiveSection();
+    ScrollTrigger.refresh();
+  });
+
+  window.addEventListener("resize", () => {
+    updateActiveSection();
+    ScrollTrigger.refresh();
   });
 });
 
-jQuery(document).on('click', '.video-overlay', function () {
+jQuery(document).on("click", ".video-overlay", function () {
   const $overlay = jQuery(this);
-  const $video = $overlay.siblings('video');
+  const $video = $overlay.siblings("video");
   const videoElement = $video[0];
 
-  $video.off('pause ended');
+  $video.off("pause ended");
 
   $overlay.fadeOut(400, function () {
-    // Aggiungiamo l'important al display none
-    $overlay.attr('style', $overlay.attr('style') + '; display: none !important;');
+    $overlay.attr(
+      "style",
+      ($overlay.attr("style") || "") + "; display: none !important;",
+    );
 
     const playPromise = videoElement.play();
 
     if (playPromise !== undefined) {
-      playPromise.then(() => {
-        // 1. ATTIVA i controlli appena il video parte
-        videoElement.controls = true;
+      playPromise
+        .then(() => {
+          videoElement.controls = true;
 
-        setTimeout(() => {
-          $video.on('pause ended', function () {
-            if (videoElement.paused || videoElement.ended) {
-              // 2. DISATTIVA i controlli quando va in pausa
-              videoElement.controls = false;
-
-              // Mostra l'overlay
-              $overlay.css('display', 'flex'); 
-              $overlay.hide().fadeIn(400);
-            }
-          });
-        }, 500);
-      }).catch(error => {
-        $overlay.attr('style', $overlay.attr('style').replace('display: none !important;', ''));
-        $overlay.show();
-      });
+          setTimeout(() => {
+            $video.on("pause ended", function () {
+              if (videoElement.paused || videoElement.ended) {
+                videoElement.controls = false;
+                $overlay.css("display", "flex");
+                $overlay.hide().fadeIn(400);
+              }
+            });
+          }, 500);
+        })
+        .catch(() => {
+          $overlay.attr(
+            "style",
+            ($overlay.attr("style") || "").replace(
+              "display: none !important;",
+              "",
+            ),
+          );
+          $overlay.show();
+        });
     }
   });
 });
-document.querySelector('video').addEventListener('pause', (e) => {
-  console.log('Pausa triggerata da:', e.target);
-  console.log('Tempo attuale video:', e.target.currentTime);
-});
+
+const firstVideo = document.querySelector("video");
+
+if (firstVideo) {
+  firstVideo.addEventListener("pause", (e) => {
+    console.log("Pausa triggerata da:", e.target);
+    console.log("Tempo attuale video:", e.target.currentTime);
+  });
+}

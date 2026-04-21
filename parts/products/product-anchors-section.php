@@ -34,7 +34,7 @@
         <!-- CONTENUTO -->
         <div class="product-anchor-content">
             <div class="button-sticky-container">
-                <a class="button-sticky button-cta btn text-capitalize">Richiedi info</a>
+                <a href="#contactForm" class="button-sticky button-cta btn text-capitalize">Richiedi info</a>
             </div>
             <!-- PANORAMICA -->
             <div id="panoramica" class="bg-primary d-flex align-items-center sp-pt-10 js-section" data-anchor="panoramica">
