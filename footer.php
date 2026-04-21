@@ -1,4 +1,4 @@
-        <?php //get_template_part('parts/contact-form'); ?>
+        <?php get_template_part('parts/contact-form'); ?>
         <?php //get_template_part('parts/section-newsletter'); ?>
         <!-- <footer class="flc-main-footer sp-pt-9 sp-pb-3 sp-sxl-pt-8 sp-sxl-pb-4 bg-blog text-white">
             <div class="container-fluid">

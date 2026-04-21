@@ -5,7 +5,7 @@ if($related_c > 0) :
 ?>
     <section id="correlati" class="section js-section sp-py-6 sp-lg-py-8" data-anchor="correlati">
         <div class="section-inner container-fluid">
-            <div class="subtitle-header sp-mb-4 sp-xl-mb-6">
+            <div class="subtitle-header sp-mb-5">
                 <h2 class="h6 text-secondary text-uppercase semibold">Correlati</h2>
             </div>
             <div class="row sp-row-gap-4">
@@ -15,7 +15,7 @@ if($related_c > 0) :
                 ?>
                     <div class="col-6 col-xl-3">
                         <div class="product-card h-100">
-                            <div class="product-card-inner sp-pb-7 sp-sxl-pb-9 sp-uxl-pb-15 h-100 justify-content-between">
+                            <a class="product-card-inner sp-pb-7 sp-sxl-pb-9 sp-uxl-pb-15 h-100 justify-content-between" href="<?php echo get_the_permalink($prod_id); ?> ">
                                 <div class="product-card-content">
                                     <h2 class="card-title product-2 text-grey500">
                                         <?php echo get_the_title($prod_id); ?>
@@ -31,7 +31,7 @@ if($related_c > 0) :
                                         <img src="<?php echo wp_get_attachment_image_url($img, 'product-car-thumb'); ?>" alt="">
                                     </div>
                                 <?php endif; ?>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 <?php endfor; ?>
