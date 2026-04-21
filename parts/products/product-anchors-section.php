@@ -53,7 +53,7 @@
             <!-- ACCESSORI -->
             <?php get_template_part('parts/products/accessori-block', ''); ?>
             <!-- CORRELATI -->
-            <?php //get_template_part('parts/products/related', 'statico'); ?>
+            <?php get_template_part('parts/products/related', ''); ?>
         </div>
     </div>
 </section>

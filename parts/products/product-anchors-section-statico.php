@@ -59,4 +59,4 @@
         </div>
     </div>
 </section>
-<?php get_template_part('parts/contact', 'form'); ?>
+<?php //get_template_part('parts/contact', 'form'); ?>
