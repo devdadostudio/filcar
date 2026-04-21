@@ -75,219 +75,147 @@ $compatibility_c = count($compatibility);
             </div>
         </div>
         <?php
-        endif;
-        /*
-        |--------------------------------------------------------------------------
-        | CONFIGURAZIONE "SIMULAZIONE ACF"
-        |--------------------------------------------------------------------------
-        | Qui puoi aggiungere/togliere colonne liberamente.
-        */
-
-        // gruppo: Adatto alle cilindrate
-        $cilindrate_columns = [
-            ['Motoveicoli' => '🏍'],
-            ['Veicoli piccola cilindrata' => '🚗'],
-            ['Veicoli grande cilindrata' => '🚙'],
-            ['Autobus e autosnodati' => '🚐'],
-            ['Veicoli Autoarticolati' => '🚚'],
-            ['Macchine movimento terra' => '🚜'],
-        ];
-
-        // gruppo: Canaline compatibili
-        $canaline_columns = [
-            ['key' => 'etk', 'label' => 'ETK'],
-            ['key' => 'xtk', 'label' => 'XTK'],
-        ];
-
-        // gruppo: Accessori disponibili
-        $accessori_columns = [
-            ['key' => 's',  'label' => 'S'],
-            ['key' => 'ms', 'label' => 'MS'],
-            ['key' => 'mc', 'label' => 'MC'],
-            ['key' => 'tx', 'label' => 'TX'],
-        ];
+        endif; ?>
+        <?php
+        $table_features = get_field('table_features_features_block');
+        $table_features_headings = $table_features['headings'] ?? [];
+        $table_features_rows = $table_features['rows'] ?? [];
 
         /*
         |--------------------------------------------------------------------------
-        | RIGHE
-        |--------------------------------------------------------------------------
-        | Ogni riga usa le key dei gruppi sopra.
-        | true  = presente
-        | false = assente
-        | Per gli accessori, se vuoi distinguere graficamente puoi usare 'dot'
-        | oppure true. Qui uso 'dot' per il quadratino.
-        */
-
-        $rows = [
-            [
-                'mod' => 'ARMTEL-ETK-420',
-                'cilindrate' => [
-                    'moto' => true,
-                    'auto' => true,
-                    'suv' => true,
-                    'van' => true,
-                    'truck' => true,
-                    'tractor' => true,
-                ],
-                'diametro' => '100 mm',
-                'temperatura' => '200°C',
-                'potenza' => '0,5 HP',
-                'canaline' => [
-                    'etk' => true,
-                    'xtk' => false,
-                ],
-                'accessori' => [
-                    's'  => 'dot',
-                    'ms' => false,
-                    'mc' => 'dot',
-                    'tx' => false,
-                ],
-            ],
-            [
-                'mod' => 'ARMTEL-ETK-350',
-                'cilindrate' => [
-                    'moto' => true,
-                    'auto' => true,
-                    'suv' => true,
-                    'van' => true,
-                    'truck' => true,
-                    'tractor' => true,
-                ],
-                'diametro' => '125 mm',
-                'temperatura' => '200°C',
-                'potenza' => '1 HP',
-                'canaline' => [
-                    'etk' => true,
-                    'xtk' => false,
-                ],
-                'accessori' => [
-                    's'  => false,
-                    'ms' => 'dot',
-                    'mc' => false,
-                    'tx' => 'dot',
-                ],
-            ],
-            [
-                'mod' => 'ARMTEL-XTK-420',
-                'cilindrate' => [
-                    'moto' => true,
-                    'auto' => true,
-                    'suv' => true,
-                    'van' => true,
-                    'truck' => true,
-                    'tractor' => true,
-                ],
-                'diametro' => '125 mm',
-                'temperatura' => '200°C',
-                'potenza' => '1 HP',
-                'canaline' => [
-                    'etk' => false,
-                    'xtk' => true,
-                ],
-                'accessori' => [
-                    's'  => false,
-                    'ms' => false,
-                    'mc' => 'dot',
-                    'tx' => false,
-                ],
-            ],
-            [
-                'mod' => 'ARMTEL-XTK-422',
-                'cilindrate' => [
-                    'moto' => true,
-                    'auto' => true,
-                    'suv' => true,
-                    'van' => true,
-                    'truck' => true,
-                    'tractor' => true,
-                ],
-                'diametro' => '125 mm',
-                'temperatura' => '200°C',
-                'potenza' => '1 HP',
-                'canaline' => [
-                    'etk' => false,
-                    'xtk' => true,
-                ],
-                'accessori' => [
-                    's'  => false,
-                    'ms' => false,
-                    'mc' => 'dot',
-                    'tx' => false,
-                ],
-            ],
-        ];
-
-        /*
-        |--------------------------------------------------------------------------
-        | LARGHEZZE COLONNE
-        |--------------------------------------------------------------------------
-        | Puoi cambiarle facilmente.
-        */
-
-        $w_mod         = '120px';
-        $w_cilindrata  = '44px';
-        $w_diametro    = '95px';
-        $w_temperatura = '100px';
-        $w_potenza     = '60px';
-        $w_canalina    = '60px';
-        $w_accessorio  = '40px';
-
-        /*
-        |--------------------------------------------------------------------------
-        | COSTRUZIONE AUTOMATICA GRID TEMPLATE
+        | HELPERS
         |--------------------------------------------------------------------------
         */
 
+        if (!function_exists('features_get_advanced_icon')) {
+            function features_get_advanced_icon($item, $mode = 'Cilindrate') {
+                if ($mode === 'Fluidi') {
+                    $label = trim($item['fluid_type'] ?? '');
+                    $map = [
+                        'Fluido 1' => '💧',
+                        'Fluido 2' => '🌬',
+                        'Fluido 3' => '🛢',
+                        'Fluido 4' => '♨️',
+                        'Fluido 5' => '🔥',
+                    ];
+
+                    return $map[$label] ?? $label;
+                }
+
+                $label = trim($item['displacement_type'] ?? '');
+                $map = [
+                    'Motoveicoli'                => '🏍',
+                    'Veicoli piccola cilindrata' => '🚗',
+                    'Veicoli grande cilindrata'  => '🚙',
+                    'Autobus e autosnodati'      => '🚐',
+                    'Veicoli Autoarticolati'     => '🚚',
+                    'Macchine movimento terra'   => '🚜',
+                ];
+
+                return $map[$label] ?? $label;
+            }
+        }
+
         /*
         |--------------------------------------------------------------------------
-        | COSTRUZIONE AUTOMATICA GRID TEMPLATE
+        | GRID DINAMICA DA ACF (ORDINE REALE ACF)
         |--------------------------------------------------------------------------
-        | mobile/tablet = px + scroll
-        | desktop >= 1200 = fr + no scroll orizzontale
         */
 
         $grid_parts_mobile = [];
         $grid_parts_desktop = [];
 
-        /* colonna Mod */
-        $grid_parts_mobile[] = $w_mod;
-        $grid_parts_desktop[] = str_replace('px', 'fr', $w_mod);
+        foreach ($table_features_headings as $i => $heading) {
+            $type = $heading['heading_type'] ?? '';
+            $label = trim($heading['lable_title'] ?? '');
 
-        /* gruppo cilindrate */
-        if (!empty($cilindrate_columns)) {
-            $grid_parts_mobile[] = 'repeat(' . count($cilindrate_columns) . ', ' . $w_cilindrata . ')';
-            $grid_parts_desktop[] = 'repeat(' . count($cilindrate_columns) . ', ' . str_replace('px', 'fr', $w_cilindrata) . ')';
-        }
+            if ($i === 0) {
+                $grid_parts_mobile[] = '120px';
+                $grid_parts_desktop[] = 'minmax(120px,1.4fr)';
+                continue;
+            }
 
-        /* colonne centrali */
-        $grid_parts_mobile[] = $w_diametro;
-        $grid_parts_desktop[] = str_replace('px', 'fr', $w_diametro);
+            if ($type === 'title-advanced') {
+                $sub = [];
 
-        $grid_parts_mobile[] = $w_temperatura;
-        $grid_parts_desktop[] = str_replace('px', 'fr', $w_temperatura);
+                if (($heading['advanced_select'] ?? '') === 'Cilindrate') {
+                    $sub = $heading['displacements'] ?? [];
+                } elseif (($heading['advanced_select'] ?? '') === 'Fluidi') {
+                    $sub = $heading['fluids'] ?? [];
+                }
 
-        $grid_parts_mobile[] = $w_potenza;
-        $grid_parts_desktop[] = str_replace('px', 'fr', $w_potenza);
+                foreach ($sub as $s) {
+                    $grid_parts_mobile[] = '44px';
+                    $grid_parts_desktop[] = 'minmax(44px,0.55fr)';
+                }
 
-        /* gruppo canaline */
-        if (!empty($canaline_columns)) {
-            $grid_parts_mobile[] = 'repeat(' . count($canaline_columns) . ', ' . $w_canalina . ')';
-            $grid_parts_desktop[] = 'repeat(' . count($canaline_columns) . ', ' . str_replace('px', 'fr', $w_canalina) . ')';
-        }
+                continue;
+            }
 
-        /* gruppo accessori */
-        if (!empty($accessori_columns)) {
-            $grid_parts_mobile[] = 'repeat(' . count($accessori_columns) . ', ' . $w_accessorio . ')';
-            $grid_parts_desktop[] = 'repeat(' . count($accessori_columns) . ', ' . str_replace('px', 'fr', $w_accessorio) . ')';
+            if ($type === 'title-normal') {
+                $grid_parts_mobile[] = '95px';
+                $grid_parts_desktop[] = 'minmax(95px,1fr)';
+                continue;
+            }
+
+            if ($type === 'title-sub') {
+                $sub = $heading['subtitles'] ?? [];
+
+                if ($label === 'Canaline compatibili') {
+                    foreach ($sub as $s) {
+                        $grid_parts_mobile[] = '60px';
+                        $grid_parts_desktop[] = 'minmax(60px,0.8fr)';
+                    }
+                } else {
+                    foreach ($sub as $s) {
+                        $grid_parts_mobile[] = '40px';
+                        $grid_parts_desktop[] = 'minmax(40px,0.55fr)';
+                    }
+                }
+            }
         }
 
         $grid_template_columns_mobile = implode(' ', $grid_parts_mobile);
         $grid_template_columns_desktop = implode(' ', $grid_parts_desktop);
+
+        /*
+        |--------------------------------------------------------------------------
+        | CONTEGGI ATTESI PER NORMALIZZARE IL BODY
+        |--------------------------------------------------------------------------
+        */
+
+        $expected_advanced_counts = [];
+        $expected_sub_counts = [];
+        $expected_sub_group_labels = [];
+
+        foreach ($table_features_headings as $heading) {
+            $heading_type = $heading['heading_type'] ?? '';
+
+            if ($heading_type === 'title-advanced') {
+                $advanced_select = $heading['advanced_select'] ?? '';
+                $sub_rows = [];
+
+                if ($advanced_select === 'Cilindrate') {
+                    $sub_rows = $heading['displacements'] ?? [];
+                } elseif ($advanced_select === 'Fluidi') {
+                    $sub_rows = $heading['fluids'] ?? [];
+                }
+
+                $expected_advanced_counts[] = count($sub_rows);
+            }
+
+            if ($heading_type === 'title-sub') {
+                $expected_sub_counts[] = count($heading['subtitles'] ?? []);
+                $expected_sub_group_labels[] = trim($heading['lable_title'] ?? '');
+            }
+        }
         ?>
+
         <div class="border-top sp-py-5">
             <div class="sp-mb-5">
                 <span class="text-uppercase subtitle-2">Specifiche tecniche</span>
             </div>
+
             <div class="table-shell">
                 <div class="table-scroll">
                     <div
@@ -304,50 +232,52 @@ $compatibility_c = count($compatibility);
                         | HEADER - RIGA 1
                         |--------------------------------------------------------------------------
                         */
-                        $table_features = get_field('table_features_features_block');
-                        $table_features_headings = $table_features['headings'];
-                        $table_features_rows = $table_features['rows'];
-                        for($i = 0; $i < count($table_features_headings); $i++) :
-                            $separator_class = $i < count($table_features_headings) - 1 ? 'has-separator' : '';
-                            if($i == 0) : ?>
-                                <div class="cell corner table-2 head-rowspan-2 has-separator" style="grid-row: span 2;">
-                                    <?php echo $table_features_headings[$i]['lable_title']; ?>
-                                </div>
-                        <?php
-                            else :
-                                $heading_type = $table_features_headings[$i]['heading_type'];
-                                if($heading_type == 'title-normal') : 
                         ?>
+
+                        <?php foreach ($table_features_headings as $i => $heading) :
+                            $heading_type = $heading['heading_type'] ?? '';
+                            $label = $heading['lable_title'] ?? '';
+                            $separator_class = $i < count($table_features_headings) - 1 ? 'has-separator' : '';
+
+                            if ($i === 0) : ?>
+                                <div class="cell corner table-2 head-rowspan-2 has-separator" style="grid-row: span 2;">
+                                    <?php echo esc_html($label); ?>
+                                </div>
+                            <?php else : ?>
+
+                                <?php if ($heading_type === 'title-normal') : ?>
                                     <div class="cell head-rowspan-2 table-2 <?php echo $separator_class; ?>" style="grid-row: span 2;">
-                                        <?php echo $table_features_headings[$i]['lable_title']; ?>
+                                        <?php echo esc_html($label); ?>
                                     </div>
-                        <?php
-                                elseif($heading_type == 'title-advanced') :
-                                    $advanced_select = $table_features_headings[$i]['advanced_select'];
-                                    if($advanced_select == 'Cilindrate'){
-                                        $sub_rows = $table_features_headings[$i]['displacements'];
-                                    }elseif($advanced_select == 'Fluidi'){
-                                        $sub_rows = $table_features_headings[$i]['fluids'];
+
+                                <?php elseif ($heading_type === 'title-advanced') :
+                                    $advanced_select = $heading['advanced_select'] ?? '';
+                                    $sub_rows = [];
+
+                                    if ($advanced_select === 'Cilindrate') {
+                                        $sub_rows = $heading['displacements'] ?? [];
+                                    } elseif ($advanced_select === 'Fluidi') {
+                                        $sub_rows = $heading['fluids'] ?? [];
                                     }
+
                                     if (!empty($sub_rows)) : ?>
                                         <div class="cell head-l1 table-2 <?php echo $separator_class; ?>" style="grid-column: span <?php echo count($sub_rows); ?>;">
-                                            <?php echo $table_features_headings[$i]['lable_title']; ?>
+                                            <?php echo esc_html($label); ?>
                                         </div>
                                     <?php endif; ?>
-                        <?php
-                                elseif($heading_type == 'title-sub') :
-                                    $sub_rows = $table_features_headings[$i]['subtitles'];
-                        ?>
-                                    <div class="cell head-l1 table-2 <?php echo $separator_class; ?>" style="grid-column: span <?php echo count($sub_rows); ?>;">
-                                        <?php echo $table_features_headings[$i]['lable_title']; ?>
-                                    </div>
-                        <?php
-                                endif;
-                        ?>
-                        <?php
-                            endif;
-                        endfor;
-                        ?>
+
+                                <?php elseif ($heading_type === 'title-sub') :
+                                    $sub_rows = $heading['subtitles'] ?? [];
+                                    if (!empty($sub_rows)) : ?>
+                                        <div class="cell head-l1 table-2 <?php echo $separator_class; ?>" style="grid-column: span <?php echo count($sub_rows); ?>;">
+                                            <?php echo esc_html($label); ?>
+                                        </div>
+                                    <?php endif; ?>
+
+                                <?php endif; ?>
+
+                            <?php endif; ?>
+                        <?php endforeach; ?>
 
                         <?php
                         /*
@@ -357,81 +287,88 @@ $compatibility_c = count($compatibility);
                         */
                         ?>
 
-                        <?php
-                        for($i = 0; $i < count($table_features_headings); $i++) :
-                            $heading_type = $table_features_headings[$i]['heading_type'];
-                            if($heading_type == 'title-advanced') :
-                                $advanced_select = $table_features_headings[$i]['advanced_select'];
-                                if($advanced_select == 'Cilindrate'){
-                                    $sub_rows_2 = $table_features_headings[$i]['displacements'];
-                                }elseif($advanced_select == 'Fluidi'){
-                                    $sub_rows_2 = $table_features_headings[$i]['fluids'];
+                        <?php foreach ($table_features_headings as $heading) :
+                            $heading_type = $heading['heading_type'] ?? '';
+
+                            if ($heading_type === 'title-advanced') :
+                                $advanced_select = $heading['advanced_select'] ?? '';
+                                $sub_rows_2 = [];
+
+                                if ($advanced_select === 'Cilindrate') {
+                                    $sub_rows_2 = $heading['displacements'] ?? [];
+                                } elseif ($advanced_select === 'Fluidi') {
+                                    $sub_rows_2 = $heading['fluids'] ?? [];
                                 }
-                                for($j = 0; $j < count($sub_rows_2); $j++) :
+
+                                for ($j = 0; $j < count($sub_rows_2); $j++) :
                                     $separator_class = '';
                                     if ($j < count($sub_rows_2) - 1) {
                                         $separator_class = 'has-separator-lighter';
                                     } elseif ($j === count($sub_rows_2) - 1) {
                                         $separator_class = 'has-separator';
                                     }
-                                    $displacement_type = $sub_rows_2[$j]['displacement_type'];
-                                ?>
+                                    ?>
                                     <div class="cell head-l2 <?php echo $separator_class; ?>">
-                                        <?php echo esc_html($cilindrate_columns[$j][$displacement_type]); ?>
+                                        <?php echo esc_html(features_get_advanced_icon($sub_rows_2[$j], $advanced_select)); ?>
                                     </div>
-                                <?php
-                                endfor;
-                            elseif($heading_type == 'title-sub') :
-                                $sub_rows_2 = $table_features_headings[$i]['subtitles'];
-                                $separator_class = '';
-                                for($k = 0; $k < count($sub_rows_2); $k++) :
+                                <?php endfor;
+                            endif;
+
+                            if ($heading_type === 'title-sub') :
+                                $sub_rows_2 = $heading['subtitles'] ?? [];
+
+                                for ($k = 0; $k < count($sub_rows_2); $k++) :
+                                    $separator_class = '';
                                     if ($k < count($sub_rows_2) - 1) {
                                         $separator_class = 'has-separator-lighter';
                                     } elseif ($k === count($sub_rows_2) - 1) {
                                         $separator_class = 'has-separator';
                                     }
-                        ?>
+                                    ?>
                                     <div class="cell head-l2 table-2 <?php echo $separator_class; ?>">
-                                        <?php echo esc_html($sub_rows_2[$k]['subtitle']); ?>
+                                        <?php echo esc_html($sub_rows_2[$k]['subtitle'] ?? ''); ?>
                                     </div>
-                        <?php
-                                endfor;
+                                <?php endfor;
                             endif;
-                        endfor;
-                        ?>
+                        endforeach; ?>
 
                         <?php
                         /*
                         |--------------------------------------------------------------------------
                         | SPACER ROW
                         |--------------------------------------------------------------------------
-                        | Riga tecnica vuota tra intestazione e body
                         */
                         ?>
 
                         <div class="table-row table-row-spacer" aria-hidden="true">
-
-                            <!-- prima colonna -->
                             <div class="cell first-col table-spacer-cell"></div>
 
-                            <!-- tutte le altre colonne -->
                             <?php
                             $total_cols = 0;
-                            for($tc = 0; $tc < count($table_features_headings); $tc++) :
-                                if($table_features_headings[$tc]['heading_type'] == 'title-normal') :
+                            foreach ($table_features_headings as $index => $heading) {
+                                if ($index === 0) {
+                                    continue;
+                                }
+
+                                $type = $heading['heading_type'] ?? '';
+
+                                if ($type === 'title-normal') {
                                     $total_cols += 1;
-                                elseif($table_features_headings[$tc]['heading_type'] == 'title-advanced') :
-                                    $advanced_select = $table_features_headings[$tc]['advanced_select'];
-                                    if($advanced_select == 'Cilindrate'){
-                                        $sub_rows_tc = $table_features_headings[$tc]['displacements'];
-                                    }elseif($advanced_select == 'Fluidi'){
-                                        $sub_rows_tc = $table_features_headings[$tc]['fluids'];
+                                } elseif ($type === 'title-advanced') {
+                                    $advanced_select = $heading['advanced_select'] ?? '';
+                                    $sub_rows_tc = [];
+
+                                    if ($advanced_select === 'Cilindrate') {
+                                        $sub_rows_tc = $heading['displacements'] ?? [];
+                                    } elseif ($advanced_select === 'Fluidi') {
+                                        $sub_rows_tc = $heading['fluids'] ?? [];
                                     }
+
                                     $total_cols += count($sub_rows_tc);
-                                elseif($table_features_headings[$tc]['heading_type'] == 'title-sub') :
-                                    $total_cols += count($table_features_headings[$tc]['subtitles']);
-                                endif;
-                            endfor;
+                                } elseif ($type === 'title-sub') {
+                                    $total_cols += count($heading['subtitles'] ?? []);
+                                }
+                            }
                             ?>
 
                             <?php for ($i = 0; $i < $total_cols; $i++) : ?>
@@ -445,98 +382,118 @@ $compatibility_c = count($compatibility);
                         | BODY
                         |--------------------------------------------------------------------------
                         */
-                        $rows = $table_features['rows'];
-                        if(!empty($rows)){
-                            $rows_c = count($rows);
-                            for($i = 0; $i < $rows_c; $i++){
-                                $row = $rows[$i];
-                                $columns = $row['columns'];
-                                $columns_c = count($columns);
-                        ?>
-                                <div class="table-row">
-                        <?php
-                                    for($j = 0; $j < $columns_c; $j++) :
-                                        $column = $columns[$j];
-                                        $column_type = $column['column_type'];
-                                        if($j == 0) :
-                        ?>
-                                        <div class="cell first-col table-2 medium text-secondary has-separator">
-                                            <?php echo esc_html($column['column_value']); ?>
-                                        </div>
-                        <?php
-                                        else :
-                                            if($column_type == 'row-normal') :
-                        ?>
-                                                <div class="cell table-2 has-separator">
-                                                    <?php echo esc_html($column['column_value']); ?>
-                                                </div>
-                        <?php
-                                            elseif($column_type == 'row-advanced') :
-                                                $advanced_values = $column['advanced_values'];
-                                                if(!empty($advanced_values)):
-                                                    $advanced_values_c = count($advanced_values);
-                                                    for($k = 0; $k < $advanced_values_c; $k++) :
-                                                        $separator_class = '';
-                                                        if ($k < $advanced_values_c - 1) {
-                                                            $separator_class = 'has-separator-lighter';
-                                                        } elseif ($k === $advanced_values_c - 1) {
-                                                            $separator_class = 'has-separator';
-                                                        }
-                                                        $value = $advanced_values[$k]['value'];
-                                                ?>
-                                                        <div class="cell table-2 <?php echo $separator_class; ?>">
-                                                            <?php if ($value) : ?>
-                                                                <span class="is-check">
-                                                                    <?php echo get_icon('check'); ?>
-                                                                </span>
-                                                            <?php endif; ?>
-                                                        </div>
-                                                <?php
-                                                    endfor;
-                                                endif;
-                                            elseif($column_type == 'row-sub') :
-                                                $values_subtitles = $column['values_subtitles'];
-                                                if(!empty($values_subtitles)):
-                                                    $values_subtitles_c = count($values_subtitles);
-                                                    for($sb = 0; $sb < $values_subtitles_c; $sb++) :
-                                                        $separator_class = $sb < $values_subtitles_c - 1 ? 'has-separator-lighter' : '';
-                                                        $value = $values_subtitles[$sb]['value'];
-                                                        $type_check = $values_subtitles[$sb]['type_check'];
-                                                    ?>
-                                                        <div class="cell table-2 <?php echo $separator_class; ?>">
-                                                            <?php
-                                                                if ($value) :
-                                                                    if ($type_check === 'dot') : ?>
-                                                                        <span class="is-dot">■</span>
-                                                            <?php 
-                                                                    elseif ($type_check === 'check') : ?>
-                                                                        <span class="is-check">
-                                                                            <?php echo get_icon('check'); ?>
-                                                                        </span>
-                                                            <?php
-                                                                    endif;
-                                                                endif;
-                                                            ?>
-                                                        </div>
-                        <?php                       endfor;
-                                                endif;
-                                            endif;
-                                        endif;
                         ?>
 
-                        <?php
-                                    endfor;
-                        ?>
+                        <?php if (!empty($table_features_rows)) :
+                            foreach ($table_features_rows as $row) :
+                                $columns = $row['columns'] ?? [];
+                                $advanced_group_index = 0;
+                                $sub_group_index = 0;
+                                ?>
+                                <div class="table-row">
+
+                                    <?php foreach ($columns as $j => $column) :
+                                        $column_type = $column['column_type'] ?? '';
+
+                                        if ($j === 0) : ?>
+                                            <div class="cell first-col table-2 medium text-secondary has-separator">
+                                                <?php echo esc_html($column['column_value'] ?? ''); ?>
+                                            </div>
+
+                                        <?php elseif ($column_type === 'row-normal') : ?>
+                                            <div class="cell table-2 has-separator">
+                                                <?php echo esc_html($column['column_value'] ?? ''); ?>
+                                            </div>
+
+                                        <?php elseif ($column_type === 'row-advanced') :
+                                            $advanced_values = $column['advanced_values'] ?? [];
+                                            $expected_count = $expected_advanced_counts[$advanced_group_index] ?? count($advanced_values);
+
+                                            $advanced_values = array_slice($advanced_values, 0, $expected_count);
+                                            while (count($advanced_values) < $expected_count) {
+                                                $advanced_values[] = ['value' => false];
+                                            }
+
+                                            for ($k = 0; $k < $expected_count; $k++) :
+                                                $separator_class = '';
+                                                if ($k < $expected_count - 1) {
+                                                    $separator_class = 'has-separator-lighter';
+                                                } elseif ($k === $expected_count - 1) {
+                                                    $separator_class = 'has-separator';
+                                                }
+                                                $value = $advanced_values[$k]['value'] ?? false;
+                                                ?>
+                                                <div class="cell table-2 <?php echo $separator_class; ?>">
+                                                    <?php if ($value) : ?>
+                                                        <span class="is-check">
+                                                            <?php echo get_icon('check'); ?>
+                                                        </span>
+                                                    <?php endif; ?>
+                                                </div>
+                                            <?php endfor;
+
+                                            $advanced_group_index++;
+                                            ?>
+
+                                        <?php elseif ($column_type === 'row-sub') :
+                                            $values_subtitles = $column['values_subtitles'] ?? [];
+                                            $expected_count = $expected_sub_counts[$sub_group_index] ?? count($values_subtitles);
+                                            $sub_group_label = $expected_sub_group_labels[$sub_group_index] ?? '';
+
+                                            $values_subtitles = array_slice($values_subtitles, 0, $expected_count);
+                                            while (count($values_subtitles) < $expected_count) {
+                                                $values_subtitles[] = [
+                                                    'value' => false,
+                                                    'type_check' => '',
+                                                ];
+                                            }
+
+                                            for ($sb = 0; $sb < $expected_count; $sb++) :
+                                                $separator_class = '';
+
+                                                if ($sb < $expected_count - 1) {
+                                                    $separator_class = 'has-separator-lighter';
+                                                } else {
+                                                    if ($sub_group_label === 'Canaline compatibili') {
+                                                        $separator_class = 'has-separator';
+                                                    } else {
+                                                        $separator_class = '';
+                                                    }
+                                                }
+
+                                                $value = $values_subtitles[$sb]['value'] ?? false;
+                                                $type_check = $values_subtitles[$sb]['type_check'] ?? '';
+                                                ?>
+                                                <div class="cell table-2 <?php echo $separator_class; ?>">
+                                                    <?php if ($value) : ?>
+                                                        <?php if ($type_check === 'dot') : ?>
+                                                            <span class="is-dot">■</span>
+                                                        <?php elseif ($type_check === 'check') : ?>
+                                                            <span class="is-check">
+                                                                <?php echo get_icon('check'); ?>
+                                                            </span>
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
+                                                </div>
+                                            <?php endfor;
+
+                                            $sub_group_index++;
+                                            ?>
+
+                                        <?php endif; ?>
+
+                                    <?php endforeach; ?>
 
                                 </div>
-                        <?php
-                            }
-                        }
-                        ?>
+                            <?php endforeach;
+                        endif; ?>
+
                     </div>
                 </div>
             </div>
         </div>
+        <!-- start table -->
+        <!-- end table -->
     </div>
 </section>
 
