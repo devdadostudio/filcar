@@ -33,7 +33,9 @@
 
         <!-- CONTENUTO -->
         <div class="product-anchor-content">
-
+            <div class="button-sticky-container">
+                <a class="button-sticky button-cta btn text-capitalize">Richiedi info</a>
+            </div>
             <!-- PANORAMICA -->
             <div id="panoramica" class="bg-primary d-flex align-items-center sp-pt-10 js-section" data-anchor="panoramica">
                 <div class="container-fluid position-relative">
@@ -48,7 +50,10 @@
             <?php get_template_part('parts/products/dimensioni', 'block'); ?>
             <!-- DETTAGLI -->
             <?php get_template_part('parts/products/slider-with-external-txt', ''); ?>
-        
+            <!-- ACCESSORI -->
+            <?php //get_template_part('parts/products/accessori-block', 'statico'); ?>
+            <!-- CORRELATI -->
+            <?php //get_template_part('parts/products/related', 'statico'); ?>
         </div>
     </div>
 </section>

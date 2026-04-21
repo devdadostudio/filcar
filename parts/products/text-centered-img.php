@@ -1,7 +1,7 @@
 <?php
-    $title_section = get_field('title_section');
-    $txt_section = get_field('txt_section');
-    $img_section = get_field('img_section');
+    $title_section = get_field('title_section_centered_txt');
+    $txt_section = get_field('txt_section_centered_txt');
+    $img_section = get_field('img_section_centered_txt');
 ?>
 <section id="panoramica" class="bg-primary d-flex align-items-center sp-py-10 js-section" data-anchor="panoramica">
     <div class="container-fluid position-relative sp-px-0">

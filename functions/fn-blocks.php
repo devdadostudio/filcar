@@ -66,6 +66,15 @@ add_action('acf/init', function () {
             'post_types' => ['page', 'product'],
         ]);
         acf_register_block_type([
+            'name' => 'block-anchors',
+            'title' => __('BLOCCO ANCHORS'),
+            'render_template' => get_template_directory() . '/parts/products/product-anchors-section.php',
+            'category' => 'layout',
+            'icon' => 'format-gallery',
+            'mode' => 'edit',
+            'post_types' => ['page', 'product'],
+        ]);
+        acf_register_block_type([
             'name' => 'block-anchors-static',
             'title' => __('BLOCCO ANCHORS STATICI'),
             'render_template' => get_template_directory() . '/parts/products/product-anchors-section-statico.php',

@@ -1,5 +1,5 @@
 <?php
-    $slides = get_field('slides');
+    $slides = get_field('slides_carousel_ext');
     if($slides) :
         $slide_c = count($slides);
         if ($slide_c > 0) :
