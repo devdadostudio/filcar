@@ -103,16 +103,17 @@
                     |--------------------------------------------------------------------------
                     */
                     ?>
-
+                    <?php
+                    if(!empty($table_headings)) :
+                    ?>
                     <div class="table-row table-row-spacer" aria-hidden="true">
                         <div class="cell first-col table-spacer-cell"></div>
-
                         <?php for ($i = 1; $i < count($table_headings); $i++) : ?>
                             <div class="cell table-spacer-cell"></div>
                         <?php endfor; ?>
                     </div>
-
                     <?php
+                    endif;
                     /*
                     |--------------------------------------------------------------------------
                     | BODY
