@@ -181,17 +181,52 @@ $compatibility_c = count($compatibility);
                                     } elseif ($i === count($canaline_columns) - 1) {
                                         $separator_class = 'has-separator';
                                     }
+
+                                    $tooltip = $col['tooltip'] ?? [];
+                                    $tooltip_title = $tooltip['title'] ?? '';
+                                    $tooltip_text  = $tooltip['text'] ?? '';
                                     ?>
-                                    <div class="cell head-l2 table-2 <?php echo $separator_class; ?>">
-                                        <?php echo esc_html($col['label']); ?>
+                                    <div class="cell head-l2 table-2 <?php echo $separator_class; ?> <?php echo $tooltip ? 'has-tooltip' : ''; ?>">
+                                        <span class="cell-label"><?php echo esc_html($col['label']); ?></span>
+
+                                        <?php if ($tooltip_title || $tooltip_text) : ?>
+                                            <span class="tooltip-icon">
+                                                i
+                                                <span class="tooltip-content">
+                                                    <?php if ($tooltip_title) : ?>
+                                                        <strong class="table-2"><?php echo esc_html($tooltip_title); ?></strong>
+                                                    <?php endif; ?>
+
+                                                    <?php if ($tooltip_text) : ?>
+                                                        <span class="table-2"><?php echo $tooltip_text; ?></span>
+                                                    <?php endif; ?>
+                                                </span>
+                                            </span>
+                                        <?php endif; ?>
                                     </div>
                                 <?php endforeach; ?>
 
                                 <?php foreach ($accessori_columns as $i => $col) :
                                     $separator_class = $i < count($accessori_columns) - 1 ? 'has-separator-lighter' : '';
+                                    $tooltip = $col['tooltip'] ?? '';
                                     ?>
-                                    <div class="cell head-l2 table-2 <?php echo $separator_class; ?>">
-                                        <?php echo esc_html($col['label']); ?>
+                                    <div class="cell head-l2 table-2 <?php echo $separator_class; ?> <?php echo $tooltip ? 'has-tooltip' : ''; ?>">
+                                        <span class="cell-label"><?php echo esc_html($col['label']); ?></span>
+
+                                        <?php if ($tooltip_title || $tooltip_text) : ?>
+                                            <span class="tooltip-icon">
+                                                i
+                                                <span class="tooltip-content">
+                                                    <?php if ($tooltip_title) : ?>
+                                                        <strong class="table-2"><?php echo esc_html($tooltip_title); ?></strong>
+                                                    <?php endif; ?>
+
+                                                    <?php if ($tooltip_text) : ?>
+                                                        <span class="table-2"><?php echo $tooltip_text; ?></span>
+                                                    <?php endif; ?>
+                                                </span>
+                                            </span>
+                                        <?php endif; ?>
                                     </div>
                                 <?php endforeach; ?>
 
@@ -408,9 +443,15 @@ $compatibility_c = count($compatibility);
 
                     $subtitle = $sub['subtitle'] ?? '';
 
+                    $tooltip_group = $sub['tooltip'] ?? [];
+
                     $mapped[] = [
                         'key'   => sanitize_title($subtitle),
                         'label' => $subtitle,
+                        'tooltip' => [
+                            'title' => $tooltip_group['titolo'] ?? '',
+                            'text'  => $tooltip_group['testo'] ?? '',
+                        ],
                     ];
                 }
 

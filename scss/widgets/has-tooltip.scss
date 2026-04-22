@@ -1,0 +1,84 @@
+.has-tooltip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  overflow: visible;
+}
+
+.has-tooltip .cell-label {
+  display: inline-block;
+}
+
+.tooltip-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #0085dd;
+  color: #fff;
+  font-size: 11px;
+  line-height: 1;
+  cursor: pointer;
+  flex: 0 0 auto;
+  z-index: 5;
+}
+
+.tooltip-content {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 180px;
+  max-width: 240px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #17191b;
+  color: #fff;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+}
+
+.tooltip-content::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #17191b;
+}
+
+.tooltip-title {
+  display: block;
+}
+
+.tooltip-text {
+  display: block;
+  font-weight: 400 !important;
+}
+
+.tooltip-icon:hover .tooltip-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+.tech-table .head-l1,
+.tech-table .head-l2,
+.tech-table .head-rowspan-2 {
+  overflow: visible;
+}
