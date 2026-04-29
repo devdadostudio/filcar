@@ -46,12 +46,13 @@ body {
   margin-top: 32px;
 }
 .flc-main-nav {
-  background-color: $black-opacity;
+  background-color: $primary;
   position: fixed;
   z-index: 3;
   top: 0;
   left: 0;
   right: 0;
+  border-bottom: 1px solid $grey800;
   .flc-main-nav-inner {
     display: flex;
     justify-content: space-between;
@@ -89,29 +90,17 @@ body {
         display: block;
         position: relative;
         font-family: $headings-font-family;
-        @include media-breakpoint-up(md) {
-          text-transform: uppercase;
-          &::after {
-            content: "";
-            background-color: transparent;
-            bottom: 0;
-            left: 0;
-            right: 100%;
-            height: 3px;
-            position: absolute;
-            transition: all 200ms ease-in-out;
-            &:not(.current_page_item, .current-menu-item) {
-              right: 100%;
-              > a {
-                &::after {
-                  right: 100%;
-                }
-              }
-            }
-          }
+        font-size: 18px;
+        @include media-breakpoint-down(uxl) {
+          font-size: 16px;
         }
-        @include media-breakpoint-down(md) {
-          font-size: 18px;
+        @include media-breakpoint-down(lg) {
+          font-size: 14px;
+        }
+        @include media-breakpoint-up(md) {
+          &::after {
+            content: none;
+          }
         }
       }
       &.current_page_item,
@@ -135,23 +124,15 @@ body {
   }
   @include media-breakpoint-up(md) {
     .navbar-nav {
-      padding-right: 1.5rem;
       > li {
         padding: 0 1rem;
-        > a {
-          font-size: 14px;
-        }
       }
     }
   }
   @include media-breakpoint-up(sxl) {
     .navbar-nav {
-      padding-right: 3.5rem;
       > li {
         padding: 0 1.5rem;
-        > a {
-          font-size: 16px;
-        }
       }
     }
   }
@@ -339,6 +320,15 @@ body {
       font-family: "Material Symbols Outlined";
       position: relative !important;
       height: auto !important;
+    }
+  }
+}
+
+
+.flc-main-nav{
+  .flc-logo{
+    img{
+      max-height: 30px;
     }
   }
 }

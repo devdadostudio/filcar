@@ -72,6 +72,7 @@ if (function_exists('add_theme_support')) {
     add_image_size('hero-400', 400, 99999, false);
     add_image_size('slide-img-ext', 705, 530, false);
     add_image_size('product-car-thumb', 240, 200, false);
+    add_image_size('img-menu-arredo-tecnico', 300, 215, false);
     
     // Enables post and comment RSS feed links to head
     add_theme_support('automatic-feed-links');
@@ -196,7 +197,7 @@ if (function_exists('register_sidebar')) {
         'id' => 'footer-area-2',
         'before_widget' => '<div id="%1$s" class="%2$s">',
         'after_widget' => '</div>',
-        'before_title' => '<span class="widget-title text-primary fw-bold">',
+        'before_title' => '<span class="widget-title p-small fw-normal text-white">',
         'after_title' => '</span>'
     ));
 
@@ -207,7 +208,7 @@ if (function_exists('register_sidebar')) {
         'id' => 'footer-area-3',
         'before_widget' => '<div id="%1$s" class="%2$s">',
         'after_widget' => '</div>',
-        'before_title' => '<span class="widget-title text-primary fw-bold">',
+        'before_title' => '<span class="widget-title p-small fw-normal text-white">',
         'after_title' => '</span>'
     ));
 
@@ -218,7 +219,7 @@ if (function_exists('register_sidebar')) {
         'id' => 'footer-area-4',
         'before_widget' => '<div id="%1$s" class="%2$s">',
         'after_widget' => '</div>',
-        'before_title' => '<span class="widget-title text-primary fw-bold">',
+        'before_title' => '<span class="widget-title p-small fw-normal text-white">',
         'after_title' => '</span>'
     ));
 

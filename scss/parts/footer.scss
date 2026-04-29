@@ -3,160 +3,131 @@
   background-color: $primary;
 }
 .flc-main-footer > .container-fluid > .row {
-  .social-container-footer {
-    gap: 1rem;
-  }
-  @include media-breakpoint-down(llg) {
-    flex-wrap: nowrap;
-    .first-column-container {
-      flex-shrink: 1;
-      .footer-widget-area {
-        font-size: 14px;
-      }
-    }
-  }
-  @include media-breakpoint-down(md) {
-    flex-wrap: wrap;
-    .first-column-container .footer-widget-area {
-      display: flex;
-      flex-direction: row;
-      > div {
-        width: 50%;
-        &:last-of-type {
-          display: none;
-        }
-      }
-    }
-  }
-}
-.footer-widget-area {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  .wp-block-social-links {
-    justify-content: space-between;
-    width: 100%;
-  }
-  .widget_nav_menu {
-    .widget-title {
-      margin-bottom: 12px;
-      display: block;
-    }
-    .menu {
-      list-style: none;
-      padding-left: 0;
-      margin-bottom: 0;
+  .first-column-container {
+    > .footer-widget-area{
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      a {
-        color: #ffffff;
-        text-decoration: none;
-        &:hover {
-          text-decoration: underline;
-        }
-        &:focus {
-          text-decoration: underline;
-        }
+      justify-content: space-between;
+    }
+  }
+  .social-container-footer {
+    gap: 4rem;
+    @include media-breakpoint-down(sxl) {
+      gap: 3rem;
+    }
+    @include media-breakpoint-down(lg) {
+      gap: 2rem;
+      align-items: center;
+    }
+    @include media-breakpoint-down(md) {
+      gap: 1.5rem;
+    }
+    .is-style-logos-only {
+      column-gap: 3rem;
+      row-gap: 1rem;
+      @include media-breakpoint-down(sxl) {
+        column-gap: 2.5rem;
+      }
+      @include media-breakpoint-down(md) {
+        column-gap: 1.75rem;
+      }
+      .wp-block-social-link-label{
+        display: none;
       }
     }
   }
-}
-.footer-mobile-container .footer-widget-area .widget_nav_menu .menu {
-  @include media-breakpoint-down(llg) {
-    gap: 0;
-    > .menu-item {
-      font-size: 0.75rem;
-      &:not(:last-child) {
-        margin-bottom: 1rem;
-        padding-bottom: 1rem;
-        border-bottom: 1px solid;
+  .footer-widget-area {
+    height: 100%;
+    .widget_nav_menu {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      height: 100%;
+      @include media-breakpoint-down(lg){
+        .widget-title {
+          font-weight: 500;
+        }
       }
-      &.menu-item-has-children {
-        > .sub-menu {
-          padding-left: 0;
-          list-style: none;
-          margin-top: 1rem;
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          > .menu-item {
-            > a {
-              color: $primary;
-              font-weight: 700;
-              width: 100%;
+      @include media-breakpoint-down(lg){
+        border-top: 1px solid $grey800;
+        padding-top: 1.5rem;
+      }
+      > ul {
+        display: flex;
+        flex-direction: column;
+        padding-left: 1.5rem;
+        list-style: none;
+        flex-grow: 1;
+        border-left: 1px solid $grey800;
+        gap: 1rem;
+        margin-bottom: 0;
+        padding-bottom: 50px;
+        @include media-breakpoint-down(lg){
+          border-left: 0;
+          padding-left: 0.5rem;
+          padding-bottom: 1.5rem;
+        }
+        > li {
+          &.footer-menu-link-arrow {
+            > a{
               display: flex;
+              width: 100%;
               justify-content: space-between;
-              align-items: center;
-              text-decoration: none !important;
-              &:after {
-                content: "\e313";
-                font-family: "Material Symbols Outlined";
-                font-size: 1rem;
-              }
-              &.active:after {
-                content: "\e316";
+              &::after {
+                content: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYuODc1MzQgMTMuMTk1NEwxMi41MTIyIDcuNTUwMzFDMTIuOTAyNCA3LjE1OTUgMTIuOTAxOSA2LjUyNjM4IDEyLjUxMTEgNi4xMzYxOUw2Ljg2NTEgMC41MDAxMThNMC41MDAzNjUgNi44NTE4M0wxMi4yNTg4IDYuODUxODMiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K");
+                color: #ffffff;
               }
             }
-            > .sub-menu {
-              display: none;
-              list-style: none;
-              padding-left: 0;
-              padding-top: 1rem;
-              > li {
-                margin-bottom: 1rem;
-              }
-            }
+          }
+          > a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 300;
           }
         }
       }
     }
   }
-}
-.copyright-area .footer-widget-area {
-  gap: 0;
-  justify-content: space-between;
-  flex-direction: row;
-  > div:first-child {
-    display: none;
-  }
-  @include media-breakpoint-down(md) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: 1rem;
-    > div:first-child {
-      display: block;
-      grid-row-start: 1;
-      grid-row-end: 3;
-      grid-column-start: 1;
-      grid-column-end: 1;
+  &.copyright-area{
+    h5{
+      font-weight: 600;
+      margin-bottom: 1rem !important;
     }
-    > div:nth-child(2) {
-      grid-row-start: 3;
-      margin-top: 2rem;
-    }
-    > div:nth-child(3) {
-      grid-column-start: 2;
-      grid-row-start: 1;
-      grid-row-end: 1;
-      text-align: right;
-    }
-    > div:nth-child(4) {
-      grid-column-start: 2;
-      grid-row-start: 2;
-      grid-row-end: 2;
-      text-align: right;
-    }
-    > div:nth-child(5) {
-      margin-top: 2rem;
-      text-align: right;
-    }
-  }
-  a {
-    color: #ffffff;
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
+    .links-container{
+      .footer-widget-area{
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        column-gap: 5rem;
+        @include media-breakpoint-down(uxl) {
+          column-gap: 1.5rem;
+        }
+        @include media-breakpoint-down(lg) {
+          flex-wrap: wrap;
+          row-gap: 1rem;
+          > div:first-of-type{
+            width: 100%;
+          }
+        }
+        > div{
+          > p{
+            margin-bottom: 0;
+          }
+        }
+        > div:not(:first-of-type){
+          flex-grow: 1;
+          > p{
+            white-space: nowrap;
+          }
+        }
+        > div:first-of-type{
+          flex-shrink: 1;
+        }
+        a{
+          color: #ffffff;
+          text-decoration: none;
+        }
+      }
     }
   }
 }

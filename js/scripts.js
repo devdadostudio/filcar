@@ -306,3 +306,63 @@ if (firstVideo) {
     console.log("Tempo attuale video:", e.target.currentTime);
   });
 }
+
+
+/**
+ * Funzione per calcolare l'altezza dinamica del megamenu
+ */
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    /**
+     * 1. GESTIONE CLICK ATTREZZATURE OPERATIVE
+     * Cambia i pannelli a destra al click sulla sidebar a sinistra
+     */
+    const attrWrapper = document.querySelector('.attrezzature-wrapper');
+    if (attrWrapper) {
+        attrWrapper.addEventListener('click', function(e) {
+            const trigger = e.target.closest('.attrezzature-trigger');
+            if (trigger) {
+                // Impediamo la chiusura del menu e la navigazione del '#'
+                e.preventDefault();
+                e.stopPropagation();
+
+                const targetId = trigger.getAttribute('data-bs-target');
+                
+                // Reset classi Attivo sui trigger
+                attrWrapper.querySelectorAll('.attrezzature-trigger').forEach(t => t.classList.remove('is-active'));
+                // Nascondi tutti i pannelli
+                attrWrapper.querySelectorAll('.attrezzature-panel').forEach(p => {
+                    p.classList.remove('d-block');
+                    p.classList.add('d-none');
+                });
+
+                // Attiva quello cliccato
+                trigger.classList.add('is-active');
+                const panel = attrWrapper.querySelector(targetId);
+                if (panel) {
+                    panel.classList.remove('d-none');
+                    panel.classList.add('d-block');
+                }
+            }
+        });
+    }
+
+    /**
+     * 2. PREVENZIONE CHIUSURA DROPDOWN (BOOTSTRAP)
+     * Impedisce a Bootstrap di chiudere il menu se clicchiamo su elementi non-link
+     */
+    const specialMenus = document.querySelectorAll('.arredo-tecnico-megamenu, .attrezzature-megamenu');
+    specialMenus.forEach(menu => {
+        menu.addEventListener('click', function(e) {
+            const isRealLink = e.target.closest('a') && 
+                               e.target.closest('a').getAttribute('href') !== '#' && 
+                               e.target.closest('a').getAttribute('href') !== '';
+            
+            // Se NON è un link vero, ferma la propagazione così Bootstrap non sente il click
+            if (!isRealLink) {
+                e.stopPropagation();
+            }
+        });
+    });
+});

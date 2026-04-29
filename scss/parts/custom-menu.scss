@@ -1,0 +1,218 @@
+.dropdown-toggle {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    &.show{
+        color: #ffffff !important;
+        font-weight: 600 !important;
+    }
+}
+/* Il contenitore principale del dropdown */
+.megamenu.attrezzature-megamenu {
+    width: 100vw;
+    /* Usiamo una variabile calcolata via JS per l'altezza */
+    height: calc(100vh - $header-bar-height) !important;
+    top: $header-bar-height !important; /* Si posiziona sotto la navbar */
+    position: fixed;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    overflow: hidden; /* Evita scroll sulla colonna principale */
+    align-items: center;
+    &.show{
+        display: flex !important;
+    }
+    > .container-fluid{
+        height: calc(100vh - $header-bar-height) !important;
+        overflow-y: scroll;
+    }
+    @include media-breakpoint-down(uxl) {
+        height: calc(100vh - $header-bar-height-uxl) !important;
+        top: $header-bar-height-uxl !important;
+        > .container-fluid{
+            height: calc(100vh - $header-bar-height-uxl) !important;
+        }
+    }
+}
+
+/* Wrapper interno per il layout a due colonne */
+.attrezzature-wrapper {
+    display: flex;
+    height: 100%; /* Occupa tutto il 100vh calcolato */
+    width: 100%;
+    align-items: center;
+}
+
+/* Colonna sinistra (Sidebar) */
+.attrezzature-sidebar {
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar, &::-webkit-scrollbar-button {
+        display: none;
+    }
+}
+
+/* Colonna destra (Contenuto) */
+.attrezzature-content {
+    flex-grow: 1;
+    height: 100%;
+    overflow-y: auto; /* Se ci sono tanti prodotti, scrolla solo qui */
+    display: flex;
+    align-items: center;
+}
+
+/* Applichiamo le dimensioni a entrambi i tipi di megamenu speciali */
+.arredo-tecnico-megamenu,
+.attrezzature-megamenu {
+    width: 100vw !important;
+    height: calc(100vh - $header-bar-height) !important;
+    position: fixed !important;
+    left: 0 !important;
+    top: $header-bar-height !important; /* Si posiziona sotto la navbar */
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    background-color: $primary !important;
+    transform: none !important;
+}
+
+.attrezzature-megamenu::after {
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    background: $grey800;
+    left: calc(50% - 10px);
+    top: 0;
+    transform: translateX(-50%);
+}
+
+.admin-bar {
+    .arredo-tecnico-megamenu,
+    .attrezzature-megamenu {
+        height: calc(100vh - $header-bar-height-admin) !important;
+        top: $header-bar-height-admin !important; /* Si posiziona sotto la navbar */
+        @include media-breakpoint-down(uxl) {
+            height: calc(100vh - $header-bar-height-admin-uxl) !important;
+            top: $header-bar-height-admin-uxl !important;
+        }
+    }
+}
+
+/* Scroll interno per l'arredo tecnico se le righe sono tante */
+.arredo-tecnico-megamenu .inner-container-small {
+    height: 100%;
+    overflow-x: hidden;
+    width: 830px;
+    max-width: 100%;
+    margin: 0 auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar, &::-webkit-scrollbar-button {
+        display: none;
+    }
+}
+
+.arredo-tecnico-scroll-container {
+    max-height: 100%;
+    overflow-y: auto;
+    padding-right: 15px; /* Evita sovrapposizione con scrollbar */
+}
+
+.arredo-tecnico-menu__lvl3-link .icon-big{
+    font-size: 18px;
+}
+
+.arredo-tecnico-menu__row:not(:last-of-type) {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid $gray-800;
+}
+
+.arredo-tecnico-menu__lvl3-link {
+    .figure-img-menu-arredo-tecnico {
+        width: 300px;
+        transition: all 0.25s ease;
+        @include media-breakpoint-down(uxl) {
+            width: 215px;
+        }
+        @include media-breakpoint-down(lg) {
+            max-width: 180px;
+        }
+        @include media-breakpoint-down(md) {
+            max-width: 90px;
+        }
+    }
+    &:hover{
+        .figure-img-menu-arredo-tecnico {
+            width: 350px;
+            @include media-breakpoint-between(uxl, lg) {
+                width: 240px;
+            }
+        }
+    }
+}
+
+.attrezzature-sidebar{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .attrezzature-trigger{
+        position: relative;
+        margin-bottom: 21px;
+        &:after {
+            content: "";
+            position: absolute;
+            bottom: -11px;
+            width: calc(50% - var(--bs-gutter-x));
+            height: 1px;
+            right: calc(var(--bs-gutter-x) * .5);
+            background: $grey800;
+        }
+        &.is-active{
+            .h7{
+                color: #ffffff !important;
+            }
+            &:after{
+                width: calc(60% - var(--bs-gutter-x));
+            }
+        }
+        .figure-img-left-links{
+            width: 160px;
+            transition: all 0.25s ease;
+            margin-bottom: 0;
+            @include media-breakpoint-down(uxl) {
+                width: 120px;
+            }
+            @include media-breakpoint-down(sxl) {
+                max-width: 100px;
+            }
+            @include media-breakpoint-down(lg) {
+                display: none;
+            }
+        }
+        &.is-active{
+            .figure-img-left-links{
+                width: 350px;
+                @include media-breakpoint-down(uxl) {
+                    width: 270px;
+                }
+                @include media-breakpoint-down(sxl) {
+                    max-width: 215px;
+                }
+            }
+        }
+        &:hover{
+            .h7{
+                color: #ffffff !important;
+            }
+        }
+    }
+}
+.hover-white:hover{
+    color: #ffffff !important;
+}
