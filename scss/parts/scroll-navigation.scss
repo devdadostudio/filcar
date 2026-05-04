@@ -1,7 +1,7 @@
 .page-header {
   position: sticky;
   top: calc(
-    var(--admin-offset) + var(--fake-header-offset) + var(--page-header-gap)
+    var(--admin-offset) + var(--site-header-offset) + var(--page-header-gap)
   );
   z-index: 100;
   padding: 1em 0;

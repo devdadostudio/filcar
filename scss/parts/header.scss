@@ -1,61 +1,59 @@
 :root {
-  --fake-header-height: 76px;
-  --fake-header-offset: 76px;
+  --site-header-height: #{$header-bar-height};
+  --site-header-offset: #{$header-bar-height};
   --page-header-gap: 20px;
   --admin-offset: 0px;
 }
 
 .admin-bar {
-  --admin-offset: 20px;
+  --admin-offset: 32px;
 }
 
-/* HEADER FAKE */
-.header-placehold {
-  position: fixed;
-  top: var(--admin-offset);
-  left: 0;
-  width: 100%;
-  height: var(--fake-header-height);
-  background-color: $primary;
-  border: 1px solid #fff;
-  z-index: 999;
-  transform: translateY(0);
-  transition: transform 0.35s ease;
-  will-change: transform;
+@include media-breakpoint-down(uxl) {
+  :root {
+    --site-header-height: #{$header-bar-height-uxl};
+    --site-header-offset: #{$header-bar-height-uxl};
+  }
 }
 
-.header-placehold.is-hidden {
-  transform: translateY(-100%);
+@media (max-width: 782px) {
+  .admin-bar {
+    --admin-offset: 46px;
+  }
+}
+
+.flc-main-nav.is-hidden {
+  transform: translateY(calc(-100% - var(--admin-offset)));
 }
 
 /* stato body */
-body.fake-header-visible {
-  --fake-header-offset: var(--fake-header-height);
+body.site-header-visible {
+  --site-header-offset: var(--site-header-height);
 }
 
-body.fake-header-hidden {
-  --fake-header-offset: 0px;
+body.site-header-hidden {
+  --site-header-offset: 0px;
 }
 
 /* spazio globale per il contenuto pagina */
 body {
-  padding-top: calc(var(--admin-offset) + var(--fake-header-offset));
+  padding-top: calc(var(--admin-offset) + var(--site-header-offset));
 }
 
-.admin-bar .flc-main-nav {
-  margin-top: 32px;
-}
 .flc-main-nav {
   background-color: $primary;
   position: fixed;
   z-index: 3;
-  top: 0;
+  top: var(--admin-offset);
   left: 0;
   right: 0;
   border-bottom: 1px solid $grey800;
-  height: $header-bar-height;
+  height: var(--site-header-height);
   display: flex;
   align-items: center;
+  transform: translateY(0);
+  transition: transform 0.35s ease;
+  will-change: transform;
   .flc-main-nav-inner {
     display: flex;
     justify-content: space-between;

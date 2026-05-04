@@ -156,7 +156,7 @@ jQuery(document).ready(function () {
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 document.addEventListener("DOMContentLoaded", () => {
-  const fakeHeader = document.querySelector(".header-placehold");
+  const siteHeader = document.querySelector(".flc-main-nav");
   const navWrap = document.querySelector(".js-anchor-nav-wrap");
   const navLinks = gsap.utils.toArray(".anchor-link");
   const sections = gsap.utils.toArray(".js-section");
@@ -167,11 +167,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const smoother = window.ScrollSmoother ? ScrollSmoother.get() : null;
 
   let currentActiveId = null;
-  let fakeHeaderVisible = true;
+  let siteHeaderVisible = true;
 
-  if (fakeHeader) {
-    document.body.classList.add("fake-header-visible");
-    document.body.classList.remove("fake-header-hidden");
+  if (siteHeader) {
+    document.body.classList.add("site-header-visible");
+    document.body.classList.remove("site-header-hidden");
   }
 
   function getScrollTop() {
@@ -180,30 +180,30 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function getHeaderHeight() {
-    if (!fakeHeader) return 0;
-    return fakeHeaderVisible ? fakeHeader.offsetHeight : 0;
+    if (!siteHeader) return 0;
+    return siteHeaderVisible ? siteHeader.offsetHeight : 0;
   }
 
   function getActivationY() {
     return getScrollTop() + getHeaderHeight() + 12;
   }
 
-  function showFakeHeader() {
-    if (!fakeHeader || fakeHeaderVisible) return;
+  function showSiteHeader() {
+    if (!siteHeader || siteHeaderVisible) return;
 
-    fakeHeaderVisible = true;
-    fakeHeader.classList.remove("is-hidden");
-    document.body.classList.remove("fake-header-hidden");
-    document.body.classList.add("fake-header-visible");
+    siteHeaderVisible = true;
+    siteHeader.classList.remove("is-hidden");
+    document.body.classList.remove("site-header-hidden");
+    document.body.classList.add("site-header-visible");
   }
 
-  function hideFakeHeader() {
-    if (!fakeHeader || !fakeHeaderVisible) return;
+  function hideSiteHeader() {
+    if (!siteHeader || !siteHeaderVisible) return;
 
-    fakeHeaderVisible = false;
-    fakeHeader.classList.add("is-hidden");
-    document.body.classList.remove("fake-header-visible");
-    document.body.classList.add("fake-header-hidden");
+    siteHeaderVisible = false;
+    siteHeader.classList.add("is-hidden");
+    document.body.classList.remove("site-header-visible");
+    document.body.classList.add("site-header-hidden");
   }
 
   function centerNavItem(activeLink) {
@@ -302,14 +302,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const currentY = getScrollTop();
 
       if (currentY <= 10) {
-        showFakeHeader();
+        showSiteHeader();
         return;
       }
 
       if (self.direction === 1) {
-        hideFakeHeader();
+        hideSiteHeader();
       } else if (self.direction === -1) {
-        showFakeHeader();
+        showSiteHeader();
       }
     },
   });
