@@ -1,96 +1,108 @@
 /* IBMPlexSans EXTRALIGHT - EXTRALIGHT ITALIC - REGULAR - REGULAR ITALIC -  MEDIUM - MEDIUM ITALIC - SEMIBOLD - SEMIBOLD ITALIC - BOLD - BOLD ITALIC */
 @font-face {
-  font-family: 'IBMPlexSans';
-  src: url('fonts/woff2/IBMPlexSans-ExtraLight.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans-ExtraLight.ttf') format('truetype');
+  font-family: "IBMPlexSans";
+  src:
+    url("fonts/woff2/IBMPlexSans-ExtraLight.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans-ExtraLight.ttf") format("truetype");
   font-weight: 200;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexSans';
-  src: url('fonts/woff2/IBMPlexSans-ExtraLightItalic.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans-ExtraLightItalic.ttf') format('truetype');
+  font-family: "IBMPlexSans";
+  src:
+    url("fonts/woff2/IBMPlexSans-ExtraLightItalic.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans-ExtraLightItalic.ttf") format("truetype");
   font-weight: 200;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexSans';
-  src: url('fonts/woff2/IBMPlexSans-Light.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans-Light.ttf') format('truetype');
+  font-family: "IBMPlexSans";
+  src:
+    url("fonts/woff2/IBMPlexSans-Light.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans-Light.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexSans';
-  src: url('fonts/woff2/IBMPlexSans-LightItalic.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans-LightItalic.ttf') format('truetype');
+  font-family: "IBMPlexSans";
+  src:
+    url("fonts/woff2/IBMPlexSans-LightItalic.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans-LightItalic.ttf") format("truetype");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexSans';
-  src: url('fonts/woff2/IBMPlexSans-Regular.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans-Regular.ttf') format('truetype');
+  font-family: "IBMPlexSans";
+  src:
+    url("fonts/woff2/IBMPlexSans-Regular.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexSans';
-  src: url('fonts/woff2/IBMPlexSans-Italic.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans-Italic.ttf') format('truetype');
+  font-family: "IBMPlexSans";
+  src:
+    url("fonts/woff2/IBMPlexSans-Italic.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans-Italic.ttf") format("truetype");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexSans';
-  src: url('fonts/woff2/IBMPlexSans-Medium.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans-Medium.ttf') format('truetype');
+  font-family: "IBMPlexSans";
+  src:
+    url("fonts/woff2/IBMPlexSans-Medium.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexSans';
-  src: url('fonts/woff2/IBMPlexSans-MediumItalic.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans-MediumItalic.ttf') format('truetype');
+  font-family: "IBMPlexSans";
+  src:
+    url("fonts/woff2/IBMPlexSans-MediumItalic.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans-MediumItalic.ttf") format("truetype");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexSans';
-  src: url('fonts/woff2/IBMPlexSans-SemiBold.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans-SemiBold.ttf') format('truetype');
+  font-family: "IBMPlexSans";
+  src:
+    url("fonts/woff2/IBMPlexSans-SemiBold.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans-SemiBold.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexSans';
-  src: url('fonts/woff2/IBMPlexSans-SemiBoldItalic.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans-SemiBoldItalic.ttf') format('truetype');
+  font-family: "IBMPlexSans";
+  src:
+    url("fonts/woff2/IBMPlexSans-SemiBoldItalic.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans-SemiBoldItalic.ttf") format("truetype");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexSans';
-  src: url('fonts/woff2/IBMPlexSans-Bold.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans-Bold.ttf') format('truetype');
+  font-family: "IBMPlexSans";
+  src:
+    url("fonts/woff2/IBMPlexSans-Bold.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexSans';
-  src: url('fonts/woff2/IBMPlexSans-BoldItalic.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans-BoldItalic.ttf') format('truetype');
+  font-family: "IBMPlexSans";
+  src:
+    url("fonts/woff2/IBMPlexSans-BoldItalic.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans-BoldItalic.ttf") format("truetype");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -99,49 +111,55 @@
 /* IBMPlexSans_Condensed - REGULAR - ITALIC - MEDIUM - MEDIUM ITALIC - BOLD - BOLD ITALIC */
 
 @font-face {
-  font-family: 'IBMPlexSansCondensed';
-  src: url('fonts/woff2/IBMPlexSans_Condensed-Regular.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans_Condensed-Regular.ttf') format('truetype');
+  font-family: "IBMPlexSansCondensed";
+  src:
+    url("fonts/woff2/IBMPlexSans_Condensed-Regular.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans_Condensed-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexSansCondensed';
-  src: url('fonts/woff2/IBMPlexSans_Condensed-Italic.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans_Condensed-Italic.ttf') format('truetype');
+  font-family: "IBMPlexSansCondensed";
+  src:
+    url("fonts/woff2/IBMPlexSans_Condensed-Italic.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans_Condensed-Italic.ttf") format("truetype");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexSansCondensed';
-  src: url('fonts/woff2/IBMPlexSans_Condensed-Medium.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans_Condensed-Medium.ttf') format('truetype');
+  font-family: "IBMPlexSansCondensed";
+  src:
+    url("fonts/woff2/IBMPlexSans_Condensed-Medium.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans_Condensed-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexSansCondensed';
-  src: url('fonts/woff2/IBMPlexSans_Condensed-MediumItalic.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans_Condensed-MediumItalic.ttf') format('truetype');
+  font-family: "IBMPlexSansCondensed";
+  src:
+    url("fonts/woff2/IBMPlexSans_Condensed-MediumItalic.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans_Condensed-MediumItalic.ttf") format("truetype");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexSansCondensed';
-  src: url('fonts/woff2/IBMPlexSans_Condensed-Bold.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans_Condensed-Bold.ttf') format('truetype');
+  font-family: "IBMPlexSansCondensed";
+  src:
+    url("fonts/woff2/IBMPlexSans_Condensed-Bold.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans_Condensed-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexSansCondensed';
-  src: url('fonts/woff2/IBMPlexSans_Condensed-BoldItalic.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexSans_Condensed-BoldItalic.ttf') format('truetype');
+  font-family: "IBMPlexSansCondensed";
+  src:
+    url("fonts/woff2/IBMPlexSans_Condensed-BoldItalic.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexSans_Condensed-BoldItalic.ttf") format("truetype");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -150,49 +168,55 @@
 /* IBMPlexMono - REGULAR - ITALIC - MEDIUM - MEDIUM ITALIC - BOLD - BOLD ITALIC */
 
 @font-face {
-  font-family: 'IBMPlexMono';
-  src: url('fonts/woff2/IBMPlexMono-Regular.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexMono-Regular.ttf') format('truetype');
+  font-family: "IBMPlexMono";
+  src:
+    url("fonts/woff2/IBMPlexMono-Regular.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexMono-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexMono';
-  src: url('fonts/woff2/IBMPlexMono-Italic.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexMono-Italic.ttf') format('truetype');
+  font-family: "IBMPlexMono";
+  src:
+    url("fonts/woff2/IBMPlexMono-Italic.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexMono-Italic.ttf") format("truetype");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexMono';
-  src: url('fonts/woff2/IBMPlexMono-Medium.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexMono-Medium.ttf') format('truetype');
+  font-family: "IBMPlexMono";
+  src:
+    url("fonts/woff2/IBMPlexMono-Medium.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexMono-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexMono';
-  src: url('fonts/woff2/IBMPlexMono-MediumItalic.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexMono-MediumItalic.ttf') format('truetype');
+  font-family: "IBMPlexMono";
+  src:
+    url("fonts/woff2/IBMPlexMono-MediumItalic.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexMono-MediumItalic.ttf") format("truetype");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexMono';
-  src: url('fonts/woff2/IBMPlexMono-Bold.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexMono-Bold.ttf') format('truetype');
+  font-family: "IBMPlexMono";
+  src:
+    url("fonts/woff2/IBMPlexMono-Bold.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexMono-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBMPlexMono';
-  src: url('fonts/woff2/IBMPlexMono-BoldItalic.woff2') format('woff2'),
-       url('fonts/ttf/IBMPlexMono-BoldItalic.ttf') format('truetype');
+  font-family: "IBMPlexMono";
+  src:
+    url("fonts/woff2/IBMPlexMono-BoldItalic.woff2") format("woff2"),
+    url("fonts/ttf/IBMPlexMono-BoldItalic.ttf") format("truetype");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -200,65 +224,73 @@
 
 /* Inter - REGULAR - ITALIC - MEDIUM - MEDIUM ITALIC - BOLD - BOLD ITALIC */
 @font-face {
-  font-family: 'Inter';
-  src: url('fonts/woff2/Inter-Light.woff2') format('woff2'),
-       url('fonts/ttf/Inter-Light.ttf') format('truetype');
+  font-family: "Inter";
+  src:
+    url("fonts/woff2/Inter-Light.woff2") format("woff2"),
+    url("fonts/ttf/Inter-Light.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Inter';
-  src: url('fonts/woff2/Inter-LightItalic.woff2') format('woff2'),
-       url('fonts/ttf/Inter-LightItalic.ttf') format('truetype');
+  font-family: "Inter";
+  src:
+    url("fonts/woff2/Inter-LightItalic.woff2") format("woff2"),
+    url("fonts/ttf/Inter-LightItalic.ttf") format("truetype");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Inter';
-  src: url('fonts/woff2/Inter-Regular.woff2') format('woff2'),
-       url('fonts/ttf/Inter-Regular.ttf') format('truetype');
+  font-family: "Inter";
+  src:
+    url("fonts/woff2/Inter-Regular.woff2") format("woff2"),
+    url("fonts/ttf/Inter-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Inter';
-  src: url('fonts/woff2/Inter-Italic.woff2') format('woff2'),
-       url('fonts/ttf/Inter-Italic.ttf') format('truetype');
+  font-family: "Inter";
+  src:
+    url("fonts/woff2/Inter-Italic.woff2") format("woff2"),
+    url("fonts/ttf/Inter-Italic.ttf") format("truetype");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Inter';
-  src: url('fonts/woff2/Inter-Medium.woff2') format('woff2'),
-       url('fonts/ttf/Inter-Medium.ttf') format('truetype');
+  font-family: "Inter";
+  src:
+    url("fonts/woff2/Inter-Medium.woff2") format("woff2"),
+    url("fonts/ttf/Inter-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Inter';
-  src: url('fonts/woff2/Inter-MediumItalic.woff2') format('woff2'),
-       url('fonts/ttf/Inter-MediumItalic.ttf') format('truetype');
+  font-family: "Inter";
+  src:
+    url("fonts/woff2/Inter-MediumItalic.woff2") format("woff2"),
+    url("fonts/ttf/Inter-MediumItalic.ttf") format("truetype");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Inter';
-  src: url('fonts/woff2/Inter-Bold.woff2') format('woff2'),
-       url('fonts/ttf/Inter-Bold.ttf') format('truetype');
+  font-family: "Inter";
+  src:
+    url("fonts/woff2/Inter-Bold.woff2") format("woff2"),
+    url("fonts/ttf/Inter-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Inter';
-  src: url('fonts/woff2/Inter-BoldItalic.woff2') format('woff2'),
-       url('fonts/ttf/Inter-BoldItalic.ttf') format('truetype');
+  font-family: "Inter";
+  src:
+    url("fonts/woff2/Inter-BoldItalic.woff2") format("woff2"),
+    url("fonts/ttf/Inter-BoldItalic.ttf") format("truetype");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -267,12 +299,13 @@ $breakpoint0: "uxxl";
 $breakpoint1: "uxl";
 $breakpoint2: "md";
 
-body, .p-normal{
+body,
+.p-normal {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 22px;
   line-height: 150%;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 18px;
   }
@@ -289,7 +322,7 @@ h1,
   font-size: 72px;
   font-weight: 200;
   line-height: normal;
-  font-family: 'IBMPlexSans', sans-serif;
+  font-family: "IBMPlexSans", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 68px;
   }
@@ -306,7 +339,7 @@ h2,
   font-size: 64px;
   font-weight: 400;
   line-height: normal;
-  font-family: 'IBMPlexSans', sans-serif;
+  font-family: "IBMPlexSans", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 60px;
   }
@@ -323,7 +356,7 @@ h3,
   font-size: 52px;
   font-weight: 400;
   line-height: normal;
-  font-family: 'IBMPlexSans', sans-serif;
+  font-family: "IBMPlexSans", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 46px;
   }
@@ -340,7 +373,7 @@ h4,
   font-size: 44px;
   font-weight: 400;
   line-height: 130%;
-  font-family: 'IBMPlexSans', sans-serif;
+  font-family: "IBMPlexSans", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 40px;
   }
@@ -357,7 +390,7 @@ h5,
   font-size: 36px;
   font-weight: 400;
   line-height: normal;
-  font-family: 'IBMPlexSans', sans-serif;
+  font-family: "IBMPlexSans", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 32px;
   }
@@ -374,7 +407,7 @@ h6,
   font-size: 32px;
   font-weight: 400;
   line-height: normal;
-  font-family: 'IBMPlexSans', sans-serif;
+  font-family: "IBMPlexSans", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 28px;
   }
@@ -391,7 +424,7 @@ h7,
   font-size: 28px;
   font-weight: 400;
   line-height: normal;
-  font-family: 'IBMPlexSans', sans-serif;
+  font-family: "IBMPlexSans", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 24px;
   }
@@ -403,11 +436,11 @@ h7,
   }
 }
 
-.subtitle-1{
+.subtitle-1 {
   font-size: 24px;
   font-weight: 400;
   line-height: normal;
-  font-family: 'IBMPlexSans', sans-serif;
+  font-family: "IBMPlexSans", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 20px;
   }
@@ -419,11 +452,11 @@ h7,
   }
 }
 
-.subtitle-2{
+.subtitle-2 {
   font-size: 22px;
   font-weight: 400;
   line-height: normal;
-  font-family: 'IBMPlexSans', sans-serif;
+  font-family: "IBMPlexSans", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 18px;
   }
@@ -435,11 +468,11 @@ h7,
   }
 }
 
-.subtitle-3{
+.subtitle-3 {
   font-size: 18px;
   font-weight: 400;
   line-height: normal;
-  font-family: 'IBMPlexSans', sans-serif;
+  font-family: "IBMPlexSans", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 14px;
   }
@@ -451,11 +484,11 @@ h7,
   }
 }
 
-.subtitle-4{
+.subtitle-4 {
   font-size: 16px;
   font-weight: 400;
   line-height: normal;
-  font-family: 'IBMPlexSans', sans-serif;
+  font-family: "IBMPlexSans", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 13px;
   }
@@ -467,10 +500,10 @@ h7,
   }
 }
 
-.p-bigger{
+.p-bigger {
   font-size: 28px;
   line-height: 140%;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 24px;
   }
@@ -482,10 +515,10 @@ h7,
   }
 }
 
-.p-big{
+.p-big {
   font-size: 24px;
   line-height: 140%;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 20px;
   }
@@ -497,10 +530,10 @@ h7,
   }
 }
 
-.p-small{
+.p-small {
   font-size: 18px;
   line-height: 150%;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 16px;
   }
@@ -512,10 +545,10 @@ h7,
   }
 }
 
-.p-smaller{
+.p-smaller {
   font-size: 16px;
   line-height: 130%;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 14px;
   }
@@ -527,11 +560,11 @@ h7,
   }
 }
 
-.h0{
+.h0 {
   font-size: 88px;
   font-weight: 400;
-  line-height: normal;
-  font-family: 'IBMPlexSans', sans-serif;
+  line-height: 100%;
+  font-family: "IBMPlexSans", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 80px;
   }
@@ -546,7 +579,7 @@ h7,
 .table-1 {
   font-size: 16px;
   line-height: normal;
-  font-family: 'IBMPlexSans', sans-serif;
+  font-family: "IBMPlexSans", sans-serif;
   @include media-breakpoint-down($breakpoint1) {
     font-size: 14px;
   }
@@ -558,7 +591,7 @@ h7,
 .table-2 {
   font-size: 14px;
   line-height: normal;
-  font-family: 'IBMPlexSans', sans-serif;
+  font-family: "IBMPlexSans", sans-serif;
   @include media-breakpoint-down($breakpoint1) {
     font-size: 12px;
   }
@@ -570,7 +603,7 @@ h7,
 .table-3 {
   font-size: 16px;
   line-height: normal;
-  font-family: 'IBMPlexSansCondensed', sans-serif;
+  font-family: "IBMPlexSansCondensed", sans-serif;
   @include media-breakpoint-down($breakpoint1) {
     font-size: 14px;
   }
@@ -582,7 +615,7 @@ h7,
 .table-4 {
   font-size: 14px;
   line-height: normal;
-  font-family: 'IBMPlexSansCondensed', sans-serif;
+  font-family: "IBMPlexSansCondensed", sans-serif;
   @include media-breakpoint-down($breakpoint1) {
     font-size: 12px;
   }
@@ -594,7 +627,7 @@ h7,
 .number-1 {
   font-size: 160px;
   line-height: normal;
-  font-family: 'IBMPlexMono', sans-serif;
+  font-family: "IBMPlexMono", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 140px;
   }
@@ -609,7 +642,7 @@ h7,
 .number-2 {
   font-size: 48px;
   line-height: normal;
-  font-family: 'IBMPlexMono', sans-serif;
+  font-family: "IBMPlexMono", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 44px;
   }
@@ -624,7 +657,7 @@ h7,
 .number-3 {
   font-size: 18px;
   line-height: normal;
-  font-family: 'IBMPlexMono', sans-serif;
+  font-family: "IBMPlexMono", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 16px;
   }
@@ -639,7 +672,7 @@ h7,
 .product-1 {
   font-size: 52px;
   line-height: normal;
-  font-family: 'obvia-wide', sans-serif;
+  font-family: "obvia-wide", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 46px;
   }
@@ -654,7 +687,7 @@ h7,
 .product-2 {
   font-size: 24px;
   line-height: normal;
-  font-family: 'obvia-wide', sans-serif;
+  font-family: "obvia-wide", sans-serif;
   @include media-breakpoint-down($breakpoint1) {
     font-size: 20px;
   }
@@ -666,7 +699,7 @@ h7,
 .product-3 {
   font-size: 18px;
   line-height: normal;
-  font-family: 'obvia-wide', sans-serif;
+  font-family: "obvia-wide", sans-serif;
   @include media-breakpoint-down($breakpoint1) {
     font-size: 16px;
   }
@@ -675,12 +708,16 @@ h7,
   }
 }
 
-.font-0{
+.font-0 {
   font-size: 0;
 }
 
 .extralight {
   font-weight: 200;
+}
+
+.light {
+  font-weight: 300;
 }
 
 .regular {

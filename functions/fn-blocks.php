@@ -3,6 +3,15 @@
 add_action('acf/init', function () {
     if (function_exists('acf_register_block_type')) {
         acf_register_block_type([
+            'name' => 'hero-video-slider',
+            'title' => __('HERO VIDEO SLIDER'),
+            'render_template' => get_template_directory() . '/parts/hero-video-slider.php',
+            'category' => 'layout',
+            'icon' => 'format-video',
+            'mode' => 'edit',
+            'post_types' => ['page'],
+        ]);
+        acf_register_block_type([
             'name' => 'hero-product',
             'title' => __('HERO PRODOTTO'),
             'render_template' => get_template_directory() . '/parts/products/hero-products-static.php',

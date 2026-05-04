@@ -1,4 +1,114 @@
 jQuery(document).ready(function () {
+  function initHeroVideoSlider() {
+    document.querySelectorAll(".js-hero-video-slider").forEach((slider) => {
+      const slides = Array.from(
+        slider.querySelectorAll(".hero-video-slider__slide"),
+      );
+      const tabs = Array.from(
+        slider.querySelectorAll(".hero-video-slider__tab"),
+      );
+
+      if (
+        !slides.length ||
+        !tabs.length ||
+        slider.dataset.heroVideoReady === "true"
+      )
+        return;
+
+      slider.dataset.heroVideoReady = "true";
+
+      let activeIndex = 0;
+
+      function updateProgress() {
+        const activeSlide = slides[activeIndex];
+        const activeTab = tabs[activeIndex];
+        const video = activeSlide ? activeSlide.querySelector("video") : null;
+        const progress = activeTab
+          ? activeTab.querySelector(".hero-video-slider__progress")
+          : null;
+
+        if (
+          video &&
+          progress &&
+          Number.isFinite(video.duration) &&
+          video.duration > 0
+        ) {
+          progress.style.transform =
+            "scaleX(" + Math.min(video.currentTime / video.duration, 1) + ")";
+        }
+
+        window.requestAnimationFrame(updateProgress);
+      }
+
+      function setActiveSlide(index) {
+        if (index < 0 || index >= slides.length) return;
+
+        slides.forEach((slide, slideIndex) => {
+          const isActive = slideIndex === index;
+          const video = slide.querySelector("video");
+
+          slide.classList.toggle("is-active", isActive);
+
+          if (video) {
+            if (isActive) {
+              video.currentTime = 0;
+              video.play().catch(() => {});
+            } else {
+              video.pause();
+            }
+          }
+        });
+
+        tabs.forEach((tab, tabIndex) => {
+          const isActive = tabIndex === index;
+          const progress = tab.querySelector(".hero-video-slider__progress");
+
+          tab.classList.toggle("is-active", isActive);
+          tab.setAttribute("aria-selected", isActive ? "true" : "false");
+
+          if (progress) {
+            progress.style.transform = "scaleX(0)";
+          }
+        });
+
+        activeIndex = index;
+      }
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => setActiveSlide(index));
+      });
+
+      slides.forEach((slide, index) => {
+        const video = slide.querySelector("video");
+
+        if (!video) return;
+
+        video.addEventListener("ended", () => {
+          setActiveSlide((index + 1) % slides.length);
+        });
+      });
+
+      setActiveSlide(0);
+      window.requestAnimationFrame(updateProgress);
+
+      document.addEventListener("visibilitychange", () => {
+        const activeVideo = slides[activeIndex]
+          ? slides[activeIndex].querySelector("video")
+          : null;
+
+        if (!activeVideo) return;
+
+        if (document.hidden) {
+          activeVideo.pause();
+        } else {
+          activeVideo.play().catch(() => {});
+        }
+      });
+    });
+  }
+
+  initHeroVideoSlider();
+
   jQuery(".carousel-text-2").owlCarousel({
     loop: false,
     margin: 0,
@@ -307,110 +417,121 @@ if (firstVideo) {
   });
 }
 
-
 /**
  * Funzione per calcolare l'altezza dinamica del megamenu
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function () {
+  /**
+   * 1. GESTIONE CLICK ATTREZZATURE OPERATIVE
+   * Cambia i pannelli a destra al click sulla sidebar a sinistra
+   */
+  const attrWrapper = document.querySelector(".attrezzature-wrapper");
+  if (attrWrapper) {
+    attrWrapper.addEventListener("click", function (e) {
+      const trigger = e.target.closest(".attrezzature-trigger");
+      if (trigger) {
+        // Impediamo la chiusura del menu e la navigazione del '#'
+        e.preventDefault();
+        e.stopPropagation();
 
-    /**
-     * 1. GESTIONE CLICK ATTREZZATURE OPERATIVE
-     * Cambia i pannelli a destra al click sulla sidebar a sinistra
-     */
-    const attrWrapper = document.querySelector('.attrezzature-wrapper');
-    if (attrWrapper) {
-        attrWrapper.addEventListener('click', function(e) {
-            const trigger = e.target.closest('.attrezzature-trigger');
-            if (trigger) {
-                // Impediamo la chiusura del menu e la navigazione del '#'
-                e.preventDefault();
-                e.stopPropagation();
+        const targetId = trigger.getAttribute("data-bs-target");
 
-                const targetId = trigger.getAttribute('data-bs-target');
-                
-                // Reset classi Attivo sui trigger
-                attrWrapper.querySelectorAll('.attrezzature-trigger').forEach(t => t.classList.remove('is-active'));
-                // Nascondi tutti i pannelli
-                attrWrapper.querySelectorAll('.attrezzature-panel').forEach(p => {
-                    p.classList.remove('d-block');
-                    p.classList.add('d-none');
-                });
-
-                // Attiva quello cliccato
-                trigger.classList.add('is-active');
-                const panel = attrWrapper.querySelector(targetId);
-                if (panel) {
-                    panel.classList.remove('d-none');
-                    panel.classList.add('d-block');
-                }
-            }
+        // Reset classi Attivo sui trigger
+        attrWrapper
+          .querySelectorAll(".attrezzature-trigger")
+          .forEach((t) => t.classList.remove("is-active"));
+        // Nascondi tutti i pannelli
+        attrWrapper.querySelectorAll(".attrezzature-panel").forEach((p) => {
+          p.classList.remove("d-block");
+          p.classList.add("d-none");
         });
-    }
 
-    /**
-     * 2. PREVENZIONE CHIUSURA DROPDOWN (BOOTSTRAP)
-     * Impedisce a Bootstrap di chiudere il menu se clicchiamo su elementi non-link
-     */
-    const specialMenus = document.querySelectorAll('.arredo-tecnico-megamenu, .attrezzature-megamenu');
-    specialMenus.forEach(menu => {
-        menu.addEventListener('click', function(e) {
-            const isRealLink = e.target.closest('a') && 
-                               e.target.closest('a').getAttribute('href') !== '#' && 
-                               e.target.closest('a').getAttribute('href') !== '';
-            
-            // Se NON è un link vero, ferma la propagazione così Bootstrap non sente il click
-            if (!isRealLink) {
-                e.stopPropagation();
-            }
-        });
+        // Attiva quello cliccato
+        trigger.classList.add("is-active");
+        const panel = attrWrapper.querySelector(targetId);
+        if (panel) {
+          panel.classList.remove("d-none");
+          panel.classList.add("d-block");
+        }
+      }
     });
+  }
+
+  /**
+   * 2. PREVENZIONE CHIUSURA DROPDOWN (BOOTSTRAP)
+   * Impedisce a Bootstrap di chiudere il menu se clicchiamo su elementi non-link
+   */
+  const specialMenus = document.querySelectorAll(
+    ".arredo-tecnico-megamenu, .attrezzature-megamenu",
+  );
+  specialMenus.forEach((menu) => {
+    menu.addEventListener("click", function (e) {
+      const isRealLink =
+        e.target.closest("a") &&
+        e.target.closest("a").getAttribute("href") !== "#" &&
+        e.target.closest("a").getAttribute("href") !== "";
+
+      // Se NON è un link vero, ferma la propagazione così Bootstrap non sente il click
+      if (!isRealLink) {
+        e.stopPropagation();
+      }
+    });
+  });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const toggleBtn = document.querySelector('.js-toggle-menu');
-    const rightNav = document.querySelector('.flc-right-nav');
+document.addEventListener("DOMContentLoaded", function () {
+  const toggleBtn = document.querySelector(".js-toggle-menu");
+  const rightNav = document.querySelector(".flc-right-nav");
 
-    // 1. Apertura Menu Mobile
-    if (toggleBtn && rightNav) {
-        toggleBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            this.classList.toggle('is-active');
-            rightNav.classList.toggle('is-active');
-            document.body.classList.toggle('menu-open');
-        });
-    }
+  // 1. Apertura Menu Mobile
+  if (toggleBtn && rightNav) {
+    toggleBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      this.classList.toggle("is-active");
+      rightNav.classList.toggle("is-active");
+      document.body.classList.toggle("menu-open");
+    });
+  }
 
-    // 2. Gestione Accordion Livello 0
-    if (rightNav) {
-        rightNav.addEventListener('click', function(e) {
-            const trigger = e.target.closest('.js-accordion-trigger');
-            const isInside = e.target.closest('.accordion-collapse');
+  // 2. Gestione Accordion Livello 0
+  if (rightNav) {
+    rightNav.addEventListener(
+      "click",
+      function (e) {
+        const trigger = e.target.closest(".js-accordion-trigger");
+        const isInside = e.target.closest(".accordion-collapse");
 
-            if (trigger || isInside) {
-                // Se non è un link di navigazione reale, blocchiamo la chiusura automatica del menu
-                const isLink = e.target.closest('a') && e.target.closest('a').getAttribute('href') !== '#';
-                
-                if (!isLink) {
-                    e.stopPropagation();
-                    e.stopImmediatePropagation();
+        if (trigger || isInside) {
+          // Se non è un link di navigazione reale, blocchiamo la chiusura automatica del menu
+          const isLink =
+            e.target.closest("a") &&
+            e.target.closest("a").getAttribute("href") !== "#";
 
-                    if (trigger) {
-                        const targetId = trigger.getAttribute('data-bs-target');
-                        const targetEl = document.querySelector(targetId);
-                        if (targetEl) {
-                            trigger.classList.toggle('is-active');
-                            // Se Bootstrap è caricato, lo usiamo, altrimenti toggle manuale
-                            if (window.bootstrap) {
-                                let bsCol = bootstrap.Collapse.getInstance(targetEl) || new bootstrap.Collapse(targetEl);
-                                bsCol.toggle();
-                            } else {
-                                targetEl.classList.toggle('show');
-                            }
-                        }
-                    }
+          if (!isLink) {
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+
+            if (trigger) {
+              const targetId = trigger.getAttribute("data-bs-target");
+              const targetEl = document.querySelector(targetId);
+              if (targetEl) {
+                trigger.classList.toggle("is-active");
+                // Se Bootstrap è caricato, lo usiamo, altrimenti toggle manuale
+                if (window.bootstrap) {
+                  let bsCol =
+                    bootstrap.Collapse.getInstance(targetEl) ||
+                    new bootstrap.Collapse(targetEl);
+                  bsCol.toggle();
+                } else {
+                  targetEl.classList.toggle("show");
                 }
+              }
             }
-        }, true);
-    }
+          }
+        }
+      },
+      true,
+    );
+  }
 });
