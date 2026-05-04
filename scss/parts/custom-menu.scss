@@ -93,13 +93,10 @@
 
 .admin-bar {
     .arredo-tecnico-megamenu,
-    .attrezzature-megamenu {
+    .attrezzature-megamenu,
+    .flc-right-nav{
         height: calc(100vh - $header-bar-height-admin) !important;
         top: $header-bar-height-admin !important; /* Si posiziona sotto la navbar */
-        @include media-breakpoint-down(uxl) {
-            height: calc(100vh - $header-bar-height-admin-uxl) !important;
-            top: $header-bar-height-admin-uxl !important;
-        }
     }
 }
 
@@ -215,4 +212,142 @@
 }
 .hover-white:hover{
     color: #ffffff !important;
+}
+
+/* Il contenitore che si apre */
+.flc-right-nav {
+    position: fixed;
+    top: $header-bar-height;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - $header-bar-height) !important;
+    background-color: $primary; /* Fondo scuro coerente */
+    z-index: 999;
+    
+    /* Animazione di apertura */
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease-in-out;
+    
+    overflow-y: auto;
+    padding: 2rem;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar, &::-webkit-scrollbar-button {
+        display: none;
+    }
+    &.is-active {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+        display: flex;
+        align-items: center;
+        @include media-breakpoint-down(lg) {
+            align-items: start;
+        }
+    }
+    .menu-widget-area{
+        figure{
+            width: max-content;
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 100%;
+        }
+        p{
+            color: #ffffff !important;
+        }
+        .is-style-logos-only {
+            column-gap: 2.5rem;
+            row-gap: 1rem;
+            @include media-breakpoint-down(sxl) {
+                column-gap: 2.5rem;
+            }
+            @include media-breakpoint-down(md) {
+                column-gap: 1.75rem;
+            }
+            .wp-block-social-link-label{
+                display: none;
+            }
+        }
+    }
+    .col-6{
+        flex: 1 1 auto;
+    }
+}
+/* Se vuoi bloccare lo scroll del body quando il menu è aperto */
+body.menu-open {
+    overflow: hidden;
+}
+.flc-rightmenu {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    justify-self: end;
+    @include media-breakpoint-down(lg) {
+        width: 100%;
+    }
+    > li{
+        border-bottom: 1px solid $grey800;
+        padding-left: 0 !important;
+        padding-right: 3.5rem !important;
+        position: relative;
+        &:hover{
+            &:after{
+                content: '\e804';
+                font-family: "fontello";
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #fff;
+                font-size: 46px;
+            }
+        }
+    }
+}
+.flc-right-nav {
+    span.nav-link.dropdown-toggle{
+        border-bottom: 1px solid $grey800;
+        padding-left: 0 !important;
+        padding-right: 3.5rem !important;
+        position: relative;
+    }
+    .second-level-label {
+        border-top: 1px solid $grey800;
+        padding-top: 1rem;
+        height: 0;
+        margin-bottom: 0;
+    }
+    .figure-arredo-mob{
+        width: 180px;
+        aspect-ratio: 4 / 3;
+    }
+    .list-unstyled{
+        li:not(:last-of-type){
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid $grey800;
+        }
+    }
+    .js-accordion-trigger{
+        cursor: pointer;
+        .accordion-icon i{
+            display: block;
+            transform: rotate(90deg);
+            font-size: 10px;
+        }
+        &.is-active{
+            .accordion-icon i{
+                transform: rotate(-90deg);
+                position: relative;
+            }
+        }
+    }
+    .menu-attrezzature-operative{
+        .accordion-collapse{
+            padding-top: 1.5rem;
+        }
+    }
 }

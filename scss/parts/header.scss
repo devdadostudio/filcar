@@ -53,6 +53,9 @@ body {
   left: 0;
   right: 0;
   border-bottom: 1px solid $grey800;
+  height: $header-bar-height;
+  display: flex;
+  align-items: center;
   .flc-main-nav-inner {
     display: flex;
     justify-content: space-between;
@@ -79,7 +82,7 @@ body {
 }
 
 .flc-nav-container {
-  .navbar-nav {
+  .navbar-nav:not(.flc-rightmenu) {
     > li {
       //padding: 0 2rem;
       > a {
@@ -217,19 +220,6 @@ body {
       color: $primary;
     }
   }
-  .flc-headmenu {
-    --bs-gutter-x: 1.5rem;
-    --bs-gutter-y: 0;
-    width: 100%;
-    padding-right: calc(var(--bs-gutter-x) * 0.5);
-    padding-left: calc(var(--bs-gutter-x) * 0.5);
-    margin-right: auto;
-    margin-left: auto;
-  }
-  .flc-hamburger-button {
-    padding: 0.5rem 1rem;
-    position: relative;
-  }
 }
 
 .fake-language-switcher {
@@ -324,11 +314,32 @@ body {
   }
 }
 
-
 .flc-main-nav{
   .flc-logo{
     img{
       max-height: 30px;
     }
+  }
+}
+.js-toggle-menu {
+  font-size: 30px !important;
+}
+.flc-headmenu-mobile, .flc-rightmenu{
+  width: 100%;
+  li{
+    padding-left: 0 !important;
+    .nav-link{
+      padding: 1.5rem 0 !important;
+      margin-bottom: 0;
+    }
+  }
+}
+.flc-headmenu-mobile{
+  > li{
+    border-top: 1px solid $grey800;
+  }
+  li{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }

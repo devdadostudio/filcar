@@ -73,6 +73,7 @@ if (function_exists('add_theme_support')) {
     add_image_size('slide-img-ext', 705, 530, false);
     add_image_size('product-car-thumb', 240, 200, false);
     add_image_size('img-menu-arredo-tecnico', 300, 215, false);
+    add_image_size('460x300', 460, 300, false);
     
     // Enables post and comment RSS feed links to head
     add_theme_support('automatic-feed-links');
@@ -157,22 +158,10 @@ function add_slug_to_body_class($classes)
 
 // If Dynamic Sidebar Exists
 if (function_exists('register_sidebar')) {
-    // Define Sidebar Widget Area 1
     register_sidebar(array(
-        'name' => __('Widget Area 1', 'flc'),
+        'name' => __('Menu a destra', 'flc'),
         'description' => __('Description for this widget-area...', 'flc'),
-        'id' => 'widget-area-1',
-        'before_widget' => '<div id="%1$s" class="%2$s">',
-        'after_widget' => '</div>',
-        'before_title' => '<h3>',
-        'after_title' => '</h3>'
-    ));
-    
-    // Define Sidebar Widget Area 2
-    register_sidebar(array(
-        'name' => __('Widget Area 2', 'flc'),
-        'description' => __('Description for this widget-area...', 'flc'),
-        'id' => 'widget-area-2',
+        'id' => 'right-menu-area',
         'before_widget' => '<div id="%1$s" class="%2$s">',
         'after_widget' => '</div>',
         'before_title' => '<h3>',

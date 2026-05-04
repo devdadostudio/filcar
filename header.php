@@ -46,7 +46,6 @@
             $headerBg = 'home';
         }
         ?>
-        <!--<header class="header-placehold"></header>-->
         <header class="flc-main-nav <?php echo $headerBg; ?> w-100vw sp-py-3 sp-lg-py-4 sp-uxl-py-5">
             <div class="flc-main-nav-container container-fluid">
                 <div class="flc-main-nav-inner d-flex sp-gap-3">
@@ -55,30 +54,46 @@
                             <img src="<?php echo get_home_url(); ?>/wp-content/uploads/2026/04/filcar_logo.svg" alt="Logo"><?php?>
                         </a>
                     </nav>
-                    <div class="flc-nav-container d-flex align-items-lg-center">
-                        <div class="flc-nav-mobile-container sp-py-8 sp-px-4 sp-md-p-0">
+                    <div class="flc-nav-container align-items-lg-center d-none d-lg-flex">
+                        <div class="sp-py-8 sp-px-4 sp-md-p-0">
                             <?php filcar_main_menu_nav(); ?>
                         </div>
                     </div>
-                    <div class="flc-nav-container d-flex align-items-center">
+                    <div class="flc-nav-container d-flex align-items-center sp-gap-4 sp-lg-gap-6 sp-sxl-gap-7">
                         <div class="search-toggle text-white">
                             <i class="icon-filcar-icon-arrow-zoom"></i>
                         </div>
-                        <a class="btn no-btn text-white" href="<?php echo home_url(); ?>/contatti">
+                        <a class="btn no-btn text-white d-none d-lg-block" href="<?php echo home_url(); ?>/contatti">
                             Contatti
                             <span class="icon-filcar-icon-arrow-upr"></span>
                         </a>
-                        <a class="btn no-btn text-white" href="<?php echo home_url(); ?>/contatti">
+                        <a class="btn no-btn text-white" href="">
                             IT
                             <span class="icon-filcar-icon-arrow-downr"></span>
                         </a>
-                        <div class="d-block flc-hamburger-button">
+                        <div class="d-block flc-hamburger-button text-white">
                             <button aria-label="Open Menu" class="hamburger hamburger--squeeze js-toggle-menu" type="button">
                                 <i class="icon-filcar-icon-hamburger"></i>
                             </button>
                         </div>
                         <div class="flc-right-nav">
-                            <?php //filcar_right_nav(); ?>
+                            <div class="container-fluid">
+                                <div class="d-flex flex-nowrap sp-gap-8">
+                                    <div class="col-12 col-lg-6">
+                                        <div class="d-flex d-lg-none">
+                                            <?php filcar_main_menu_nav_mob(); ?>
+                                        </div>
+                                        <?php filcar_nav_right(); ?>
+                                    </div>
+                                    <div class="col-6 minh-100 d-none d-lg-block">
+                                        <?php if ( is_active_sidebar( 'right-menu-area' ) ) : ?>
+                                            <div class="menu-widget-area h-100 d-flex flex-column justify-content-between">
+                                                <?php dynamic_sidebar( 'right-menu-area' ); ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

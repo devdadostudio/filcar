@@ -366,3 +366,51 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleBtn = document.querySelector('.js-toggle-menu');
+    const rightNav = document.querySelector('.flc-right-nav');
+
+    // 1. Apertura Menu Mobile
+    if (toggleBtn && rightNav) {
+        toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.classList.toggle('is-active');
+            rightNav.classList.toggle('is-active');
+            document.body.classList.toggle('menu-open');
+        });
+    }
+
+    // 2. Gestione Accordion Livello 0
+    if (rightNav) {
+        rightNav.addEventListener('click', function(e) {
+            const trigger = e.target.closest('.js-accordion-trigger');
+            const isInside = e.target.closest('.accordion-collapse');
+
+            if (trigger || isInside) {
+                // Se non è un link di navigazione reale, blocchiamo la chiusura automatica del menu
+                const isLink = e.target.closest('a') && e.target.closest('a').getAttribute('href') !== '#';
+                
+                if (!isLink) {
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+
+                    if (trigger) {
+                        const targetId = trigger.getAttribute('data-bs-target');
+                        const targetEl = document.querySelector(targetId);
+                        if (targetEl) {
+                            trigger.classList.toggle('is-active');
+                            // Se Bootstrap è caricato, lo usiamo, altrimenti toggle manuale
+                            if (window.bootstrap) {
+                                let bsCol = bootstrap.Collapse.getInstance(targetEl) || new bootstrap.Collapse(targetEl);
+                                bsCol.toggle();
+                            } else {
+                                targetEl.classList.toggle('show');
+                            }
+                        }
+                    }
+                }
+            }
+        }, true);
+    }
+});
