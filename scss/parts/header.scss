@@ -3,6 +3,10 @@
   --site-header-offset: #{$header-bar-height};
   --page-header-gap: 20px;
   --admin-offset: 0px;
+  @include media-breakpoint-down(lg) {
+    --site-header-height: 48px;
+    --site-header-offset: 48px;
+  }
 }
 
 .admin-bar {
@@ -18,7 +22,7 @@
 
 @media (max-width: 782px) {
   .admin-bar {
-    --admin-offset: 46px;
+    --admin-offset: 32px;
   }
 }
 
@@ -29,6 +33,9 @@
 /* stato body */
 body.site-header-visible {
   --site-header-offset: var(--site-header-height);
+  @include media-breakpoint-down(lg) {
+    --site-header-offset: 48px;
+  }
 }
 
 body.site-header-hidden {
@@ -54,6 +61,9 @@ body {
   transform: translateY(0);
   transition: transform 0.35s ease;
   will-change: transform;
+  @include media-breakpoint-down(lg) {
+    height: 48px;
+  }
   .flc-main-nav-inner {
     display: flex;
     justify-content: space-between;
@@ -316,6 +326,9 @@ body {
   .flc-logo{
     img{
       max-height: 30px;
+      @include media-breakpoint-down(lg){
+        max-height: 16px;
+      }
     }
   }
 }

@@ -1,27 +1,24 @@
 .bg-grey {
     background-color: $grey !important;
 }
-
 .bg-blog {
     background: $blog-txt !important;
 }
-
 .bg-primary {
     background: $primary !important;
 }
-
 .text-primary {
     color: $primary !important;
 }
-
 .text-secondary {
     color: $secondary !important;
 }
-
 .text-blog {
     color: $blog-txt !important;
 }
-
+.text-white-half {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
 .text-grey-300 {
     color: $grey300 !important;
 }

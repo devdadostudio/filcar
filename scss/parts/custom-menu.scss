@@ -78,6 +78,10 @@
     border: none;
     background-color: $primary !important;
     transform: none !important;
+    @include media-breakpoint-down(uxl) {
+        top: 79px !important; /* Si posiziona sotto la navbar */
+        height: calc(100vh - 79px) !important;
+    }
 }
 
 .attrezzature-megamenu::after {
@@ -96,7 +100,12 @@
     .attrezzature-megamenu,
     .flc-right-nav{
         height: calc(100vh - $header-bar-height-admin) !important;
-        top: $header-bar-height-admin !important; /* Si posiziona sotto la navbar */
+        @include media-breakpoint-down(uxl) {
+            height: calc(100vh - 111px) !important;
+        }
+        @include media-breakpoint-down(lg) {
+            height: calc(100vh - 48px) !important;
+        }
     }
 }
 
@@ -235,6 +244,14 @@
 
     scrollbar-width: none;
     -ms-overflow-style: none;
+    @include media-breakpoint-down(uxl) {
+        top: 79px;
+        height: calc(100vh - 79px) !important;
+    }
+    @include media-breakpoint-down(lg) {
+        top: 48px;
+        height: calc(100vh - 48px) !important;
+    }
     &::-webkit-scrollbar, &::-webkit-scrollbar-button {
         display: none;
     }
