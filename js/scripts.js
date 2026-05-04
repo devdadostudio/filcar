@@ -78,6 +78,45 @@ jQuery(document).ready(function () {
         tab.addEventListener("click", () => setActiveSlide(index));
       });
 
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      slider.addEventListener(
+        "touchstart",
+        (event) => {
+          if (event.touches.length !== 1) return;
+
+          touchStartX = event.touches[0].clientX;
+          touchStartY = event.touches[0].clientY;
+        },
+        { passive: true },
+      );
+
+      slider.addEventListener(
+        "touchend",
+        (event) => {
+          if (!touchStartX || !touchStartY) return;
+
+          const touch = event.changedTouches[0];
+          const deltaX = touch.clientX - touchStartX;
+          const deltaY = touch.clientY - touchStartY;
+
+          touchStartX = 0;
+          touchStartY = 0;
+
+          if (Math.abs(deltaX) < 45 || Math.abs(deltaX) < Math.abs(deltaY)) {
+            return;
+          }
+
+          if (deltaX < 0) {
+            setActiveSlide((activeIndex + 1) % slides.length);
+          } else {
+            setActiveSlide((activeIndex - 1 + slides.length) % slides.length);
+          }
+        },
+        { passive: true },
+      );
+
       slides.forEach((slide, index) => {
         const video = slide.querySelector("video");
 
