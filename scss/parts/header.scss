@@ -44,7 +44,7 @@ body.site-header-hidden {
 
 /* spazio globale per il contenuto pagina */
 body {
-  padding-top: calc(var(--admin-offset) + var(--site-header-offset));
+  padding-top: var(--site-header-offset);
 }
 
 .flc-main-nav {
@@ -322,11 +322,11 @@ body {
   }
 }
 
-.flc-main-nav{
-  .flc-logo{
-    img{
+.flc-main-nav {
+  .flc-logo {
+    img {
       max-height: 30px;
-      @include media-breakpoint-down(lg){
+      @include media-breakpoint-down(lg) {
         max-height: 16px;
       }
     }
@@ -335,21 +335,22 @@ body {
 .js-toggle-menu {
   font-size: 30px !important;
 }
-.flc-headmenu-mobile, .flc-rightmenu{
+.flc-headmenu-mobile,
+.flc-rightmenu {
   width: 100%;
-  li{
+  li {
     padding-left: 0 !important;
-    .nav-link{
+    .nav-link {
       padding: 1.5rem 0 !important;
       margin-bottom: 0;
     }
   }
 }
-.flc-headmenu-mobile{
-  > li{
+.flc-headmenu-mobile {
+  > li {
     border-top: 1px solid $grey800;
   }
-  li{
+  li {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }

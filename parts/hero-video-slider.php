@@ -70,7 +70,7 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'hero-video-slider-' .
                         <?php endif; ?>
 
                         <?php if ($slide_cta_url) : ?>
-                            <a class="hero-video-slider__cta" href="<?php echo esc_url($slide_cta_url); ?>" target="<?php echo esc_attr($slide_cta_target); ?>">
+                            <a class="hero-video-slider__cta p-small" href="<?php echo esc_url($slide_cta_url); ?>" target="<?php echo esc_attr($slide_cta_target); ?>">
                                 <span><?php echo esc_html($slide_cta_title); ?></span>
                                 <i class="icon icon-filcar-icon-arrow-upr"></i>
                             </a>
@@ -93,7 +93,7 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'hero-video-slider-' .
                                 <span class="hero-video-slider__progress"></span>
                             </span>
                             <?php if ($label) : ?>
-                                <span class="hero-video-slider__tab-label"><?php echo esc_html($label); ?></span>
+                                <span class="hero-video-slider__tab-label p-smaller"><?php echo esc_html($label); ?></span>
                             <?php endif; ?>
                         </button>
                     <?php endforeach; ?>
