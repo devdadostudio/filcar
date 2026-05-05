@@ -1,0 +1,42 @@
+.search-container{
+    .search-container-inner {
+        background:
+        linear-gradient(0deg, rgba(202, 202, 204, 0.4), rgba(202, 202, 204, 0.4)),
+        linear-gradient(0deg, rgba(71, 71, 75, 0.9), rgba(71, 71, 75, 0.9)),
+        linear-gradient(0deg, rgba(71, 71, 75, 0.4), rgba(71, 71, 75, 0.4)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
+        .search-title{
+            border-right: 1px solid $white;
+            @include media-breakpoint-down(md) {
+                width: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+        form{
+            flex-grow: 1;
+            display: flex;
+            > input{
+                flex-grow: 1;
+                background: transparent;
+                border: none;
+                padding: 0 1rem;
+                color: $white;
+                outline: none;
+            }
+            .search-submit {
+                aspect-ratio: 1;
+                width: 70px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-left: 1px solid $white;
+                color: $white;
+                @include media-breakpoint-down(md) {
+                    width: 50px;
+                }
+            }
+        }
+    }
+}

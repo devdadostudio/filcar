@@ -679,4 +679,12 @@ document.addEventListener("DOMContentLoaded", function () {
       searchContainer.classList.remove("show");
     });
   }
+  const searchSubmit = document.querySelector(".search-submit");
+  const form = document.getElementById("searchform");
+  if (searchSubmit) {
+    searchSubmit.addEventListener("click", function (e) {
+      e.preventDefault();
+      form.submit();
+    });
+  }
 });

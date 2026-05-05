@@ -106,6 +106,9 @@
         @include media-breakpoint-down(lg) {
             height: calc(100vh - 80px) !important;
         }
+        @include media-breakpoint-down(md) {
+            height: calc(100vh - 94px) !important;
+        }
     }
 }
 

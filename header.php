@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="flc-nav-container d-flex align-items-center sp-gap-4 sp-lg-gap-6 sp-sxl-gap-7">
-                        <div class="search-toggle text-white">
+                        <div class="search-toggle text-white cursor-pointer">
                             <i class="icon-filcar-icon-arrow-zoom"></i>
                         </div>
                         <a class="btn no-btn text-white d-none d-lg-block" href="<?php echo home_url(); ?>/contatti">
@@ -101,7 +101,41 @@
                             </div>
                         </div>
                         <div class="flc-search-container dropdown-menu">
-                            <?php get_search_form(); ?>
+                            <div class="container-fluid">
+                                <div class="top-container sp-mb-5">
+                                    <div class="search-breadcrumbs breadcrumbs sp-pt-5 sp-pb-7">
+                                        <div class="row">
+                                            <div class="col-6 p-smaller text-grey-600">
+                                                <span>
+                                                    <span>
+                                                        <a href="<?php echo home_url(); ?>" class="text-grey-600 text-decoration-none">Home</a>
+                                                    </span> <i class="icon-filcar-icon-chevron-forward"></i> 
+                                                    <span class="breadcrumb_last" aria-current="page">Ricerca</span>
+                                                </span>
+                                            </div>
+                                            <div class="col-6 d-flex justify-content-end text-white">
+                                                <div class="search-close">
+                                                    <i class="icon-filcar-icon-close"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="search-title">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="search-title">
+                                                    <span class="subtitle-1 text-white">RICERCA</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="search-container">
+                                    <div class="col-12 sp-px-0 sp-md-px-6 sp-sxl-px-16">
+                                        <?php get_search_form(); ?>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
