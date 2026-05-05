@@ -594,8 +594,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       section.dataset.innovationReady = "true";
 
-      const isMobile = window.matchMedia("(max-width: 1024px)").matches;
-      const endDistance = isMobile ? "+=135%" : "+=150%";
+      const isMobileViewport = () =>
+        window.matchMedia("(max-width: 1024px)").matches;
+      const isMobile = isMobileViewport();
+      const endDistance = () => (isMobileViewport() ? "+=180%" : "+=220%");
+      const shrinkDuration = 0.72;
+      const introDuration = 0.22;
+      const getMediaWidth = () =>
+        isMobileViewport() ? "calc(100% - 48px)" : "71.5vw";
+      const getMediaHeight = () =>
+        isMobileViewport()
+          ? 193
+          : Math.min(window.innerHeight * 0.58, 540);
+      const getMediaY = () =>
+        isMobileViewport()
+          ? 166
+          : Math.max(40, Math.min(72, window.innerHeight * 0.06));
 
       gsap.set(content, { autoAlpha: 0, y: isMobile ? 28 : 42 });
       gsap.set(bar, { scaleX: 1 });
@@ -617,22 +631,31 @@ document.addEventListener("DOMContentLoaded", () => {
         .to(
           media,
           {
-            width: isMobile ? "calc(100% - 48px)" : "74.7vw",
-            height: isMobile ? "193px" : "64vh",
-            y: isMobile ? 166 : 72,
-            borderRadius: isMobile ? 5 : 4,
+            width: getMediaWidth,
+            height: getMediaHeight,
+            y: getMediaY,
+            borderRadius: () => (isMobileViewport() ? 5 : 4),
+            duration: shrinkDuration,
           },
           0,
         )
-        .to(intro, { autoAlpha: 0, y: isMobile ? -30 : -50 }, 0)
+        .to(
+          intro,
+          {
+            autoAlpha: 0,
+            y: isMobile ? -30 : -50,
+            duration: introDuration,
+          },
+          0.06,
+        )
         .fromTo(
           content,
           { autoAlpha: 0, y: isMobile ? 28 : 42 },
-          { autoAlpha: 1, y: 0, duration: 0.34 },
-          0.34,
+          { autoAlpha: 1, y: 0, duration: 0.24 },
+          0.58,
         )
-        .to(bar, { scaleX: isMobile ? 0.9 : 0.86, duration: 0.2 }, 0.45)
-        .to({}, { duration: 0.34 });
+        .to(bar, { scaleX: isMobile ? 0.9 : 0.86, duration: 0.16 }, 0.68)
+        .to({}, { duration: 0.28 });
     });
   }
 
