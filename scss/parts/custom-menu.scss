@@ -104,7 +104,7 @@
             height: calc(100vh - 111px) !important;
         }
         @include media-breakpoint-down(lg) {
-            height: calc(100vh - 48px) !important;
+            height: calc(100vh - 80px) !important;
         }
     }
 }
@@ -244,6 +244,7 @@
 
     scrollbar-width: none;
     -ms-overflow-style: none;
+
     @include media-breakpoint-down(uxl) {
         top: 79px;
         height: calc(100vh - 79px) !important;
@@ -310,6 +311,11 @@ body.menu-open {
         padding-left: 0 !important;
         padding-right: 3.5rem !important;
         position: relative;
+        @include media-breakpoint-down(lg) {
+            padding-right: 0 !important;
+            border-bottom: none;
+            border-top: 1px solid $grey800;
+        }
         &:hover{
             &:after{
                 content: '\e804';
@@ -320,6 +326,20 @@ body.menu-open {
                 transform: translateY(-50%);
                 color: #fff;
                 font-size: 46px;
+                @include media-breakpoint-down(lg) {
+                    content: none;
+                }
+            }
+        }
+        > a{
+            @include media-breakpoint-down(lg) {
+                font-weight: 400;
+                line-height: normal;
+                font-family: "IBMPlexSans", sans-serif;
+                font-size: 20px;
+            }
+            @include media-breakpoint-down(md) {
+                font-size: 16px;
             }
         }
     }
@@ -336,6 +356,9 @@ body.menu-open {
         padding-top: 1rem;
         height: 0;
         margin-bottom: 0;
+        @include media-breakpoint-down(md) {
+            padding-top: 8px;
+        }
     }
     .figure-arredo-mob{
         width: 180px;
@@ -346,6 +369,10 @@ body.menu-open {
             margin-bottom: 1rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid $grey800;
+            @include media-breakpoint-down(md) {
+                margin-bottom: 8px;
+                padding-bottom: 8px;
+            }
         }
     }
     .js-accordion-trigger{
@@ -365,6 +392,49 @@ body.menu-open {
     .menu-attrezzature-operative{
         .accordion-collapse{
             padding-top: 1.5rem;
+            @include media-breakpoint-down(md) {
+                padding-top: 0;
+            }
+            .accordion-collapse{
+                @include media-breakpoint-down(md) {
+                    padding: 8px;
+                    .list-unstyled{
+                        padding-bottom: 0 !important;
+                    }
+                }
+            }
+        }
+        .accordion-body{
+            @include media-breakpoint-down(lg) {
+                padding-left: 1.5rem !important;
+                gap: 2rem !important;
+            }
+            @include media-breakpoint-down(md) {
+                gap: 1rem !important;
+            }
+        }
+    }
+}
+.flc-rightmenu-mobile li.menu-item-has-children{
+    .sub-menu {
+        padding-left: 0;
+        list-style: none;
+        > li {
+            > a{
+                padding: 9px 0 !important;
+                color: $grey500 !important;
+            }
+            &:first-of-type {
+                > a {
+                    padding-top: 0 !important;
+                }
+            }
+            /* &:first-of-type {
+                > a {
+                    padding-top: 0 !important;
+                    @extend .p-small;
+                }
+            } */
         }
     }
 }

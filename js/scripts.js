@@ -574,3 +574,15 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  // 3. Gestione Accordion Livello 1
+  const searchToggle = document.querySelector(".search-toggle");
+  if (searchToggle) {
+    const searchContainer = document.querySelector(".flc-search-container");
+    searchToggle.addEventListener("click", function (e) {
+      e.preventDefault();
+      searchContainer.classList.toggle("show");
+    });
+  }
+});

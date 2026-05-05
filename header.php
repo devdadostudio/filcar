@@ -51,7 +51,7 @@
                 <div class="flc-main-nav-inner d-flex sp-gap-3">
                     <nav class="flc-main-header">
                         <a class="flc-main-brand flc-logo font-0" href="<?php echo home_url(); ?>">
-                            <img src="<?php echo get_home_url(); ?>/wp-content/uploads/2026/04/filcar_logo.svg" alt="Logo"><?php?>
+                            <img src="<?php echo get_home_url(); ?>/wp-content/uploads/2026/04/filcar_logo.svg" alt="Logo">
                         </a>
                     </nav>
                     <div class="flc-nav-container align-items-lg-center d-none d-lg-flex">
@@ -76,14 +76,19 @@
                                 <i class="icon-filcar-icon-hamburger"></i>
                             </button>
                         </div>
-                        <div class="flc-right-nav">
+                        <div class="flc-right-nav sp-pt-6 sp-md-pt-11 sp-lg-pt-5 sp-px-0 sp-md-px-5">
                             <div class="container-fluid">
                                 <div class="d-flex flex-nowrap sp-gap-8">
                                     <div class="col-12 col-lg-6">
                                         <div class="d-flex d-lg-none">
                                             <?php filcar_main_menu_nav_mob(); ?>
                                         </div>
-                                        <?php filcar_nav_right(); ?>
+                                        <div class="d-none d-lg-block">
+                                            <?php filcar_nav_right(); ?>
+                                        </div>
+                                        <div class="d-flex d-lg-none">
+                                            <?php filcar_nav_right_mob(); ?>
+                                        </div>
                                     </div>
                                     <div class="col-6 minh-100 d-none d-lg-block">
                                         <?php if ( is_active_sidebar( 'right-menu-area' ) ) : ?>
@@ -94,6 +99,9 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="flc-search-container dropdown-menu">
+                            <?php get_search_form(); ?>
                         </div>
                     </div>
                 </div>

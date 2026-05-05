@@ -69,11 +69,36 @@ function filcar_nav_right()
         )
     );
 }
+
+function filcar_nav_right_mob()
+{
+    wp_nav_menu(
+        array(
+            'theme_location'  => 'right-menu-mobile',
+            'menu'            => '',
+            'container'       => 'div',
+            'container_class' => 'menu-{menu slug}-container',
+            'container_id'    => '',
+            'menu_class'      => '',
+            'menu_id'         => '',
+            'echo'            => true,
+            'fallback_cb'     => 'wp_page_menu',
+            'before'          => '',
+            'after'           => '',
+            'link_before'     => '',
+            'link_after'      => '',
+            'items_wrap'      => '<ul class="navbar-nav flc-rightmenu flc-rightmenu-mobile">%3$s</ul>',
+            'depth'           => 0,
+        )
+    );
+}
+
 function register_html5_menu()
 {
     register_nav_menus(array(
         'header-menu' => __('Header Menu', 'pmx'),
         'right-menu'  => __('Right Menu', 'pmx'),
+        'right-menu-mobile'  => __('Right Menu Mobile', 'pmx'),
     ));
 }
 add_action('init', 'register_html5_menu'); // Add HTML5 Blank Menu
@@ -93,6 +118,8 @@ function aggiungi_classe_ai_link($atts, $item, $args) {
     // Esempio: aggiungi una classe solo se il menu è quello "primary"
     if(isset($args->menu) && ($args->menu->name == 'Right menu')) {
         $atts['class'] .= ' h3 fw-normal text-white';
+    }elseif(isset($args->menu) && ($args->menu->name == 'Right menu mobile')) {
+        $atts['class'] .= ' text-white';
     }
 
     return $atts;
@@ -367,17 +394,17 @@ class Custom_Submenu_Walker_Mobile extends Walker_Nav_Menu {
             // Capiamo se questa voce specifica deve avere l'accordion
             $this->is_special = in_array('menu-arredo-tecnico', $classes) || in_array('menu-attrezzature-operative', $classes);
             
-            $output .= "\n<li class=\"" . esc_attr(implode(' ', $classes)) . " nav-item mb-2\">";
+            $output .= "\n<li class=\"" . esc_attr(implode(' ', $classes)) . " nav-item\">";
             
             if ($this->is_special) {
                 $target_id = "collapse-menu-" . $item->ID;
                 $output .= "<div class=\"d-flex justify-content-between align-items-center w-100 js-accordion-trigger\" role=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#{$target_id}\">";
                 $output .= "<span class=\"nav-link h7 fw-normal text-white mb-0\">" . $item->title . "</span>";
-                $output .= "<span class=\"accordion-icon text-white h4 mb-0\"><i class=\"icon-filcar-icon-chevron-forward\"></i></span></div>";
+                $output .= "<span class=\"accordion-icon text-white-half h4 mb-0\"><i class=\"icon-filcar-icon-chevron-forward\"></i></span></div>";
                 
                 // Apertura corpo accordion
                 $output .= "<div id=\"{$target_id}\" class=\"accordion-collapse collapse\">";
-                $output .= "<div class=\"accordion-body px-0 py-2 d-flex flex-column sp-gap-4\">";
+                $output .= "<div class=\"accordion-body px-0 d-flex flex-column sp-gap-2 sp-md-gap-3 sp-pb-4\">";
             } else {
                 $output .= "<a href=\"" . esc_url($item->url) . "\" class=\"nav-link h3 fw-normal text-white\">" . $item->title . "</a>";
             }
@@ -387,37 +414,38 @@ class Custom_Submenu_Walker_Mobile extends Walker_Nav_Menu {
         elseif ($depth === 1 && $this->is_special) {
             // Controllo se siamo nel ramo attrezzature (per fare il sotto-accordion)
             // Cerchiamo la classe nel genitore o nel titolo
-            $is_attr_branch = strpos(strtolower($item->title), 'aspirazione') !== false || strpos(strtolower($item->title), 'distribuzione') !== false;
+            $is_attr_branch = in_array('is-accordion', $classes);
 
             if ($is_attr_branch) {
                 $sub_id = "sub-collapse-" . $item->ID;
                 $output .= "<div class=\"special-menu-section\">";
                 $output .= "<div class=\"d-flex justify-content-between align-items-center js-accordion-trigger\" role=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#{$sub_id}\">";
                 $output .= "<p class=\"p-big text-white mb-0\">" . $item->title . "</p>";
-                $output .= "<span class=\"accordion-icon text-white\"><i class=\"icon-filcar-icon-chevron-forward\"></i></span></div>";
-                $output .= "<div id=\"{$sub_id}\" class=\"accordion-collapse collapse\"><ul class=\"list-unstyled ps-4 pb-3 mb-0\">";
+                $output .= "<span class=\"accordion-icon text-white-half\"><i class=\"icon-filcar-icon-chevron-forward\"></i></span></div>";
+                $output .= "<div id=\"{$sub_id}\" class=\"accordion-collapse collapse\"><ul class=\"list-unstyled ps-3 ps-md-4 pb-3 mb-0\">";
             } else {
                 // Arredo tecnico (statico con immagine)
-                $output .= "<div class=\"special-menu-section ms-3 mt-4 mb-3\">";
+                $output .= "<div class=\"special-menu-section ms-3\">";
                 $img = get_field('immagine', $item);
                 if ($img) {
-                    $output .= "<div class=\"mb-2 pe-3\"><img src=\"".esc_url($img['url'])."\" style=\"width:100%;height:auto;border-radius:4px;\"></div>";
+                    $output .= "<div class=\"pe-3\"><img src=\"".esc_url($img['url'])."\" style=\"width:100%;height:auto;border-radius:4px;\"></div>";
                 }
-                $output .= "<p class=\"text-uppercase small fw-bold text-grey-800 second-level-label mb-2\">" . $item->title . "</p>";
-                $output .= "<ul class=\"list-unstyled ps-4 mb-0\">";
+                $output .= "<p class=\"text-uppercase small fw-bold text-grey-800 second-level-label\">" . $item->title . "</p>";
+                $output .= "<ul class=\"list-unstyled ps-3 ps-md-4 mb-0\">";
             }
         }
 
         // --- LIVELLO 2 ---
         elseif ($depth === 2 && $this->is_special) {
             $img = get_field('immagine', $item);
-            $output .= "<li>";
             if ($img) {
-                $output .= "<a href=\"".esc_url($item->url)."\" class=\"d-flex align-items-end justify-content-between text-decoration-none py-1 mb-3\">";
+                $output .= "<li>";
+                $output .= "<a href=\"".esc_url($item->url)."\" class=\"d-flex align-items-end justify-content-between text-decoration-none\">";
                 $output .= "<div><span class=\"d-block text-white fw-medium\">".$item->title."</span></div>";
                 $output .= "<figure class=\"figure-arredo-mob respimg rounded overflow-hidden mb-0\"><img src=\"".esc_url($img['url'])."\" alt=\"\"></figure></a>";
             } else {
-                $output .= "<a href=\"".esc_url($item->url)."\" class=\"nav-link p-big py-2 text-white-50\">" . $item->title . "</a>";
+                $output .= "<li class=\"sp-my-0 border-none\">";
+                $output .= "<a href=\"".esc_url($item->url)."\" class=\"text-grey-400 p-big text-decoration-none\">" . $item->title . "</a>";
             }
             $output .= "</li>";
         }
@@ -427,15 +455,12 @@ class Custom_Submenu_Walker_Mobile extends Walker_Nav_Menu {
 
         if ($depth === 1 && $this->is_special) {
             $classes = empty( $item->classes ) ? [] : (array) $item->classes;
-            $is_attr_branch = strpos(strtolower($item->title), 'aspirazione') !== false 
-                        || strpos(strtolower($item->title), 'distribuzione') !== false;
+            $is_attr_branch = in_array('is-accordion', $classes); // <-- solo questo cambia
 
-            $output .= "</ul>"; // chiude la lista prodotti (presente in entrambi i rami)
-
+            $output .= "</ul>";
             if ($is_attr_branch) {
-                $output .= "</div>"; // chiude il collapse (#sub-collapse-X)
+                $output .= "</div>"; // chiude accordion-collapse
             }
-
             $output .= "</div>"; // chiude .special-menu-section
         }
 

@@ -355,3 +355,27 @@ body {
     padding-right: 0 !important;
   }
 }
+.flc-search-container {
+  width: 100vw !important;
+  height: calc(100vh - $header-bar-height) !important;
+  position: fixed !important;
+  left: 0 !important;
+  top: $header-bar-height !important; /* Si posiziona sotto la navbar */
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+  background-color: $primary !important;
+  transform: none !important;
+  &.show{
+      display: flex !important;
+  }
+  > .container-fluid{
+      height: calc(100vh - $header-bar-height) !important;
+      overflow-y: scroll;
+  }
+  @include media-breakpoint-down(uxl) {
+      top: 79px !important; /* Si posiziona sotto la navbar */
+      height: calc(100vh - 79px) !important;
+  }
+}
