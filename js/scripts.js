@@ -586,3 +586,67 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  function initInnovationScroll() {
+    const sections = gsap.utils.toArray(".js-innovation-scroll");
+
+    if (!sections.length || !window.ScrollTrigger) return;
+
+    sections.forEach((section) => {
+      if (section.dataset.innovationReady === "true") return;
+
+      const pin = section.querySelector(".innovation-scroll__pin");
+      const media = section.querySelector(".innovation-scroll__media");
+      const intro = section.querySelector(".innovation-scroll__intro");
+      const content = section.querySelector(".innovation-scroll__content");
+      const bar = section.querySelector(".innovation-scroll__bar");
+
+      if (!pin || !media || !intro || !content) return;
+
+      section.dataset.innovationReady = "true";
+
+      const isMobile = window.matchMedia("(max-width: 1024px)").matches;
+      const endDistance = isMobile ? "+=135%" : "+=150%";
+
+      gsap.set(content, { autoAlpha: 0, y: isMobile ? 28 : 42 });
+      gsap.set(bar, { scaleX: 1 });
+
+      const timeline = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: endDistance,
+          scrub: 0.85,
+          pin,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      timeline
+        .to(
+          media,
+          {
+            width: isMobile ? "calc(100% - 48px)" : "74.7vw",
+            height: isMobile ? "193px" : "64vh",
+            y: isMobile ? 166 : 72,
+            borderRadius: isMobile ? 5 : 4,
+          },
+          0,
+        )
+        .to(intro, { autoAlpha: 0, y: isMobile ? -30 : -50 }, 0)
+        .fromTo(
+          content,
+          { autoAlpha: 0, y: isMobile ? 28 : 42 },
+          { autoAlpha: 1, y: 0, duration: 0.34 },
+          0.34,
+        )
+        .to(bar, { scaleX: isMobile ? 0.9 : 0.86, duration: 0.2 }, 0.45)
+        .to({}, { duration: 0.34 });
+    });
+  }
+
+  initInnovationScroll();
+});

@@ -12,6 +12,15 @@ add_action('acf/init', function () {
             'post_types' => ['page'],
         ]);
         acf_register_block_type([
+            'name' => 'innovation-scroll',
+            'title' => __('SEZIONE INNOVAZIONE ANIMATA'),
+            'render_template' => get_template_directory() . '/parts/innovation-scroll.php',
+            'category' => 'layout',
+            'icon' => 'images-alt2',
+            'mode' => 'edit',
+            'post_types' => ['page'],
+        ]);
+        acf_register_block_type([
             'name' => 'hero-product',
             'title' => __('HERO PRODOTTO'),
             'render_template' => get_template_directory() . '/parts/products/hero-products-static.php',
