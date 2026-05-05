@@ -575,18 +575,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  // 3. Gestione Accordion Livello 1
-  const searchToggle = document.querySelector(".search-toggle");
-  if (searchToggle) {
-    const searchContainer = document.querySelector(".flc-search-container");
-    searchToggle.addEventListener("click", function (e) {
-      e.preventDefault();
-      searchContainer.classList.toggle("show");
-    });
-  }
-});
-
 document.addEventListener("DOMContentLoaded", () => {
   function initInnovationScroll() {
     const sections = gsap.utils.toArray(".js-innovation-scroll");
@@ -649,4 +637,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   initInnovationScroll();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  // 3. Gestione Accordion Livello 1
+  const searchToggle = document.querySelector(".search-toggle");
+  const searchContainer = document.querySelector(".flc-search-container");
+  if (searchToggle) {
+    searchToggle.addEventListener("click", function (e) {
+      e.preventDefault();
+      searchContainer.classList.toggle("show");
+    });
+  }
+  const searchClose = document.querySelector(".search-close");
+  if (searchClose) {
+    searchClose.addEventListener("click", function (e) {
+      e.preventDefault();
+      searchContainer.classList.remove("show");
+    });
+  }
 });
