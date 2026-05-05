@@ -11,18 +11,15 @@
 
 .admin-bar {
   --admin-offset: 32px;
+  @include media-breakpoint-down(md) {
+    --admin-offset: 46px;
+  }
 }
 
 @include media-breakpoint-down(uxl) {
   :root {
     --site-header-height: #{$header-bar-height-uxl};
     --site-header-offset: #{$header-bar-height-uxl};
-  }
-}
-
-@media (max-width: 782px) {
-  .admin-bar {
-    --admin-offset: 32px;
   }
 }
 
@@ -360,7 +357,7 @@ body {
   height: calc(100vh - $header-bar-height) !important;
   position: fixed !important;
   left: 0 !important;
-  top: $header-bar-height !important; /* Si posiziona sotto la navbar */
+  top: $header-bar-height !important;
   margin: 0;
   padding: 0;
   border-radius: 0;
@@ -374,8 +371,8 @@ body {
       height: calc(100vh - $header-bar-height) !important;
       overflow-y: scroll;
   }
-  @include media-breakpoint-down(uxl) {
-      top: 79px !important; /* Si posiziona sotto la navbar */
-      height: calc(100vh - 79px) !important;
+  @include media-breakpoint-down(lg) {
+      top: 48px !important;
+      height: calc(100vh - 48px) !important;
   }
 }
