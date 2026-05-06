@@ -63,3 +63,43 @@ function get_icon($name) {
 
     return $icons[$name] ?? '';
 }
+
+function registra_custom_post_type_settori() {
+
+    $labels = array(
+        'name'                  => 'Settori',
+        'singular_name'         => 'Settore',
+        'menu_name'             => 'Settori',
+        'name_admin_bar'        => 'Settore',
+        'add_new'               => 'Aggiungi Nuovo',
+        'add_new_item'          => 'Aggiungi Nuovo Settore',
+        'new_item'              => 'Nuovo Settore',
+        'edit_item'             => 'Modifica Settore',
+        'view_item'             => 'Vedi Settore',
+        'all_items'             => 'Tutti i Settori',
+        'search_items'          => 'Cerca Settori',
+        'not_found'             => 'Nessun settore trovato.',
+        'not_found_in_trash'    => 'Nessun settore trovato nel cestino.'
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'settori' ),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => 5,
+        'menu_icon'          => 'dashicons-category', // Icona nel menu admin
+        'show_in_rest'       => true, // Obbligatorio per abilitare l'editor Gutenberg
+        'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' )
+    );
+
+    register_post_type( 'settori', $args );
+}
+
+add_action( 'init', 'registra_custom_post_type_settori' );

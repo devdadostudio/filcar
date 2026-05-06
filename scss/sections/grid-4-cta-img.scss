@@ -1,0 +1,75 @@
+.section-grid-4-cta-img {
+    .section-inner {
+        .cta-section {
+            position: relative;
+            &:first-child {
+                &:before {
+                    content: "";
+                    position: absolute;
+                    background: $primary;
+                    width: 1px;
+                    height: 65%;
+                    right: 0;
+                    bottom: 2.5rem;
+                    z-index: 2;
+                }
+            }
+            &:nth-child(2) {
+                &:before {
+                    content: "";
+                    position: absolute;
+                    background: $primary;
+                    width: 65%;
+                    height: 1px;
+                    left: 2.5rem;
+                    z-index: 2;
+                    bottom: 0;
+                }
+            }
+            &:nth-child(3) {
+                &:before {
+                    content: "";
+                    position: absolute;
+                    background: $primary;
+                    width: 65%;
+                    height: 1px;
+                    right: 2.5rem;
+                    z-index: 2;
+                    top: 0;
+                }
+            }
+            &:nth-child(4) {
+                &:before {
+                    content: "";
+                    position: absolute;
+                    background: $primary;
+                    width: 1px;
+                    height: 65%;
+                    left: 0;
+                    top: 2.5rem;
+                    z-index: 2;
+                }
+            }
+            &:after {
+                content: "\e804";
+                font-family: 'fontello';
+                position: absolute;
+                color: #ffffff;
+                font-size: 58px;
+                right: 1.5rem;
+                top: 2.5rem;
+                transition: all 0.3s ease-in-out;
+            }
+            &:hover{
+                &:after{
+                    right: 0.75rem;
+                    top: 1.75rem;
+                }
+                .subtitle-2{
+                    color: #ffffff !important;
+                    transition: all 0.3s ease-in-out;
+                }
+            }
+        }
+    }
+}

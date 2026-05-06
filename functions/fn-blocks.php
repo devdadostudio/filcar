@@ -101,5 +101,35 @@ add_action('acf/init', function () {
             'mode' => 'edit',
             'post_types' => ['page', 'product'],
         ]);
+
+        acf_register_block_type([
+            'name' => 'grid-4-cta-img',
+            'title' => __('CTA grid: 4 CTA + immagine'),
+            'render_template' => get_template_directory() . '/parts/grid-4-cta-img.php',
+            'category' => 'layout',
+            'icon' => 'format-gallery',
+            'mode' => 'edit',
+            'post_types' => ['page', 'product'],
+        ]);
+
+        acf_register_block_type([
+            'name' => 'img-txt',
+            'title' => __('Immagini + testo affiancato'),
+            'render_template' => get_template_directory() . '/parts/img-txt.php',
+            'category' => 'layout',
+            'icon' => 'format-gallery',
+            'mode' => 'edit',
+            'post_types' => ['page', 'product'],
+        ]);
+
+        acf_register_block_type([
+            'name' => 'txt-cta-carousel-sectors',
+            'title' => __('Testo + CTA + carosello settori'),
+            'render_template' => get_template_directory() . '/parts/txt-cta-carousel-sectors.php',
+            'category' => 'layout',
+            'icon' => 'format-video',
+            'mode' => 'edit',
+            'post_types' => ['page', 'product'],
+        ]);
     }
 });

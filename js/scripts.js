@@ -688,3 +688,19 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+jQuery(document).ready(function () {
+  jQuery(".carousel-sectors").owlCarousel({
+    loop: false,
+    margin: 24,
+    nav: true,
+    dots: false,
+    responsive: {
+      0: {
+        items: 1,
+      },
+      993: {
+        items: 2,
+      },
+    },
+  });
+});

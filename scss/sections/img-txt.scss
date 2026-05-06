@@ -1,0 +1,17 @@
+.img-txt {
+    .figure-img {
+        @include media-breakpoint-down(lg) {
+            aspect-ratio: 4 / 3;
+        }
+    }
+    .txt-container {
+        .btn{
+            @include media-breakpoint-down(lg) {
+                width: 100%;
+                > span{
+                    justify-content: center;
+                }
+            }
+        }
+    }
+}
