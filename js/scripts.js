@@ -662,6 +662,75 @@ document.addEventListener("DOMContentLoaded", () => {
   initInnovationScroll();
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  function initExpandableCards() {
+    const sections = document.querySelectorAll(".js-expandable-cards");
+
+    if (!sections.length) return;
+
+    sections.forEach((section) => {
+      if (section.dataset.expandableCardsReady === "true") return;
+
+      const cards = Array.from(
+        section.querySelectorAll(".expandable-cards__card"),
+      );
+
+      if (!cards.length) return;
+
+      section.dataset.expandableCardsReady = "true";
+
+      const setActiveCard = (index) => {
+        cards.forEach((card, cardIndex) => {
+          card.classList.toggle("is-active", cardIndex === index);
+          card.setAttribute(
+            "aria-expanded",
+            cardIndex === index ? "true" : "false",
+          );
+        });
+      };
+
+      cards.forEach((card, index) => {
+        card.addEventListener("mouseenter", () => {
+          if (section.dataset.expansionMode !== "scroll") {
+            setActiveCard(index);
+          }
+        });
+
+        card.addEventListener("focus", () => setActiveCard(index));
+        card.addEventListener("click", () => setActiveCard(index));
+      });
+
+      setActiveCard(0);
+
+      if (
+        section.dataset.expansionMode === "scroll" &&
+        window.ScrollTrigger &&
+        cards.length > 1 &&
+        !window.matchMedia("(max-width: 991px)").matches
+      ) {
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top 58%",
+          end: "bottom 42%",
+          scrub: true,
+          onUpdate: (self) => {
+            const activeIndex = Math.min(
+              cards.length - 1,
+              Math.floor(self.progress * cards.length),
+            );
+
+            setActiveCard(activeIndex);
+          },
+          onLeaveBack: () => setActiveCard(0),
+          onLeave: () => setActiveCard(cards.length - 1),
+        });
+      }
+    });
+  }
+
+  initExpandableCards();
+});
+
 document.addEventListener("DOMContentLoaded", function () {
   // 3. Gestione Accordion Livello 1
   const searchToggle = document.querySelector(".search-toggle");

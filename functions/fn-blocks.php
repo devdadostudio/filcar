@@ -21,6 +21,15 @@ add_action('acf/init', function () {
             'post_types' => ['page'],
         ]);
         acf_register_block_type([
+            'name' => 'expandable-cards',
+            'title' => __('CARD ESPANDIBILI'),
+            'render_template' => get_template_directory() . '/parts/expandable-cards.php',
+            'category' => 'layout',
+            'icon' => 'screenoptions',
+            'mode' => 'edit',
+            'post_types' => ['page', 'product'],
+        ]);
+        acf_register_block_type([
             'name' => 'hero-product',
             'title' => __('HERO PRODOTTO'),
             'render_template' => get_template_directory() . '/parts/products/hero-products-static.php',
