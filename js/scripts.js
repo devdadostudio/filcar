@@ -693,13 +693,32 @@ jQuery(document).ready(function () {
     loop: false,
     margin: 24,
     nav: true,
+    navText: [
+      '<span class="icon-filcar-icon-chevron-forward"></span>',
+      '<span class="icon-filcar-icon-chevron-forward"></span>',
+    ],
+    items: 1,
     dots: false,
     responsive: {
       0: {
         items: 1,
+        stagePadding: 30,
       },
-      993: {
+      767: {
         items: 2,
+        stagePadding: 50,
+      },
+      992: {
+        items: 2,
+        stagePadding: 50,
+      },
+      1350: {
+        items: 2,
+        stagePadding: 100,
+      },
+      2250: {
+        items: 2,
+        stagePadding: 150,
       },
     },
   });

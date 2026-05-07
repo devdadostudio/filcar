@@ -186,3 +186,8 @@
   position: sticky;
   top: 10px;
 }
+.btn-100-mb {
+  @include media-breakpoint-down(lg) {
+    width: 100% !important;
+  } 
+}

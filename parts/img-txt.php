@@ -43,7 +43,7 @@ if(!empty($sections_block)) {
             $class_text_block = 'col-12 col-lg-5';
         }
 ?>
-        <section class="img-txt sp-py-11 sp-lg-py-16 sp-sxl-py-23 <?php echo $section_bg; ?>">
+        <section class="img-txt sp-pt-11 sp-pb-6 sp-lg-py-16 sp-sxl-py-23 <?php echo $section_bg; ?>">
             <div class="container-fluid">
                 <div class="row align-items-center <?php echo $class_section; ?>">
                     <div class="<?php echo $class_img_block; ?>">

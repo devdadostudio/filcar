@@ -457,3 +457,13 @@ add_action('enqueue_block_editor_assets', function() {
 });
 
 add_filter('wpcf7_autop_or_not', '__return_false');
+
+function abilita_webp($tipi) {
+    $tipi['webp'] = 'image/webp';
+    return $tipi;
+}
+add_filter('upload_mimes', 'abilita_webp');
+add_filter('file_is_displayable_image', function($result, $path) {
+    if (str_ends_with(strtolower($path), '.webp')) return true;
+    return $result;
+}, 10, 2);
