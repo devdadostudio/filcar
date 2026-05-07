@@ -131,5 +131,25 @@ add_action('acf/init', function () {
             'mode' => 'edit',
             'post_types' => ['page', 'product'],
         ]);
+
+        acf_register_block_type([
+            'name' => 'marquee-brands',
+            'title' => __('Marquee marchi'),
+            'render_template' => get_template_directory() . '/parts/marquee-brands.php',
+            'category' => 'layout',
+            'icon' => 'format-video',
+            'mode' => 'edit',
+            'post_types' => ['page', 'product'],
+        ]);
+
+        acf_register_block_type([
+            'name' => 'scroll-phrases',
+            'title' => __('Scorrimento scritte grandi'),
+            'render_template' => get_template_directory() . '/parts/scroll-phrases.php',
+            'category' => 'layout',
+            'icon' => 'format-video',
+            'mode' => 'edit',
+            'post_types' => ['page', 'product'],
+        ]);
     }
 });
