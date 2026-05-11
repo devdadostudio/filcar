@@ -1,0 +1,113 @@
+.technical-text-scroll {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: clamp(520px, 74vh, 780px);
+  padding: clamp(72px, 10vw, 136px) 0;
+  overflow: hidden;
+  background: $grey600;
+  color: $white;
+
+  &__technical-bg {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 0;
+    width: 50%;
+    max-width: none;
+    height: auto;
+    opacity: 0.34;
+    filter: grayscale(100%);
+    transform: translateY(-50%);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  &__inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    width: 100%;
+  }
+
+  &__intro {
+    justify-self: end;
+    width: min(470px, 48vw);
+    margin-bottom: clamp(70px, 10vw, 118px);
+    color: rgba($white, 0.82);
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &__content {
+    width: min(100%, 1180px);
+    padding-left: clamp(28px, 3.1vw, 56px);
+  }
+
+  &__text {
+    color: rgba($white, 0.38);
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &__word {
+    color: rgba($white, 0.36);
+    transition: color 0.14s linear;
+  }
+
+  &__word.is-active {
+    color: $white;
+  }
+
+  &__cta {
+    margin-top: clamp(26px, 3vw, 44px);
+  }
+
+  &:not(.technical-text-scroll--has-intro) {
+    min-height: clamp(500px, 68vh, 700px);
+  }
+
+  &:not(.technical-text-scroll--has-intro) &__content {
+    padding-top: clamp(30px, 5vw, 82px);
+  }
+
+  &:not(.technical-text-scroll--has-technical-bg) &__content {
+    width: min(100%, 1120px);
+  }
+
+  @include media-breakpoint-down(llg) {
+    min-height: auto;
+    padding: 72px 0;
+
+    &__technical-bg {
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0.24;
+      transform: none;
+    }
+
+    &__intro {
+      justify-self: start;
+      width: min(100%, 430px);
+      margin-bottom: 92px;
+    }
+
+    &__content {
+      width: min(100%, 760px);
+      padding-left: 0;
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    padding: 64px 0;
+
+    &__intro {
+      margin-bottom: 76px;
+    }
+  }
+}

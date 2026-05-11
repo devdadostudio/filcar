@@ -112,7 +112,7 @@ function filcar_styles()
 {
     wp_register_style('aoscss', 'https://unpkg.com/aos@2.3.1/dist/aos.css', array(), '1.0', 'all');
     //wp_enqueue_style('aoscss'); // Enqueue it!
-    wp_register_style('filcarcss', get_template_directory_uri() . '/style.min.css', array(), '1.0', 'all');
+    wp_register_style('filcarcss', get_template_directory_uri() . '/style.min.css', array(), filemtime(get_template_directory() . '/style.min.css'), 'all');
     wp_enqueue_style('filcarcss'); // Enqueue it!
     wp_register_style('swipercss', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css', array(), '1.0', 'all');
     //wp_enqueue_style('swipercss'); // Enqueue it!

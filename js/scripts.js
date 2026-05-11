@@ -220,8 +220,7 @@ function filcarForceStartAtTop() {
     history.scrollRestoration = "manual";
   }
 
-  const previousScrollBehavior =
-    document.documentElement.style.scrollBehavior;
+  const previousScrollBehavior = document.documentElement.style.scrollBehavior;
 
   document.documentElement.style.scrollBehavior = "auto";
   window.scrollTo(0, 0);
@@ -769,6 +768,104 @@ document.addEventListener("DOMContentLoaded", () => {
   initInnovationScroll();
   filcarForceStartAtTop();
   filcarScheduleLayoutRefresh(80);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  function initTechnicalTextScroll() {
+    const sections = document.querySelectorAll(".js-technical-text-scroll");
+
+    if (!sections.length) return;
+
+    sections.forEach((section) => {
+      if (section.dataset.technicalTextReady === "true") return;
+
+      const textElement = section.querySelector(
+        ".js-technical-text-scroll-text",
+      );
+
+      if (!textElement) return;
+
+      section.dataset.technicalTextReady = "true";
+
+      const textNodes = [];
+      const walker = document.createTreeWalker(
+        textElement,
+        NodeFilter.SHOW_TEXT,
+        {
+          acceptNode(node) {
+            return node.nodeValue.trim()
+              ? NodeFilter.FILTER_ACCEPT
+              : NodeFilter.FILTER_REJECT;
+          },
+        },
+      );
+
+      while (walker.nextNode()) {
+        textNodes.push(walker.currentNode);
+      }
+
+      textNodes.forEach((node) => {
+        const fragment = document.createDocumentFragment();
+        const parts = node.nodeValue.split(/(\s+)/);
+
+        parts.forEach((part) => {
+          if (!part) return;
+
+          if (/^\s+$/.test(part)) {
+            fragment.appendChild(document.createTextNode(part));
+            return;
+          }
+
+          const word = document.createElement("span");
+          word.className = "technical-text-scroll__word";
+          word.textContent = part;
+          fragment.appendChild(word);
+        });
+
+        node.parentNode.replaceChild(fragment, node);
+      });
+
+      const words = Array.from(
+        textElement.querySelectorAll(".technical-text-scroll__word"),
+      );
+
+      if (!words.length) return;
+
+      const setProgress = (progress) => {
+        const easedProgress = window.gsap
+          ? window.gsap.parseEase("power1.out")(progress)
+          : progress;
+        const activeWords = Math.ceil(easedProgress * words.length);
+
+        words.forEach((word, index) => {
+          word.classList.toggle("is-active", index < activeWords);
+        });
+      };
+
+      if (
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+        !window.ScrollTrigger
+      ) {
+        setProgress(1);
+        return;
+      }
+
+      setProgress(0);
+
+      ScrollTrigger.create({
+        trigger: section,
+        start: "center bottom-=10%",
+        end: "bottom 52%",
+        scrub: true,
+        invalidateOnRefresh: true,
+        markers: true,
+        onUpdate: (self) => setProgress(self.progress),
+        onRefresh: (self) => setProgress(self.progress),
+      });
+    });
+  }
+
+  initTechnicalTextScroll();
 });
 
 document.addEventListener("DOMContentLoaded", () => {

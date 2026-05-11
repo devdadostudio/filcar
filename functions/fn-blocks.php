@@ -21,6 +21,15 @@ add_action('acf/init', function () {
             'post_types' => ['page'],
         ]);
         acf_register_block_type([
+            'name' => 'technical-text-scroll',
+            'title' => __('TESTO TECNICO ANIMATO'),
+            'render_template' => get_template_directory() . '/parts/technical-text-scroll.php',
+            'category' => 'layout',
+            'icon' => 'editor-alignleft',
+            'mode' => 'edit',
+            'post_types' => ['page', 'product'],
+        ]);
+        acf_register_block_type([
             'name' => 'expandable-cards',
             'title' => __('CARD ESPANDIBILI'),
             'render_template' => get_template_directory() . '/parts/expandable-cards.php',
