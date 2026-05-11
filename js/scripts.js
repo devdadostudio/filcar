@@ -1016,6 +1016,47 @@ jQuery(document).ready(function () {
       },
     },
   });
+
+  jQuery(".js-case-studies-carousel").each(function () {
+    const $carousel = jQuery(this);
+    const itemsCount = $carousel.children().length;
+
+    if (itemsCount <= 1) {
+      $carousel.addClass("is-single");
+    }
+
+    $carousel.owlCarousel({
+      loop: false,
+      center: itemsCount > 1,
+      startPosition: itemsCount > 1 ? 1 : 0,
+      autoWidth: true,
+      margin: 24,
+      nav: true,
+      dots: true,
+      navText: [
+        '<span class="icon-filcar-icon-chevron-forward"></span>',
+        '<span class="icon-filcar-icon-chevron-forward"></span>',
+      ],
+      responsive: {
+        0: {
+          margin: 18,
+          stagePadding: 24,
+        },
+        768: {
+          margin: 24,
+          stagePadding: 70,
+        },
+        992: {
+          margin: 24,
+          stagePadding: 120,
+        },
+        1535: {
+          margin: 32,
+          stagePadding: 170,
+        },
+      },
+    });
+  });
 });
 
 
