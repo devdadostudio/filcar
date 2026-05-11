@@ -298,7 +298,7 @@
 $breakpoint0: "uxxl";
 $breakpoint1: "uxl";
 $breakpoint2: "md";
-
+// corrisponde a body-2 - p-normal
 body,
 .p-normal {
   -webkit-font-smoothing: antialiased;
@@ -516,6 +516,7 @@ h7,
   }
 }
 
+//corrisponde a body-4
 .p-big {
   font-size: 24px;
   line-height: 140%;
@@ -627,7 +628,7 @@ h7,
 
 .number-1 {
   font-size: 160px;
-  line-height: normal;
+  line-height: 150px;
   font-family: "IBMPlexMono", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 140px;

@@ -1,42 +1,45 @@
 .bg-grey {
-    background-color: $grey !important;
+  background-color: $grey !important;
 }
 .bg-grey-200 {
     background-color: $grey200 !important;
+}
+.bg-grey-600 {
+  background-color: $grey600;
 }
 .bg-grey-800 {
     background-color: $grey800 !important;
 }
 .bg-blog {
-    background: $blog-txt !important;
+  background: $blog-txt !important;
 }
 .bg-primary {
-    background: $primary !important;
+  background: $primary !important;
 }
 .text-primary {
-    color: $primary !important;
+  color: $primary !important;
 }
 .text-secondary {
-    color: $secondary !important;
+  color: $secondary !important;
 }
 .text-blog {
-    color: $blog-txt !important;
+  color: $blog-txt !important;
 }
 .text-white-half {
-    color: rgba(255, 255, 255, 0.5) !important;
+  color: rgba(255, 255, 255, 0.5) !important;
 }
 .text-grey-300 {
-    color: $grey300 !important;
+  color: $grey300 !important;
 }
 .text-grey-400 {
-    color: $grey400 !important;
+  color: $grey400 !important;
 }
 .text-grey-500 {
-    color: $grey500 !important;
+  color: $grey500 !important;
 }
 .text-grey-600 {
-    color: $grey600 !important;
+  color: $grey600 !important;
 }
 .text-grey-800 {
-    color: $grey800 !important;
+  color: $grey800 !important;
 }

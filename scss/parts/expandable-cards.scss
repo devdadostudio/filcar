@@ -1,14 +1,16 @@
 .expandable-cards {
-  --expandable-card-height: clamp(360px, 29vw, 520px);
+  --expandable-card-height: clamp(330px, 32.2vw, 444px);
   --expandable-card-gap: clamp(16px, 1.25vw, 24px);
   --expandable-card-radius: 5px;
+  --expandable-card-open-width: 912px;
+  --expandable-card-closed-width: 210px;
   background: $grey600;
   color: $white;
   overflow: hidden;
   padding: clamp(88px, 11vw, 190px) 0;
 
   &__inner {
-    width: min(100%, 1720px);
+    width: 100%;
   }
 
   &__header {
@@ -19,32 +21,28 @@
 
   &__eyebrow {
     margin-bottom: 10px;
-    font-family: "IBMPlexSans", sans-serif;
-    font-size: clamp(13px, 0.86vw, 17px);
     font-weight: 600;
-    line-height: 1.2;
     text-transform: uppercase;
   }
 
   &__title {
     margin: 0;
-    font-family: "IBMPlexSans", sans-serif;
-    font-size: clamp(34px, 2.2vw, 52px);
     font-weight: 300;
-    line-height: 1.12;
   }
 
   &__list {
     display: flex;
     gap: var(--expandable-card-gap);
+    align-items: stretch;
     min-height: var(--expandable-card-height);
   }
 
   &__card {
     position: relative;
-    flex: 1 1 0;
+    flex: 1 1 var(--expandable-card-closed-width);
     min-width: 0;
-    min-height: var(--expandable-card-height);
+    height: var(--expandable-card-height);
+    min-height: 0;
     border: 0;
     border-radius: var(--expandable-card-radius);
     background: $grey800;
@@ -54,12 +52,13 @@
     overflow: hidden;
     outline: 0;
     transition:
-      flex 600ms cubic-bezier(0.22, 1, 0.36, 1),
+      flex-basis 600ms cubic-bezier(0.22, 1, 0.36, 1),
       background-color 300ms ease,
       opacity 300ms ease;
 
     &.is-active {
-      flex-grow: 3.8;
+      flex-basis: var(--expandable-card-open-width);
+      flex-grow: 1;
       background: $grey500;
       cursor: default;
     }
@@ -74,7 +73,9 @@
     inset: 0;
     z-index: -1;
     opacity: 0.34;
-    transition: opacity 360ms ease, transform 600ms ease;
+    overflow: hidden;
+    pointer-events: none;
+    transition: opacity 360ms ease;
 
     img {
       width: 100%;
@@ -85,9 +86,49 @@
     }
   }
 
-  &__card.is-active &__card-bg {
+  &__bg-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    filter: grayscale(100%);
+    opacity: 0;
+    transform: scale(1);
+    transition: opacity 360ms ease, transform 600ms ease;
+  }
+
+  &__bg-image--inactive {
+    opacity: 1;
+  }
+
+  .expandable-cards__card--has-active-image.is-active .expandable-cards__bg-image--inactive {
+    opacity: 0;
+  }
+
+  .expandable-cards__card.is-active .expandable-cards__bg-image--active {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+
+  .expandable-cards__card:not(.expandable-cards__card--has-active-image).is-active .expandable-cards__bg-image--inactive {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+
+  &__card--image-left &__bg-image,
+  &__card--image-left &__card-bg img {
+    object-position: left center;
+  }
+
+  &__card--image-right &__bg-image,
+  &__card--image-right &__card-bg img {
+    object-position: right center;
+  }
+
+  .expandable-cards__card.is-active .expandable-cards__card-bg {
     opacity: 0.82;
-    transform: scale(1.01);
   }
 
   &__toggle {
@@ -114,9 +155,13 @@
     &::after {
       transform: translate(-50%, -50%) rotate(90deg);
     }
+
+    i {
+      display: none;
+    }
   }
 
-  &__card.is-active &__toggle::after {
+  .expandable-cards__card.is-active .expandable-cards__toggle::after {
     opacity: 0;
     transform: translate(-50%, -50%) rotate(90deg) scaleX(0);
   }
@@ -126,22 +171,29 @@
     z-index: 1;
     display: flex;
     flex-direction: column;
-    min-height: var(--expandable-card-height);
+    height: 100%;
+    min-height: 0;
     padding: clamp(28px, 2.8vw, 56px);
   }
 
   &__label {
-    font-size: clamp(20px, 1.5vw, 32px);
     font-weight: 300;
-    line-height: 1.1;
+  }
+
+  &__meta {
+    position: relative;
+    z-index: 2;
   }
 
   &__card-title {
     max-width: 430px;
     margin: 0;
-    font-size: clamp(38px, 2.9vw, 58px);
     font-weight: 300;
-    line-height: 0.98;
+  }
+
+  &__product-icon {
+    display: block;
+    margin-top: 0.08em;
   }
 
   &__reveal {
@@ -155,7 +207,7 @@
     pointer-events: none;
   }
 
-  &__card.is-active &__reveal {
+  .expandable-cards__card.is-active .expandable-cards__reveal {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
@@ -163,9 +215,7 @@
 
   &__description {
     margin-bottom: clamp(24px, 3vw, 58px);
-    font-size: clamp(16px, 1vw, 21px);
     font-weight: 300;
-    line-height: 1.35;
 
     p {
       margin: 0;
@@ -178,15 +228,24 @@
     text-transform: none;
   }
 
+  &__link-product-icon {
+    display: inline-block;
+  }
+
+  &__controls {
+    display: none;
+  }
+
+  &__mobile-arrow,
+  &__mobile-description {
+    display: none;
+  }
+
   &--numbers {
-    --expandable-card-height: clamp(360px, 23vw, 455px);
+    --expandable-card-closed-width: 444px;
 
     .expandable-cards__inner {
-      width: min(100%, 1372px);
-    }
-
-    .expandable-cards__card.is-active {
-      flex-grow: 2.05;
+      width: 100%;
     }
 
     .expandable-cards__card-content {
@@ -194,46 +253,98 @@
     }
 
     .expandable-cards__value {
+      position: relative;
+      z-index: 1;
       margin-bottom: clamp(18px, 1.5vw, 28px);
-      font-size: clamp(70px, 6.8vw, 132px);
       font-weight: 300;
-      line-height: 0.86;
-
-      span {
-        font-size: 0.92em;
-      }
     }
 
-    .expandable-cards__label {
-      font-size: clamp(24px, 1.6vw, 32px);
+    .expandable-cards__meta,
+    .expandable-cards__reveal {
+      z-index: 2;
+      width: min(42%, 620px);
     }
 
     .expandable-cards__card-title {
       margin-top: 0.12em;
-      font-size: clamp(28px, 2.35vw, 48px);
-      line-height: 1.08;
+    }
+
+    .expandable-cards__reveal {
+      margin-top: clamp(8px, 1vw, 18px);
     }
 
     .expandable-cards__description {
       max-width: 620px;
       margin-bottom: 0;
     }
+
+    .expandable-cards__card-bg {
+      inset: auto 0 0 auto;
+      width: 44%;
+      height: 70%;
+    }
+
+    .expandable-cards__card:not(.is-active) .expandable-cards__card-bg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .expandable-cards__bg-image {
+      object-position: right bottom;
+    }
+  }
+
+  &--products {
+    --expandable-card-height: clamp(390px, 32.4vw, 556px);
+    --expandable-card-open-width: 1142px;
+    --expandable-card-closed-width: 268px;
+
+    .expandable-cards__card-bg {
+      left: 0;
+      right: auto;
+      width: 46%;
+    }
+
+    .expandable-cards__card:not(.is-active) .expandable-cards__card-bg {
+      width: 100%;
+    }
+
+    .expandable-cards__card.is-active .expandable-cards__bg-image--active,
+    .expandable-cards__card:not(.expandable-cards__card--has-active-image).is-active .expandable-cards__bg-image--inactive {
+      transform: scale(1.05);
+    }
+
+    .expandable-cards__card-content {
+      padding-right: clamp(28px, 2.8vw, 56px);
+    }
+
+    .expandable-cards__reveal {
+      position: absolute;
+      right: clamp(54px, 5.4vw, 104px);
+      bottom: clamp(26px, 4.6vw, 64px);
+      width: min(34vw, 520px);
+      margin-top: 0;
+    }
+
+    .expandable-cards__description {
+      margin-bottom: clamp(24px, 2.8vw, 48px);
+    }
+
+    .expandable-cards__link {
+      width: min(100%, 214px);
+    }
   }
 
   &--count-2 {
-    .expandable-cards__card.is-active {
-      flex-grow: 2.05;
-    }
+    --expandable-card-closed-width: 444px;
 
-    &.expandable-cards--numbers .expandable-cards__card.is-active {
-      flex-grow: 1.8;
+    .expandable-cards__inner {
+      width: 100%;
     }
   }
 
-  &--count-3 {
-    .expandable-cards__card.is-active {
-      flex-grow: 3.8;
-    }
+  &--numbers.expandable-cards--count-3 {
+    --expandable-card-closed-width: 210px;
   }
 
   @include media-breakpoint-down(lg) {
@@ -244,25 +355,104 @@
     }
 
     &__list {
-      display: grid;
+      display: flex;
+      gap: 28px;
+      width: calc(100% + clamp(64px, 16vw, 120px));
       min-height: 0;
+      margin-right: calc((var(--bs-gutter-x) * -0.5) - clamp(64px, 16vw, 120px));
+      padding-right: calc(var(--bs-gutter-x) * 0.5);
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
 
     &__card,
     &__card.is-active {
-      flex: none;
+      flex: 0 0 min(82vw, 520px);
+      height: auto;
       min-height: 330px;
+      background: transparent;
+      overflow: visible;
+      scroll-snap-align: start;
+    }
+
+    &__card.is-active {
+      background: transparent;
+    }
+
+    &__card-bg,
+    &__card.is-active .expandable-cards__card-bg {
+      inset: 0 0 auto !important;
+      z-index: 0;
+      width: 100% !important;
+      height: 330px !important;
+      opacity: 0.82;
+      border-radius: var(--expandable-card-radius);
+      background: $grey800;
     }
 
     &__card-content {
+      position: relative;
+      z-index: 1;
+      height: auto;
       min-height: 330px;
       padding: 28px;
+      border-radius: var(--expandable-card-radius);
+      background: transparent;
+    }
+
+    &__toggle {
+      display: none;
+    }
+
+    &__mobile-arrow {
+      position: absolute;
+      z-index: 3;
+      top: 28px;
+      right: 28px;
+      display: block;
+      color: $white;
     }
 
     &__reveal {
-      opacity: 1;
-      transform: none;
-      pointer-events: auto;
+      display: none;
+    }
+
+    &__mobile-description {
+      display: block;
+      margin-top: 28px;
+      padding: 0 14px;
+      color: $white;
+    }
+
+    &__controls {
+      display: flex;
+      justify-content: flex-end;
+      gap: 20px;
+      margin-top: 46px;
+    }
+
+    &__control {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border: 0;
+      border-radius: 8px;
+      background: rgba($white, 0.18);
+      color: $white;
+    }
+
+    &__control--prev {
+      transform: rotate(180deg);
     }
   }
 

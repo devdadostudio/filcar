@@ -194,6 +194,109 @@ jQuery(document).ready(function () {
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
+const filcarLayoutRefreshCallbacks = [];
+let filcarLayoutRefreshTimer = null;
+const filcarStartAtTop = filcarShouldStartAtTop();
+
+function filcarShouldStartAtTop() {
+  if (window.location.hash) return false;
+
+  const navigationEntry = performance.getEntriesByType
+    ? performance.getEntriesByType("navigation")[0]
+    : null;
+  const navigationType = navigationEntry
+    ? navigationEntry.type
+    : performance.navigation && performance.navigation.type === 1
+      ? "reload"
+      : "navigate";
+
+  return navigationType === "reload" || navigationType === "back_forward";
+}
+
+function filcarForceStartAtTop() {
+  if (!filcarStartAtTop) return;
+
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+
+  const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+
+  document.documentElement.style.scrollBehavior = "auto";
+  window.scrollTo(0, 0);
+  document.documentElement.style.scrollBehavior = previousScrollBehavior;
+}
+
+filcarForceStartAtTop();
+
+function filcarOnLayoutRefresh(callback) {
+  if (typeof callback === "function") {
+    filcarLayoutRefreshCallbacks.push(callback);
+  }
+}
+
+function filcarRefreshOwlCarousels() {
+  if (!window.jQuery) return;
+
+  jQuery(".owl-carousel.owl-loaded").trigger("refresh.owl.carousel");
+}
+
+function filcarRunLayoutRefresh(preserveScroll = false) {
+  const scrollY = preserveScroll
+    ? window.pageYOffset || window.scrollY || 0
+    : null;
+
+  filcarRefreshOwlCarousels();
+
+  if (window.ScrollTrigger) {
+    ScrollTrigger.sort();
+    ScrollTrigger.refresh(true);
+
+    if (preserveScroll && scrollY !== null) {
+      window.requestAnimationFrame(() => {
+        window.scrollTo(0, scrollY);
+        ScrollTrigger.update();
+      });
+    }
+
+    ScrollTrigger.update();
+  }
+
+  filcarLayoutRefreshCallbacks.forEach((callback) => callback());
+}
+
+function filcarScheduleLayoutRefresh(delay = 140, preserveScroll = false) {
+  window.clearTimeout(filcarLayoutRefreshTimer);
+
+  filcarLayoutRefreshTimer = window.setTimeout(() => {
+    window.requestAnimationFrame(() => filcarRunLayoutRefresh(preserveScroll));
+  }, delay);
+}
+
+window.addEventListener("resize", () => filcarScheduleLayoutRefresh(180));
+window.addEventListener("orientationchange", () =>
+  filcarScheduleLayoutRefresh(260),
+);
+window.addEventListener("pageshow", () => {
+  filcarForceStartAtTop();
+  filcarScheduleLayoutRefresh(80);
+});
+
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready
+    .then(() => filcarScheduleLayoutRefresh(40))
+    .catch(() => {});
+}
+
+window.addEventListener("load", () => {
+  filcarForceStartAtTop();
+  window.requestAnimationFrame(() => filcarRunLayoutRefresh(false));
+  window.setTimeout(() => {
+    filcarForceStartAtTop();
+    window.requestAnimationFrame(() => filcarRunLayoutRefresh(false));
+  }, 320);
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   const siteHeader = document.querySelector(".flc-main-nav");
   const navWrap = document.querySelector(".js-anchor-nav-wrap");
@@ -394,12 +497,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     updateActiveSection();
-    ScrollTrigger.refresh();
+    filcarScheduleLayoutRefresh(60);
   });
 
-  window.addEventListener("resize", () => {
+  filcarOnLayoutRefresh(() => {
     updateActiveSection();
-    ScrollTrigger.refresh();
   });
 });
 
@@ -596,20 +698,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const isMobileViewport = () =>
         window.matchMedia("(max-width: 1024px)").matches;
-      const isMobile = isMobileViewport();
       const endDistance = () => (isMobileViewport() ? "+=180%" : "+=220%");
       const shrinkDuration = 0.72;
       const introDuration = 0.22;
       const getMediaWidth = () =>
-        isMobileViewport() ? "calc(100% - 48px)" : "71.5vw";
+        isMobileViewport() ? "calc(100% - 48px)" : "73.2vw";
       const getMediaHeight = () =>
-        isMobileViewport() ? 193 : Math.min(window.innerHeight * 0.58, 540);
+        isMobileViewport() ? 193 : Math.min(window.innerHeight * 0.64, 620);
       const getMediaY = () =>
         isMobileViewport()
           ? 166
-          : Math.max(40, Math.min(72, window.innerHeight * 0.06));
+          : Math.max(38, Math.min(58, window.innerHeight * 0.055));
+      const getIntroY = () => (isMobileViewport() ? -30 : -50);
+      const getContentY = () => (isMobileViewport() ? 28 : 42);
+      const getBarScale = () => (isMobileViewport() ? 0.9 : 0.86);
 
-      gsap.set(content, { autoAlpha: 0, y: isMobile ? 28 : 42 });
+      gsap.set(content, { autoAlpha: 0, y: getContentY });
       gsap.set(bar, { scaleX: 1 });
 
       const timeline = gsap.timeline({
@@ -622,6 +726,10 @@ document.addEventListener("DOMContentLoaded", () => {
           pin,
           anticipatePin: 1,
           invalidateOnRefresh: true,
+          onRefreshInit: () => {
+            gsap.set(content, { y: getContentY });
+            gsap.set(bar, { scaleX: 1 });
+          },
         },
       });
 
@@ -641,23 +749,123 @@ document.addEventListener("DOMContentLoaded", () => {
           intro,
           {
             autoAlpha: 0,
-            y: isMobile ? -30 : -50,
+            y: getIntroY,
             duration: introDuration,
           },
           0.06,
         )
         .fromTo(
           content,
-          { autoAlpha: 0, y: isMobile ? 28 : 42 },
+          { autoAlpha: 0, y: getContentY },
           { autoAlpha: 1, y: 0, duration: 0.24 },
           0.58,
         )
-        .to(bar, { scaleX: isMobile ? 0.9 : 0.86, duration: 0.16 }, 0.68)
+        .to(bar, { scaleX: getBarScale, duration: 0.16 }, 0.68)
         .to({}, { duration: 0.28 });
     });
   }
 
   initInnovationScroll();
+  filcarForceStartAtTop();
+  filcarScheduleLayoutRefresh(80);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  function initTechnicalTextScroll() {
+    const sections = document.querySelectorAll(".js-technical-text-scroll");
+
+    if (!sections.length) return;
+
+    sections.forEach((section) => {
+      if (section.dataset.technicalTextReady === "true") return;
+
+      const textElement = section.querySelector(
+        ".js-technical-text-scroll-text",
+      );
+
+      if (!textElement) return;
+
+      section.dataset.technicalTextReady = "true";
+
+      const textNodes = [];
+      const walker = document.createTreeWalker(
+        textElement,
+        NodeFilter.SHOW_TEXT,
+        {
+          acceptNode(node) {
+            return node.nodeValue.trim()
+              ? NodeFilter.FILTER_ACCEPT
+              : NodeFilter.FILTER_REJECT;
+          },
+        },
+      );
+
+      while (walker.nextNode()) {
+        textNodes.push(walker.currentNode);
+      }
+
+      textNodes.forEach((node) => {
+        const fragment = document.createDocumentFragment();
+        const parts = node.nodeValue.split(/(\s+)/);
+
+        parts.forEach((part) => {
+          if (!part) return;
+
+          if (/^\s+$/.test(part)) {
+            fragment.appendChild(document.createTextNode(part));
+            return;
+          }
+
+          const word = document.createElement("span");
+          word.className = "technical-text-scroll__word";
+          word.textContent = part;
+          fragment.appendChild(word);
+        });
+
+        node.parentNode.replaceChild(fragment, node);
+      });
+
+      const words = Array.from(
+        textElement.querySelectorAll(".technical-text-scroll__word"),
+      );
+
+      if (!words.length) return;
+
+      const setProgress = (progress) => {
+        const easedProgress = window.gsap
+          ? window.gsap.parseEase("power1.out")(progress)
+          : progress;
+        const activeWords = Math.ceil(easedProgress * words.length);
+
+        words.forEach((word, index) => {
+          word.classList.toggle("is-active", index < activeWords);
+        });
+      };
+
+      if (
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+        !window.ScrollTrigger
+      ) {
+        setProgress(1);
+        return;
+      }
+
+      setProgress(0);
+
+      ScrollTrigger.create({
+        trigger: section,
+        start: "center bottom-=10%",
+        end: "bottom 52%",
+        scrub: true,
+        invalidateOnRefresh: true,
+        markers: true,
+        onUpdate: (self) => setProgress(self.progress),
+        onRefresh: (self) => setProgress(self.progress),
+      });
+    });
+  }
+
+  initTechnicalTextScroll();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -672,57 +880,76 @@ document.addEventListener("DOMContentLoaded", () => {
       const cards = Array.from(
         section.querySelectorAll(".expandable-cards__card"),
       );
+      const list = section.querySelector(".expandable-cards__list");
+      const prevButton = section.querySelector(
+        ".expandable-cards__control--prev",
+      );
+      const nextButton = section.querySelector(
+        ".expandable-cards__control--next",
+      );
 
-      if (!cards.length) return;
+      if (!cards.length || !list) return;
 
       section.dataset.expandableCardsReady = "true";
 
       const setActiveCard = (index) => {
         cards.forEach((card, cardIndex) => {
-          card.classList.toggle("is-active", cardIndex === index);
-          card.setAttribute(
-            "aria-expanded",
-            cardIndex === index ? "true" : "false",
-          );
+          const isActive = cardIndex === index;
+          const value = card.querySelector(".expandable-cards__value");
+
+          card.classList.toggle("is-active", isActive);
+          card.setAttribute("aria-expanded", isActive ? "true" : "false");
+
+          if (value) {
+            value.classList.toggle("number-1", isActive);
+            value.classList.toggle("number-2", !isActive);
+          }
         });
       };
 
       cards.forEach((card, index) => {
-        card.addEventListener("mouseenter", () => {
-          if (section.dataset.expansionMode !== "scroll") {
-            setActiveCard(index);
-          }
-        });
-
-        card.addEventListener("focus", () => setActiveCard(index));
         card.addEventListener("click", () => setActiveCard(index));
+        card.addEventListener("keydown", (event) => {
+          if (event.key !== "Enter" && event.key !== " ") return;
+
+          event.preventDefault();
+          setActiveCard(index);
+        });
       });
 
-      setActiveCard(0);
+      const scrollCards = (direction) => {
+        const firstCard = cards[0];
+        if (!firstCard) return;
 
-      if (
-        section.dataset.expansionMode === "scroll" &&
-        window.ScrollTrigger &&
-        cards.length > 1 &&
-        !window.matchMedia("(max-width: 991px)").matches
-      ) {
-        ScrollTrigger.create({
-          trigger: section,
-          start: "top 58%",
-          end: "bottom 42%",
-          scrub: true,
-          onUpdate: (self) => {
-            const activeIndex = Math.min(
-              cards.length - 1,
-              Math.floor(self.progress * cards.length),
-            );
+        const gap = parseFloat(window.getComputedStyle(list).columnGap || 0);
+        const step = firstCard.getBoundingClientRect().width + gap;
 
-            setActiveCard(activeIndex);
-          },
-          onLeaveBack: () => setActiveCard(0),
-          onLeave: () => setActiveCard(cards.length - 1),
+        list.scrollBy({
+          left: direction * step,
+          behavior: "smooth",
         });
+      };
+
+      if (prevButton) {
+        prevButton.addEventListener("click", () => scrollCards(-1));
       }
+
+      if (nextButton) {
+        nextButton.addEventListener("click", () => scrollCards(1));
+      }
+
+      filcarOnLayoutRefresh(() => {
+        const activeCard = section.querySelector(
+          ".expandable-cards__card.is-active",
+        );
+
+        if (activeCard && window.matchMedia("(max-width: 991px)").matches) {
+          list.scrollTo({
+            left: activeCard.offsetLeft,
+            behavior: "auto",
+          });
+        }
+      });
     });
   }
 
