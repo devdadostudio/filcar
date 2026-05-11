@@ -1,0 +1,7 @@
+.section-img-4-txt-blocks{
+    .img-figure{
+        @include media-breakpoint-down(lg) {
+            @include aspect-ratio(16, 9);
+        }
+    }
+}

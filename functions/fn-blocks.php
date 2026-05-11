@@ -160,5 +160,15 @@ add_action('acf/init', function () {
             'mode' => 'edit',
             'post_types' => ['page', 'product'],
         ]);
+
+        acf_register_block_type([
+            'name' => 'img-4-txt-blocks',
+            'title' => __('Immagine + 4 blocchi di testo'),
+            'render_template' => get_template_directory() . '/parts/img-4-txt-blocks.php',
+            'category' => 'layout',
+            'icon' => 'format-gallery',
+            'mode' => 'edit',
+            'post_types' => ['page', 'product'],
+        ]);
     }
 });
