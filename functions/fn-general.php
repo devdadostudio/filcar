@@ -103,3 +103,72 @@ function registra_custom_post_type_settori() {
 }
 
 add_action( 'init', 'registra_custom_post_type_settori' );
+
+function registra_custom_post_type_caso_studio() {
+    $labels = array(
+        'name'                  => 'Casi studio',
+        'singular_name'         => 'Caso studio',
+        'menu_name'             => 'Caso studio',
+        'name_admin_bar'        => 'Caso studio',
+        'add_new'               => 'Aggiungi Nuovo',
+        'add_new_item'          => 'Aggiungi Nuovo Caso studio',
+        'new_item'              => 'Nuovo Caso studio',
+        'edit_item'             => 'Modifica Caso studio',
+        'view_item'             => 'Visualizza Caso studio',
+        'all_items'             => 'Tutti i Casi studio',
+        'search_items'          => 'Cerca Casi studio',
+        'not_found'             => 'Nessun caso studio trovato.',
+        'not_found_in_trash'    => 'Nessun caso studio trovato nel cestino.'
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'caso-studio' ),
+        'capability_type'    => 'post',
+        'has_archive'        => 'casi-studio',
+        'hierarchical'       => false,
+        'menu_position'      => 6,
+        'menu_icon'          => 'dashicons-portfolio',
+        'show_in_rest'       => true,
+        'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt' )
+    );
+
+    register_post_type( 'caso-studio', $args );
+}
+
+add_action( 'init', 'registra_custom_post_type_caso_studio' );
+
+function registra_tassonomia_caso_studio() {
+    $labels = array(
+        'name'              => 'Categorie caso studio',
+        'singular_name'     => 'Categoria caso studio',
+        'search_items'      => 'Cerca categorie caso studio',
+        'all_items'         => 'Tutte le categorie caso studio',
+        'parent_item'       => 'Categoria padre',
+        'parent_item_colon' => 'Categoria padre:',
+        'edit_item'         => 'Modifica categoria caso studio',
+        'update_item'       => 'Aggiorna categoria caso studio',
+        'add_new_item'      => 'Aggiungi nuova categoria caso studio',
+        'new_item_name'     => 'Nuovo nome categoria caso studio',
+        'menu_name'         => 'Categorie'
+    );
+
+    $args = array(
+        'hierarchical'      => true,
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array( 'slug' => 'casi-studio' ),
+        'show_in_rest'      => true
+    );
+
+    register_taxonomy( 'categoria-caso-studio', array( 'caso-studio' ), $args );
+}
+
+add_action( 'init', 'registra_tassonomia_caso_studio' );

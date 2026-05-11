@@ -1,23 +1,36 @@
 <?php
 $args = wp_parse_args($args ?? [], [
-    'category_id' => 0,
+    'term_id' => 0,
+    'taxonomy' => 'categoria-caso-studio',
     'posts_per_page' => 3,
 ]);
 
-$category_id = (int) $args['category_id'];
+$term_id = (int) $args['term_id'];
+$taxonomy = sanitize_key($args['taxonomy']);
 $posts_limit = max(1, (int) $args['posts_per_page']);
-$category = $category_id ? get_category($category_id) : null;
-$block_id = $category instanceof WP_Term ? 'case-studies-carousel-' . $category->slug : 'case-studies-carousel';
-$kicker = $category instanceof WP_Term ? strtoupper($category->name) : __('CASE STUDIES', 'filcar');
-$title = $category instanceof WP_Term && $category->description ? wp_strip_all_tags($category->description) : __('La visione che diventa layout operativo', 'filcar');
+$term = $term_id ? get_term($term_id, $taxonomy) : null;
+$block_id = $term instanceof WP_Term ? 'case-studies-carousel-' . $term->slug : 'case-studies-carousel';
+$kicker = $term instanceof WP_Term ? strtoupper($term->name) : __('CASI STUDIO', 'filcar');
+$title = $term instanceof WP_Term && $term->description ? wp_strip_all_tags($term->description) : __('La visione che diventa layout operativo', 'filcar');
 
-$case_studies_query = new WP_Query([
-    'post_type' => 'post',
+$query_args = [
+    'post_type' => 'caso-studio',
     'posts_per_page' => $posts_limit,
     'post_status' => 'publish',
     'ignore_sticky_posts' => true,
-    'cat' => $category_id,
-]);
+];
+
+if ($term instanceof WP_Term) {
+    $query_args['tax_query'] = [
+        [
+            'taxonomy' => $taxonomy,
+            'field' => 'term_id',
+            'terms' => $term_id,
+        ],
+    ];
+}
+
+$case_studies_query = new WP_Query($query_args);
 
 if ($case_studies_query->have_posts()) :
 ?>
@@ -26,7 +39,7 @@ if ($case_studies_query->have_posts()) :
         <div class="case-studies-carousel__breadcrumb p-small">
             <a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html__('Home', 'filcar'); ?></a>
             <span><?php echo esc_html__('>', 'filcar'); ?></span>
-            <span><?php echo esc_html($category instanceof WP_Term ? $category->name : __('Case Studies', 'filcar')); ?></span>
+            <span><?php echo esc_html($term instanceof WP_Term ? $term->name : __('Casi studio', 'filcar')); ?></span>
         </div>
         <div class="case-studies-carousel__kicker product-3 fw-bold">
             <?php echo esc_html($kicker); ?>
