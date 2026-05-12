@@ -1025,14 +1025,25 @@ jQuery(document).ready(function () {
       $carousel.addClass("is-single");
     }
 
+    $carousel.on("click", ".case-studies-carousel__card", function (event) {
+      if (!jQuery(this).closest(".owl-item").hasClass("center")) {
+        event.preventDefault();
+      }
+    });
+
     $carousel.owlCarousel({
-      loop: false,
+      loop: itemsCount > 1,
       center: itemsCount > 1,
-      startPosition: itemsCount > 1 ? 1 : 0,
+      startPosition: 0,
       autoWidth: true,
+      items: 1,
       margin: 24,
       nav: true,
       dots: true,
+      mouseDrag: itemsCount > 1,
+      touchDrag: itemsCount > 1,
+      pullDrag: itemsCount > 1,
+      smartSpeed: 450,
       navText: [
         '<span class="icon-filcar-icon-chevron-forward"></span>',
         '<span class="icon-filcar-icon-chevron-forward"></span>',
@@ -1044,15 +1055,15 @@ jQuery(document).ready(function () {
         },
         768: {
           margin: 24,
-          stagePadding: 70,
+          stagePadding: 64,
         },
         992: {
-          margin: 24,
-          stagePadding: 120,
+          margin: 28,
+          stagePadding: 260,
         },
         1535: {
           margin: 32,
-          stagePadding: 170,
+          stagePadding: 380,
         },
       },
     });
