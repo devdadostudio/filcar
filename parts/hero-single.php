@@ -13,8 +13,7 @@ $breadcrumb_parent_label = $is_case_study ? __('Case Studies', 'filcar') : __('B
 $breadcrumb_parent_url = '';
 
 if ($is_case_study) {
-    $case_studies_page = get_page_by_path('casi-studio');
-    $breadcrumb_parent_url = $case_studies_page ? get_permalink($case_studies_page) : home_url('/casi-studio/');
+    $breadcrumb_parent_url = home_url('/case-studies/');
 } else {
     $posts_page_id = (int) get_option('page_for_posts');
     $breadcrumb_parent_url = $posts_page_id ? get_permalink($posts_page_id) : home_url('/');
