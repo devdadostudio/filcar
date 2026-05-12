@@ -130,7 +130,7 @@ function registra_custom_post_type_caso_studio() {
         'query_var'          => true,
         'rewrite'            => array( 'slug' => 'caso-studio' ),
         'capability_type'    => 'post',
-        'has_archive'        => 'casi-studio',
+        'has_archive'        => false,
         'hierarchical'       => false,
         'menu_position'      => 6,
         'menu_icon'          => 'dashicons-portfolio',
@@ -164,7 +164,7 @@ function registra_tassonomia_caso_studio() {
         'show_ui'           => true,
         'show_admin_column' => true,
         'query_var'         => true,
-        'rewrite'           => array( 'slug' => 'casi-studio' ),
+        'rewrite'           => array( 'slug' => 'categoria-caso-studio' ),
         'show_in_rest'      => true
     );
 
@@ -172,3 +172,36 @@ function registra_tassonomia_caso_studio() {
 }
 
 add_action( 'init', 'registra_tassonomia_caso_studio' );
+
+function registra_tag_caso_studio() {
+    $labels = array(
+        'name'                       => 'Tag caso studio',
+        'singular_name'              => 'Tag caso studio',
+        'search_items'               => 'Cerca tag caso studio',
+        'popular_items'              => 'Tag caso studio popolari',
+        'all_items'                  => 'Tutti i tag caso studio',
+        'edit_item'                  => 'Modifica tag caso studio',
+        'update_item'                => 'Aggiorna tag caso studio',
+        'add_new_item'               => 'Aggiungi nuovo tag caso studio',
+        'new_item_name'              => 'Nuovo nome tag caso studio',
+        'separate_items_with_commas' => 'Separa i tag caso studio con virgole',
+        'add_or_remove_items'        => 'Aggiungi o rimuovi tag caso studio',
+        'choose_from_most_used'      => 'Scegli tra i tag caso studio piu usati',
+        'not_found'                  => 'Nessun tag caso studio trovato.',
+        'menu_name'                  => 'Tag'
+    );
+
+    $args = array(
+        'hierarchical'      => false,
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array( 'slug' => 'tag-caso-studio' ),
+        'show_in_rest'      => true
+    );
+
+    register_taxonomy( 'tag-caso-studio', array( 'caso-studio' ), $args );
+}
+
+add_action( 'init', 'registra_tag_caso_studio' );

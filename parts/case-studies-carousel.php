@@ -44,39 +44,19 @@ if ($case_studies_query->have_posts()) :
         <div class="case-studies-carousel__kicker product-3 fw-bold">
             <?php echo esc_html($kicker); ?>
         </div>
-        <h2 class="case-studies-carousel__title mb-0">
+        <h1 class="case-studies-carousel__title mb-0 h0 extralight">
             <?php echo esc_html($title); ?>
-        </h2>
+        </h1>
     </div>
 
     <div class="case-studies-carousel__slider-wrap">
         <div class="case-studies-carousel__slider js-case-studies-carousel owl-carousel">
-            <?php while ($case_studies_query->have_posts()) :
+            <?php
+            while ($case_studies_query->have_posts()) :
                 $case_studies_query->the_post();
-                $post_id = get_the_ID();
-                $image_url = get_the_post_thumbnail_url($post_id, 'hero-768') ?: get_template_directory_uri() . '/assets/img/sfondo-card.jpg';
-                $excerpt = get_the_excerpt($post_id);
-                $excerpt = $excerpt ?: wp_strip_all_tags(get_post_field('post_content', $post_id));
+                get_template_part('parts/card/card-case-studies', 'extended', ['post_id' => get_the_ID()]);
+            endwhile;
             ?>
-                <article class="case-studies-carousel__item">
-                    <a class="case-studies-carousel__card" href="<?php echo esc_url(get_permalink($post_id)); ?>">
-                        <div class="case-studies-carousel__media respimg">
-                            <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr(get_the_title($post_id)); ?>" loading="lazy">
-                        </div>
-                        <div class="case-studies-carousel__content">
-                            <time class="case-studies-carousel__date p-small" datetime="<?php echo esc_attr(get_the_date('c', $post_id)); ?>">
-                                <?php echo esc_html(get_the_date('j F Y', $post_id)); ?>
-                            </time>
-                            <h3 class="case-studies-carousel__card-title">
-                                <?php echo esc_html(get_the_title($post_id)); ?>
-                            </h3>
-                            <p class="case-studies-carousel__excerpt p-small mb-0">
-                                <?php echo esc_html(wp_trim_words($excerpt, 18, '...')); ?>
-                            </p>
-                        </div>
-                    </a>
-                </article>
-            <?php endwhile; ?>
         </div>
     </div>
 </section>
