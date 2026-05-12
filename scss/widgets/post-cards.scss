@@ -3,3 +3,55 @@
     padding: 2px 10px;
     border-radius: 15px;
 }
+
+.post-card {
+    .post-card-inner {
+        .post-card-image {
+            .img-overlay {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                background: linear-gradient(0deg, rgba(23, 25, 27, 0.30) 0%, rgba(23, 25, 27, 0.30) 100%), -57.09px -65.879px / 117.568% 171.608% no-repeat;
+                color: #ffffff;
+                display: flex;
+                justify-content: end;
+                visibility: hidden;
+                transition: 0.3s ease-in-out;
+                .card-link-arrow {
+                    height: max-content;
+                    font-size: 50px;
+                    position: relative;
+                    top: 30px;
+                    right: 20px;
+                    transition: 0.3s ease-in-out;
+                    visibility: hidden;
+                }
+            }
+        }
+        .post-card-content {
+            .post-card-link {
+                visibility: hidden;
+                transition: 0.3s ease-in-out;
+            }
+        }
+    }
+    &:hover {
+        .post-card-inner {
+            .post-card-image {
+                .img-overlay {
+                    visibility: visible;
+                    .card-link-arrow {
+                        visibility: visible;
+                        right: 0;
+                        top: 10px;
+                    }
+                }
+            }
+            .post-card-content {
+                .post-card-link {
+                    visibility: visible;
+                }
+            }
+        }
+    }
+}

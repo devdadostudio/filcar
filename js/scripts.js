@@ -1216,3 +1216,15 @@ function horizontalLoop(items, config) {
   }
   return tl;
 }
+
+const searchInPage = document.querySelector('.search-in-page');
+
+const sentinel = document.createElement('div');
+sentinel.style.cssText = 'position:absolute;top:50px;height:1px;width:1px;pointer-events:none;';
+searchInPage.parentElement.insertBefore(sentinel, searchInPage);
+
+const observer = new IntersectionObserver(([entry]) => {
+    searchInPage.classList.toggle('is-sticky', !entry.isIntersecting);
+}, { threshold: 0 });
+
+observer.observe(sentinel);

@@ -1,10 +1,38 @@
-.section-search-results{
-    .number-results{
-        > div{
-            border-bottom: 1px solid $primary;
+body{
+    .search-sticky-wrapper {
+        position: relative;
+
+        .search-in-page {
+            position: sticky;
+            top: 50px;
+            z-index: 4;
+            transition: 0.3s ease-in-out;
+            &.is-sticky {
+                background: none !important;
+            }
+        }
+
+        .section-search-results {
+            .number-results {
+                > div {
+                    border-bottom: 1px solid $primary;
+                }
+            }
+        }
+    }
+    &.site-header-visible{
+        .search-sticky-wrapper {
+            .search-in-page {
+                top: 120px;
+            }
         }
     }
 }
-.border-bottom-black{
+
+.section-search {
+    // stili visivi della sezione (colori, padding, ecc.)
+}
+
+.border-bottom-black {
     border-bottom: 1px solid $primary;
 }
