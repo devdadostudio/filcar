@@ -1,41 +1,65 @@
 .product-card {
-  //width: 100%;
-}
-
-.product-card-inner {
-  position: relative;
-  width: 100%;
-  border-radius: 20px;
-  overflow: hidden;
-  background-image: url("assets/img/sfondo-card.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  &:hover{
+  .product-card-inner {
+    position: relative;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    background-image: url("assets/img/sfondo-card.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
+    &:hover{
+      text-decoration: none;
+    }
+    .product-card-content{
+      padding: 24px 24px 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 2;
+      padding-right: 85px;
+      .card-title {
+        margin: 0;
+        color: $grey500;
+      }
+      .card-subtitle {
+        display: block;
+        color: $grey500;
+      }
+      .card-link-arrow {
+        position: absolute;
+        right: 25px;
+        top: 30px;
+        font-size: 45px;
+        visibility: hidden;
+      }
+    }
+    .card-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      transform: translateY(100%);
+      > ul {
+        list-style: square;
+        ::marker { color: $secondary; }
+      }
+    }
   }
-}
-
-/* titolo */
-.card-title {
-  margin: 0;
-  color: $grey500;
-}
-
-/* subtitle */
-.card-subtitle {
-  display: block;
-  color: $grey500;
-}
-
-.product-card-content {
-  padding: 24px 24px 0 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  z-index: 2;
+  &:hover {
+    .card-link-arrow {
+      visibility: visible !important;
+      transition: 0.3s ease-in-out;
+      right: 0 !important;
+      top: 10px !important;
+    }
+    .card-info {
+      transform: translateY(0);
+      transition: 0.3s ease-in-out;
+    }
+  }
 }

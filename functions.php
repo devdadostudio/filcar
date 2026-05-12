@@ -74,6 +74,7 @@ if (function_exists('add_theme_support')) {
     add_image_size('product-car-thumb', 240, 200, false);
     add_image_size('img-menu-arredo-tecnico', 300, 215, false);
     add_image_size('460x300', 460, 300, false);
+    add_image_size('blog-card-thumb', 450, 254, true);
     
     // Enables post and comment RSS feed links to head
     add_theme_support('automatic-feed-links');

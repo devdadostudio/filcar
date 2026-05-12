@@ -1,0 +1,10 @@
+.section-search-results{
+    .number-results{
+        > div{
+            border-bottom: 1px solid $primary;
+        }
+    }
+}
+.border-bottom-black{
+    border-bottom: 1px solid $primary;
+}

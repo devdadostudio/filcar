@@ -80,6 +80,9 @@ body {
   > p:last-of-type {
     margin-bottom: 0;
   }
+  > ul:last-of-type{
+    margin-bottom: 0;
+  }
 }
 
 %label-before-base {

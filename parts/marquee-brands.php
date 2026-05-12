@@ -17,6 +17,17 @@ if(!empty($brands_logos)) {
                 </div>
             <?php
             }
+            for($i = 0; $i < $brands_logos_c; $i++) {
+                $brand_logo = $brands_logos[$i];
+                //print_r($brand_logo);
+            ?>
+                <div href="#" class="stb-item">
+                    <?php
+                    echo wp_get_attachment_image($brand_logo['ID'], 'full', false, ['class' => '']);
+                    ?>
+                </div>
+            <?php
+            }
             ?>
         </div>
     </div>
