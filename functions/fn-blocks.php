@@ -171,6 +171,16 @@ add_action('acf/init', function () {
         ]);
 
         acf_register_block_type([
+            'name' => 'hero-sector',
+            'title' => __('Hero settore'),
+            'render_template' => get_template_directory() . '/parts/hero-sector.php',
+            'category' => 'layout',
+            'icon' => 'cover-image',
+            'mode' => 'edit',
+            'post_types' => ['settori'],
+        ]);
+
+        acf_register_block_type([
             'name' => 'img-4-txt-blocks',
             'title' => __('Immagine + 4 blocchi di testo'),
             'render_template' => get_template_directory() . '/parts/img-4-txt-blocks.php',
@@ -189,4 +199,5 @@ add_action('acf/init', function () {
             'post_types' => ['page', 'product'],
         ]);
     }
+
 });
