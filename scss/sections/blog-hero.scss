@@ -1,0 +1,156 @@
+.blog-index {
+  background: $primary;
+}
+
+.blog-hero {
+  background: $primary;
+  color: $light;
+  display: flex;
+  flex-direction: column;
+
+  @include media-breakpoint-up(lg) {
+    min-height: 65vh;
+  }
+
+  @include media-breakpoint-up(xl) {
+    min-height: calc((100vh - var(--site-header-height)) * 0.8);
+  }
+}
+
+.blog-hero__inner {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 2rem;
+
+  @include media-breakpoint-up(lg) {
+    min-height: 65vh;
+  }
+
+  @include media-breakpoint-up(xl) {
+    min-height: calc((100vh - var(--site-header-height)) * 0.8);
+  }
+}
+
+.blog-hero__breadcrumb {
+  padding-top: 2rem;
+  margin-bottom: clamp(2.5rem, 8vh, 5rem);
+}
+
+.blog-hero__grid {
+  flex: 1 1 auto;
+  align-items: stretch;
+  min-height: 0;
+}
+
+.blog-hero__copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.blog-hero__eyebrow {
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  margin-bottom: 1.15rem;
+}
+
+.blog-hero__title {
+  margin: 0;
+  color: #fff;
+}
+
+.blog-hero__featured {
+  display: flex;
+  min-height: 0;
+}
+
+.blog-hero__post {
+  display: flex;
+  width: 100%;
+  min-height: 0;
+
+  .post-card {
+    border-radius: 3px !important;
+    width: 100%;
+  }
+
+  .post-card-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .post-card-image {
+    flex: 0 0 auto;
+    aspect-ratio: 520 / 292;
+    margin: 0;
+  }
+
+  .post-card-content {
+    flex: 1 1 auto;
+    padding: 1.35rem 1.5rem 2.5rem !important;
+  }
+
+  .post-card-categories {
+    display: none !important;
+  }
+
+  .post-card-excerpt {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .blog-hero__inner {
+    padding-top: 0;
+    padding-bottom: 3rem;
+  }
+
+  .blog-hero__breadcrumb {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 3.75rem;
+  }
+
+  .blog-hero__grid {
+    row-gap: 2rem;
+  }
+
+  .blog-hero__copy {
+    display: block;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .blog-hero__inner {
+    padding-bottom: 2rem;
+  }
+
+  .blog-hero__breadcrumb {
+    margin-bottom: 3rem;
+  }
+
+  .blog-hero__eyebrow {
+    margin-bottom: 0.8rem;
+  }
+
+  .blog-hero__title {
+    max-width: 250px;
+  }
+
+  .blog-hero__grid {
+    row-gap: 1.5rem;
+  }
+
+  .blog-hero__post {
+    max-width: none;
+  }
+
+  .blog-hero__post .post-card-content {
+    padding: 0.85rem 1rem 1.3rem !important;
+  }
+}

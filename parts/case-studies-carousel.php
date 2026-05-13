@@ -35,12 +35,21 @@ $case_studies_query = new WP_Query($query_args);
 if ($case_studies_query->have_posts()) :
 ?>
 <section id="<?php echo esc_attr($block_id); ?>" class="case-studies-carousel bg-blog text-white overflow-hidden">
+    <?php
+    get_template_part('parts/breadcrumbs', null, [
+        'variant' => 'dark',
+        'layout' => 'inline',
+        'class' => 'case-studies-carousel__breadcrumb',
+        'inner_class' => 'p-small',
+        'col_class' => 'col-12',
+        'mobile_bg' => true,
+        'items' => [
+            ['label' => __('Home', 'filcar'), 'url' => home_url('/')],
+            ['label' => $term instanceof WP_Term ? $term->name : __('Casi studio', 'filcar')],
+        ],
+    ]);
+    ?>
     <div class="case-studies-carousel__head container-fluid">
-        <div class="case-studies-carousel__breadcrumb p-small">
-            <a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html__('Home', 'filcar'); ?></a>
-            <span><?php echo esc_html__('>', 'filcar'); ?></span>
-            <span><?php echo esc_html($term instanceof WP_Term ? $term->name : __('Casi studio', 'filcar')); ?></span>
-        </div>
         <div class="case-studies-carousel__kicker product-3 fw-bold">
             <?php echo esc_html($kicker); ?>
         </div>
