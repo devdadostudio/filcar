@@ -18,7 +18,7 @@ get_header();
             ?>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12 sp-px-0">
+                    <div class="col-12">
                         <div class="search-title sp-mb-6">
                             <div class="row">
                                 <div class="col-12">
