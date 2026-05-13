@@ -12,29 +12,8 @@ if($related_c > 0) :
                 <?php
                 for($i = 0; $i < $related_c; $i++) :
                     $prod_id = $related[$i];
-                ?>
-                    <div class="col-6 col-xl-3">
-                        <div class="product-card h-100">
-                            <a class="product-card-inner sp-pb-7 sp-sxl-pb-9 sp-uxl-pb-15 h-100 justify-content-between" href="<?php echo get_the_permalink($prod_id); ?> ">
-                                <div class="product-card-content">
-                                    <h2 class="card-title product-2 text-grey500">
-                                        <?php echo get_the_title($prod_id); ?>
-                                    </h2>
-                                    <span class="card-subtitle body-4 text-grey500">
-                                        <?php echo get_field('card_desc', $prod_id); ?>
-                                    </span>
-                                </div>
-                                <?php
-                                $img = get_post_thumbnail_id($prod_id);
-                                if($img) : ?>
-                                    <div class="product-card-image d-flex justify-content-center w-100 sp-mt-7 sp-sxl-mt-9 sp-uxl-mt-15">
-                                        <img src="<?php echo wp_get_attachment_image_url($img, 'product-car-thumb'); ?>" alt="">
-                                    </div>
-                                <?php endif; ?>
-                            </a>
-                        </div>
-                    </div>
-                <?php endfor; ?>
+                    get_template_part('parts/card/card', 'product', ['card_class' => 'col-6 col-xl-3']);
+                endfor; ?>
             </div>
         </div>
     </section>

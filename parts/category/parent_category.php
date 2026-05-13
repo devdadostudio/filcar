@@ -17,7 +17,7 @@ $taxonomy = $args['taxonomy'];
             </div>
         </div>
     </section>
-    <section class="section-category-header sp-py-9 sp-lg-py-15 sp-sxl-py-19">
+    <section class="section-category-header sp-py-8 sp-lg-py-15 sp-sxl-py-19">
         <div class="container-fluid">
             <div class="row align-items-end">
                 <div class="col-12 col-lg-6">
@@ -26,7 +26,7 @@ $taxonomy = $args['taxonomy'];
                         <?php single_cat_title(); ?>
                     </h1>
                 </div>
-                <div class="col-12 col-lg-6">
+                <div class="col-12 col-lg-6 sp-mt-10 sp-lg-mt-0">
                     <div class="category-description p-big fw-light">
                         <?php echo category_description(); ?>
                     </div>
@@ -37,9 +37,9 @@ $taxonomy = $args['taxonomy'];
     <?php if(!empty($children)) :
         $children_c = count($children);
     ?>
-    <section class="section-category-posts">
+    <section class="section-category-posts sp-pb-0 sp-lg-pb-4 sp-sxl-pb-12">
         <div class="container-fluid">
-            <div class="row">
+            <div class="row sp-lg-row-gap-4 sp-row-gap-3">
                 <?php
                 for($i = 0; $i < $children_c; $i++) {
                     $child = $children[$i];

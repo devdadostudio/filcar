@@ -90,7 +90,7 @@ get_header();
                         <div class="border-bottom-black sp-pb-6">
                             <div class="row sp-row-gap-4">
                                 <?php while ( $product_query->have_posts() ) : $product_query->the_post();
-                                    get_template_part('parts/card/card', 'product', ['card_class' => 'col-12 col-md-6 col-lg-4 col-sxl-3']);
+                                    get_template_part('parts/card/card', 'product', ['card_class' => 'col-6 col-lg-4 col-sxl-3']);
                                 endwhile; ?>
                             </div>
                         </div>
