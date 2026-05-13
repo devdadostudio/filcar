@@ -1,7 +1,20 @@
 .hero-single {
-  overflow: hidden;
+  overflow: visible;
+  padding-bottom: clamp(10rem, 21vw, 22rem);
+  margin-bottom: clamp(3rem, 7vw, 7rem);
+
+  &.bg-blog {
+    background: linear-gradient(
+      to bottom,
+      $blog-txt 0,
+      $blog-txt calc(100vh - var(--site-header-offset)),
+      $white calc(100vh - var(--site-header-offset)),
+      $white 100%
+    ) !important;
+  }
 
   &__inner {
+    position: relative;
     min-height: calc(100vh - var(--site-header-offset));
     display: flex;
     flex-direction: column;
@@ -61,13 +74,17 @@
   }
 
   &__media {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
     width: min(100%, 72rem);
     aspect-ratio: 1146 / 644;
-    margin-top: clamp(4.5rem, 9vh, 7rem);
+    margin-top: 0;
     margin-left: auto;
     margin-right: auto;
     background: $grey900;
     overflow: hidden;
+    transform: translate(-50%, 50%);
   }
 
   @include media-breakpoint-up(sxl) {
@@ -77,28 +94,21 @@
   }
 
   @include media-breakpoint-down(lg) {
+    padding-bottom: 3.25rem;
+    margin-bottom: clamp(2.5rem, 10vw, 4rem);
+
+    &.bg-blog {
+      background: linear-gradient(
+        to bottom,
+        $blog-txt 0,
+        $blog-txt calc(100% - 3.25rem - ((100vw - 3rem) * 0.28125)),
+        $white calc(100% - 3.25rem - ((100vw - 3rem) * 0.28125)),
+        $white 100%
+      ) !important;
+    }
+
     &__inner {
-      min-height: calc(100vh - var(--site-header-offset));
-    }
-
-    &__title {
-      max-width: 58rem;
-      margin-top: 4.5rem;
-    }
-
-    &__meta {
-      margin-top: 3rem;
-      align-items: flex-start;
-    }
-
-    &__media {
-      width: 100%;
-      margin-top: 4rem;
-    }
-  }
-
-  @include media-breakpoint-down(md) {
-    &__inner {
+      min-height: auto;
       padding-top: 1rem;
     }
 
@@ -115,17 +125,38 @@
     }
 
     &__title {
-      margin-top: 3.5rem;
+      max-width: 58rem;
+      margin-top: 4rem;
     }
 
     &__meta {
+      margin-top: 2.35rem;
       flex-direction: column;
+      align-items: stretch;
       gap: 1.5rem;
     }
 
+    &__chips {
+      gap: 0.75rem;
+    }
+
+    &__chip {
+      min-height: 2.65rem;
+      padding: 0.35rem 1.25rem;
+    }
+
+    &__date {
+      margin-left: auto;
+    }
+
     &__media {
-      aspect-ratio: 4 / 3;
-      margin-top: 3rem;
+      position: relative;
+      left: auto;
+      bottom: auto;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      margin-top: 0.85rem;
+      transform: none;
     }
   }
 }

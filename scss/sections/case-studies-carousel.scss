@@ -175,6 +175,7 @@
     grid-template-columns: 44.2% 55.8%;
     color: $white;
     overflow: hidden;
+    border-radius: 6px;
     text-decoration: none;
     isolation: isolate;
 
@@ -241,6 +242,10 @@
 
   &__card-title {
     margin-bottom: 1rem;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
   }
 
   &__excerpt {
@@ -272,21 +277,8 @@
 
     &__item {
       width: 82vw;
-      height: auto;
-      min-height: 460px;
-      aspect-ratio: auto;
-    }
-
-    &__card {
-      grid-template-columns: 1fr;
-      grid-template-rows: 46% 54%;
-
-      &:hover,
-      &:focus-visible {
-        .case-studies-carousel__content {
-          transform: none;
-        }
-      }
+      min-height: 280px;
+      aspect-ratio: 1.25;
     }
 
     &__content {
@@ -294,7 +286,7 @@
     }
 
     &__date {
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
     }
   }
 }
