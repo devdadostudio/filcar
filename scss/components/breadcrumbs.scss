@@ -1,15 +1,61 @@
-.breadcrumbs-on-grey{
-    .breadcrumbs-container-inner {
-        > span {
-            > span:first-of-type {
-                > a {
-                    text-decoration: none;
-                    color: $grey600;
-                    &:hover {
-                        text-decoration: underline;
-                    }
-                }
-            }
-        }
+.site-breadcrumb {
+  width: 100%;
+  color: $grey600;
+  position: relative;
+  z-index: 2;
+
+  &--dark,
+  &--light {
+    color: $grey600;
+  }
+
+  &--overlay {
+    position: absolute;
+    top: 1.5rem;
+    left: 0;
+
+    @include media-breakpoint-down(lg) {
+      position: relative;
+      top: 0;
     }
+  }
+
+  &--overlay,
+  &--mobile-bg {
+    @include media-breakpoint-down(lg) {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      background: $grey200;
+    }
+  }
+
+  &__items {
+    color: inherit;
+
+    > span,
+    > span > span {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .breadcrumb_last {
+    font-weight: 600;
+  }
+
+  &__separator,
+  .icon-filcar-icon-chevron-forward {
+    color: inherit;
+  }
 }

@@ -4,21 +4,21 @@ get_header();
 <main id="main-content-search" class="bg-grey-200">
     <div class="search-sticky-wrapper">
         <section class="section-search bg-primary">
+            <?php
+            get_template_part('parts/breadcrumbs', null, [
+                'variant' => 'dark',
+                'layout' => 'inline',
+                'class' => 'search-breadcrumbs sp-pt-5 sp-pb-7',
+                'col_class' => 'col-6',
+                'items' => [
+                    ['label' => __('Home', 'filcar'), 'url' => home_url('/')],
+                    ['label' => __('Ricerca', 'filcar')],
+                ],
+            ]);
+            ?>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12 sp-px-0">
-                        <div class="search-breadcrumbs breadcrumbs sp-pt-5 sp-pb-7">
-                            <div class="row">
-                                <div class="col-6 p-smaller text-grey-600">
-                                    <span>
-                                        <span>
-                                            <a href="<?php echo home_url(); ?>" class="text-grey-600 text-decoration-none">Home</a>
-                                        </span> <i class="icon-filcar-icon-chevron-forward"></i> 
-                                        <span class="breadcrumb_last" aria-current="page">Ricerca</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
                         <div class="search-title sp-mb-6">
                             <div class="row">
                                 <div class="col-12">

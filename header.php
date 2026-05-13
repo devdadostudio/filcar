@@ -103,23 +103,20 @@
                         <div class="flc-search-container dropdown-menu">
                             <div class="container-fluid">
                                 <div class="top-container sp-mb-5">
-                                    <div class="search-breadcrumbs breadcrumbs sp-pt-5 sp-pb-7">
-                                        <div class="row">
-                                            <div class="col-6 p-smaller text-grey-600">
-                                                <span>
-                                                    <span>
-                                                        <a href="<?php echo home_url(); ?>" class="text-grey-600 text-decoration-none">Home</a>
-                                                    </span> <i class="icon-filcar-icon-chevron-forward"></i> 
-                                                    <span class="breadcrumb_last" aria-current="page">Ricerca</span>
-                                                </span>
-                                            </div>
-                                            <div class="col-6 d-flex justify-content-end text-white">
-                                                <div class="search-close">
-                                                    <i class="icon-filcar-icon-close"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <?php
+                                    get_template_part('parts/breadcrumbs', null, [
+                                        'variant' => 'dark',
+                                        'layout' => 'inline',
+                                        'class' => 'search-breadcrumbs sp-pt-5 sp-pb-7',
+                                        'col_class' => 'col-6',
+                                        'container' => false,
+                                        'items' => [
+                                            ['label' => __('Home', 'filcar'), 'url' => home_url('/')],
+                                            ['label' => __('Ricerca', 'filcar')],
+                                        ],
+                                        'after' => '<div class="col-6 d-flex justify-content-end text-white"><div class="search-close"><i class="icon-filcar-icon-close"></i></div></div>',
+                                    ]);
+                                    ?>
                                     <div class="search-title">
                                         <div class="row">
                                             <div class="col-12">

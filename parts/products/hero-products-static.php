@@ -3,19 +3,13 @@
     $txt_hero = get_field('txt_hero');
 ?>
 <section class="position-relative section-hero-product d-flex align-items-center h-100vh-header">
-    <div class="breadcrumbs">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12 col-lg-4 p-smaller text-grey-600">
-                    <?php
-                    if (function_exists('yoast_breadcrumb')) {
-                        yoast_breadcrumb();
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php
+    get_template_part('parts/breadcrumbs', null, [
+        'variant' => 'light',
+        'layout' => 'overlay',
+        'class' => 'product-hero__breadcrumb',
+    ]);
+    ?>
     <?php
     $thumb_id = get_post_thumbnail_id();
     ?>

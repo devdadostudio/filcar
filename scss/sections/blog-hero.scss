@@ -6,6 +6,7 @@
   background: $primary;
   color: $light;
   display: flex;
+  flex-direction: column;
 
   @include media-breakpoint-up(lg) {
     min-height: 65vh;
@@ -19,7 +20,6 @@
 .blog-hero__inner {
   display: flex;
   flex-direction: column;
-  padding-top: 2rem;
   padding-bottom: 2rem;
 
   @include media-breakpoint-up(lg) {
@@ -32,20 +32,8 @@
 }
 
 .blog-hero__breadcrumb {
-  color: $grey500;
-  display: flex;
-  gap: 0.45rem;
+  padding-top: 2rem;
   margin-bottom: clamp(2.5rem, 8vh, 5rem);
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  a:after {
-    content: ">";
-    margin-left: 0.45rem;
-  }
 }
 
 .blog-hero__grid {
@@ -118,11 +106,13 @@
 
 @include media-breakpoint-down(lg) {
   .blog-hero__inner {
-    padding-top: 1.5rem;
+    padding-top: 0;
     padding-bottom: 3rem;
   }
 
   .blog-hero__breadcrumb {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     margin-bottom: 3.75rem;
   }
 

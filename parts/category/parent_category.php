@@ -4,19 +4,13 @@ $term_id = $args['term_id'];
 $taxonomy = $args['taxonomy'];
 ?>
 <main id="main-content-category" class="bg-grey-200">
-    <section class="breadcrumbs bg-grey-200 sp-py-3 breadcrumbs-on-grey">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12 col-lg-4 p-smaller text-grey-600 breadcrumbs-container-inner">
-                    <?php
-                    if (function_exists('yoast_breadcrumb')) {
-                        yoast_breadcrumb();
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php
+    get_template_part('parts/breadcrumbs', null, [
+        'variant' => 'light',
+        'layout' => 'bar',
+        'class' => 'bg-grey-200 sp-py-3',
+    ]);
+    ?>
     <section class="section-category-header sp-py-9 sp-lg-py-15 sp-sxl-py-19">
         <div class="container-fluid">
             <div class="row align-items-end">

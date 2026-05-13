@@ -57,15 +57,21 @@ $chips = array_slice(array_unique(array_filter($chips)), 0, 3);
 $thumb_id = get_post_thumbnail_id($post_id);
 ?>
 <section class="hero-single bg-blog text-white">
+    <?php
+    get_template_part('parts/breadcrumbs', null, [
+        'variant' => 'dark',
+        'layout' => 'inline',
+        'class' => 'hero-single__breadcrumb',
+        'col_class' => 'col-12',
+        'mobile_bg' => true,
+        'items' => [
+            ['label' => __('Home', 'filcar'), 'url' => home_url('/')],
+            ['label' => $breadcrumb_parent_label, 'url' => $breadcrumb_parent_url],
+            ['label' => $title],
+        ],
+    ]);
+    ?>
     <div class="hero-single__inner container-fluid">
-        <nav class="hero-single__breadcrumb p-smaller" aria-label="<?php echo esc_attr__('Breadcrumb', 'filcar'); ?>">
-            <a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html__('Home', 'filcar'); ?></a>
-            <span><?php echo esc_html__('>', 'filcar'); ?></span>
-            <a href="<?php echo esc_url($breadcrumb_parent_url); ?>"><?php echo esc_html($breadcrumb_parent_label); ?></a>
-            <span><?php echo esc_html__('>', 'filcar'); ?></span>
-            <span><?php echo esc_html($title); ?></span>
-        </nav>
-
         <h1 class="hero-single__title h0 extralight mb-0">
             <?php echo esc_html($title); ?>
         </h1>

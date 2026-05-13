@@ -1,21 +1,4 @@
 .section-hero-product{
-    .breadcrumbs {
-        position: absolute;
-        top: 1.5rem;
-        width: 100%;
-        @include media-breakpoint-down(lg) {
-            position: relative;
-            top: 0;
-            padding: 1rem 0;
-            background: #EBEBEB;
-        }
-        .breadcrumb_last{
-            font-weight: 600;
-        }
-        a{
-            color: inherit;
-        }
-    }
     @include media-breakpoint-down(lg) { 
         flex-direction: column;
         .text-container{
