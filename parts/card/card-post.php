@@ -1,9 +1,11 @@
 <?php
 $post_id = get_the_ID();
+$card_class = $args['card_class'] ?? '';
+$show_excerpt = $args['show_excerpt'] ?? false;
 ?>
-<div class="<?php echo $args['card_class']; ?> card-post">
+<div class="<?php echo esc_attr($card_class); ?> card-post">
     <div class="post-card h-100 bg-white rounded overflow-hidden">
-        <a class="post-card-inner text-decoration-none" href="<?php echo get_the_permalink($post_id); ?> ">
+        <a class="post-card-inner text-decoration-none" href="<?php echo esc_url(get_the_permalink($post_id)); ?>">
             <figure class="post-card-image d-flex justify-content-center aspect-ratio-16x9 overflow-hidden respimg position-relative">
             <div class="img-overlay">
                 <div class="card-link-arrow">
@@ -40,8 +42,13 @@ $post_id = get_the_ID();
                     <?php echo get_the_date('d M Y', $post_id); ?>
                 </div>
                 <div class="p-big text-grey-500 fw-light">
-                    <?php echo get_the_title($post_id); ?>
+                    <?php echo esc_html(get_the_title($post_id)); ?>
                 </div>
+                <?php if ($show_excerpt && get_the_excerpt($post_id)) : ?>
+                    <div class="post-card-excerpt p-smaller text-grey-600 fw-light sp-mt-3">
+                        <?php echo esc_html(wp_trim_words(get_the_excerpt($post_id), 22, '...')); ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </a>
     </div>
