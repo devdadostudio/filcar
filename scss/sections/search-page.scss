@@ -10,6 +10,10 @@ body{
             &.is-sticky {
                 background: none !important;
             }
+            .search-container-inner{
+                background: linear-gradient(0deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.08) 100%), rgba(71, 71, 75, 0.50);
+                backdrop-filter: blur(15px);
+            }
         }
 
         .section-search-results {

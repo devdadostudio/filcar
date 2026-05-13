@@ -1,0 +1,15 @@
+.breadcrumbs-on-grey{
+    .breadcrumbs-container-inner {
+        > span {
+            > span:first-of-type {
+                > a {
+                    text-decoration: none;
+                    color: $grey600;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}

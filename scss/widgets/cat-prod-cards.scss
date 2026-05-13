@@ -1,0 +1,19 @@
+.card-cat-prod{
+    figure{
+        &:before{
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1D1D1F4D;
+        }
+    }
+    .card-category-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60%;
+    }
+}

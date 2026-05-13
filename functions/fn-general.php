@@ -205,3 +205,33 @@ function registra_tag_caso_studio() {
 }
 
 add_action( 'init', 'registra_tag_caso_studio' );
+
+function register_taxonomy_products() {
+    $labels = array(
+        'name'              => 'Categorie prodotto',
+        'singular_name'     => 'Categoria prodotto',
+        'search_items'      => 'Cerca categorie prodotto',
+        'all_items'         => 'Tutte le categorie prodotto',
+        'parent_item'       => 'Categoria padre',
+        'parent_item_colon' => 'Categoria padre:',
+        'edit_item'         => 'Modifica categoria prodotto',
+        'update_item'       => 'Aggiorna categoria prodotto',
+        'add_new_item'      => 'Aggiungi nuova categoria prodotto',
+        'new_item_name'     => 'Nuovo nome categoria prodotto',
+        'menu_name'         => 'Categorie'
+    );
+
+    $args = array(
+        'hierarchical'      => true,
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array( 'slug' => 'cat-prod' ),
+        'show_in_rest'      => true
+    );
+
+    register_taxonomy( 'cat-prod', array( 'product' ), $args );
+}
+
+add_action( 'init', 'register_taxonomy_products' );
