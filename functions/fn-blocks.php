@@ -209,4 +209,68 @@ add_action('acf/init', function () {
         ]);
     }
 
+    if (function_exists('acf_add_local_field_group')) {
+        acf_add_local_field_group([
+            'key' => 'group_hero_sector',
+            'title' => __('Hero settore', 'filcar'),
+            'fields' => [
+                [
+                    'key' => 'field_hero_sector_title',
+                    'label' => __('Titolo hero', 'filcar'),
+                    'name' => 'title',
+                    'type' => 'textarea',
+                    'instructions' => __('Titolo grande della hero. La label sopra arriva dal titolo WordPress del settore.', 'filcar'),
+                    'rows' => 3,
+                    'new_lines' => 'br',
+                ],
+                [
+                    'key' => 'field_hero_sector_cards',
+                    'label' => __('Card ancore', 'filcar'),
+                    'name' => 'cards',
+                    'type' => 'repeater',
+                    'instructions' => __('Card mostrate in overlay da desktop. Da mobile vengono nascoste.', 'filcar'),
+                    'layout' => 'block',
+                    'button_label' => __('Aggiungi card', 'filcar'),
+                    'sub_fields' => [
+                        [
+                            'key' => 'field_hero_sector_card_image',
+                            'label' => __('Immagine', 'filcar'),
+                            'name' => 'image',
+                            'type' => 'image',
+                            'return_format' => 'array',
+                            'preview_size' => 'medium',
+                            'library' => 'all',
+                        ],
+                        [
+                            'key' => 'field_hero_sector_card_title',
+                            'label' => __('Titolo', 'filcar'),
+                            'name' => 'title',
+                            'type' => 'text',
+                        ],
+                        [
+                            'key' => 'field_hero_sector_card_link',
+                            'label' => __('Link ancora', 'filcar'),
+                            'name' => 'link',
+                            'type' => 'link',
+                            'return_format' => 'array',
+                        ],
+                    ],
+                ],
+            ],
+            'location' => [
+                [
+                    [
+                        'param' => 'block',
+                        'operator' => '==',
+                        'value' => 'acf/hero-sector',
+                    ],
+                ],
+            ],
+            'position' => 'normal',
+            'style' => 'default',
+            'label_placement' => 'top',
+            'instruction_placement' => 'label',
+            'active' => true,
+        ]);
+    }
 });

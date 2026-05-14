@@ -698,7 +698,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const isMobileViewport = () =>
         window.matchMedia("(max-width: 1024px)").matches;
-      const endDistance = () => (isMobileViewport() ? "+=180%" : "+=220%");
+      const endDistance = () => (isMobileViewport() ? "+=230%" : "+=220%");
       const shrinkDuration = 0.72;
       const introDuration = 0.22;
       const getMediaWidth = () =>
@@ -707,7 +707,7 @@ document.addEventListener("DOMContentLoaded", () => {
         isMobileViewport() ? 193 : Math.min(window.innerHeight * 0.64, 620);
       const getMediaY = () =>
         isMobileViewport()
-          ? 166
+          ? Math.max(78, Math.min(112, window.innerHeight * 0.13))
           : Math.max(38, Math.min(58, window.innerHeight * 0.055));
       const getIntroY = () => (isMobileViewport() ? -30 : -50);
       const getContentY = () => (isMobileViewport() ? 28 : 42);
