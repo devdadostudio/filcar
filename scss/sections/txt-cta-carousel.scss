@@ -1,4 +1,4 @@
-.txt-cta-carousel-sectors{
+.txt-cta-carousel{
     .container-fluid{
         position: relative;
         &:before{
@@ -23,7 +23,7 @@
                 width: 10.5rem;
             }
         }
-        .carousel-sectors{
+        .carousel-cards{
             .owl-stage-outer{
                 overflow: visible !important;
                 .owl-stage{
@@ -57,6 +57,13 @@
                         }
                     }
                 }
+            }
+        }
+    }
+    &.bg-grey-200{
+        .container-fluid{
+            &:before{
+                background: $grey200;
             }
         }
     }

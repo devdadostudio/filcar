@@ -1,0 +1,3 @@
+(function($,window,undefined){$.fn.verticalTextAligner=function(){heights=[];ele=[];prev=null;tot=this.length;this.each(function(i){let top=parseInt($(this).offset().top);if(i==0)prev=top;if(top!=prev){maxHeight=Math.max.apply(null,ele.map(e=>e.height()));ele.map(e=>{$(e).height(maxHeight)});heights=[top];ele=[$(this)]}else{heights.push(top);ele.push($(this))}
+if(i==tot-1){maxHeight=Math.max.apply(null,ele.map(e=>e.height()));ele.map(e=>{$(e).height(maxHeight)})}
+prev=top})}}(jQuery))

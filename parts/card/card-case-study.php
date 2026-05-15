@@ -1,7 +1,11 @@
 <?php
-$post_id = get_the_ID();
+if(isset($args['case_study_id'])){
+    $post_id = $args['case_study_id'];
+}else{
+    $post_id = get_the_ID();
+}
 ?>
-<div class="<?php echo $args['card_class']; ?> card-post">
+<div class="<?php echo isset($args['card_class']) ? $args['card_class'] : ''; ?> card-post">
     <div class="post-card h-100 bg-white rounded overflow-hidden">
         <a class="post-card-inner text-decoration-none" href="<?php echo get_the_permalink($post_id); ?> ">
             <figure class="post-card-image d-flex justify-content-center aspect-ratio-16x9 overflow-hidden respimg position-relative">

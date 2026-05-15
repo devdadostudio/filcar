@@ -141,9 +141,9 @@ add_action('acf/init', function () {
         ]);
 
         acf_register_block_type([
-            'name' => 'txt-cta-carousel-sectors',
-            'title' => __('Testo + CTA + carosello settori'),
-            'render_template' => get_template_directory() . '/parts/txt-cta-carousel-sectors.php',
+            'name' => 'txt-cta-carousel',
+            'title' => __('Testo + CTA + carosello'),
+            'render_template' => get_template_directory() . '/parts/txt-cta-carousel.php',
             'category' => 'layout',
             'icon' => 'format-video',
             'mode' => 'edit',

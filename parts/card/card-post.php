@@ -1,5 +1,10 @@
 <?php
-$post_id = get_the_ID();
+if(isset($args['post_id'])) {
+    $post_id = $args['post_id'];
+} else {
+    $post_id = get_the_ID();
+}
+
 $card_class = $args['card_class'] ?? '';
 $show_excerpt = $args['show_excerpt'] ?? false;
 ?>

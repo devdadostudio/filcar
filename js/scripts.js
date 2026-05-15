@@ -983,7 +983,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 jQuery(document).ready(function () {
-  jQuery(".carousel-sectors").owlCarousel({
+  jQuery(".carousel-cards").owlCarousel({
     loop: false,
     margin: 24,
     nav: true,
