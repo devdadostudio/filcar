@@ -1,16 +1,18 @@
 @font-face {
-  font-family: 'fontello';
-  src: url('fonts/icons/fontello.eot?54900169');
-  src: url('fonts/icons/fontello.eot?54900169#iefix') format('embedded-opentype'),
-       url('fonts/icons/fontello.woff2?54900169') format('woff2'),
-       url('fonts/icons/fontello.woff?54900169') format('woff'),
-       url('fonts/icons/fontello.ttf?54900169') format('truetype'),
-       url('fonts/icons/fontello.svg?54900169#fontello') format('svg');
+  font-family: "fontello";
+  src: url("fonts/icons/fontello.eot?44195215");
+  src:
+    url("fonts/icons/fontello.eot?44195215#iefix") format("embedded-opentype"),
+    url("fonts/icons/fontello.woff2?44195215") format("woff2"),
+    url("fonts/icons/fontello.woff?44195215") format("woff"),
+    url("fonts/icons/fontello.ttf?44195215") format("truetype"),
+    url("fonts/icons/fontello.svg?44195215#fontello") format("svg");
   font-weight: normal;
   font-style: normal;
 }
 
-[class^="icon-"]:before, [class*=" icon-"]:before {
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
   font-family: "fontello";
   font-style: normal;
   font-weight: normal;
@@ -18,31 +20,133 @@
   display: inline-block;
   text-decoration: inherit;
   width: 1em;
-  margin-right: .2em;
+  margin-right: 0.2em;
   text-align: center;
   font-variant: normal;
   text-transform: none;
   line-height: 1em;
-  margin-left: .2em;
+  margin-left: 0.2em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-filcar-icon-arrow-down:before { content: '\e800'; }
-.icon-filcar-icon-arrow-downr:before { content: '\e801'; }
-.icon-filcar-icon-arrow-right:before { content: '\e802'; }
-.icon-filcar-icon-arrow-up:before { content: '\e803'; }
-.icon-filcar-icon-arrow-upr:before { content: '\e804'; }
-.icon-filcar-icon-arrow-zoom:before { content: '\e805'; }
-.icon-filcar-icon-chevron-forward:before { content: '\e806'; }
-.icon-filcar-icon-close:before { content: '\e807'; }
-.icon-filcar-icon-document:before { content: '\e808'; }
-.icon-filcar-icon-email:before { content: '\e809'; }
-.icon-filcar-icon-hamburger:before { content: '\e80a'; }
-.icon-filcar-icon-pin:before { content: '\e80b'; }
-.icon-filcar-icon-phone:before { content: '\e80c'; }
-.icon-filcar-icon-trash:before { content: '\e80d'; }
-.icon-filcar-icon-items:before { content: '\e80e'; }
-.icon-logo-dual:before { content: '\e80f'; width: auto;}
-.icon-logo-infinity:before { content: '\e810'; width: auto;}
-.icon-logo-mono:before { content: '\e811'; width: auto;}
+.icon-filcar-icon-arrow-down:before {
+  content: "\e800";
+}
+.icon-filcar-icon-arrow-downr:before {
+  content: "\e801";
+}
+.icon-filcar-icon-arrow-right:before {
+  content: "\e802";
+}
+.icon-filcar-icon-arrow-up:before {
+  content: "\e803";
+}
+.icon-filcar-icon-arrow-upr:before {
+  content: "\e804";
+}
+.icon-filcar-icon-arrow-zoom:before {
+  content: "\e805";
+}
+.icon-filcar-icon-chevron-forward:before {
+  content: "\e806";
+}
+.icon-filcar-icon-close:before {
+  content: "\e807";
+}
+.icon-filcar-icon-document:before {
+  content: "\e808";
+}
+.icon-filcar-icon-email:before {
+  content: "\e809";
+}
+.icon-filcar-icon-hamburger:before {
+  content: "\e80a";
+}
+.icon-filcar-icon-pin:before {
+  content: "\e80b";
+}
+.icon-filcar-icon-phone:before {
+  content: "\e80c";
+}
+.icon-filcar-icon-trash:before {
+  content: "\e80d";
+}
+.icon-filcar-icon-items:before {
+  content: "\e80e";
+}
+.icon-logo-dual:before {
+  content: "\e80f";
+  width: auto;
+}
+.icon-logo-infinity:before {
+  content: "\e810";
+  width: auto;
+}
+.icon-logo-mono:before {
+  content: "\e811";
+  width: auto;
+}
+.icon-icon-anticaduta:before {
+  content: "\e812";
+}
+.icon-icon-aperto:before {
+  content: "\e813";
+}
+.icon-icon-banchi:before {
+  content: "\e814";
+}
+.icon-icon-chiuso:before {
+  content: "\e815";
+}
+.icon-icon-fissa:before {
+  content: "\e816";
+}
+.icon-icon-lista:before {
+  content: "\e817";
+}
+.icon-icon-grande:before {
+  content: "\e818";
+}
+.icon-icon-media:before {
+  content: "\e819";
+}
+.icon-icon-optional:before {
+  content: "\e81a";
+}
+.icon-icon-no-predisposizioni:before {
+  content: "\e81b";
+}
+.icon-icon-predisposizioni-elettriche:before {
+  content: "\e81c";
+}
+.icon-icon-regolabile:before {
+  content: "\e81d";
+}
+.icon-icon-sottostruttura:before {
+  content: "\e81e";
+}
+.icon-icon-sovrastruttura:before {
+  content: "\e81f";
+}
+.icon-icon-standard:before {
+  content: "\e820";
+}
+.icon-ip55:before {
+  content: "\e821";
+}
+.icon-push-to-open:before {
+  content: "\e822";
+}
+.icon-reversibile:before {
+  content: "\e823";
+}
+.icon-soft-close-1:before {
+  content: "\e824";
+}
+.icon-soft-close:before {
+  content: "\e825";
+}
+.icon-spessore-3-mm:before {
+  content: "\e826";
+}
