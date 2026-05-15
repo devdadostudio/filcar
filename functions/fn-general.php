@@ -143,6 +143,45 @@ function registra_custom_post_type_caso_studio() {
 
 add_action( 'init', 'registra_custom_post_type_caso_studio' );
 
+function registra_custom_post_type_elementi_arredo() {
+    $labels = array(
+        'name'                  => 'Elementi di arredo',
+        'singular_name'         => 'Elemento di arredo',
+        'menu_name'             => 'Elementi di arredo',
+        'name_admin_bar'        => 'Elemento di arredo',
+        'add_new'               => 'Aggiungi Nuovo',
+        'add_new_item'          => 'Aggiungi Nuovo Elemento di arredo',
+        'new_item'              => 'Nuovo Elemento di arredo',
+        'edit_item'             => 'Modifica Elemento di arredo',
+        'view_item'             => 'Visualizza Elemento di arredo',
+        'all_items'             => 'Tutti gli Elementi di arredo',
+        'search_items'          => 'Cerca Elementi di arredo',
+        'not_found'             => 'Nessun elemento di arredo trovato.',
+        'not_found_in_trash'    => 'Nessun elemento di arredo trovato nel cestino.'
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'elementi-di-arredo' ),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => 7,
+        'menu_icon'          => 'dashicons-layout',
+        'show_in_rest'       => true,
+        'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt' )
+    );
+
+    register_post_type( 'elementi-arredo', $args );
+}
+
+add_action( 'init', 'registra_custom_post_type_elementi_arredo' );
+
 function registra_tassonomia_caso_studio() {
     $labels = array(
         'name'              => 'Categorie caso studio',
@@ -235,3 +274,33 @@ function register_taxonomy_products() {
 }
 
 add_action( 'init', 'register_taxonomy_products' );
+
+function registra_tassonomia_elementi_arredo() {
+    $labels = array(
+        'name'              => 'Categorie elementi di arredo',
+        'singular_name'     => 'Categoria elemento di arredo',
+        'search_items'      => 'Cerca categorie elementi di arredo',
+        'all_items'         => 'Tutte le categorie elementi di arredo',
+        'parent_item'       => 'Categoria padre',
+        'parent_item_colon' => 'Categoria padre:',
+        'edit_item'         => 'Modifica categoria elemento di arredo',
+        'update_item'       => 'Aggiorna categoria elemento di arredo',
+        'add_new_item'      => 'Aggiungi nuova categoria elemento di arredo',
+        'new_item_name'     => 'Nuovo nome categoria elemento di arredo',
+        'menu_name'         => 'Categorie'
+    );
+
+    $args = array(
+        'hierarchical'      => true,
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array( 'slug' => 'categoria-elemento-arredo' ),
+        'show_in_rest'      => true
+    );
+
+    register_taxonomy( 'categoria-elemento-arredo', array( 'elementi-arredo' ), $args );
+}
+
+add_action( 'init', 'registra_tassonomia_elementi_arredo' );
