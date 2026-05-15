@@ -17,8 +17,8 @@ if (empty($items) || !is_array($items)) {
             continue;
         }
         ?>
-        <a class="category-anchor-nav__link subtitle-4 text-uppercase user-select-none" href="<?php echo esc_url($url); ?>">
-            <span class="category-anchor-nav__meta" aria-hidden="true">
+        <a class="category-anchor-nav__link subtitle-4 text-uppercase user-select-none<?php echo $index === 0 ? ' is-active' : ''; ?>" href="<?php echo esc_url($url); ?>">
+            <span class="category-anchor-nav__meta number-3" aria-hidden="true">
                 <?php echo esc_html(str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT)); ?>
             </span>
             <span class="category-anchor-nav__label"><?php echo esc_html($label); ?></span>

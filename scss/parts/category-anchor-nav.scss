@@ -11,6 +11,10 @@
 
   @include media-breakpoint-up(lg) {
     align-items: flex-start !important;
+
+    .row {
+      align-items: stretch !important;
+    }
   }
 }
 
@@ -19,27 +23,64 @@
     padding-top: 1.5rem;
   }
 
-    &__inner {
-        width: 100%;
-    }
+  &__inner {
+    width: 100%;
+  }
 
   &__visual {
     position: relative;
   }
 
+  &__visual-col {
+    padding-right: 0;
+  }
+
+  &__content {
+    @include media-breakpoint-down(lg) {
+      padding-right: 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+    @include media-breakpoint-between(md, lg) {
+      padding-right: 3rem;
+      padding-left: 3rem;
+    }
+
+    @include media-breakpoint-up(lg) {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 4rem;
+    }
+
+    .cta-content {
+      @include media-breakpoint-down(lg) {
+        padding-bottom: 2rem;
+
+        .btn {
+          width: 100%;
+        }
+      }
+    }
+  }
+
   &__image {
     aspect-ratio: 1 / 1;
     width: 100%;
-    max-height: calc(100vh - var(--site-header-offset, 0px) - 1.5rem);
+    height: 74vh;
 
     @include media-breakpoint-down(lg) {
+      height: auto;
       max-height: 390px;
     }
   }
 }
 
 .category-anchor-nav {
+  display: flex;
   flex-direction: column;
+  box-sizing: border-box;
   width: max(360px, 50%);
   padding: 22px 44px;
   background: rgba($primary, 0.1);
@@ -51,7 +92,13 @@
     width: max(420px, 50%);
   }
 
+  @include media-breakpoint-down(lg) {
+    width: 100%;
+    padding: 12px 24px;
+  }
+
   &__link {
+    position: relative;
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
@@ -64,6 +111,10 @@
     &:hover {
       color: #fff;
       opacity: 0.75;
+    }
+
+    &.is-active {
+      font-weight: 700;
     }
   }
 
@@ -93,7 +144,159 @@
   &--hero {
     position: absolute;
     left: 24px;
-    bottom: 24px;
-    z-index: 10;
+    bottom: -48px;
+    z-index: 1;
+  }
+
+  &--content {
+    width: 100%;
+
+    .category-anchor-nav__link {
+      &::before {
+        content: "";
+        position: absolute;
+        left: -44px;
+        top: 50%;
+        width: 4px;
+        height: 32px;
+        background-color: $secondary;
+        opacity: 0;
+        transform: translateY(-50%);
+        transition: opacity 0.25s ease;
+
+        @include media-breakpoint-down(lg) {
+          left: -24px;
+        }
+      }
+
+      &.is-active::before {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.category-products-placeholder {
+  height: 100vh;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+}
+
+.category-anchor-sections {
+  color: #fff;
+  padding: 7rem 0 10rem;
+  isolation: isolate;
+  overflow-x: clip;
+
+  @include media-breakpoint-down(lg) {
+    padding: 1.5rem 0 8rem;
+  }
+
+  &__aside {
+    z-index: 2;
+    position: sticky;
+    top: 0;
+    padding-top: 0;
+    padding-bottom: 2rem;
+
+    @include media-breakpoint-up(lg) {
+      position: relative;
+      padding-top: $header-bar-height;
+      padding-bottom: 5rem;
+    }
+  }
+
+  &__aside-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    @include media-breakpoint-up(lg) {
+      position: sticky;
+      top: calc(#{$header-bar-height} + 2rem);
+    }
+  }
+
+  &__image {
+    aspect-ratio: 1 / 1;
+    max-height: 40vh;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+}
+
+.category-anchor-panel {
+  position: relative;
+  z-index: 1;
+  min-height: 82vh;
+  padding: 5rem 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -100vw;
+    bottom: 0;
+    left: -100vw;
+    z-index: -1;
+    background-color: $grey500;
+    pointer-events: none;
+  }
+
+  &:nth-child(even)::before {
+    background-color: $grey600;
+  }
+
+  @include media-breakpoint-down(lg) {
+    min-height: 0;
+    padding: 3rem 0;
+  }
+
+  &__number {
+    color: rgba(#fff, 0.35);
+    margin-bottom: 1.5rem;
+  }
+
+  &__title {
+    margin-bottom: 2rem;
+  }
+
+  &__body {
+    color: rgba(#fff, 0.86);
+
+    p + p {
+      margin-top: 1.5rem;
+    }
+  }
+
+  &--faq {
+    min-height: 70vh;
+  }
+}
+
+.category-anchor-faq {
+  .accordion-item {
+    color: #fff;
+    border-top: 1px solid rgba(#fff, 0.9);
+    border-bottom: 1px solid rgba(#fff, 0.9);
+    background: transparent;
+  }
+
+  .accordion-button {
+    color: #fff;
+    background: transparent;
+    padding-right: 0;
+    padding-left: 0;
+
+    &::after {
+      filter: invert(1);
+    }
+  }
+
+  .accordion-body {
+    color: rgba(#fff, 0.86);
+    padding-right: 0;
+    padding-left: 0;
   }
 }
