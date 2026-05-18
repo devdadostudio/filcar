@@ -25,8 +25,8 @@ switch($section_bg) {
         <div class="row">
             <?php if ($img) : ?>
             <div class="col-12 col-lg-4">
-                <figure class="w-100">        
-                    <img src="<?php echo esc_url($img['url']); ?>" alt="<?php echo esc_attr($img['alt']); ?>" class="rounded overflow-hidden w-100">
+                <figure class="w-100 rounded overflow-hidden respimg aspect-ratio-1x1">
+                    <img src="<?php echo esc_url($img['url']); ?>" alt="<?php echo esc_attr($img['alt']); ?>" class="w-100">
                 </figure>
             </div>
             <?php endif; ?>

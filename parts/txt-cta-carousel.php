@@ -33,7 +33,7 @@ if(!empty($items)) {
                         endif;
                         if($title_block) :
                         ?>
-                        <div class="<?php echo $title_type ? 'h2' : 'h3'; ?> fw-light text-primary mb-0-p <?php echo $txt_block ? 'sp-mb-5' : ''; ?>">
+                        <div class="<?php echo $title_type ? 'h2' : 'h3'; ?> fw-light text-primary mb-0-p sp-mb-5">
                             <?php echo $title_block; ?>
                         </div>
                         <?php

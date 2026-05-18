@@ -22,7 +22,7 @@
     </div>
     <div class="container-fluid position-relative text-container">
         <div class="row">
-            <div class="col-12 col-lg-4">
+            <div class="col-12 col-lg-5">
                 <div class="product-hero__content text-grey-500">
                     <?php the_title('<h1 class="product-1 fw-normal sp-mb-3 sp-sxl-mb-4 sp-uxl-mb-5">', '</h1>'); ?>
                     <!-- subtitle -->

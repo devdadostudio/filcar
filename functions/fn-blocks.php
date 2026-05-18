@@ -147,7 +147,7 @@ add_action('acf/init', function () {
             'category' => 'layout',
             'icon' => 'format-video',
             'mode' => 'edit',
-            'post_types' => ['page', 'product'],
+            'post_types' => ['page', 'product', 'post', 'caso-studio'],
         ]);
 
         acf_register_block_type([
