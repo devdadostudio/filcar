@@ -59,7 +59,7 @@ if(!empty($items)) {
                             <?php
                             for($i = 0; $i < $items_c; $i++) :
                                 if($type_cards == 'sectors') :
-                                    get_template_part('parts/card/card-sector', null, ['sector_id' => $items[$i]->ID]);
+                                    get_template_part('parts/card/card-sector', null, ['sector_id' => $items[$i]->ID, 'class' => '', 'name_class' => 'h3', 'class_figure' => 'aspect-ratio-1x1']);
                                 elseif($type_cards == 'case-studies') :
                                     get_template_part('parts/card/card-case-study', null, ['case_study_id' => $items[$i]->ID]);
                                 elseif($type_cards == 'blog') :

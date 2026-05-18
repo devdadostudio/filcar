@@ -77,6 +77,7 @@ if (function_exists('add_theme_support')) {
     add_image_size('blog-card-thumb', 450, 254, true);
     add_image_size('cat-prod-card-thumb', 650, 490, true);
     add_image_size('catalogs-launch-cta-img', 120, 115, false);
+    add_image_size('sidebar-img-blog', 800, 800, false);
     
     // Enables post and comment RSS feed links to head
     add_theme_support('automatic-feed-links');

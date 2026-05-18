@@ -1,0 +1,41 @@
+body {
+    .sidebar-inner{
+        display: block;
+        position: sticky;
+        top: 6.5rem;
+        .sidebar-index-container{
+            .sidebar-index-list {
+                .sidebar-index-item {
+                    position: relative;
+                    &.is-active {
+                        @include blog-content-index;
+                    }
+                    &:hover {
+                        @include blog-content-index;
+                    }
+                    .number-span {
+                        display: inline-block;
+                        margin-right: .5rem;
+                        padding-right: calc(.5rem + 1px);
+                        position: relative;
+                        &:after {
+                            content: "";
+                            position: absolute;
+                            width: 1px;
+                            height: 1rem;
+                            background: $grey800;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            right: 1px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.site-header-visible{
+        .sidebar-inner{
+            top: 8rem;
+        }
+    }
+}

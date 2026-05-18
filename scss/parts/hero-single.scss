@@ -1,7 +1,5 @@
 .hero-single {
   overflow: visible;
-  padding-bottom: clamp(10rem, 21vw, 22rem);
-  margin-bottom: clamp(3rem, 7vw, 7rem);
 
   &.bg-blog {
     background: linear-gradient(
@@ -15,7 +13,6 @@
 
   &__inner {
     position: relative;
-    min-height: calc(100vh - var(--site-header-offset));
     display: flex;
     flex-direction: column;
   }
@@ -68,28 +65,14 @@
   }
 
   &__media {
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    width: min(100%, 72rem);
-    aspect-ratio: 1146 / 644;
     margin-top: 0;
     margin-left: auto;
     margin-right: auto;
-    background: $grey900;
     overflow: hidden;
-    transform: translate(-50%, 50%);
-  }
-
-  @include media-breakpoint-up(sxl) {
-    &__media {
-      width: min(100%, 78.5rem);
-    }
   }
 
   @include media-breakpoint-down(lg) {
-    padding-bottom: 3.25rem;
-    margin-bottom: clamp(2.5rem, 10vw, 4rem);
+    margin-bottom: clamp(1.5rem, 10vw, 4rem);
 
     &.bg-blog {
       background: linear-gradient(
@@ -109,7 +92,6 @@
     &__breadcrumb {
       padding-top: 1rem;
       padding-bottom: 1rem;
-      margin-bottom: 4rem;
 
       .site-breadcrumb__items {
         overflow: hidden;

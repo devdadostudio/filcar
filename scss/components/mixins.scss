@@ -217,3 +217,19 @@ $vw-values: (
   -moz-border-radius: $radius;
   border-radius: $radius;
 }
+
+@mixin blog-content-index {
+    &:before{
+      content: "";
+      width: 4px;
+      height: 2rem;
+      position: absolute;
+      top: 50%;
+      left: 3px;
+      transform: translateY(-50%);
+      background: $secondary;
+    }
+    > a span{
+      font-weight: 600;
+    }
+}
