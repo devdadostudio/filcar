@@ -1228,6 +1228,85 @@ function horizontalLoop(items, config) {
   return tl;
 }
 
+function initHeroHotspotPositionDetector() {
+  const params = new URLSearchParams(window.location.search);
+
+  if (!params.has("ACF-hotspot-position") && !params.has("ACF-svg-position")) {
+    return;
+  }
+
+  document.querySelectorAll(".js-hero-hotspots-positioner").forEach((hero) => {
+    if (hero.dataset.hotspotDetectorReady === "true") return;
+
+    hero.dataset.hotspotDetectorReady = "true";
+    hero.classList.add("is-position-detector-active");
+
+    hero.addEventListener("click", async (event) => {
+      const rect = hero.getBoundingClientRect();
+      const x = Math.round(((event.clientX - rect.left) / rect.width) * 1000) / 10;
+      const y = Math.round(((event.clientY - rect.top) / rect.height) * 1000) / 10;
+      const coords = `["${x}%","${y}%"]`;
+      const fields = `desktop_x: ${x}%\ndesktop_y: ${y}%`;
+
+      console.log("HOTSPOT COORDINATES");
+      console.log(fields);
+      console.log(coords);
+
+      hero.style.setProperty("--debug-hotspot-x", `${x}%`);
+      hero.style.setProperty("--debug-hotspot-y", `${y}%`);
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        try {
+          await navigator.clipboard.writeText(fields);
+        } catch (error) {
+          console.warn("Coordinate non copiate automaticamente", error);
+        }
+      }
+    });
+  });
+}
+
+function initHeroHotspotAnimations() {
+  if (!window.gsap) return;
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isMobile = window.matchMedia("(max-width: 991px)").matches;
+
+  if (reduceMotion || isMobile) return;
+
+  document.querySelectorAll(".js-hero-image-hotspots").forEach((hero) => {
+    if (hero.dataset.hotspotAnimationReady === "true") return;
+
+    const points = Array.from(hero.querySelectorAll(".hero-image-hotspots__point"));
+
+    if (!points.length) return;
+
+    hero.dataset.hotspotAnimationReady = "true";
+
+    gsap.set(points, { autoAlpha: 0, scale: 0.86 });
+    gsap.set(hero.querySelectorAll(".hero-image-hotspots__point-card"), {
+      autoAlpha: 0,
+      y: 10,
+    });
+
+    const timeline = gsap.timeline({
+      delay: 0.35,
+      defaults: { ease: "power2.out" },
+    });
+
+    points.forEach((point, index) => {
+      const card = point.querySelector(".hero-image-hotspots__point-card");
+
+      timeline
+        .to(point, { autoAlpha: 1, scale: 1, duration: 0.36 }, index * 0.18)
+        .to(card, { autoAlpha: 1, y: 0, duration: 0.34 }, index * 0.18 + 0.12);
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initHeroHotspotPositionDetector);
+document.addEventListener("DOMContentLoaded", initHeroHotspotAnimations);
+
 const searchInPage = document.querySelector('.search-in-page');
 
 const sentinel = document.createElement('div');
