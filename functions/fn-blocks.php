@@ -227,6 +227,33 @@ add_action('acf/init', function () {
             'mode' => 'edit',
             'post_types' => ['page', 'product'],
         ]);
+        acf_register_block_type([
+            'name' => 'hero-simple-text-img',
+            'title' => __('Hero semplice con testo e immagine'),
+            'render_template' => get_template_directory() . '/parts/hero-simple-text-img.php',
+            'category' => 'layout',
+            'icon' => 'format-gallery',
+            'mode' => 'edit',
+            'post_types' => ['page', 'product'],
+        ]);
+        acf_register_block_type([
+            'name' => 'sectors-grid',
+            'title' => __('Griglia settori'),
+            'render_template' => get_template_directory() . '/parts/sectors-grid.php',
+            'category' => 'layout',
+            'icon' => 'format-gallery',
+            'mode' => 'edit',
+            'post_types' => ['page', 'product'],
+        ]);
+        acf_register_block_type([
+            'name' => 'blog-content',
+            'title' => __('Contenuto blog/case study'),
+            'render_template' => get_template_directory() . '/parts/blog-content.php',
+            'category' => 'layout',
+            'icon' => 'format-gallery',
+            'mode' => 'edit',
+            'post_types' => ['caso-studio', 'post'],
+        ]);
     }
 
     if (function_exists('acf_add_local_field_group')) {
@@ -446,4 +473,5 @@ add_action('acf/init', function () {
             'active' => true,
         ]);
     }
+    
 });

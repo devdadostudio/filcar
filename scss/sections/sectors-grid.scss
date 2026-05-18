@@ -1,0 +1,16 @@
+.sectors-grid{
+    .card-sector{
+        &:before {
+            top: 40px;
+            right: 45px;
+            visibility: hidden;
+        }
+        &:hover{
+            &:before{
+                top: 30px;
+                right: 35px;
+                visibility: visible;
+            }
+        }
+    }
+}

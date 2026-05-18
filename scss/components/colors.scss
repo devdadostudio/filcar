@@ -13,6 +13,9 @@
 .bg-blog {
   background: $blog-txt !important;
 }
+.bg-blog-33{
+  background: linear-gradient(0deg,transparent 70%, $blog-txt 70%, $blog-txt 100%);
+}
 .bg-primary {
   background: $primary !important;
 }
@@ -42,4 +45,9 @@
 }
 .text-grey-800 {
   color: $grey800 !important;
+}
+.bg-sidebar-index {
+  background-color: #1D1D1F10 !important;
+  transform: blur(45px);
+  backdrop-filter: blur(45px);
 }

@@ -89,7 +89,7 @@ function registra_custom_post_type_settori() {
         'show_ui'            => true,
         'show_in_menu'       => true,
         'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'settori' ),
+        'rewrite'            => array( 'slug' => 'settore' ),
         'capability_type'    => 'post',
         'has_archive'        => true,
         'hierarchical'       => false,
