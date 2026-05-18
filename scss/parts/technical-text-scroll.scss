@@ -76,7 +76,7 @@
   }
 
   &:not(.technical-text-scroll--has-technical-bg) &__content {
-    width: min(100%, 1120px);
+    width: min(100%, 90vw);
   }
 
   @include media-breakpoint-down(llg) {

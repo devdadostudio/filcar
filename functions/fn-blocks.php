@@ -181,6 +181,16 @@ add_action('acf/init', function () {
         ]);
 
         acf_register_block_type([
+            'name' => 'parallax-sector-block',
+            'title' => __('Parallax settore'),
+            'render_template' => get_template_directory() . '/parts/parallax-sector-block.php',
+            'category' => 'layout',
+            'icon' => 'cover-image',
+            'mode' => 'edit',
+            'post_types' => ['settori'],
+        ]);
+
+        acf_register_block_type([
             'name' => 'hero-image-hotspots',
             'title' => __('Hero immagine con punti'),
             'render_template' => get_template_directory() . '/parts/hero-image-hotspots.php',

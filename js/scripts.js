@@ -858,7 +858,7 @@ document.addEventListener("DOMContentLoaded", () => {
         end: "bottom 52%",
         scrub: true,
         invalidateOnRefresh: true,
-        markers: true,
+        markers: false,
         onUpdate: (self) => setProgress(self.progress),
         onRefresh: (self) => setProgress(self.progress),
       });
@@ -1070,23 +1070,14 @@ jQuery(document).ready(function () {
   });
 });
 
-
-
-
-
-
-
-
-
-
 gsap.utils.toArray(".stb_line_single_1").forEach((line, i) => {
   const links = line.querySelectorAll(".stb-item"),
-  tl = horizontalLoop(links, {
-    repeat: -1,
-    speed: 1 + i * 0.5,
-    reversed: true,
-    paddingRight: parseFloat(gsap.getProperty(links[0], "marginRight", "px")), // otherwise first element would be right up against the last when it loops. In this layout, the spacing is done with marginRight.
-  });
+    tl = horizontalLoop(links, {
+      repeat: -1,
+      speed: 1 + i * 0.5,
+      reversed: true,
+      paddingRight: parseFloat(gsap.getProperty(links[0], "marginRight", "px")), // otherwise first element would be right up against the last when it loops. In this layout, the spacing is done with marginRight.
+    });
   links.forEach((link) => {
     link.addEventListener("mouseenter", () =>
       gsap.to(tl, { timeScale: 0, overwrite: true }),
@@ -1100,12 +1091,12 @@ gsap.utils.toArray(".stb_line_single_1").forEach((line, i) => {
 // Aspetta che tutto sia renderizzato
 gsap.utils.toArray(".stb_line_single_2").forEach((line, i) => {
   const links = line.querySelectorAll(".stb-item"),
-  tl = horizontalLoop(links, {
-    repeat: -1,
-    speed: 1,
-    reversed: false, // sempre false, niente reversed
-    paddingRight: parseFloat(gsap.getProperty(links[0], "marginRight", "px")),
-  });
+    tl = horizontalLoop(links, {
+      repeat: -1,
+      speed: 1,
+      reversed: false, // sempre false, niente reversed
+      paddingRight: parseFloat(gsap.getProperty(links[0], "marginRight", "px")),
+    });
   links.forEach((link) => {
     link.addEventListener("mouseenter", () =>
       gsap.to(tl, { timeScale: 0, overwrite: true }),
@@ -1134,25 +1125,25 @@ function horizontalLoop(items, config) {
   items = gsap.utils.toArray(items);
   config = config || {};
   let tl = gsap.timeline({
-    repeat: config.repeat,
-    paused: config.paused,
-    defaults: { ease: "none" },
-    onReverseComplete: () => tl.totalTime(tl.rawTime() + tl.duration() * 100),
-  }),
-  length = items.length,
-  startX = items[0].offsetLeft,
-  times = [],
-  widths = [],
-  xPercents = [],
-  curIndex = 0,
-  pixelsPerSecond = (config.speed || 1) * 100,
-  snap = config.snap === false ? (v) => v : gsap.utils.snap(config.snap || 1), // some browsers shift by a pixel to accommodate flex layouts, so for example if width is 20% the first element's width might be 242px, and the next 243px, alternating back and forth. So we snap to 5 percentage points to make things look more natural
-  totalWidth,
-  curX,
-  distanceToStart,
-  distanceToLoop,
-  item,
-  i;
+      repeat: config.repeat,
+      paused: config.paused,
+      defaults: { ease: "none" },
+      onReverseComplete: () => tl.totalTime(tl.rawTime() + tl.duration() * 100),
+    }),
+    length = items.length,
+    startX = items[0].offsetLeft,
+    times = [],
+    widths = [],
+    xPercents = [],
+    curIndex = 0,
+    pixelsPerSecond = (config.speed || 1) * 100,
+    snap = config.snap === false ? (v) => v : gsap.utils.snap(config.snap || 1), // some browsers shift by a pixel to accommodate flex layouts, so for example if width is 20% the first element's width might be 242px, and the next 243px, alternating back and forth. So we snap to 5 percentage points to make things look more natural
+    totalWidth,
+    curX,
+    distanceToStart,
+    distanceToLoop,
+    item,
+    i;
   gsap.set(items, {
     // convert "x" to "xPercent" to make things responsive, and populate the widths/xPercents Arrays to make lookups faster.
     xPercent: (i, el) => {
@@ -1176,7 +1167,8 @@ function horizontalLoop(items, config) {
     item = items[i];
     curX = (xPercents[i] / 100) * widths[i];
     distanceToStart = item.offsetLeft + curX - startX;
-    distanceToLoop = distanceToStart + widths[i] * gsap.getProperty(item, "scaleX");
+    distanceToLoop =
+      distanceToStart + widths[i] * gsap.getProperty(item, "scaleX");
     tl.to(
       item,
       {
@@ -1184,21 +1176,23 @@ function horizontalLoop(items, config) {
         duration: distanceToLoop / pixelsPerSecond,
       },
       0,
-    ).fromTo(
-      item,
-      {
-        xPercent: snap(
-          ((curX - distanceToLoop + totalWidth) / widths[i]) * 100,
-        ),
-      },
-      {
-        xPercent: xPercents[i],
-        duration:
-          (curX - distanceToLoop + totalWidth - curX) / pixelsPerSecond,
-        immediateRender: false,
-      },
-      distanceToLoop / pixelsPerSecond,
-    ).add("label" + i, distanceToStart / pixelsPerSecond);
+    )
+      .fromTo(
+        item,
+        {
+          xPercent: snap(
+            ((curX - distanceToLoop + totalWidth) / widths[i]) * 100,
+          ),
+        },
+        {
+          xPercent: xPercents[i],
+          duration:
+            (curX - distanceToLoop + totalWidth - curX) / pixelsPerSecond,
+          immediateRender: false,
+        },
+        distanceToLoop / pixelsPerSecond,
+      )
+      .add("label" + i, distanceToStart / pixelsPerSecond);
     times[i] = distanceToStart / pixelsPerSecond;
   }
   function toIndex(index, vars) {
@@ -1228,6 +1222,144 @@ function horizontalLoop(items, config) {
   return tl;
 }
 
+function initParallaxSectorBlock() {
+  if (!window.gsap || !window.ScrollTrigger) return;
+
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  const isDesktop = window.matchMedia("(min-width: 992px)").matches;
+
+  if (reduceMotion || !isDesktop) return;
+
+  document.querySelectorAll(".js-parallax-sector-block").forEach((block) => {
+    if (block.dataset.parallaxSectorReady === "true") return;
+
+    const mediaItems = Array.from(
+      block.querySelectorAll(".js-parallax-sector-media"),
+    );
+    const marqueeRows = Array.from(
+      block.querySelectorAll(".js-parallax-sector-marquee"),
+    );
+
+    if (!mediaItems.length && !marqueeRows.length) return;
+
+    block.dataset.parallaxSectorReady = "true";
+
+    mediaItems.forEach((media, index) => {
+      const image = media.querySelector(".js-parallax-sector-image");
+      const speed = parseFloat(media.dataset.parallaxSpeed || "0.14");
+
+      if (!image || !Number.isFinite(speed) || speed === 0) return;
+
+      const overflow = Math.abs(speed) * 100;
+      const imageHeight = 100 + overflow;
+      const travel = ((speed * 100) / imageHeight) * -100;
+
+      gsap.set(image, {
+        height: `${imageHeight}%`,
+        y: "0%",
+      });
+
+      const setParallax = gsap.quickTo(image, "yPercent", {
+        duration: 0.42,
+        ease: "power2.out",
+      });
+
+      ScrollTrigger.create({
+        trigger: media,
+        start: "top bottom",
+        end: "bottom top",
+        invalidateOnRefresh: true,
+        onUpdate: () => {
+          const rect = media.getBoundingClientRect();
+          const distance = window.innerHeight + rect.height;
+          const progress = gsap.utils.clamp(
+            0,
+            1,
+            (window.innerHeight - rect.top) / distance,
+          );
+
+          setParallax(progress * travel);
+        },
+        onRefresh: () => {
+          const rect = media.getBoundingClientRect();
+          const distance = window.innerHeight + rect.height;
+          const progress = gsap.utils.clamp(
+            0,
+            1,
+            (window.innerHeight - rect.top) / distance,
+          );
+
+          gsap.set(image, { yPercent: progress * travel });
+        },
+      });
+    });
+
+    marqueeRows.forEach((row, index) => {
+      const groups = Array.from(
+        row.querySelectorAll(".parallax-sector-block__marquee-group"),
+      );
+
+      if (groups.length < 2) return;
+
+      row.classList.add("is-gsap-marquee");
+
+      const direction = index % 2 === 0 ? -1 : 1;
+      const baseSpeed = 52;
+      let targetMultiplier = 1;
+      let currentMultiplier = 1;
+      let groupWidth = groups[0].offsetWidth;
+      let x = direction > 0 ? groupWidth * -1 : 0;
+
+      const updateGroupWidth = () => {
+        groupWidth = groups[0].offsetWidth || groupWidth;
+      };
+
+      const tick = () => {
+        updateGroupWidth();
+
+        currentMultiplier += (targetMultiplier - currentMultiplier) * 0.18;
+        targetMultiplier += (1 - targetMultiplier) * 0.025;
+
+        x +=
+          (direction *
+            baseSpeed *
+            currentMultiplier *
+            gsap.ticker.deltaRatio(60)) /
+          60;
+
+        if (x <= groupWidth * -1) {
+          x += groupWidth;
+        } else if (x > 0) {
+          x -= groupWidth;
+        }
+
+        gsap.set(row, { x });
+      };
+
+      gsap.ticker.add(tick);
+
+      ScrollTrigger.create({
+        start: 0,
+        end: "max",
+        onUpdate: (self) => {
+          const boost = gsap.utils.clamp(
+            0,
+            18,
+            Math.abs(self.getVelocity()) / 160,
+          );
+          targetMultiplier = 1 + boost;
+        },
+        onRefresh: updateGroupWidth,
+      });
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initParallaxSectorBlock);
+filcarOnLayoutRefresh(initParallaxSectorBlock);
+
 function initHeroHotspotPositionDetector() {
   const params = new URLSearchParams(window.location.search);
 
@@ -1243,8 +1375,10 @@ function initHeroHotspotPositionDetector() {
 
     hero.addEventListener("click", async (event) => {
       const rect = hero.getBoundingClientRect();
-      const x = Math.round(((event.clientX - rect.left) / rect.width) * 1000) / 10;
-      const y = Math.round(((event.clientY - rect.top) / rect.height) * 1000) / 10;
+      const x =
+        Math.round(((event.clientX - rect.left) / rect.width) * 1000) / 10;
+      const y =
+        Math.round(((event.clientY - rect.top) / rect.height) * 1000) / 10;
       const coords = `["${x}%","${y}%"]`;
       const fields = `desktop_x: ${x}%\ndesktop_y: ${y}%`;
 
@@ -1269,7 +1403,9 @@ function initHeroHotspotPositionDetector() {
 function initHeroHotspotAnimations() {
   if (!window.gsap) return;
 
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
   const isMobile = window.matchMedia("(max-width: 991px)").matches;
 
   if (reduceMotion || isMobile) return;
@@ -1277,7 +1413,9 @@ function initHeroHotspotAnimations() {
   document.querySelectorAll(".js-hero-image-hotspots").forEach((hero) => {
     if (hero.dataset.hotspotAnimationReady === "true") return;
 
-    const points = Array.from(hero.querySelectorAll(".hero-image-hotspots__point"));
+    const points = Array.from(
+      hero.querySelectorAll(".hero-image-hotspots__point"),
+    );
 
     if (!points.length) return;
 
@@ -1307,14 +1445,18 @@ function initHeroHotspotAnimations() {
 document.addEventListener("DOMContentLoaded", initHeroHotspotPositionDetector);
 document.addEventListener("DOMContentLoaded", initHeroHotspotAnimations);
 
-const searchInPage = document.querySelector('.search-in-page');
+const searchInPage = document.querySelector(".search-in-page");
 
-const sentinel = document.createElement('div');
-sentinel.style.cssText = 'position:absolute;top:50px;height:1px;width:1px;pointer-events:none;';
+const sentinel = document.createElement("div");
+sentinel.style.cssText =
+  "position:absolute;top:50px;height:1px;width:1px;pointer-events:none;";
 searchInPage.parentElement.insertBefore(sentinel, searchInPage);
 
-const observer = new IntersectionObserver(([entry]) => {
-    searchInPage.classList.toggle('is-sticky', !entry.isIntersecting);
-}, { threshold: 0 });
+const observer = new IntersectionObserver(
+  ([entry]) => {
+    searchInPage.classList.toggle("is-sticky", !entry.isIntersecting);
+  },
+  { threshold: 0 },
+);
 
 observer.observe(sentinel);
