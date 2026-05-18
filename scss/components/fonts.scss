@@ -424,7 +424,7 @@ h7,
   /*** ho creato un exted copy in custom-menu ***/
   font-size: 28px;
   font-weight: 400;
-  line-height: 100%;
+  line-height: 110%;
   font-family: "IBMPlexSans", sans-serif;
   @include media-breakpoint-down($breakpoint0) {
     font-size: 24px;
@@ -532,6 +532,7 @@ h7,
   }
 }
 
+//corrisponde a body-4
 .p-small {
   font-size: 18px;
   line-height: 150%;
