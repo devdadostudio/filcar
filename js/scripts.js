@@ -1228,6 +1228,133 @@ function horizontalLoop(items, config) {
   return tl;
 }
 
+function initParallaxSectorBlock() {
+  if (!window.gsap || !window.ScrollTrigger) return;
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isDesktop = window.matchMedia("(min-width: 992px)").matches;
+
+  if (reduceMotion || !isDesktop) return;
+
+  document.querySelectorAll(".js-parallax-sector-block").forEach((block) => {
+    if (block.dataset.parallaxSectorReady === "true") return;
+
+    const mediaItems = Array.from(
+      block.querySelectorAll(".js-parallax-sector-media"),
+    );
+    const marqueeRows = Array.from(
+      block.querySelectorAll(".js-parallax-sector-marquee"),
+    );
+
+    if (!mediaItems.length && !marqueeRows.length) return;
+
+    block.dataset.parallaxSectorReady = "true";
+
+    mediaItems.forEach((media, index) => {
+      const image = media.querySelector(".js-parallax-sector-image");
+      const speed = parseFloat(media.dataset.parallaxSpeed || "0.14");
+
+      if (!image || !Number.isFinite(speed) || speed === 0) return;
+
+      const overflow = Math.abs(speed) * 100;
+      const imageHeight = 100 + overflow;
+      const travel = ((speed * 100) / imageHeight) * -100;
+
+      gsap.set(image, {
+        height: `${imageHeight}%`,
+        y: "0%",
+      });
+
+      const setParallax = gsap.quickTo(image, "yPercent", {
+        duration: 0.42,
+        ease: "power2.out",
+      });
+
+      ScrollTrigger.create({
+        trigger: media,
+        start: "top bottom",
+        end: "bottom top",
+        invalidateOnRefresh: true,
+        onUpdate: () => {
+          const rect = media.getBoundingClientRect();
+          const distance = window.innerHeight + rect.height;
+          const progress = gsap.utils.clamp(
+            0,
+            1,
+            (window.innerHeight - rect.top) / distance,
+          );
+
+          setParallax(progress * travel);
+        },
+        onRefresh: () => {
+          const rect = media.getBoundingClientRect();
+          const distance = window.innerHeight + rect.height;
+          const progress = gsap.utils.clamp(
+            0,
+            1,
+            (window.innerHeight - rect.top) / distance,
+          );
+
+          gsap.set(image, { yPercent: progress * travel });
+        },
+      });
+    });
+
+    marqueeRows.forEach((row, index) => {
+      const groups = Array.from(
+        row.querySelectorAll(".parallax-sector-block__marquee-group"),
+      );
+
+      if (groups.length < 2) return;
+
+      row.classList.add("is-gsap-marquee");
+
+      const direction = index % 2 === 0 ? -1 : 1;
+      const baseSpeed = 52;
+      let targetMultiplier = 1;
+      let currentMultiplier = 1;
+      let groupWidth = groups[0].offsetWidth;
+      let x = direction > 0 ? groupWidth * -1 : 0;
+
+      const updateGroupWidth = () => {
+        groupWidth = groups[0].offsetWidth || groupWidth;
+      };
+
+      const tick = () => {
+        updateGroupWidth();
+
+        currentMultiplier += (targetMultiplier - currentMultiplier) * 0.18;
+        targetMultiplier += (1 - targetMultiplier) * 0.025;
+
+        x += direction * baseSpeed * currentMultiplier * gsap.ticker.deltaRatio(60) / 60;
+
+        if (x <= groupWidth * -1) {
+          x += groupWidth;
+        } else if (x > 0) {
+          x -= groupWidth;
+        }
+
+        gsap.set(row, { x });
+      };
+
+      gsap.ticker.add(tick);
+
+      ScrollTrigger.create({
+        start: 0,
+        end: "max",
+        onUpdate: (self) => {
+          const boost = gsap.utils.clamp(0, 18, Math.abs(self.getVelocity()) / 160);
+          targetMultiplier = 1 + boost;
+        },
+        onRefresh: updateGroupWidth,
+      });
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initParallaxSectorBlock);
+filcarOnLayoutRefresh(initParallaxSectorBlock);
+
 function initHeroHotspotPositionDetector() {
   const params = new URLSearchParams(window.location.search);
 

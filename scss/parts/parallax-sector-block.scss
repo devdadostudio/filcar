@@ -1,0 +1,295 @@
+.parallax-sector-block {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(72px, 8vw, 132px) 0 clamp(84px, 10vw, 160px);
+  background: $light;
+  color: $primary;
+
+  &__item {
+    position: relative;
+
+    + .parallax-sector-block__item {
+      margin-top: clamp(80px, 9vw, 150px);
+    }
+  }
+
+  &__copy-wrap {
+    position: relative;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 0 $grid-gutter-width;
+    margin-bottom: clamp(42px, 4.2vw, 78px);
+  }
+
+  &__copy {
+    grid-column: 2 / span 5;
+    max-width: 580px;
+  }
+
+  &__item--reverse &__copy {
+    grid-column: 8 / span 4;
+  }
+
+  &__number {
+    grid-column: 11 / -1;
+    grid-row: 1;
+    align-self: start;
+    justify-self: end;
+    color: rgba($grey400, 0.34);
+    line-height: 0.82;
+    text-align: right;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  &__item--reverse &__number {
+    grid-column: 1 / span 2;
+    justify-self: start;
+    text-align: left;
+  }
+
+  &__title {
+    margin-bottom: clamp(18px, 1.5vw, 28px);
+    color: $primary;
+  }
+
+  &__text {
+    color: rgba($primary, 0.78);
+
+    p {
+      margin-bottom: 1.35em;
+    }
+  }
+
+  &__stage {
+    position: relative;
+  }
+
+  &__media-wrap {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 0 $grid-gutter-width;
+  }
+
+  &__media {
+    grid-column: 3 / span 8;
+    position: relative;
+    height: clamp(360px, 33.8vw, 650px);
+    margin: 0;
+    overflow: hidden;
+    border-radius: 4px;
+    background: $grey200;
+  }
+
+  &__item--reverse &__media {
+    grid-column: 3 / span 8;
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+    height: 116%;
+    max-width: none;
+    object-fit: cover;
+    will-change: transform;
+  }
+
+  &__marquee {
+    position: absolute;
+    z-index: 1;
+    top: 44%;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  &__item--reverse &__marquee {
+    top: 53%;
+  }
+
+  &__marquee-row {
+    display: flex;
+    width: max-content;
+    animation: parallax-sector-marquee 34s linear infinite;
+    will-change: transform;
+
+    &.is-gsap-marquee {
+      animation: none;
+    }
+  }
+
+  &__marquee-group {
+    flex: 0 0 auto;
+    padding-right: clamp(24px, 3vw, 56px);
+    color: transparent;
+    font-family: "Inter", sans-serif;
+    font-size: clamp(118px, 14.3vw, 272px);
+    font-weight: 300;
+    line-height: 0.8;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    white-space: nowrap;
+    -webkit-text-stroke: 1px rgba($primary, 0.26);
+    text-stroke: 1px rgba($primary, 0.26);
+  }
+
+  &__cta {
+    position: absolute;
+    z-index: 4;
+    top: -34px;
+    right: calc(8.333333% + 5rem);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    min-width: clamp(205px, 13.5vw, 270px);
+    padding: 20px 56px 18px 24px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: rgba($grey600, 0.84);
+    color: $light;
+    text-decoration: none;
+    backdrop-filter: blur(18px);
+
+    &:hover {
+      color: $light;
+    }
+
+    &:hover .parallax-sector-block__cta-icon {
+      transform: translate(5px, -5px);
+    }
+  }
+
+  &__item--reverse &__cta {
+    top: -56px;
+    right: auto;
+    left: calc(8.333333% + 5rem);
+  }
+
+  &__cta-label,
+  &__cta-title {
+    grid-column: 1;
+    display: block;
+  }
+
+  &__cta-icon {
+    position: absolute;
+    top: 20px;
+    right: 22px;
+    font-size: 22px;
+    line-height: 1;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  &__cta-progress {
+    position: absolute;
+    bottom: 0;
+    left: 24px;
+    width: 78%;
+    height: 4px;
+    background: $secondary;
+  }
+
+  @include media-breakpoint-down(lg) {
+    padding: 88px 0;
+
+    &__item + .parallax-sector-block__item {
+      margin-top: 86px;
+    }
+
+    &__copy-wrap {
+      display: block;
+      margin-bottom: 52px;
+    }
+
+    &__copy {
+      max-width: 410px;
+    }
+
+    &__number {
+      position: absolute;
+      top: -62px;
+      right: 3rem;
+      font-size: 70px;
+    }
+
+    &__media-wrap {
+      display: block;
+    }
+
+    &__media {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1.68;
+    }
+
+    &__image {
+      height: 100%;
+      transform: none;
+      will-change: auto;
+    }
+
+    &__marquee {
+      top: 47%;
+    }
+
+    &__marquee-group {
+      font-size: clamp(80px, 22vw, 118px);
+      -webkit-text-stroke-color: rgba($primary, 0.22);
+      text-stroke-color: rgba($primary, 0.22);
+    }
+
+    &__cta,
+    &__item--reverse &__cta {
+      top: auto;
+      right: auto;
+      bottom: -46px;
+      left: 50%;
+      width: min(66vw, 250px);
+      min-width: 0;
+      padding: 17px 50px 17px 21px;
+      transform: translateX(-50%);
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding: 86px 0 96px;
+
+    &__copy {
+      max-width: 100%;
+    }
+
+    &__number {
+      right: 1.5rem;
+    }
+
+    &__media {
+      aspect-ratio: 1.36;
+    }
+
+    &__cta,
+    &__item--reverse &__cta {
+      left: calc(50% + 24px);
+      width: min(58vw, 225px);
+    }
+  }
+}
+
+@keyframes parallax-sector-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-sector-block__marquee-row {
+    animation: none;
+  }
+}
