@@ -27,6 +27,15 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'hero-video-' . ($bloc
 
         <div class="hero-video-slider__shade" aria-hidden="true"></div>
 
+        <?php
+        get_template_part('parts/breadcrumbs', null, [
+            'variant' => 'dark',
+            'layout' => 'overlay',
+            'class' => 'hero-video-slider__breadcrumb',
+            'col_class' => 'col-12',
+        ]);
+        ?>
+
         <div class="container-fluid hero-video-slider__content">
             <div class="row w-100">
                 <div class="col-12 col-lg-9 col-xl-8 col-uxl-7">
