@@ -3,8 +3,8 @@
 add_action('acf/init', function () {
     if (function_exists('acf_register_block_type')) {
         acf_register_block_type([
-            'name' => 'hero-video-slider',
-            'title' => __('HERO VIDEO SLIDER'),
+            'name' => 'hero-video',
+            'title' => __('HERO VIDEO'),
             'render_template' => get_template_directory() . '/parts/hero-video-slider.php',
             'category' => 'layout',
             'icon' => 'format-video',
@@ -257,6 +257,74 @@ add_action('acf/init', function () {
     }
 
     if (function_exists('acf_add_local_field_group')) {
+        acf_add_local_field_group([
+            'key' => 'group_hero_video',
+            'title' => __('Hero video', 'filcar'),
+            'fields' => [
+                [
+                    'key' => 'field_hero_video_label',
+                    'label' => __('Titoletto', 'filcar'),
+                    'name' => 'label',
+                    'type' => 'text',
+                ],
+                [
+                    'key' => 'field_hero_video_title',
+                    'label' => __('Titolo', 'filcar'),
+                    'name' => 'title',
+                    'type' => 'textarea',
+                    'rows' => 2,
+                    'new_lines' => 'br',
+                ],
+                [
+                    'key' => 'field_hero_video_text',
+                    'label' => __('Testo', 'filcar'),
+                    'name' => 'text',
+                    'type' => 'textarea',
+                    'rows' => 3,
+                    'new_lines' => 'br',
+                ],
+                [
+                    'key' => 'field_hero_video_video',
+                    'label' => __('Video', 'filcar'),
+                    'name' => 'video',
+                    'type' => 'file',
+                    'return_format' => 'array',
+                    'library' => 'all',
+                    'mime_types' => 'mp4,webm,ogv',
+                ],
+                [
+                    'key' => 'field_hero_video_poster',
+                    'label' => __('Poster video', 'filcar'),
+                    'name' => 'poster',
+                    'type' => 'image',
+                    'return_format' => 'array',
+                    'preview_size' => 'medium',
+                    'library' => 'all',
+                ],
+                [
+                    'key' => 'field_hero_video_cta',
+                    'label' => __('CTA', 'filcar'),
+                    'name' => 'cta',
+                    'type' => 'link',
+                    'return_format' => 'array',
+                ],
+            ],
+            'location' => [
+                [
+                    [
+                        'param' => 'block',
+                        'operator' => '==',
+                        'value' => 'acf/hero-video',
+                    ],
+                ],
+            ],
+            'position' => 'normal',
+            'style' => 'default',
+            'label_placement' => 'top',
+            'instruction_placement' => 'label',
+            'active' => true,
+        ]);
+
         acf_add_local_field_group([
             'key' => 'group_hero_sector',
             'title' => __('Hero settore', 'filcar'),
