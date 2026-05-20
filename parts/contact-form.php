@@ -8,27 +8,6 @@ $img_mob       = get_field('img_contact_mob', 'option');
 $phone_contact = get_field('phone_contact', 'option');
 $email_contact = get_field('email_contact', 'option');
 
-function filcar_get_image_url($image_field) {
-	if (empty($image_field)) {
-		return '';
-	}
-
-	if (is_string($image_field) && filter_var($image_field, FILTER_VALIDATE_URL)) {
-		return $image_field;
-	}
-
-	if (is_array($image_field) && !empty($image_field['url'])) {
-		return $image_field['url'];
-	}
-
-	if (is_numeric($image_field)) {
-		$url = wp_get_attachment_image_url((int) $image_field, 'full');
-		return $url ? $url : '';
-	}
-
-	return '';
-}
-
 $img_url     = filcar_get_image_url($img);
 $img_mob_url = filcar_get_image_url($img_mob);
 
@@ -108,14 +87,14 @@ $page_title = get_the_title();
 			</div>
 
 			<div class="col-12 col-lg-6 sp-mb-4">
-				<div class="contact-form-block__content h-100 d-flex flex-column sp-pt-4 sp-xl-pt-6 sp-pl-4 sp-xl-pl-6 sp-pr-4 sp-xl-pr-6">
+				<div class="contact-form-block__content h-100 d-flex flex-column sp-pt-4 sp-xl-pt-6 sp-pl-4 sp-xl-pl-6 sp-pr-4 sp-xl-pr-6 justify-content-center">
 
 					<?php 
                     $page_title = get_the_title();
                     if ($block_text) : ?>
-						<div class="contact-form-block__text mb-4">
+						<div class="contact-form-block__text sp-mb-3">
                             <h2 class="h5"><?php echo $block_subtitle; ?> <span class="h5"><?php echo esc_html($page_title); ?></span>?</h2>
-                            <div><?php echo $block_text; ?></div>
+                            <div class="p-small"><?php echo $block_text; ?></div>
 						</div>
 					<?php endif; ?>
 
@@ -133,61 +112,11 @@ $page_title = get_the_title();
 		</div>
 	</div>
 </section>
-
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-	var hiddenField = document.querySelector('.contact-form-block input[name="page-origin"]');
-	if (hiddenField) {
-		hiddenField.value = <?php echo wp_json_encode($page_title); ?>;
-	}
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const forms = document.querySelectorAll('.contact-form-block .wpcf7 form');
-
-  forms.forEach(function (form) {
-    const submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
-    if (!submitBtn) return;
-
-    const firstName = form.querySelector('[name="first-name"]');
-    const lastName = form.querySelector('[name="last-name"]');
-    const company = form.querySelector('[name="company"]');
-    const email = form.querySelector('[name="email"]');
-    const privacy = form.querySelector('[name="privacy-consent"]');
-
-    function isFilled(field) {
-      return field && field.value && field.value.trim() !== '';
-    }
-
-    function isValidEmail(field) {
-      if (!field) return false;
-      return field.value.trim() !== '' && field.checkValidity();
-    }
-
-    function isChecked(field) {
-      return field && field.checked;
-    }
-
-    function updateSubmitState() {
-      const isValid =
-        isFilled(firstName) &&
-        isFilled(lastName) &&
-        isFilled(company) &&
-        isValidEmail(email) &&
-        isChecked(privacy);
-
-      submitBtn.disabled = !isValid;
-    }
-
-    form.addEventListener('input', updateSubmitState);
-    form.addEventListener('change', updateSubmitState);
-
-    document.addEventListener('wpcf7reset', function (event) {
-      if (event.target === form) updateSubmitState();
-    });
-
-    updateSubmitState();
-  });
-});
+	document.addEventListener('DOMContentLoaded', function () {
+		var hiddenField = document.querySelector('.contact-form-block input[name="page-origin"]');
+		if (hiddenField) {
+			hiddenField.value = <?php echo wp_json_encode($page_title); ?>;
+		}
+	});
 </script>

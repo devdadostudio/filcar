@@ -304,3 +304,24 @@ function registra_tassonomia_elementi_arredo() {
 }
 
 add_action( 'init', 'registra_tassonomia_elementi_arredo' );
+
+function filcar_get_image_url($image_field) {
+	if (empty($image_field)) {
+		return '';
+	}
+
+	if (is_string($image_field) && filter_var($image_field, FILTER_VALIDATE_URL)) {
+		return $image_field;
+	}
+
+	if (is_array($image_field) && !empty($image_field['url'])) {
+		return $image_field['url'];
+	}
+
+	if (is_numeric($image_field)) {
+		$url = wp_get_attachment_image_url((int) $image_field, 'full');
+		return $url ? $url : '';
+	}
+
+	return '';
+}

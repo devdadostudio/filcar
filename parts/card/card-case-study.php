@@ -26,10 +26,10 @@ if(isset($args['case_study_id'])){
                 <div class="p-small text-grey-500 fw-light sp-mb-3">
                     <?php echo get_the_date('d M Y', $post_id); ?>
                 </div>
-                <div class="p-bigger text-primary fw-light sp-mb-3">
+                <div class="p-bigger text-primary fw-light sp-mb-3 case-card-title">
                     <?php echo get_the_title($post_id); ?>
                 </div>
-                <div class="p-small text-grey-500 fw-light">
+                <div class="p-small text-grey-500 fw-light case-card-excerpt">
                     <?php
                         $excerpt = strip_tags(get_the_excerpt($post_id));
                         $excerpt_length = 120;

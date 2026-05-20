@@ -4,4 +4,16 @@
   background-color: transparent;
   border: 0;
   margin: 0;
+  .icon-filcar-icon-close {
+    display: none;
+    font-size: 22px;
+  }
+  &.is-active {
+    .icon-filcar-icon-hamburger {
+      display: none;
+    }
+    .icon-filcar-icon-close {
+      display: inline-block;
+    }
+  }
 }

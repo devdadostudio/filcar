@@ -69,6 +69,9 @@
     &::before {
       background-color: #{$secondary};
     }
+    svg > path{
+      stroke: #{$white};
+    }
     &:hover svg > path{
       stroke: #{$white};
     }
@@ -94,6 +97,9 @@
 
     &::before {
       background-color: #{$secondary};
+    }
+    svg > path{
+      stroke: #{$primary};
     }
     &:hover svg > path{
       stroke: #{$white};
@@ -122,6 +128,9 @@
     &::before {
       background-color: #{$primary};
     }
+    svg > path{
+      stroke: #{$primary};
+    }
     &:hover svg > path{
       stroke: #{$white};
     }
@@ -147,6 +156,9 @@
     
     &::before {
       background-color: #{$white};
+    }
+    svg > path{
+      stroke: #{$white};
     }
     &:hover svg > path{
       stroke: #{$primary};

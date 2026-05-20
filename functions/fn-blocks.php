@@ -254,6 +254,24 @@ add_action('acf/init', function () {
             'mode' => 'edit',
             'post_types' => ['caso-studio', 'post'],
         ]);
+        acf_register_block_type([
+            'name' => 'hero-contacts',
+            'title' => __('Hero contatti'),
+            'render_template' => get_template_directory() . '/parts/hero-contacts.php',
+            'category' => 'layout',
+            'icon' => 'format-gallery',
+            'mode' => 'edit',
+            'post_types' => ['page'],
+        ]);
+        acf_register_block_type([
+            'name' => 'contact-form-block',
+            'title' => __('Form di contatto'),
+            'render_template' => get_template_directory() . '/parts/contact-form-block.php',
+            'category' => 'layout',
+            'icon' => 'format-gallery',
+            'mode' => 'edit',
+            'post_types' => ['page'],
+        ]);
     }
 
     if (function_exists('acf_add_local_field_group')) {

@@ -48,18 +48,18 @@
         ?>
         <header class="flc-main-nav <?php echo $headerBg; ?> w-100vw sp-py-3 sp-lg-py-4 sp-uxl-py-5">
             <div class="flc-main-nav-container container-fluid">
-                <div class="flc-main-nav-inner d-flex sp-gap-3">
-                    <nav class="flc-main-header">
+                <div class="flc-main-nav-inner grid sp-gap-3">
+                    <nav class="flc-main-header g-col-6 g-col-lg-4">
                         <a class="flc-main-brand flc-logo font-0" href="<?php echo home_url(); ?>">
                             <img src="<?php echo get_home_url(); ?>/wp-content/uploads/2026/04/filcar_logo.svg" alt="Logo">
                         </a>
                     </nav>
-                    <div class="flc-nav-container align-items-lg-center d-none d-lg-flex">
+                    <div class="flc-nav-container align-items-lg-center d-none d-lg-flex g-col-4 justify-content-center">
                         <div class="sp-py-8 sp-px-4 sp-md-p-0">
                             <?php filcar_main_menu_nav(); ?>
                         </div>
                     </div>
-                    <div class="flc-nav-container d-flex align-items-center sp-gap-4 sp-lg-gap-6 sp-sxl-gap-7">
+                    <div class="flc-nav-container d-flex align-items-center sp-gap-4 sp-md-gap-3 sp-xl-gap-6 sp-sxl-gap-7 g-col-6 g-col-lg-4 justify-content-end">
                         <div class="search-toggle text-white cursor-pointer">
                             <i class="icon-filcar-icon-arrow-zoom"></i>
                         </div>
@@ -74,6 +74,7 @@
                         <div class="d-block flc-hamburger-button text-white">
                             <button aria-label="Open Menu" class="hamburger hamburger--squeeze js-toggle-menu" type="button">
                                 <i class="icon-filcar-icon-hamburger"></i>
+                                <i class="icon-filcar-icon-close"></i>
                             </button>
                         </div>
                         <div class="flc-right-nav sp-pt-6 sp-md-pt-11 sp-lg-pt-5 sp-px-0 sp-md-px-5">

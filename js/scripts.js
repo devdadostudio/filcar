@@ -1448,15 +1448,106 @@ document.addEventListener("DOMContentLoaded", initHeroHotspotAnimations);
 const searchInPage = document.querySelector(".search-in-page");
 
 const sentinel = document.createElement("div");
-sentinel.style.cssText =
-  "position:absolute;top:50px;height:1px;width:1px;pointer-events:none;";
-searchInPage.parentElement.insertBefore(sentinel, searchInPage);
+if(searchInPage){
+  sentinel.style.cssText =
+    "position:absolute;top:50px;height:1px;width:1px;pointer-events:none;";
+  searchInPage.parentElement.insertBefore(sentinel, searchInPage);
 
-const observer = new IntersectionObserver(
-  ([entry]) => {
-    searchInPage.classList.toggle("is-sticky", !entry.isIntersecting);
-  },
-  { threshold: 0 },
-);
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      searchInPage.classList.toggle("is-sticky", !entry.isIntersecting);
+    },
+    { threshold: 0 },
+  );
 
-observer.observe(sentinel);
+  observer.observe(sentinel);
+}
+
+jQuery(document).ready(function () {
+  setTimeout(() => {
+    jQuery('.carousel-cards.case-studies .post-card-content .case-card-title').verticalTextAligner();
+    jQuery('.carousel-cards.case-studies .post-card-content .case-card-excerpt').verticalTextAligner();
+  }, 500);
+
+  const megamenus = document.querySelectorAll(".flc-headmenu > .nav-item > .megamenu");
+
+  megamenus.forEach(function (menu) {
+    const observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.attributeName === "class") {
+          const parentHeader = jQuery(".flc-headmenu");
+          
+          // Controlla se ALMENO UNO dei megamenu ha la classe "show"
+          const anyOpen = Array.from(megamenus).some(function (m) {
+            return m.classList.contains("show");
+          });
+
+          if (anyOpen) {
+            console.log("add");
+            parentHeader.addClass("menu-open");
+          } else {
+            console.log("remove");
+            parentHeader.removeClass("menu-open");
+          }
+        }
+      });
+    });
+
+    observer.observe(menu, { attributes: true });
+  });
+});
+
+jQuery(window).on("resize", function () {
+  setTimeout(() => {
+    jQuery('.carousel-cards.case-studies .post-card-content .case-card-title').verticalTextAligner();
+    jQuery('.carousel-cards.case-studies .post-card-content .case-card-excerpt').verticalTextAligner();
+  }, 500);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  const forms = document.querySelectorAll('.contact-form-block .wpcf7 form');
+
+  forms.forEach(function (form) {
+    const submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+    if (!submitBtn) return;
+
+    const firstName = form.querySelector('[name="first-name"]');
+    const lastName = form.querySelector('[name="last-name"]');
+    const company = form.querySelector('[name="company"]');
+    const email = form.querySelector('[name="email"]');
+    const privacy = form.querySelector('[name="privacy-consent"]');
+
+    function isFilled(field) {
+      return field && field.value && field.value.trim() !== '';
+    }
+
+    function isValidEmail(field) {
+      if (!field) return false;
+      return field.value.trim() !== '' && field.checkValidity();
+    }
+
+    function isChecked(field) {
+      return field && field.checked;
+    }
+
+    function updateSubmitState() {
+      const isValid =
+        isFilled(firstName) &&
+        isFilled(lastName) &&
+        isFilled(company) &&
+        isValidEmail(email) &&
+        isChecked(privacy);
+
+      submitBtn.disabled = !isValid;
+    }
+
+    form.addEventListener('input', updateSubmitState);
+    form.addEventListener('change', updateSubmitState);
+
+    document.addEventListener('wpcf7reset', function (event) {
+      if (event.target === form) updateSubmitState();
+    });
+
+    updateSubmitState();
+  });
+});

@@ -62,8 +62,6 @@ body {
     height: 48px;
   }
   .flc-main-nav-inner {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
   }
   .flc-main-nav-container {
@@ -123,10 +121,25 @@ body {
           }
         }
       }
-      &:hover {
-        > a {
-          font-weight: 700;
-        }
+    }
+  }
+  .btn.no-btn{
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      background: #ffffff;
+      left: 0;
+      bottom: -2px;
+      transition: .3s ease-in-out;
+      opacity: 0;
+    }
+    &:hover {
+      overflow: visible;
+      &:after {
+        opacity: 1;
       }
     }
   }
@@ -288,6 +301,22 @@ body {
             text-decoration: none;
           }
         }
+      }
+    }
+    &.menu-open{
+      > li {
+        > a:not(.show){
+          opacity: 0.6;
+        }
+      }
+    }
+  }
+}
+.flc-headmenu {
+  &.menu-open{
+    > li {
+      > a:not(.show){
+        opacity: 0.6;
       }
     }
   }

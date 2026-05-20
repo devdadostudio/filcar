@@ -1,0 +1,42 @@
+.section-hero-contacts {
+    @include media-breakpoint-down(lg) {
+        min-height: 0 !important;
+        > .h-100vh-header {
+            min-height: 0 !important;
+            gap: 1.5rem;
+        }
+    }
+    .contacts-list-container {
+        .contact-item-inner {
+            .svg-container {
+                width: 32px;
+                height: 32px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: $grey300;
+                border-radius: 8px;
+                backdrop-filter: blur(22.5px);
+                @include media-breakpoint-down(lg) {
+                    min-width: 24px;
+                    max-width: 24px;
+                    height: 24px;
+                    svg {
+                        height: 15px;
+                        width: 13px;
+                    }
+                }
+            }
+        }
+    }
+    .figure-container {
+        @include media-breakpoint-up(lg) {
+            aspect-ratio: none !important;
+        }
+        @include media-breakpoint-down(lg) {
+            > figure {
+                position: relative !important;
+            }
+        }
+    }
+}
