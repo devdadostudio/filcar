@@ -1,7 +1,7 @@
 .parallax-sector-block {
   position: relative;
   overflow: hidden;
-  padding: clamp(72px, 8vw, 132px) 0 clamp(84px, 10vw, 160px);
+  padding: clamp(96px, 10vw, 180px) 0 clamp(112px, 12vw, 220px);
   background: $light;
   color: $primary;
 
@@ -9,7 +9,7 @@
     position: relative;
 
     + .parallax-sector-block__item {
-      margin-top: clamp(80px, 9vw, 150px);
+      margin-top: clamp(116px, 13vw, 240px);
     }
   }
 
@@ -19,16 +19,17 @@
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 0 $grid-gutter-width;
-    margin-bottom: clamp(42px, 4.2vw, 78px);
+    margin-bottom: clamp(64px, 6.5vw, 122px);
   }
 
   &__copy {
-    grid-column: 2 / span 5;
-    max-width: 580px;
+    grid-column: 1 / span 5;
+    max-width: 92%;
   }
 
   &__item--reverse &__copy {
-    grid-column: 8 / span 4;
+    grid-column: 8 / -1;
+    justify-self: end;
   }
 
   &__number {
@@ -75,7 +76,7 @@
   }
 
   &__media {
-    grid-column: 3 / span 8;
+    grid-column: 2 / span 10;
     position: relative;
     height: clamp(360px, 33.8vw, 650px);
     margin: 0;
@@ -85,7 +86,7 @@
   }
 
   &__item--reverse &__media {
-    grid-column: 3 / span 8;
+    grid-column: 2 / span 10;
   }
 
   &__image {
@@ -142,11 +143,13 @@
     position: absolute;
     z-index: 4;
     top: -34px;
-    right: calc(8.333333% + 5rem);
+    right: 5rem;
     display: grid;
-    grid-template-columns: 1fr auto;
-    min-width: clamp(205px, 13.5vw, 270px);
-    padding: 20px 56px 18px 24px;
+    grid-template-columns: minmax(0, 1fr) 44px;
+    column-gap: clamp(18px, 2vw, 34px);
+    align-items: start;
+    min-width: clamp(205px, 20.5vw, 470px);
+    padding: 20px 24px 18px;
     overflow: hidden;
     border-radius: 4px;
     background: rgba($grey600, 0.84);
@@ -166,20 +169,44 @@
   &__item--reverse &__cta {
     top: -56px;
     right: auto;
-    left: calc(8.333333% + 5rem);
+    left: 5rem;
+  }
+
+  @include media-breakpoint-up(sxl) {
+    &__cta {
+      right: 6rem;
+    }
+
+    &__item--reverse &__cta {
+      left: 6rem;
+    }
+  }
+
+  @include media-breakpoint-up(uxl) {
+    &__cta {
+      right: 10.5rem;
+    }
+
+    &__item--reverse &__cta {
+      left: 10.5rem;
+    }
   }
 
   &__cta-label,
   &__cta-title {
     grid-column: 1;
     display: block;
+    min-width: 0;
+    padding-right: 0;
+    line-height: 1.16;
   }
 
   &__cta-icon {
-    position: absolute;
-    top: 20px;
-    right: 22px;
-    font-size: 22px;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    justify-self: end;
+    align-self: start;
+    font-size: 38px;
     line-height: 1;
     transition: transform 0.3s ease-in-out;
   }
@@ -197,16 +224,16 @@
     padding: 88px 0;
 
     &__item + .parallax-sector-block__item {
-      margin-top: 86px;
+      margin-top: 118px;
     }
 
     &__copy-wrap {
       display: block;
-      margin-bottom: 52px;
+      margin-bottom: 64px;
     }
 
     &__copy {
-      max-width: 410px;
+      max-width: 82%;
     }
 
     &__number {
@@ -250,13 +277,19 @@
       left: 50%;
       width: min(66vw, 250px);
       min-width: 0;
-      padding: 17px 50px 17px 21px;
+      grid-template-columns: minmax(0, 1fr) 38px;
+      column-gap: 16px;
+      padding: 17px 21px;
       transform: translateX(-50%);
+    }
+
+    &__cta-icon {
+      font-size: 34px;
     }
   }
 
   @include media-breakpoint-down(sm) {
-    padding: 86px 0 96px;
+    padding: 92px 0 112px;
 
     &__copy {
       max-width: 100%;

@@ -1445,6 +1445,317 @@ function initHeroHotspotAnimations() {
 document.addEventListener("DOMContentLoaded", initHeroHotspotPositionDetector);
 document.addEventListener("DOMContentLoaded", initHeroHotspotAnimations);
 
+function initProgettazioneSequence() {
+  const sections = document.querySelectorAll(".js-progettazione-sequence");
+
+  if (!sections.length || !window.gsap || !window.ScrollTrigger) return;
+
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  sections.forEach((section) => {
+    if (section.dataset.progettazioneSequenceReady === "true") return;
+
+    const scroll = section.querySelector(".js-progettazione-sequence-scroll");
+    const media = section.querySelector(".js-progettazione-sequence-media");
+    const canvas = section.querySelector(".js-progettazione-sequence-canvas");
+    const points = Array.from(
+      section.querySelectorAll(".js-progettazione-sequence-point"),
+    );
+
+    if (!scroll || !media || !canvas || !points.length) return;
+
+    section.dataset.progettazioneSequenceReady = "true";
+
+    const ctx = canvas.getContext("2d");
+    const frameScript = section.querySelector(
+      ".js-progettazione-sequence-frames",
+    );
+    let frameUrls = [];
+    const frames = [];
+    let loadedFrames = 0;
+    let currentSequenceProgress = 0;
+    let lastCanvasWidth = 0;
+    let lastCanvasHeight = 0;
+    let resizeRefreshFrame = null;
+
+    if (frameScript) {
+      try {
+        frameUrls = JSON.parse(frameScript.textContent);
+      } catch (error) {
+        frameUrls = [];
+      }
+    }
+
+    const pointStops = points.map((point, index) => {
+      const fallback = index / Math.max(points.length - 1, 1);
+      const value = parseFloat(point.dataset.sequenceProgress);
+
+      return Number.isFinite(value) ? gsap.utils.clamp(0, 1, value) : fallback;
+    });
+
+    const resizeCanvas = () => {
+      const width = Math.round(canvas.clientWidth || canvas.width);
+      const height = Math.round(canvas.clientHeight || canvas.height);
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+
+      if (width === lastCanvasWidth && height === lastCanvasHeight) {
+        return false;
+      }
+
+      lastCanvasWidth = width;
+      lastCanvasHeight = height;
+      canvas.width = Math.round(width * ratio);
+      canvas.height = Math.round(height * ratio);
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+      return true;
+    };
+
+    const syncCanvasSize = (refreshTriggers = false) => {
+      const resized = resizeCanvas();
+      renderSequence(currentSequenceProgress);
+
+      if (!refreshTriggers || !resized || !window.ScrollTrigger) return;
+
+      if (resizeRefreshFrame) {
+        window.cancelAnimationFrame(resizeRefreshFrame);
+      }
+
+      resizeRefreshFrame = window.requestAnimationFrame(() => {
+        resizeRefreshFrame = null;
+        ScrollTrigger.refresh();
+      });
+    };
+
+    const drawPolygon = (pointsList, fill, stroke) => {
+      ctx.beginPath();
+      pointsList.forEach((point, index) => {
+        if (index === 0) {
+          ctx.moveTo(point.x, point.y);
+          return;
+        }
+
+        ctx.lineTo(point.x, point.y);
+      });
+      ctx.closePath();
+      ctx.fillStyle = fill;
+      ctx.fill();
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    };
+
+    const drawCube = (progress) => {
+      const width = canvas.clientWidth || canvas.width;
+      const height = canvas.clientHeight || canvas.height;
+      const centerX = width / 2;
+      const centerY = height / 2 + height * 0.03;
+      const size = Math.min(width, height) * 0.34;
+      const rotation = progress * Math.PI * 2.15 + Math.PI * 0.16;
+      const pitch = Math.PI * (0.18 + progress * 0.12);
+      const vertices = [
+        [-1, -1, -1],
+        [1, -1, -1],
+        [1, 1, -1],
+        [-1, 1, -1],
+        [-1, -1, 1],
+        [1, -1, 1],
+        [1, 1, 1],
+        [-1, 1, 1],
+      ].map(([x, y, z]) => {
+        const rotatedX = x * Math.cos(rotation) - z * Math.sin(rotation);
+        const rotatedZ = x * Math.sin(rotation) + z * Math.cos(rotation);
+        const pitchedY = y * Math.cos(pitch) - rotatedZ * Math.sin(pitch);
+        const pitchedZ = y * Math.sin(pitch) + rotatedZ * Math.cos(pitch);
+        const perspective = 2.8 / (2.8 + pitchedZ);
+
+        return {
+          x: centerX + rotatedX * size * perspective,
+          y: centerY + pitchedY * size * perspective,
+          z: pitchedZ,
+        };
+      });
+      const faces = [
+        { indexes: [0, 1, 2, 3], color: "rgba(0, 133, 221, 0.34)" },
+        { indexes: [4, 7, 6, 5], color: "rgba(255, 255, 255, 0.13)" },
+        { indexes: [0, 4, 5, 1], color: "rgba(0, 133, 221, 0.52)" },
+        { indexes: [1, 5, 6, 2], color: "rgba(255, 255, 255, 0.22)" },
+        { indexes: [2, 6, 7, 3], color: "rgba(0, 133, 221, 0.22)" },
+        { indexes: [3, 7, 4, 0], color: "rgba(255, 255, 255, 0.08)" },
+      ];
+
+      ctx.clearRect(0, 0, width, height);
+      ctx.save();
+      ctx.shadowColor = "rgba(0, 0, 0, 0.36)";
+      ctx.shadowBlur = 42;
+      ctx.shadowOffsetY = 28;
+
+      faces
+        .map((face) => ({
+          ...face,
+          z:
+            face.indexes.reduce((sum, index) => sum + vertices[index].z, 0) /
+            face.indexes.length,
+        }))
+        .sort((a, b) => a.z - b.z)
+        .forEach((face) => {
+          drawPolygon(
+            face.indexes.map((index) => vertices[index]),
+            face.color,
+            "rgba(255, 255, 255, 0.42)",
+          );
+        });
+
+      ctx.restore();
+    };
+
+    const drawImageFrame = (progress) => {
+      const width = canvas.clientWidth || canvas.width;
+      const height = canvas.clientHeight || canvas.height;
+      const frameIndex = Math.round(progress * Math.max(frames.length - 1, 0));
+      const image = frames[frameIndex];
+
+      if (!image || !image.complete) {
+        drawCube(progress);
+        return;
+      }
+
+      const scale = Math.min(width / image.naturalWidth, height / image.naturalHeight);
+      const drawWidth = image.naturalWidth * scale;
+      const drawHeight = image.naturalHeight * scale;
+
+      ctx.clearRect(0, 0, width, height);
+      ctx.drawImage(
+        image,
+        (width - drawWidth) / 2,
+        (height - drawHeight) / 2,
+        drawWidth,
+        drawHeight,
+      );
+    };
+
+    const renderSequence = (progress) => {
+      currentSequenceProgress = progress;
+
+      if (frames.length && loadedFrames === frames.length) {
+        drawImageFrame(progress);
+        return;
+      }
+
+      drawCube(progress);
+    };
+
+    const setActivePoint = (progress) => {
+      let activeIndex = 0;
+      let activeDistance = Number.POSITIVE_INFINITY;
+
+      pointStops.forEach((stop, index) => {
+        const distance = Math.abs(progress - stop);
+
+        if (distance < activeDistance) {
+          activeDistance = distance;
+          activeIndex = index;
+        }
+      });
+
+      points.forEach((point, index) => {
+        point.classList.toggle("is-active", index === activeIndex);
+        point.classList.toggle("is-before", index < activeIndex);
+      });
+    };
+
+    resizeCanvas();
+    renderSequence(0);
+    setActivePoint(0);
+
+    const canvasResizeObserver =
+      "ResizeObserver" in window
+        ? new ResizeObserver(() => syncCanvasSize(false))
+        : null;
+
+    if (canvasResizeObserver) {
+      canvasResizeObserver.observe(canvas);
+      canvasResizeObserver.observe(canvas.parentElement);
+    }
+
+    frameUrls.forEach((url) => {
+      const image = new Image();
+      image.onload = () => {
+        loadedFrames += 1;
+        renderSequence(currentSequenceProgress);
+      };
+      image.src = url;
+      frames.push(image);
+    });
+
+    const isMobileViewport = () =>
+      window.matchMedia("(max-width: 1024px)").matches;
+
+    if (reduceMotion) {
+      renderSequence(0);
+      setActivePoint(0);
+      return;
+    }
+
+    window.addEventListener(
+      "resize",
+      () => syncCanvasSize(true),
+      { passive: true },
+    );
+
+    if (isMobileViewport()) {
+      ScrollTrigger.create({
+        trigger: scroll,
+        start: "top top",
+        end: () => `+=${Math.max(points.length * 75, 260)}%`,
+        scrub: 0.65,
+        pin: scroll,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onRefreshInit: () => {
+          resizeCanvas();
+          renderSequence(currentSequenceProgress);
+        },
+        onUpdate: (self) => {
+          const sequenceProgress = gsap.utils.clamp(0, 1, self.progress);
+
+          renderSequence(sequenceProgress);
+          setActivePoint(sequenceProgress);
+        },
+      });
+
+      return;
+    }
+
+    ScrollTrigger.create({
+      trigger: media,
+      start: "center center",
+      endTrigger: points[points.length - 1],
+      end: "center center",
+      scrub: 0.65,
+      pin: media,
+      pinSpacing: false,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      onRefreshInit: () => {
+        resizeCanvas();
+        renderSequence(currentSequenceProgress);
+      },
+      onUpdate: (self) => {
+        const sequenceProgress = gsap.utils.clamp(0, 1, self.progress);
+
+        renderSequence(sequenceProgress);
+        setActivePoint(sequenceProgress);
+      },
+    });
+
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initProgettazioneSequence);
+
 const searchInPage = document.querySelector(".search-in-page");
 
 const sentinel = document.createElement("div");
@@ -1453,6 +1764,12 @@ if(searchInPage){
     "position:absolute;top:50px;height:1px;width:1px;pointer-events:none;";
   searchInPage.parentElement.insertBefore(sentinel, searchInPage);
 
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      searchInPage.classList.toggle("is-sticky", !entry.isIntersecting);
+    },
+    { threshold: 0 },
+  );
   const observer = new IntersectionObserver(
     ([entry]) => {
       searchInPage.classList.toggle("is-sticky", !entry.isIntersecting);
