@@ -1736,7 +1736,7 @@ function initProgettazioneSequence() {
       end: "center center",
       scrub: 0.65,
       pin: media,
-      pinSpacing: false,
+      pinSpacing: true,
       anticipatePin: 1,
       invalidateOnRefresh: true,
       onRefreshInit: () => {
@@ -1770,13 +1770,6 @@ if(searchInPage){
     },
     { threshold: 0 },
   );
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      searchInPage.classList.toggle("is-sticky", !entry.isIntersecting);
-    },
-    { threshold: 0 },
-  );
-
   observer.observe(sentinel);
 }
 

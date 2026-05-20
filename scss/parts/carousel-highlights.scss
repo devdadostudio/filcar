@@ -2,6 +2,8 @@
   --carousel-highlight-gap: clamp(12px, 1vw, 22px);
   --carousel-highlight-pad-left: clamp(24px, 3.1vw, 64px);
   --carousel-highlight-card-unit: calc((100vw - var(--carousel-highlight-pad-left) - (var(--carousel-highlight-gap) * 2)) / 4);
+  --carousel-highlight-media-height: calc(var(--carousel-highlight-card-unit) * 421 / 327);
+  --carousel-highlight-media-hover-height: calc(var(--carousel-highlight-card-unit) * 300 / 327);
 
   position: relative;
   background: $primary;
@@ -9,6 +11,7 @@
   overflow: hidden;
 
   &__pin {
+    position: relative;
     min-height: 100svh;
     display: flex;
     align-items: center;
@@ -16,7 +19,7 @@
 
   &__inner {
     width: 100%;
-    padding: clamp(70px, 9vh, 116px) 0 clamp(56px, 8vh, 94px);
+    padding: clamp(70px, 9vh, 116px) 0 clamp(92px, 13vh, 150px);
   }
 
   &__title {
@@ -66,17 +69,13 @@
   &__media {
     position: relative;
     width: 100%;
-    aspect-ratio: 327 / 421;
+    height: var(--carousel-highlight-media-height);
     overflow: hidden;
     border-radius: 4px 4px 0 0;
     background: $primary;
     transition:
-      aspect-ratio 0.34s ease,
+      height 0.34s ease,
       border-radius 0.34s ease;
-  }
-
-  &__card--wide &__media {
-    aspect-ratio: 735 / 421;
   }
 
   &__image {
@@ -103,7 +102,7 @@
   &__card:hover,
   &__card:focus-visible {
     .carousel-highlights__media {
-      aspect-ratio: 327 / 300;
+      height: var(--carousel-highlight-media-hover-height);
     }
 
     .carousel-highlights__image--base:not(:only-child) {
@@ -114,11 +113,6 @@
       opacity: 1;
       transform: scale(1);
     }
-  }
-
-  &__card--wide:hover &__media,
-  &__card--wide:focus-visible &__media {
-    aspect-ratio: 735 / 300;
   }
 
   &__copy {
@@ -162,10 +156,16 @@
   }
 
   &__controls {
+    position: absolute;
+    right: 0;
+    bottom: clamp(40px, 6vh, 72px);
+    left: 0;
+    z-index: 5;
     display: flex;
     justify-content: center;
     gap: 9px;
-    margin-top: clamp(22px, 3vh, 34px);
+    margin: 0;
+    pointer-events: none;
   }
 
   &__control {
@@ -178,6 +178,7 @@
     border-radius: 4px;
     background: rgba($grey500, 0.88);
     color: $white;
+    pointer-events: auto;
     transition:
       background-color 0.2s ease,
       opacity 0.2s ease;
@@ -218,7 +219,7 @@
 
     &__inner {
       padding-top: 58px;
-      padding-bottom: 48px;
+      padding-bottom: 92px;
     }
 
     &__title {
@@ -256,7 +257,7 @@
     }
 
     &__controls {
-      margin-top: 20px;
+      bottom: 36px;
     }
   }
 }

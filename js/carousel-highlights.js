@@ -31,11 +31,12 @@
       let maxX = 0;
       let cardStops = [];
       let activeIndex = 0;
+      const canPin = cards.length >= 4;
 
       const setControls = () => {
         if (!prev || !next) return;
 
-        if (maxX <= 1) {
+        if (!canPin || maxX <= 1) {
           prev.disabled = true;
           next.disabled = true;
           return;
@@ -47,8 +48,8 @@
 
       const measure = () => {
         maxX = Math.max(0, track.scrollWidth - viewport.clientWidth);
-        block.classList.toggle("is-scrollable", maxX > 1);
-        block.classList.toggle("is-static", maxX <= 1);
+        block.classList.toggle("is-scrollable", canPin && maxX > 1);
+        block.classList.toggle("is-static", !canPin || maxX <= 1);
         cardStops = cards.map((card) =>
           Math.max(0, Math.min(card.offsetLeft, maxX)),
         );
@@ -154,7 +155,7 @@
         measure();
         setTrackX(Math.min(getCurrentX(), maxX));
 
-        if (reduceMotion || maxX <= 1) return;
+        if (!canPin || reduceMotion || maxX <= 1) return;
 
         tween = gsap.to(track, {
           x: () => -maxX,
