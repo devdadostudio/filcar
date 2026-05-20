@@ -20,6 +20,7 @@
       );
       const links = Array.from(block.querySelectorAll(".sequence-anchor-link"));
       const navWrap = block.querySelector(".js-sequence-anchor-nav-wrap");
+      const floatingCard = block.querySelector(".js-sequence-anchor-floating-card");
       const sections = Array.from(
         block.querySelectorAll(".js-sequence-anchor-section"),
       );
@@ -424,6 +425,25 @@
               renderSequence(progress);
               setActivePoint(progress);
             },
+          });
+        }
+
+        if (floatingCard && !isMobileViewport()) {
+          const ergonomiaSection =
+            sections.find((section) => section.dataset.anchorId === "ergonomia") ||
+            sections[0] ||
+            scroll;
+
+          ScrollTrigger.create({
+            trigger: floatingCard,
+            start: "bottom bottom-=24",
+            endTrigger: ergonomiaSection,
+            end: "top top-=120",
+            pin: floatingCard,
+            pinSpacing: false,
+            pinReparent: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
           });
         }
       }

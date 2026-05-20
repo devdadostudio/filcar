@@ -47,10 +47,33 @@ $get_image_data = static function ($image) {
     return [$image_url, $image_alt];
 };
 
+$theme_variant = $get_value('theme_variant', 'field_progettazione_png_sequence_nav_theme_variant');
+$theme_variant = in_array($theme_variant, ['dark', 'light'], true) ? $theme_variant : 'dark';
+$section_class = 'progettazione-sequence-nav progettazione-sequence-nav--' . $theme_variant . ' js-progettazione-sequence-nav';
+
 $intro_label = $get_value('intro_label', 'field_progettazione_png_sequence_nav_intro_label');
 $intro_title = $get_value('intro_title', 'field_progettazione_png_sequence_nav_intro_title');
 $intro_text = $get_value('intro_text', 'field_progettazione_png_sequence_nav_intro_text');
 [$intro_image_url, $intro_image_alt] = $get_image_data($get_value('fullscreen_intro', 'field_progettazione_png_sequence_nav_fullscreen_intro'));
+
+$floating_cta = $get_value('floating_cta', 'field_progettazione_png_sequence_nav_floating_cta');
+$floating_cta = is_array($floating_cta) ? $floating_cta : [];
+$floating_cta_title = $floating_cta['title'] ?? '';
+$floating_cta_image = $floating_cta['image'] ?? null;
+$floating_cta_link = $floating_cta['link'] ?? null;
+$floating_cta_url = '';
+$floating_cta_target = '_self';
+
+if (is_array($floating_cta_link)) {
+    $floating_cta_url = $floating_cta_link['url'] ?? '';
+    $floating_cta_title = $floating_cta_title ?: ($floating_cta_link['title'] ?? '');
+    $floating_cta_target = !empty($floating_cta_link['target']) ? $floating_cta_link['target'] : '_self';
+} elseif (is_string($floating_cta_link)) {
+    $floating_cta_url = $floating_cta_link;
+}
+
+[$floating_cta_image_url, $floating_cta_image_alt] = $get_image_data($floating_cta_image);
+$has_floating_cta = $floating_cta_title && $floating_cta_url;
 
 $sequence_points = $get_value('sequence_points', 'field_progettazione_png_sequence_nav_sequence_points');
 $sequence_points = is_array($sequence_points) ? array_values($sequence_points) : [];
@@ -60,10 +83,18 @@ $section_ergonomia_title = $get_value('ergonomia_title', 'field_progettazione_pn
 $section_ergonomia_text = $get_value('ergonomia_text', 'field_progettazione_png_sequence_nav_ergonomia_text');
 $ergonomia_slides = $get_value('ergonomia_slides', 'field_progettazione_png_sequence_nav_ergonomia_slides');
 $ergonomia_slides = is_array($ergonomia_slides) ? array_values($ergonomia_slides) : [];
-$show_elements = (bool) $get_value('show_elements', 'field_progettazione_png_sequence_nav_show_elements');
-$section_elementi_title = $get_value('elementi_title', 'field_progettazione_png_sequence_nav_elementi_title');
-$section_elementi_text = $get_value('elementi_text', 'field_progettazione_png_sequence_nav_elementi_text');
-$has_elements = $show_elements || $section_elementi_title || $section_elementi_text;
+
+$composition_text = __('Soluzioni configurate dai nostri esperti per rispondere a ogni esigenza operativa, sfruttando la flessibilità estrema della linea Mono. La struttura completamente modulare permette di creare composizioni capaci di evolversi nel tempo e di garantire sempre la massima funzionalità, organizzazione e continuità operativa.', 'filcar');
+$composition_cards = [
+    __('Composizione con parete attrezzata', 'filcar'),
+    __('Banco con accessori integrati', 'filcar'),
+    __('Postazione modulare completa', 'filcar'),
+    __('Banco doppio con contenimento', 'filcar'),
+    __('Banco operativo lineare', 'filcar'),
+    __('Modulo con pannello portautensili', 'filcar'),
+    __('Configurazione compatta', 'filcar'),
+    __('Banco essenziale su ruote', 'filcar'),
+];
 
 $frames_folder = $normalize_relative_path((string) $get_value('frames_folder', 'field_progettazione_png_sequence_nav_frames_folder'));
 $frame_urls = [];
@@ -114,20 +145,18 @@ $nav_items = [
         'label' => __('Ergonomia', 'filcar'),
         'type' => 'section',
     ],
-];
-
-if ($has_elements) {
-    $nav_items[] = [
-        'id' => 'elementi',
+    [
+        'id' => 'composizioni',
         'number' => '05',
-        'label' => __('Elementi', 'filcar'),
+        'label' => __('Composizioni', 'filcar'),
         'type' => 'section',
-    ];
-}
+    ],
+];
+$compositions_number = str_pad((string) count($nav_items), 2, '0', STR_PAD_LEFT);
 ?>
 
-<section id="<?php echo esc_attr($block_id); ?>" class="progettazione-sequence-nav js-progettazione-sequence-nav">
-    <div class="progettazione-sequence-nav__inner bg-primary">
+<section id="<?php echo esc_attr($block_id); ?>" class="<?php echo esc_attr($section_class); ?>">
+    <div class="progettazione-sequence-nav__inner">
         <aside class="page-header progettazione-sequence-nav__header">
             <div class="anchor-nav-wrap progettazione-sequence-nav__nav-wrap js-sequence-anchor-nav-wrap">
                 <nav class="anchor-nav progettazione-sequence-nav__nav" aria-label="<?php esc_attr_e('Navigazione progettazione', 'filcar'); ?>">
@@ -182,6 +211,25 @@ if ($has_elements) {
                                     <?php if ($text) : ?>
                                         <div class="progettazione-sequence-nav__point-text p-normal"><?php echo wp_kses_post(wpautop($text)); ?></div>
                                     <?php endif; ?>
+
+                                    <?php if ($index === 0 && $has_floating_cta) : ?>
+                                        <div class="progettazione-sequence-nav__floating-card js-sequence-anchor-floating-card">
+                                            <div class="hero-sector__card-item">
+                                                <a class="hero-sector__card progettazione-sequence-nav__floating-card-link<?php echo !$floating_cta_image_url ? ' progettazione-sequence-nav__floating-card-link--no-media' : ''; ?>" href="<?php echo esc_url($floating_cta_url); ?>" target="<?php echo esc_attr($floating_cta_target); ?>"<?php echo $floating_cta_target === '_blank' ? ' rel="noopener"' : ''; ?>>
+                                                    <?php if ($floating_cta_image_url) : ?>
+                                                        <span class="hero-sector__card-media">
+                                                            <img src="<?php echo esc_url($floating_cta_image_url); ?>" alt="<?php echo esc_attr($floating_cta_image_alt); ?>" loading="lazy">
+                                                        </span>
+                                                    <?php endif; ?>
+
+                                                    <span class="hero-sector__card-copy">
+                                                        <span class="hero-sector__card-title p-big"><?php echo esc_html($floating_cta_title); ?></span>
+                                                        <i class="hero-sector__card-icon icon icon-filcar-icon-arrow-downr" aria-hidden="true"></i>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
                                 </article>
                             <?php endfor; ?>
                         </aside>
@@ -233,22 +281,36 @@ if ($has_elements) {
                 <?php endif; ?>
             </section>
 
-            <?php if ($has_elements) : ?>
-                <section id="<?php echo esc_attr($block_id); ?>-elementi" class="progettazione-sequence-nav__plain-section js-sequence-anchor-section" data-anchor-id="elementi">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-12 col-lg-7 offset-lg-4">
-                                <?php if ($section_elementi_title) : ?>
-                                    <h2 class="h3 light text-white"><?php echo esc_html($section_elementi_title); ?></h2>
-                                <?php endif; ?>
-                                <?php if ($section_elementi_text) : ?>
-                                    <div class="p-big light text-white sp-mt-3"><?php echo wp_kses_post(wpautop($section_elementi_text)); ?></div>
-                                <?php endif; ?>
+            <section id="<?php echo esc_attr($block_id); ?>-composizioni" class="progettazione-sequence-nav__compositions js-sequence-anchor-section" data-anchor-id="composizioni">
+                <div class="container-fluid">
+                    <div class="row progettazione-sequence-nav__compositions-head">
+                        <div class="col-12 col-lg-6">
+                            <div class="progettazione-sequence-nav__compositions-title">
+                                <div class="progettazione-sequence-nav__compositions-number number-2"><?php echo esc_html($compositions_number); ?></div>
+                                <h2 class="progettazione-sequence-nav__compositions-heading subtitle-1"><?php esc_html_e('Composizioni', 'filcar'); ?></h2>
                             </div>
                         </div>
+                        <div class="col-12 col-lg-6">
+                            <p class="progettazione-sequence-nav__compositions-text"><?php echo esc_html($composition_text); ?></p>
+                        </div>
                     </div>
-                </section>
-            <?php endif; ?>
+
+                    <div class="row progettazione-sequence-nav__compositions-grid">
+                        <?php foreach ($composition_cards as $index => $composition_title) : ?>
+                            <div class="col-6 col-lg-3 progettazione-sequence-nav__composition-col">
+                                <article class="progettazione-sequence-nav__composition-card">
+                                    <div class="progettazione-sequence-nav__composition-placeholder" aria-hidden="true">
+                                        <span class="progettazione-sequence-nav__composition-shape progettazione-sequence-nav__composition-shape--<?php echo esc_attr(($index % 4) + 1); ?>"></span>
+                                    </div>
+                                    <div class="progettazione-sequence-nav__composition-overlay">
+                                        <span><?php echo esc_html($composition_title); ?></span>
+                                    </div>
+                                </article>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
 

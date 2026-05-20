@@ -39,6 +39,15 @@ add_action('acf/init', function () {
             'post_types' => ['page'],
         ]);
         acf_register_block_type([
+            'name' => 'carousel-highlights',
+            'title' => __('CAROUSEL HIGHLIGHTS'),
+            'render_template' => get_template_directory() . '/parts/carousel-highlights.php',
+            'category' => 'layout',
+            'icon' => 'images-alt2',
+            'mode' => 'edit',
+            'post_types' => ['page'],
+        ]);
+        acf_register_block_type([
             'name' => 'technical-text-scroll',
             'title' => __('TESTO TECNICO ANIMATO'),
             'render_template' => get_template_directory() . '/parts/technical-text-scroll.php',
@@ -443,6 +452,50 @@ add_action('acf/init', function () {
             'title' => __('Progettazione sequenza PNG con navigazione', 'filcar'),
             'fields' => [
                 [
+                    'key' => 'field_progettazione_png_sequence_nav_theme_variant',
+                    'label' => __('Variante colore', 'filcar'),
+                    'name' => 'theme_variant',
+                    'type' => 'select',
+                    'choices' => [
+                        'dark' => __('Sfondo scuro, testi bianchi', 'filcar'),
+                        'light' => __('Sfondo bianco, testi scuri', 'filcar'),
+                    ],
+                    'default_value' => 'dark',
+                    'return_format' => 'value',
+                    'ui' => 1,
+                ],
+                [
+                    'key' => 'field_progettazione_png_sequence_nav_floating_cta',
+                    'label' => __('Card CTA floating', 'filcar'),
+                    'name' => 'floating_cta',
+                    'type' => 'group',
+                    'layout' => 'block',
+                    'sub_fields' => [
+                        [
+                            'key' => 'field_progettazione_png_sequence_nav_floating_cta_title',
+                            'label' => __('Titolo', 'filcar'),
+                            'name' => 'title',
+                            'type' => 'text',
+                        ],
+                        [
+                            'key' => 'field_progettazione_png_sequence_nav_floating_cta_image',
+                            'label' => __('Immagine', 'filcar'),
+                            'name' => 'image',
+                            'type' => 'image',
+                            'return_format' => 'array',
+                            'preview_size' => 'medium',
+                            'library' => 'all',
+                        ],
+                        [
+                            'key' => 'field_progettazione_png_sequence_nav_floating_cta_link',
+                            'label' => __('Link', 'filcar'),
+                            'name' => 'link',
+                            'type' => 'link',
+                            'return_format' => 'array',
+                        ],
+                    ],
+                ],
+                [
                     'key' => 'field_progettazione_png_sequence_nav_intro_label',
                     'label' => __('Label intro', 'filcar'),
                     'name' => 'intro_label',
@@ -580,6 +633,79 @@ add_action('acf/init', function () {
                         'param' => 'block',
                         'operator' => '==',
                         'value' => 'acf/progettazione-png-sequence-nav',
+                    ],
+                ],
+            ],
+            'position' => 'normal',
+            'style' => 'default',
+            'label_placement' => 'top',
+            'instruction_placement' => 'label',
+            'active' => true,
+        ]);
+
+        acf_add_local_field_group([
+            'key' => 'group_carousel_highlights',
+            'title' => __('Carousel highlights', 'filcar'),
+            'fields' => [
+                [
+                    'key' => 'field_carousel_highlights_title',
+                    'label' => __('Titolo', 'filcar'),
+                    'name' => 'title',
+                    'type' => 'text',
+                    'default_value' => __('Highlights', 'filcar'),
+                ],
+                [
+                    'key' => 'field_carousel_highlights_items',
+                    'label' => __('Card highlights', 'filcar'),
+                    'name' => 'items',
+                    'type' => 'repeater',
+                    'instructions' => __('La vista mostra 3 card alla volta: per vedere il pin con scorrimento orizzontale servono almeno 4 card.', 'filcar'),
+                    'layout' => 'block',
+                    'button_label' => __('Aggiungi card', 'filcar'),
+                    'sub_fields' => [
+                        [
+                            'key' => 'field_carousel_highlights_item_image',
+                            'label' => __('Immagine', 'filcar'),
+                            'name' => 'image',
+                            'type' => 'image',
+                            'return_format' => 'array',
+                            'preview_size' => 'medium',
+                            'library' => 'all',
+                        ],
+                        [
+                            'key' => 'field_carousel_highlights_item_hover_image',
+                            'label' => __('Immagine hover', 'filcar'),
+                            'name' => 'hover_image',
+                            'type' => 'image',
+                            'instructions' => __('Se compilata, sostituisce l’immagine principale al passaggio del mouse/focus.', 'filcar'),
+                            'return_format' => 'array',
+                            'preview_size' => 'medium',
+                            'library' => 'all',
+                        ],
+                        [
+                            'key' => 'field_carousel_highlights_item_title',
+                            'label' => __('Titolo', 'filcar'),
+                            'name' => 'title',
+                            'type' => 'text',
+                        ],
+                        [
+                            'key' => 'field_carousel_highlights_item_text',
+                            'label' => __('Testo hover', 'filcar'),
+                            'name' => 'text',
+                            'type' => 'textarea',
+                            'instructions' => __('Compare al passaggio del mouse/focus. Le card 1, 4, 7, ecc. restano larghe il doppio.', 'filcar'),
+                            'rows' => 4,
+                            'new_lines' => 'br',
+                        ],
+                    ],
+                ],
+            ],
+            'location' => [
+                [
+                    [
+                        'param' => 'block',
+                        'operator' => '==',
+                        'value' => 'acf/carousel-highlights',
                     ],
                 ],
             ],
