@@ -299,6 +299,24 @@ add_action('acf/init', function () {
             'mode' => 'edit',
             'post_types' => ['page'],
         ]);
+        acf_register_block_type([
+            'name' => 'catalogs-block',
+            'title' => __('Cataloghi'),
+            'render_template' => get_template_directory() . '/parts/catalogs-block.php',
+            'category' => 'layout',
+            'icon' => 'format-gallery',
+            'mode' => 'edit',
+            'post_types' => ['page'],
+        ]);
+        acf_register_block_type([
+            'name' => 'videos-block',
+            'title' => __('Video'),
+            'render_template' => get_template_directory() . '/parts/videos-block.php',
+            'category' => 'layout',
+            'icon' => 'format-gallery',
+            'mode' => 'edit',
+            'post_types' => ['page'],
+        ]);
     }
 
     if (function_exists('acf_add_local_field_group')) {

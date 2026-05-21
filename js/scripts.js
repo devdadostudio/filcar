@@ -1770,12 +1770,6 @@ if(searchInPage){
     },
     { threshold: 0 },
   );
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      searchInPage.classList.toggle("is-sticky", !entry.isIntersecting);
-    },
-    { threshold: 0 },
-  );
 
   observer.observe(sentinel);
 }

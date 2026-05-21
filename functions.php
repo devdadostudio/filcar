@@ -78,6 +78,7 @@ if (function_exists('add_theme_support')) {
     add_image_size('cat-prod-card-thumb', 650, 490, true);
     add_image_size('catalogs-launch-cta-img', 120, 115, false);
     add_image_size('sidebar-img-blog', 800, 800, false);
+    add_image_size('catalog-thumb', 420, 580, false);
     
     // Enables post and comment RSS feed links to head
     add_theme_support('automatic-feed-links');
@@ -471,3 +472,154 @@ add_filter('file_is_displayable_image', function($result, $path) {
     if (str_ends_with(strtolower($path), '.webp')) return true;
     return $result;
 }, 10, 2);
+
+/**
+ * Estrae l'ID da un URL YouTube o Vimeo.
+ * Restituisce ['platform' => 'youtube'|'vimeo', 'id' => '...'] oppure false.
+ */
+function get_video_info($url) {
+    // YouTube
+    if (preg_match('/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $url, $m)) {
+        return ['platform' => 'youtube', 'id' => $m[1]];
+    }
+    // Vimeo
+    if (preg_match('/vimeo\.com\/(?:video\/)?(\d+)/', $url, $m)) {
+        return ['platform' => 'vimeo', 'id' => $m[1]];
+    }
+    return false;
+}
+
+/**
+ * Restituisce l'URL della thumbnail.
+ */
+function get_video_thumbnail($info) {
+    if (!$info) return '';
+    if ($info['platform'] === 'youtube') {
+        return 'https://img.youtube.com/vi/' . $info['id'] . '/maxresdefault.jpg';
+    }
+    if ($info['platform'] === 'vimeo') {
+        // Per Vimeo serve una chiamata API, usiamo quella oembed (sincrona)
+        $data = @file_get_contents('https://vimeo.com/api/oembed.json?url=https://vimeo.com/' . $info['id']);
+        if ($data) {
+            $json = json_decode($data, true);
+            return $json['thumbnail_url'] ?? '';
+        }
+    }
+    return '';
+}
+
+/**
+ * Restituisce l'URL embed con autoplay.
+ */
+function get_embed_url($info) {
+    if (!$info) return '';
+    if ($info['platform'] === 'youtube') {
+        return 'https://www.youtube.com/embed/' . $info['id'] . '?autoplay=1&rel=0';
+    }
+    if ($info['platform'] === 'vimeo') {
+        return 'https://player.vimeo.com/video/' . $info['id'] . '?autoplay=1';
+    }
+    return '';
+}
+
+
+
+
+
+
+
+
+// ── Enqueue script filtri casi studio ────────────────────────────────────────
+add_action('wp_enqueue_scripts', function () {
+    if (!is_page_template('page-casi-studio.php')) return;
+
+    wp_enqueue_script(
+        'case-studies-filters',
+        get_template_directory_uri() . '/js/case-studies-filters.js',
+        ['jquery'],
+        filemtime(get_template_directory() . '/js/case-studies-filters.js'),
+        true
+    );
+
+    wp_localize_script('case-studies-filters', 'caseStudiesAjax', [
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'nonce'   => wp_create_nonce('case_studies_filter_nonce'),
+    ]);
+});
+
+// ── AJAX handler ──────────────────────────────────────────────────────────────
+add_action('wp_ajax_filter_case_studies',        'handle_filter_case_studies');
+add_action('wp_ajax_nopriv_filter_case_studies', 'handle_filter_case_studies');
+
+function handle_filter_case_studies() {
+    check_ajax_referer('case_studies_filter_nonce', 'nonce');
+
+    $paged     = max(1, intval($_POST['paged'] ?? 1));
+    $sector_id = intval($_POST['settore'] ?? 0);
+    $tag       = sanitize_text_field($_POST['tag'] ?? '');
+    $search    = sanitize_text_field($_POST['search'] ?? '');
+
+    $args = [
+        'post_type'      => 'caso-studio',
+        'post_status'    => 'publish',
+        'posts_per_page' => 3,
+        'paged'          => $paged,
+        'order'          => 'DESC',
+    ];
+
+    // Filtro settore — campo ACF multiplo (array serializzato)
+    if ($sector_id) {
+        $args['meta_query'] = array(
+            'relation'      => 'AND',
+            array(
+                'key'     => 'sectors',
+                'value'   => $sector_id,
+                'compare' => 'LIKE',
+            )
+        );
+    }
+
+    // Filtro tag — tassonomia tag-caso-studio
+    if ($tag) {
+        $args['tax_query'] = [[
+            'taxonomy' => 'tag-caso-studio',
+            'field'    => 'slug',
+            'terms'    => $tag,
+        ]];
+    }
+
+    // Ricerca testo
+    if ($search) {
+        $args['s'] = $search;
+    }
+
+    $query = new WP_Query($args);
+
+    ob_start();
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            get_template_part('parts/card/card-case-study', null, [
+                'case_study_id' => get_the_ID(),
+                'card_class'    => 'col-12 col-md-6 col-lg-4',
+            ]);
+        }
+    } else {
+        echo '<div class="col-12 sp-py-10"><p class="no-results">Nessun caso studio trovato.</p></div>';
+    }
+    wp_reset_postdata();
+    $html = ob_get_clean();
+
+    // Paginazione
+    $pagination = paginate_links([
+        'total'   => $query->max_num_pages,
+        'current' => $paged,
+        'type'    => 'list',
+    ]);
+
+    wp_send_json_success([
+        'html'       => $html,
+        'pagination' => $pagination ?? '',
+        'found'      => $query->found_posts,
+    ]);
+}

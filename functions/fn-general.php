@@ -325,3 +325,42 @@ function filcar_get_image_url($image_field) {
 
 	return '';
 }
+
+function registra_custom_post_type_catalogo() {
+    $labels = array(
+        'name'                  => 'Cataloghi',
+        'singular_name'         => 'Catalogo',
+        'menu_name'             => 'Cataloghi',
+        'name_admin_bar'        => 'Catalogo',
+        'add_new'               => 'Aggiungi Nuovo',
+        'add_new_item'          => 'Aggiungi Nuovo Catalogo',
+        'new_item'              => 'Nuovo Catalogo',
+        'edit_item'             => 'Modifica Catalogo',
+        'view_item'             => 'Visualizza Catalogo',
+        'all_items'             => 'Tutti gli Elementi di arredo',
+        'search_items'          => 'Cerca Elementi di arredo',
+        'not_found'             => 'Nessun Catalogo trovato.',
+        'not_found_in_trash'    => 'Nessun Catalogo trovato nel cestino.'
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'catalogo' ),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => 7,
+        'menu_icon'          => 'dashicons-media-default',
+        'show_in_rest'       => true,
+        'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt' )
+    );
+
+    register_post_type( 'catalogo', $args );
+}
+
+add_action( 'init', 'registra_custom_post_type_catalogo' );

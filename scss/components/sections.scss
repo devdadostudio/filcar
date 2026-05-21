@@ -8,7 +8,263 @@
         height: 1px;
         background: $grey500;
     }
+    &.subtitle-after-white {
+        &:after {
+            background: $white;
+        }
+    }
     > .h6 {
         margin-bottom: 0;
     }
+}
+
+
+
+
+
+
+.filters-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    @media (max-width: 991px) {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    // ── Dropdowns ───────────────────────────────────────────────────────────
+    &__dropdowns {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        flex: 1;
+        background-color: #5a5a5a; // grigio scuro dal Figma
+        border: 2px solid #7b4fd4; // bordo viola dal Figma
+        border-radius: 8px;
+        overflow: hidden;
+
+        @media (max-width: 767px) {
+            flex-direction: column;
+        }
+    }
+
+    // ── Singolo wrapper select ───────────────────────────────────────────────
+    .filter-select-wrap {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex: 1;
+        padding: 12px 20px;
+        cursor: pointer;
+
+        // Divisore verticale tra i due dropdown
+        & + .filter-select-wrap {
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+
+            @media (max-width: 767px) {
+                border-left: none;
+                border-top: 1px solid rgba(255, 255, 255, 0.15);
+            }
+        }
+
+        // Chevron custom
+        &::after {
+            content: '';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            border-right: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+            transform: translateY(-65%) rotate(45deg);
+            pointer-events: none;
+            transition: transform 0.2s ease;
+        }
+
+        &:focus-within::after {
+            transform: translateY(-35%) rotate(225deg);
+        }
+    }
+
+    .filter-select-label {
+        display: block;
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 2px;
+        pointer-events: none;
+    }
+
+    .filter-select {
+        appearance: none;
+        -webkit-appearance: none;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 14px;
+        font-weight: 400;
+        width: 100%;
+        padding-right: 24px; // spazio per il chevron
+        cursor: pointer;
+
+        option {
+            background-color: #3a3a3a;
+            color: #fff;
+        }
+
+        &:focus {
+            color: #fff;
+        }
+    }
+
+    // ── Search ───────────────────────────────────────────────────────────────
+    .filter-search-wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: #5a5a5a;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        padding: 0 16px;
+        height: 70px; // stessa altezza del blocco dropdowns
+        min-width: 260px;
+
+        @media (max-width: 1199px) {
+            min-width: 200px;
+        }
+
+        @media (max-width: 991px) {
+            min-width: unset;
+            width: 100%;
+        }
+    }
+
+    .filter-search {
+        flex: 1;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 14px;
+
+        &::placeholder {
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        &:focus::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+        }
+    }
+
+    .filter-search-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        padding: 4px;
+        cursor: pointer;
+        color: rgba(255, 255, 255, 0.6);
+        transition: color 0.2s ease;
+        flex-shrink: 0;
+
+        &:hover {
+            color: #fff;
+        }
+    }
+}
+
+// ── Paginazione ───────────────────────────────────────────────────────────────
+#case-studies-pagination {
+    margin-top: 40px;
+
+    .page-numbers {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            .page-numbers {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 38px;
+                height: 38px;
+                border-radius: 6px;
+                font-size: 14px;
+                font-weight: 500;
+                text-decoration: none;
+                color: #333;
+                border: 1px solid rgba(0, 0, 0, 0.12);
+                transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+                &:hover {
+                    background-color: #7b4fd4;
+                    color: #fff;
+                    border-color: #7b4fd4;
+                }
+
+                &.current {
+                    background-color: #7b4fd4;
+                    color: #fff;
+                    border-color: #7b4fd4;
+                    pointer-events: none;
+                }
+
+                &.dots {
+                    border: none;
+                    background: transparent;
+                    pointer-events: none;
+                    color: #999;
+                }
+
+                &.prev,
+                &.next {
+                    width: auto;
+                    padding: 0 14px;
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+}
+
+// ── Loader spinner ────────────────────────────────────────────────────────────
+#case-studies-loader {
+    .spinner {
+        display: inline-block;
+        width: 28px;
+        height: 28px;
+        border: 3px solid rgba(123, 79, 212, 0.2);
+        border-top-color: #7b4fd4;
+        border-radius: 50%;
+        animation: cs-spin 0.7s linear infinite;
+    }
+}
+
+@keyframes cs-spin {
+    to { transform: rotate(360deg); }
+}
+
+// ── Nessun risultato ──────────────────────────────────────────────────────────
+.no-results {
+    font-size: 15px;
+    color: #888;
+    text-align: center;
+    padding: 3rem 0;
+}
+
+// ── Transizione griglia durante il fetch ──────────────────────────────────────
+#case-studies-grid {
+    transition: opacity 0.2s ease;
 }
