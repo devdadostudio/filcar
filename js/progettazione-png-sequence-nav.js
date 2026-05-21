@@ -413,7 +413,7 @@
             end: "center center",
             scrub: 0.65,
             pin: media,
-            pinSpacing: false,
+            pinSpacing: true,
             anticipatePin: 1,
             invalidateOnRefresh: true,
             onRefreshInit: () => {
