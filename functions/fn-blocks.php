@@ -228,6 +228,16 @@ add_action('acf/init', function () {
         ]);
 
         acf_register_block_type([
+            'name' => 'arredo-text-images-card',
+            'title' => __('Arredo testo immagini e card'),
+            'render_template' => get_template_directory() . '/parts/arredo-text-images-card.php',
+            'category' => 'layout',
+            'icon' => 'layout',
+            'mode' => 'edit',
+            'post_types' => ['page', 'elementi-arredo'],
+        ]);
+
+        acf_register_block_type([
             'name' => 'img-4-txt-blocks',
             'title' => __('Immagine + 4 blocchi di testo'),
             'render_template' => get_template_directory() . '/parts/img-4-txt-blocks.php',
@@ -958,6 +968,125 @@ add_action('acf/init', function () {
                         'param' => 'block',
                         'operator' => '==',
                         'value' => 'acf/hero-image-hotspots',
+                    ],
+                ],
+            ],
+            'position' => 'normal',
+            'style' => 'default',
+            'label_placement' => 'top',
+            'instruction_placement' => 'label',
+            'active' => true,
+        ]);
+
+        acf_add_local_field_group([
+            'key' => 'group_arredo_text_images_card',
+            'title' => __('Arredo testo immagini e card', 'filcar'),
+            'fields' => [
+                [
+                    'key' => 'field_arredo_text_images_card_variant',
+                    'label' => __('Variazione', 'filcar'),
+                    'name' => 'variant',
+                    'type' => 'button_group',
+                    'choices' => [
+                        'light' => __('Chiara', 'filcar'),
+                        'dark' => __('Scura', 'filcar'),
+                    ],
+                    'default_value' => 'light',
+                    'return_format' => 'value',
+                ],
+                [
+                    'key' => 'field_arredo_text_images_card_logo_icon',
+                    'label' => __('Logo linea', 'filcar'),
+                    'name' => 'logo_icon',
+                    'type' => 'select',
+                    'choices' => [
+                        '' => __('Nessun logo', 'filcar'),
+                        'icon-logo-dual' => __('Dual', 'filcar'),
+                        'icon-logo-mono' => __('Mono', 'filcar'),
+                        'icon-logo-infinity' => __('Infinity', 'filcar'),
+                    ],
+                    'default_value' => '',
+                    'return_format' => 'value',
+                    'allow_null' => 0,
+                    'ui' => 1,
+                ],
+                [
+                    'key' => 'field_arredo_text_images_card_title',
+                    'label' => __('Titolo', 'filcar'),
+                    'name' => 'title',
+                    'type' => 'textarea',
+                    'rows' => 3,
+                    'new_lines' => 'br',
+                ],
+                [
+                    'key' => 'field_arredo_text_images_card_text',
+                    'label' => __('Testo', 'filcar'),
+                    'name' => 'text',
+                    'type' => 'wysiwyg',
+                    'tabs' => 'all',
+                    'toolbar' => 'basic',
+                    'media_upload' => 0,
+                    'delay' => 0,
+                ],
+                [
+                    'key' => 'field_arredo_text_images_card_image_left',
+                    'label' => __('Immagine sinistra desktop', 'filcar'),
+                    'name' => 'image_left',
+                    'type' => 'image',
+                    'return_format' => 'array',
+                    'preview_size' => 'medium',
+                    'library' => 'all',
+                    'instructions' => __('Nascosta su mobile.', 'filcar'),
+                ],
+                [
+                    'key' => 'field_arredo_text_images_card_image_main',
+                    'label' => __('Immagine principale', 'filcar'),
+                    'name' => 'image_main',
+                    'type' => 'image',
+                    'return_format' => 'array',
+                    'preview_size' => 'medium',
+                    'library' => 'all',
+                ],
+                [
+                    'key' => 'field_arredo_text_images_card_link_card',
+                    'label' => __('Card link', 'filcar'),
+                    'name' => 'link_card',
+                    'type' => 'group',
+                    'layout' => 'block',
+                    'sub_fields' => [
+                        [
+                            'key' => 'field_arredo_text_images_card_link_card_image',
+                            'label' => __('Immagine', 'filcar'),
+                            'name' => 'image',
+                            'type' => 'image',
+                            'return_format' => 'array',
+                            'preview_size' => 'thumbnail',
+                            'library' => 'all',
+                        ],
+                        [
+                            'key' => 'field_arredo_text_images_card_link_card_title',
+                            'label' => __('Testo', 'filcar'),
+                            'name' => 'title',
+                            'type' => 'textarea',
+                            'rows' => 2,
+                            'new_lines' => 'br',
+                        ],
+                        [
+                            'key' => 'field_arredo_text_images_card_link_card_link',
+                            'label' => __('Link', 'filcar'),
+                            'name' => 'link',
+                            'type' => 'link',
+                            'return_format' => 'array',
+                        ],
+                    ],
+                ],
+            ],
+            'location' => [
+                [
+                    [
+                        'param' => 'block',
+                        'operator' => '==',
+                        'value' => 'acf/arredo-text-images-card',
                     ],
                 ],
             ],

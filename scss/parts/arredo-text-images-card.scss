@@ -1,0 +1,142 @@
+.arredo-text-images-card {
+  background: $white;
+  color: $primary;
+
+  &--dark {
+    background: $primary;
+    color: $white;
+  }
+
+  &__intro {
+    margin-bottom: clamp(2.5rem, 5vw, 5rem);
+  }
+
+  &__logo,
+  &__title,
+  &__text,
+  &__text p {
+    margin: 0;
+  }
+
+  &__logo {
+    display: block;
+    position: relative;
+    left: -12px;
+    margin-bottom: 0.75rem;
+    font-size: clamp(48px, 5.8vw, 92px);
+    line-height: 0.78;
+  }
+
+  &__title {
+    max-width: 520px;
+  }
+
+  &__text {
+    max-width: 940px;
+
+    p + p {
+      margin-top: 1.5rem;
+    }
+  }
+
+  &--dark &__text {
+    color: rgba(255, 255, 255, 0.86);
+  }
+
+  &__media-wrap {
+    margin-right: clamp(44px, 5.6vw, 96px);
+
+    .row {
+      --bs-gutter-x: 20px;
+    }
+  }
+
+  &__figure {
+    margin: 0;
+    overflow: hidden;
+    border-radius: 6px;
+    background: $grey200;
+  }
+
+  &__figure--left {
+    aspect-ratio: 1.25;
+  }
+
+  &__figure--main {
+    aspect-ratio: 1.78;
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__card-row {
+    margin-top: -6.5rem;
+  }
+
+  &__card {
+    width: 100%;
+    border-color: rgba(255, 255, 255, 0.08);
+    background:
+      linear-gradient(0deg, rgba(29, 29, 31, 0.10) 0%, rgba(29, 29, 31, 0.10) 100%),
+      rgba(71, 71, 75, 0.50);
+    backdrop-filter: blur(22.5px);
+    -webkit-backdrop-filter: blur(22.5px);
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.26);
+      background:
+        linear-gradient(0deg, rgba(29, 29, 31, 0.18) 0%, rgba(29, 29, 31, 0.18) 100%),
+        rgba(71, 71, 75, 0.62);
+    }
+
+    &--no-media {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    &__intro {
+      margin-bottom: 2.75rem;
+    }
+
+    &__logo {
+      left: -7px;
+      margin-bottom: 0.5rem;
+      font-size: 46px;
+    }
+
+    &__title {
+      margin-bottom: 1.5rem;
+    }
+
+    &__text {
+      p + p {
+        margin-top: 1.25rem;
+      }
+    }
+
+    &__figure--main {
+      aspect-ratio: 1.68;
+    }
+
+    &__media-wrap {
+      margin-right: 0;
+
+      .row {
+        --bs-gutter-x: #{$grid-gutter-width};
+      }
+    }
+
+    &__card-row {
+      margin-top: 1.25rem;
+    }
+
+    &__card {
+      max-width: none;
+    }
+  }
+}
