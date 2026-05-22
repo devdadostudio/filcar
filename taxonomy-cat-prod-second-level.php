@@ -114,11 +114,13 @@ $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_im
                     </div>
                 </div>
             </div>
-            <div class="category-products-grid row">
-                <div class="">
-                    
+            <?php if ( have_posts() ) : ?>
+                <div class="category-products-grid row sp-pt-5 sp-lg-pt-10 sp-sxl-pt-12 sp-uxl-pt-10 sp-row-gap-3 sp-lg-row-gap-4">
+                    <?php while ( have_posts() ) : the_post(); ?>
+                        <?php get_template_part('parts/card/card', 'product', ['card_class' => 'col-6 col-lg-3']); ?>
+                    <?php endwhile; ?>
                 </div>
-            </div>
+            <?php endif; ?>
         </div>
     </section>
 
