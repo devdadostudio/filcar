@@ -52,19 +52,14 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'hero-video-slider-' .
             $slide_cta_title = '';
             $slide_cta_target = '_self';
 
-            if (is_array($slide_cta)) {
-                $slide_cta = reset($slide_cta);
-            }
-
-            if ($slide_cta instanceof WP_Term) {
-                $term_link = get_term_link($slide_cta);
-                $slide_cta_url = !is_wp_error($term_link) ? $term_link : '';
-                $slide_cta_title = $slide_cta->name;
-            } elseif (is_numeric($slide_cta)) {
+            if ($slide_cta) {
                 $term = get_term((int) $slide_cta, 'cat-prod');
-                $term_link = !is_wp_error($term) && $term ? get_term_link($term) : '';
-                $slide_cta_url = !is_wp_error($term_link) ? $term_link : '';
-                $slide_cta_title = !is_wp_error($term) && $term ? $term->name : '';
+
+                if ($term && !is_wp_error($term)) {
+                    $term_link = get_term_link($term);
+                    $slide_cta_url = !is_wp_error($term_link) ? $term_link : '';
+                    $slide_cta_title = __('Scopri', 'filcar');
+                }
             }
         ?>
             <article class="hero-video-slider__slide <?php echo $index === 0 ? 'is-active' : ''; ?>" data-slide-index="<?php echo esc_attr($index); ?>">
@@ -83,7 +78,7 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'hero-video-slider-' .
                         <?php if ($title) : ?>
                             <h2 class="hero-video-slider__title h0 extralight"><?php echo esc_html($title); ?></h2>
                         <?php endif; ?>
-
+                        
                         <?php if ($slide_cta_url) : ?>
                             <a class="hero-video-slider__cta p-small" href="<?php echo esc_url($slide_cta_url); ?>" target="<?php echo esc_attr($slide_cta_target); ?>">
                                 <span><?php echo esc_html($slide_cta_title); ?></span>
