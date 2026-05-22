@@ -1,0 +1,34 @@
+.logos-block {
+  &__title {
+    color: $primary;
+  }
+
+  &__text {
+    color: $grey900;
+  }
+
+  &__logo-col {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  &__logo {
+    display: block;
+    width: auto;
+    max-width: 112px;
+    max-height: 78px;
+    object-fit: contain;
+  }
+
+  @include media-breakpoint-down(md) {
+    &__logo-col {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+
+    &__logo {
+      max-width: 54px;
+      max-height: 38px;
+    }
+  }
+}
