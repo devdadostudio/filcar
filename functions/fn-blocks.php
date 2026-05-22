@@ -54,7 +54,7 @@ add_action('acf/init', function () {
             'category' => 'layout',
             'icon' => 'editor-alignleft',
             'mode' => 'edit',
-            'post_types' => ['page', 'product'],
+            'post_types' => ['page', 'product', 'settori'],
         ]);
         acf_register_block_type([
             'name' => 'expandable-cards',
