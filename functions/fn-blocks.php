@@ -54,7 +54,7 @@ add_action('acf/init', function () {
             'category' => 'layout',
             'icon' => 'editor-alignleft',
             'mode' => 'edit',
-            'post_types' => ['page', 'product'],
+            'post_types' => ['page', 'product', 'settori'],
         ]);
         acf_register_block_type([
             'name' => 'expandable-cards',
@@ -185,6 +185,16 @@ add_action('acf/init', function () {
             'icon' => 'format-video',
             'mode' => 'edit',
             'post_types' => ['page', 'product'],
+        ]);
+
+        acf_register_block_type([
+            'name' => 'logos-block',
+            'title' => __('Blocco loghi'),
+            'render_template' => get_template_directory() . '/parts/logos-block.php',
+            'category' => 'layout',
+            'icon' => 'grid-view',
+            'mode' => 'edit',
+            'post_types' => ['page', 'settori'],
         ]);
 
         acf_register_block_type([
@@ -815,6 +825,60 @@ add_action('acf/init', function () {
                         'param' => 'block',
                         'operator' => '==',
                         'value' => 'acf/hero-sector',
+                    ],
+                ],
+            ],
+            'position' => 'normal',
+            'style' => 'default',
+            'label_placement' => 'top',
+            'instruction_placement' => 'label',
+            'active' => true,
+        ]);
+
+        acf_add_local_field_group([
+            'key' => 'group_logos_block',
+            'title' => __('Blocco loghi', 'filcar'),
+            'fields' => [
+                [
+                    'key' => 'field_logos_block_title',
+                    'label' => __('Titolo', 'filcar'),
+                    'name' => 'title',
+                    'type' => 'text',
+                ],
+                [
+                    'key' => 'field_logos_block_text',
+                    'label' => __('Testo', 'filcar'),
+                    'name' => 'text',
+                    'type' => 'textarea',
+                    'rows' => 3,
+                    'new_lines' => 'wpautop',
+                ],
+                [
+                    'key' => 'field_logos_block_logos',
+                    'label' => __('Loghi', 'filcar'),
+                    'name' => 'logos',
+                    'type' => 'repeater',
+                    'layout' => 'block',
+                    'button_label' => __('Aggiungi logo', 'filcar'),
+                    'sub_fields' => [
+                        [
+                            'key' => 'field_logos_block_logo_image',
+                            'label' => __('Logo', 'filcar'),
+                            'name' => 'image',
+                            'type' => 'image',
+                            'return_format' => 'array',
+                            'preview_size' => 'thumbnail',
+                            'library' => 'all',
+                        ],
+                    ],
+                ],
+            ],
+            'location' => [
+                [
+                    [
+                        'param' => 'block',
+                        'operator' => '==',
+                        'value' => 'acf/logos-block',
                     ],
                 ],
             ],
