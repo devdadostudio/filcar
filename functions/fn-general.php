@@ -296,7 +296,7 @@ function registra_tassonomia_elementi_arredo() {
         'show_ui'           => true,
         'show_admin_column' => true,
         'query_var'         => true,
-        'rewrite'           => array( 'slug' => 'categoria-elemento-arredo' ),
+        'rewrite'           => array( 'slug' => 'catalogo' ),
         'show_in_rest'      => true
     );
 
@@ -326,7 +326,7 @@ function filcar_get_image_url($image_field) {
 	return '';
 }
 
-function registra_custom_post_type_catalogo() {
+function registra_custom_post_type_pubblicazioni() {
     $labels = array(
         'name'                  => 'Cataloghi',
         'singular_name'         => 'Catalogo',
@@ -350,7 +350,7 @@ function registra_custom_post_type_catalogo() {
         'show_ui'            => true,
         'show_in_menu'       => true,
         'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'catalogo' ),
+        'rewrite'            => array( 'slug' => 'pubblicazioni' ),
         'capability_type'    => 'post',
         'has_archive'        => true,
         'hierarchical'       => false,
@@ -360,7 +360,7 @@ function registra_custom_post_type_catalogo() {
         'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt' )
     );
 
-    register_post_type( 'catalogo', $args );
+    register_post_type( 'pubblicazioni', $args );
 }
 
-add_action( 'init', 'registra_custom_post_type_catalogo' );
+add_action( 'init', 'registra_custom_post_type_pubblicazioni' );
