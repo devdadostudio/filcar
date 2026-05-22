@@ -3,7 +3,7 @@
 add_action('acf/init', function () {
     if (function_exists('acf_register_block_type')) {
         acf_register_block_type([
-            'name' => 'hero-video',
+            'name' => 'hero-video-slider',
             'title' => __('HERO VIDEO'),
             'render_template' => get_template_directory() . '/parts/hero-video-slider.php',
             'category' => 'layout',
@@ -330,7 +330,7 @@ add_action('acf/init', function () {
     }
 
     if (function_exists('acf_add_local_field_group')) {
-        acf_add_local_field_group([
+        /* acf_add_local_field_group([
             'key' => 'group_hero_video',
             'title' => __('Hero video', 'filcar'),
             'fields' => [
@@ -396,7 +396,7 @@ add_action('acf/init', function () {
             'label_placement' => 'top',
             'instruction_placement' => 'label',
             'active' => true,
-        ]);
+        ]); */
 
         acf_add_local_field_group([
             'key' => 'group_progettazione_png_sequence',
