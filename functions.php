@@ -619,7 +619,27 @@ function handle_filter_case_studies() {
 
     wp_send_json_success([
         'html'       => $html,
-        'pagination' => $pagination ?? '',
+        'pagination' => case_studies_pagination($paged, $query->max_num_pages),
         'found'      => $query->found_posts,
     ]);
+}
+
+function case_studies_pagination($current, $max_pages) {
+    if ($max_pages <= 1) return '';
+
+    $prev = $current > 1
+        ? '<a class="cs-page-prev" href="#" data-page="' . ($current - 1) . '">&#8249;</a>'
+        : '<span class="cs-page-prev is-disabled">&#8249;</span>';
+
+    $next = $current < $max_pages
+        ? '<a class="cs-page-next" href="#" data-page="' . ($current + 1) . '">&#8250;</a>'
+        : '<span class="cs-page-next is-disabled">&#8250;</span>';
+
+    return '
+        <div class="cs-pagination">
+            ' . $prev . '
+            <span class="cs-page-info">' . $current . ' di ' . $max_pages . '</span>
+            ' . $next . '
+        </div>
+    ';
 }

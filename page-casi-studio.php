@@ -45,11 +45,8 @@ get_template_part('parts/case-studies-carousel', null, [
         <div id="case-studies-pagination" class="row">
             <div class="col-12">
                 <?php
-                echo paginate_links([
-                    'total'   => $case_studies_query->max_num_pages,
-                    'current' => get_query_var('paged') ?: 1,
-                    'type'    => 'list',
-                ]);
+                $paged_current = get_query_var('paged') ?: 1;
+                echo case_studies_pagination($paged_current, $case_studies_query->max_num_pages);
                 ?>
             </div>
         </div>

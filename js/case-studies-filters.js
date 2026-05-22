@@ -5,7 +5,7 @@
     const $pagination = $('#case-studies-pagination');
     const $loader     = $('#case-studies-loader');
     let debounceTimer;
-    let isFiltering   = false; // false = navigazione WP normale, true = siamo in modalità AJAX
+    let currentPage = 1;
 
     function getFilters() {
         return {
@@ -15,13 +15,9 @@
         };
     }
 
-    function hasActiveFilters() {
-        const f = getFilters();
-        return f.settore !== '' || f.tag !== '' || f.search !== '';
-    }
-
     function fetchCaseStudies(page) {
         const filters = getFilters();
+        currentPage = page;
 
         $loader.show();
         $grid.css('opacity', '0.4');
@@ -41,13 +37,12 @@
                 if (!response.success) return;
 
                 $grid.html(response.data.html);
-                $pagination.html(response.data.pagination
-                    ? '<div class="col-12">' + response.data.pagination + '</div>'
-                    : ''
-                );
 
-                // Intercetta i click sulla paginazione AJAX
-                bindPaginationClicks();
+                $pagination.html(
+                    response.data.pagination
+                        ? '<div class="col-12">' + response.data.pagination + '</div>'
+                        : ''
+                );
             },
             complete() {
                 $loader.hide();
@@ -56,51 +51,32 @@
         });
     }
 
-    function bindPaginationClicks() {
-        // Rimuove listener precedenti per non duplicarli
-        $pagination.off('click', 'a').on('click', 'a', function (e) {
-            if (!isFiltering) return; // lascia funzionare WP normalmente se no filtri
+    // Paginazione — delegato su document così funziona sempre,
+    // anche sull'HTML renderizzato inizialmente dal PHP
+    $(document).on('click', '.cs-page-prev, .cs-page-next', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
 
-            e.preventDefault();
+        if ($(this).hasClass('is-disabled')) return;
 
-            // Legge il numero di pagina dall'href (es. ?paged=2 o /page/2/)
-            const href  = $(this).attr('href');
-            const match = href.match(/[?&/]paged?[=/](\d+)/i);
-            const page  = match ? parseInt(match[1]) : 1;
+        const page = parseInt($(this).data('page'));
+        if (!page) return;
 
-            fetchCaseStudies(page);
-            $('html, body').animate({ scrollTop: $grid.offset().top - 100 }, 300);
-        });
-    }
+        fetchCaseStudies(page);
+        $('html, body').animate({ scrollTop: $grid.offset().top - 100 }, 300);
+    });
 
-    // Cambio dropdown → reset a pagina 1
+    // Cambio dropdown
     $('#filter-settore, #filter-tag').on('change', function () {
-        isFiltering = hasActiveFilters();
-        if (isFiltering) {
-            fetchCaseStudies(1);
-        } else {
-            // Nessun filtro attivo: ricarica la pagina pulita
-            window.location.href = window.location.pathname;
-        }
+        fetchCaseStudies(1);
     });
 
     // Ricerca con debounce 350ms
     $('#filter-search').on('input', function () {
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(function () {
-            isFiltering = hasActiveFilters();
-            if (isFiltering) {
-                fetchCaseStudies(1);
-            } else {
-                window.location.href = window.location.pathname;
-            }
+            fetchCaseStudies(1);
         }, 350);
     });
-
-    // Init: intercetta paginazione solo se siamo già con filtri attivi al caricamento
-    if (hasActiveFilters()) {
-        isFiltering = true;
-        bindPaginationClicks();
-    }
 
 })(jQuery);
