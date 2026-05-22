@@ -12,6 +12,15 @@ add_action('acf/init', function () {
             'post_types' => ['page'],
         ]);
         acf_register_block_type([
+            'name' => 'hero-video',
+            'title' => __('HERO SIMPLE VIDEO'),
+            'render_template' => get_template_directory() . '/parts/hero-video.php',
+            'category' => 'layout',
+            'icon' => 'format-video',
+            'mode' => 'edit',
+            'post_types' => ['page'],
+        ]);
+        acf_register_block_type([
             'name' => 'innovation-scroll',
             'title' => __('SEZIONE INNOVAZIONE ANIMATA'),
             'render_template' => get_template_directory() . '/parts/innovation-scroll.php',
@@ -340,7 +349,7 @@ add_action('acf/init', function () {
     }
 
     if (function_exists('acf_add_local_field_group')) {
-        /* acf_add_local_field_group([
+        acf_add_local_field_group([
             'key' => 'group_hero_video',
             'title' => __('Hero video', 'filcar'),
             'fields' => [
@@ -406,7 +415,7 @@ add_action('acf/init', function () {
             'label_placement' => 'top',
             'instruction_placement' => 'label',
             'active' => true,
-        ]); */
+        ]);
 
         acf_add_local_field_group([
             'key' => 'group_progettazione_png_sequence',
