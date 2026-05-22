@@ -89,6 +89,10 @@ $items = is_array($items) ? array_values($items) : [];
                                 </div>
                             </article>
                         <?php endforeach; ?>
+
+                        <?php if (count($items) >= 4) : ?>
+                            <div class="carousel-highlights__end-spacer" aria-hidden="true"></div>
+                        <?php endif; ?>
                     </div>
                 </div>
 

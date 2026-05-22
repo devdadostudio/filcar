@@ -82,7 +82,7 @@
     margin-bottom: 1.25rem;
     position: relative;
     left: -20px;
-    font-size: 150px;
+    font-size: 100px;
   }
 
   &__title {
@@ -145,7 +145,7 @@
 
   &__point-icon {
     flex: 0 0 auto;
-    color: $secondary;
+    color: #fff;
   }
 
   &__point-label {

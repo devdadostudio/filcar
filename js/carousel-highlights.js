@@ -31,12 +31,16 @@
       let maxX = 0;
       let cardStops = [];
       let activeIndex = 0;
-      const canPin = cards.length >= 4;
+
+      const isMobileViewport = () =>
+        window.matchMedia("(max-width: 767.98px)").matches;
+
+      const canUsePin = () => cards.length >= 4 && !isMobileViewport();
 
       const setControls = () => {
         if (!prev || !next) return;
 
-        if (!canPin || maxX <= 1) {
+        if (maxX <= 1) {
           prev.disabled = true;
           next.disabled = true;
           return;
@@ -48,8 +52,10 @@
 
       const measure = () => {
         maxX = Math.max(0, track.scrollWidth - viewport.clientWidth);
-        block.classList.toggle("is-scrollable", canPin && maxX > 1);
-        block.classList.toggle("is-static", !canPin || maxX <= 1);
+        block.classList.toggle("is-scrollable", maxX > 1);
+        block.classList.toggle("is-static", maxX <= 1);
+        block.classList.toggle("is-pinned-scroll", canUsePin() && maxX > 1);
+        block.classList.toggle("is-arrow-scroll", !canUsePin() && maxX > 1);
         cardStops = cards.map((card) =>
           Math.max(0, Math.min(card.offsetLeft, maxX)),
         );
@@ -95,14 +101,36 @@
         setActiveByX(safeX);
       };
 
+      const animateTrackToX = (x) => {
+        const safeX = Math.max(0, Math.min(x, maxX));
+
+        gsap.to(track, {
+          x: -safeX,
+          duration: 0.55,
+          ease: "power2.out",
+          overwrite: "auto",
+          onUpdate: () => setActiveByX(getCurrentX()),
+          onComplete: () => setActiveByX(safeX),
+        });
+      };
+
+      const getEndHoldDistance = () =>
+        Math.max(window.innerHeight * 0.35, viewport.clientWidth * 0.18);
+
+      const getPinDistance = () => {
+        measure();
+
+        return Math.ceil(maxX + getEndHoldDistance());
+      };
+
       const scrollToX = (x) => {
         if (!trigger || !maxX) {
-          setTrackX(x);
+          animateTrackToX(x);
           return;
         }
 
-        const progress = Math.max(0, Math.min(x / maxX, 1));
-        const targetY = trigger.start + progress * (trigger.end - trigger.start);
+        const safeX = Math.max(0, Math.min(x, maxX));
+        const targetY = trigger.start + safeX;
 
         if (smoother) {
           smoother.scrollTo(targetY, true);
@@ -155,23 +183,22 @@
         measure();
         setTrackX(Math.min(getCurrentX(), maxX));
 
-        if (!canPin || reduceMotion || maxX <= 1) return;
+        if (!canUsePin() || reduceMotion || maxX <= 1) return;
 
-        tween = gsap.to(track, {
+        tween = gsap.timeline({ defaults: { ease: "none" } });
+        tween.to(track, {
           x: () => -maxX,
-          ease: "none",
+          duration: Math.max(maxX, 1),
           overwrite: "auto",
         });
+        tween.to({}, { duration: getEndHoldDistance() });
 
         trigger = ScrollTrigger.create({
           trigger: pin,
           start: "top top",
-          end: () => {
-            measure();
-            return `+=${Math.max(maxX, window.innerHeight * 0.75)}`;
-          },
+          end: () => `+=${getPinDistance()}`,
           animation: tween,
-          scrub: 0.65,
+          scrub: true,
           pin,
           pinSpacing: true,
           anticipatePin: 1,
@@ -181,11 +208,12 @@
           },
           onRefresh: (self) => {
             measure();
-            setActiveByX(self.progress * maxX);
+            setActiveByX(getCurrentX());
           },
           onUpdate: (self) => {
-            setActiveByX(self.progress * maxX);
+            setActiveByX(getCurrentX());
           },
+          onLeave: () => setTrackX(maxX),
         });
       };
 
