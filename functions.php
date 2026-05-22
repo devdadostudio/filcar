@@ -547,6 +547,24 @@ add_action('wp_enqueue_scripts', function () {
     ]);
 });
 
+// ── Enqueue script filtri blog ───────────────────────────────────────────────
+add_action('wp_enqueue_scripts', function () {
+    if (!is_home()) return;
+
+    wp_enqueue_script(
+        'blog-filters',
+        get_template_directory_uri() . '/js/blog-filters.js',
+        ['jquery'],
+        filemtime(get_template_directory() . '/js/blog-filters.js'),
+        true
+    );
+
+    wp_localize_script('blog-filters', 'blogPostsAjax', [
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'nonce'   => wp_create_nonce('blog_posts_filter_nonce'),
+    ]);
+});
+
 // ── AJAX handler ──────────────────────────────────────────────────────────────
 add_action('wp_ajax_filter_case_studies',        'handle_filter_case_studies');
 add_action('wp_ajax_nopriv_filter_case_studies', 'handle_filter_case_studies');
@@ -642,4 +660,89 @@ function case_studies_pagination($current, $max_pages) {
             ' . $next . '
         </div>
     ';
+}
+
+// ── AJAX handler filtri blog ────────────────────────────────────────────────
+add_action('wp_ajax_filter_blog_posts',        'handle_filter_blog_posts');
+add_action('wp_ajax_nopriv_filter_blog_posts', 'handle_filter_blog_posts');
+
+function handle_filter_blog_posts() {
+    check_ajax_referer('blog_posts_filter_nonce', 'nonce');
+
+    $paged    = max(1, intval($_POST['paged'] ?? 1));
+    $category = sanitize_text_field($_POST['category'] ?? '');
+    $tag      = sanitize_text_field($_POST['tag'] ?? '');
+    $search   = sanitize_text_field($_POST['search'] ?? '');
+
+    $latest_posts = get_posts([
+        'post_type'              => 'post',
+        'post_status'            => 'publish',
+        'posts_per_page'         => 1,
+        'fields'                 => 'ids',
+        'ignore_sticky_posts'    => true,
+        'no_found_rows'          => true,
+        'update_post_meta_cache' => false,
+        'update_post_term_cache' => false,
+    ]);
+
+    $args = [
+        'post_type'           => 'post',
+        'post_status'         => 'publish',
+        'posts_per_page'      => 3,
+        'paged'               => $paged,
+        'order'               => 'DESC',
+        'ignore_sticky_posts' => true,
+        'post__not_in'        => $latest_posts ? $latest_posts : [],
+    ];
+
+    $tax_query = [];
+
+    if ($category) {
+        $tax_query[] = [
+            'taxonomy' => 'category',
+            'field'    => 'slug',
+            'terms'    => $category,
+        ];
+    }
+
+    if ($tag) {
+        $tax_query[] = [
+            'taxonomy' => 'post_tag',
+            'field'    => 'slug',
+            'terms'    => $tag,
+        ];
+    }
+
+    if ($tax_query) {
+        $args['tax_query'] = count($tax_query) > 1
+            ? array_merge(['relation' => 'AND'], $tax_query)
+            : $tax_query;
+    }
+
+    if ($search) {
+        $args['s'] = $search;
+    }
+
+    $query = new WP_Query($args);
+
+    ob_start();
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            get_template_part('parts/card/card-post', null, [
+                'post_id'    => get_the_ID(),
+                'card_class' => 'col-12 col-md-6 col-lg-4',
+            ]);
+        }
+    } else {
+        echo '<div class="col-12 sp-py-10"><p class="no-results">Nessun articolo trovato.</p></div>';
+    }
+    wp_reset_postdata();
+    $html = ob_get_clean();
+
+    wp_send_json_success([
+        'html'       => $html,
+        'pagination' => case_studies_pagination($paged, $query->max_num_pages),
+        'found'      => $query->found_posts,
+    ]);
 }

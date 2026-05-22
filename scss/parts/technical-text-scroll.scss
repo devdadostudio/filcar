@@ -32,7 +32,7 @@
 
   &__intro {
     justify-self: end;
-    width: min(470px, 48vw);
+    width: 50%;
     margin-bottom: clamp(70px, 10vw, 118px);
     color: rgba($white, 0.82);
 
@@ -93,7 +93,7 @@
 
     &__intro {
       justify-self: start;
-      width: min(100%, 430px);
+      width: 50%;
       margin-bottom: 92px;
     }
 
@@ -107,6 +107,7 @@
     padding: 64px 0;
 
     &__intro {
+      width: 100%;
       margin-bottom: 76px;
     }
   }
