@@ -826,6 +826,143 @@ add_action('acf/init', function () {
         ]);
 
         acf_add_local_field_group([
+            'key' => 'group_parallax_sector_block',
+            'title' => __('Parallax settore', 'filcar'),
+            'fields' => [
+                [
+                    'key' => 'field_parallax_sector_block_items',
+                    'label' => __('Blocchi', 'filcar'),
+                    'name' => 'items',
+                    'type' => 'repeater',
+                    'layout' => 'block',
+                    'button_label' => __('Aggiungi blocco', 'filcar'),
+                    'sub_fields' => [
+                        [
+                            'key' => 'field_parallax_sector_block_item_anchor_id',
+                            'label' => __('ID ancora', 'filcar'),
+                            'name' => 'anchor_id',
+                            'type' => 'text',
+                            'instructions' => __('Usalo per linkare il blocco dalle card sopra, senza #. Se vuoto viene generato dal titolo.', 'filcar'),
+                        ],
+                        [
+                            'key' => 'field_parallax_sector_block_item_title',
+                            'label' => __('Titolo', 'filcar'),
+                            'name' => 'title',
+                            'type' => 'text',
+                        ],
+                        [
+                            'key' => 'field_parallax_sector_block_item_text',
+                            'label' => __('Testo', 'filcar'),
+                            'name' => 'text',
+                            'type' => 'wysiwyg',
+                            'tabs' => 'all',
+                            'toolbar' => 'basic',
+                            'media_upload' => 0,
+                            'delay' => 0,
+                        ],
+                        [
+                            'key' => 'field_parallax_sector_block_item_image',
+                            'label' => __('Immagine', 'filcar'),
+                            'name' => 'image',
+                            'type' => 'image',
+                            'return_format' => 'array',
+                            'preview_size' => 'medium',
+                            'library' => 'all',
+                        ],
+                        [
+                            'key' => 'field_parallax_sector_block_item_parallax_speed',
+                            'label' => __('Velocità parallasse', 'filcar'),
+                            'name' => 'parallax_speed',
+                            'type' => 'number',
+                            'instructions' => __('Valore consigliato tra 0.10 e 0.20. Usa valori negativi per invertire la direzione.', 'filcar'),
+                            'default_value' => 0.14,
+                            'step' => 0.01,
+                        ],
+                        [
+                            'key' => 'field_parallax_sector_block_item_cta_label',
+                            'label' => __('Label CTA', 'filcar'),
+                            'name' => 'cta_label',
+                            'type' => 'text',
+                            'instructions' => __('Prima riga della card CTA. Può restare vuota.', 'filcar'),
+                            'default_value' => __('Scopri', 'filcar'),
+                        ],
+                        [
+                            'key' => 'field_parallax_sector_block_item_cta_type',
+                            'label' => __('Tipo link CTA', 'filcar'),
+                            'name' => 'cta_type',
+                            'type' => 'button_group',
+                            'choices' => [
+                                'link' => __('Link normale', 'filcar'),
+                                'taxonomy' => __('Categoria prodotto', 'filcar'),
+                            ],
+                            'default_value' => 'link',
+                            'return_format' => 'value',
+                        ],
+                        [
+                            'key' => 'field_parallax_sector_block_item_cta_title',
+                            'label' => __('Titolo CTA', 'filcar'),
+                            'name' => 'cta_title',
+                            'type' => 'text',
+                            'instructions' => __('Seconda riga della card CTA. Se vuota usa il titolo del link o il nome della categoria.', 'filcar'),
+                        ],
+                        [
+                            'key' => 'field_parallax_sector_block_item_cta_link',
+                            'label' => __('Link CTA', 'filcar'),
+                            'name' => 'cta_link',
+                            'type' => 'link',
+                            'return_format' => 'array',
+                            'conditional_logic' => [
+                                [
+                                    [
+                                        'field' => 'field_parallax_sector_block_item_cta_type',
+                                        'operator' => '==',
+                                        'value' => 'link',
+                                    ],
+                                ],
+                            ],
+                        ],
+                        [
+                            'key' => 'field_parallax_sector_block_item_cta_taxonomy',
+                            'label' => __('Categoria prodotto CTA', 'filcar'),
+                            'name' => 'cta_taxonomy',
+                            'type' => 'taxonomy',
+                            'taxonomy' => 'cat-prod',
+                            'field_type' => 'select',
+                            'allow_null' => 1,
+                            'add_term' => 0,
+                            'save_terms' => 0,
+                            'load_terms' => 0,
+                            'return_format' => 'id',
+                            'conditional_logic' => [
+                                [
+                                    [
+                                        'field' => 'field_parallax_sector_block_item_cta_type',
+                                        'operator' => '==',
+                                        'value' => 'taxonomy',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'location' => [
+                [
+                    [
+                        'param' => 'block',
+                        'operator' => '==',
+                        'value' => 'acf/parallax-sector-block',
+                    ],
+                ],
+            ],
+            'position' => 'normal',
+            'style' => 'default',
+            'label_placement' => 'top',
+            'instruction_placement' => 'label',
+            'active' => true,
+        ]);
+
+        acf_add_local_field_group([
             'key' => 'group_hero_image_hotspots',
             'title' => __('Hero immagine con punti', 'filcar'),
             'fields' => [
