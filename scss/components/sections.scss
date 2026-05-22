@@ -25,7 +25,6 @@
 
 .filters-bar {
     display: flex;
-    align-items: center;
     gap: 16px;
 
     @media (max-width: 991px) {
@@ -39,8 +38,7 @@
         align-items: center;
         gap: 0;
         flex: 1;
-        background-color: #5a5a5a; // grigio scuro dal Figma
-        border: 2px solid #7b4fd4; // bordo viola dal Figma
+        background-color: #5a5a5a;
         border-radius: 8px;
         overflow: hidden;
 
@@ -55,48 +53,22 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        flex: 1;
-        padding: 12px 20px;
         cursor: pointer;
-
-        // Divisore verticale tra i due dropdown
-        & + .filter-select-wrap {
-            border-left: 1px solid rgba(255, 255, 255, 0.15);
-
-            @media (max-width: 767px) {
-                border-left: none;
-                border-top: 1px solid rgba(255, 255, 255, 0.15);
-            }
-        }
 
         // Chevron custom
         &::after {
             content: '';
             position: absolute;
             right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
+            bottom: 35px;
             width: 10px;
             height: 10px;
             border-right: 2px solid #fff;
             border-bottom: 2px solid #fff;
-            transform: translateY(-65%) rotate(45deg);
+            transform: rotate(45deg);
             pointer-events: none;
             transition: transform 0.2s ease;
         }
-
-        &:focus-within::after {
-            transform: translateY(-35%) rotate(225deg);
-        }
-    }
-
-    .filter-select-label {
-        display: block;
-        font-size: 12px;
-        font-weight: 500;
-        color: rgba(255, 255, 255, 0.9);
-        margin-bottom: 2px;
-        pointer-events: none;
     }
 
     .filter-select {
@@ -106,8 +78,6 @@
         border: none;
         outline: none;
         color: rgba(255, 255, 255, 0.6);
-        font-size: 14px;
-        font-weight: 400;
         width: 100%;
         padding-right: 24px; // spazio per il chevron
         cursor: pointer;
@@ -130,9 +100,6 @@
         background-color: #5a5a5a;
         border: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: 8px;
-        padding: 0 16px;
-        height: 70px; // stessa altezza del blocco dropdowns
-        min-width: 260px;
 
         @media (max-width: 1199px) {
             min-width: 200px;
@@ -148,9 +115,9 @@
         flex: 1;
         background: transparent;
         border: none;
+        border-bottom: 1px solid $white;
         outline: none;
         color: rgba(255, 255, 255, 0.9);
-        font-size: 14px;
 
         &::placeholder {
             color: rgba(255, 255, 255, 0.45);
@@ -167,14 +134,21 @@
         justify-content: center;
         background: transparent;
         border: none;
-        padding: 4px;
         cursor: pointer;
         color: rgba(255, 255, 255, 0.6);
         transition: color 0.2s ease;
         flex-shrink: 0;
-
+        padding: 0;
         &:hover {
             color: #fff;
+        }
+        > svg{
+            width: 24px;
+            height: 24px;
+            @include media-breakpoint-down(sxl) {
+                width: 16px;
+                height: 16px;
+            }
         }
     }
 }

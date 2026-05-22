@@ -25,12 +25,12 @@ $tags = get_terms([
 ]);
 ?>
 
-<div class="filters-bar">
-    <div class="filters-bar__dropdowns">
+<div class="filters-bar filters-bar row">
+    <div class="filters-bar__dropdowns col-12 col-lg-9">
 
-        <div class="filter-select-wrap">
-            <label class="filter-select-label">Settore</label>
-            <select id="filter-settore" class="filter-select" name="settore">
+        <div class="filter-select-wrap col-6 col-lg-4 offset-lg-1 sp-py-4 sp-lg-py-3 sp-uxl-py-4">
+            <label class="filter-select-label text-white">Settore</label>
+            <select id="filter-settore" class="filter-select p-small" name="settore">
                 <option value="">Seleziona un settore</option>
                 <?php foreach ($used_sector_ids as $sector) : ?>
                     <option value="<?= esc_attr($sector->ID) ?>">
@@ -40,9 +40,9 @@ $tags = get_terms([
             </select>
         </div>
 
-        <div class="filter-select-wrap">
-            <label class="filter-select-label">Tag</label>
-            <select id="filter-tag" class="filter-select" name="tag">
+        <div class="filter-select-wrap col-6 col-lg-4 offset-lg-1 sp-py-4 sp-lg-py-3 sp-uxl-py-4">
+            <label class="filter-select-label text-white">Tag</label>
+            <select id="filter-tag" class="filter-select p-small" name="tag">
                 <option value="">Seleziona una parola chiave</option>
                 <?php foreach ($tags as $tag) : ?>
                     <option value="<?= esc_attr($tag->slug) ?>">
@@ -54,11 +54,11 @@ $tags = get_terms([
 
     </div>
 
-    <div class="filter-search-wrap">
+    <div class="filter-search-wrap col-12 col-lg-3 sp-px-3 sp-lg-px-4">
         <input
             type="text"
             id="filter-search"
-            class="filter-search"
+            class="filter-search p-small"
             placeholder="Cerca qualcosa"
             autocomplete="off"
         />
