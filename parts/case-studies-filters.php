@@ -26,9 +26,8 @@ $tags = get_terms([
 ?>
 
 <div class="filters-bar filters-bar row">
-    <div class="filters-bar__dropdowns col-12 col-lg-9">
-
-        <div class="filter-select-wrap col-6 col-lg-4 offset-lg-1 sp-py-4 sp-lg-py-3 sp-uxl-py-4">
+    <div class="filters-bar__dropdowns col-12 col-lg-9 sp-px-3 sp-lg-px-0 sp-gap-4 sp-lg-gap-0">
+        <div class="filter-select-wrap col-lg-4 offset-lg-1 sp-py-3 sp-lg-py-3 sp-uxl-py-4">
             <label class="filter-select-label text-white">Settore</label>
             <select id="filter-settore" class="filter-select p-small" name="settore">
                 <option value="">Seleziona un settore</option>
@@ -40,7 +39,7 @@ $tags = get_terms([
             </select>
         </div>
 
-        <div class="filter-select-wrap col-6 col-lg-4 offset-lg-1 sp-py-4 sp-lg-py-3 sp-uxl-py-4">
+        <div class="filter-select-wrap col-lg-4 offset-lg-1 sp-py-3 sp-lg-py-3 sp-uxl-py-4">
             <label class="filter-select-label text-white">Tag</label>
             <select id="filter-tag" class="filter-select p-small" name="tag">
                 <option value="">Seleziona una parola chiave</option>
@@ -54,7 +53,7 @@ $tags = get_terms([
 
     </div>
 
-    <div class="filter-search-wrap col-12 col-lg-3 sp-px-3 sp-lg-px-4">
+    <div class="filter-search-wrap col-12 col-lg-3 sp-px-3 sp-lg-px-4 sp-py-4 sp-lg-py-0">
         <input
             type="text"
             id="filter-search"

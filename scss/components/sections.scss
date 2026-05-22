@@ -21,7 +21,11 @@
 
 
 
-
+.filters-row{
+    &__inner{
+        padding: 0 12px;
+    }
+}
 
 .filters-bar {
     display: flex;
@@ -42,8 +46,10 @@
         border-radius: 8px;
         overflow: hidden;
 
-        @media (max-width: 767px) {
-            flex-direction: column;
+        @include media-breakpoint-down(lg) {
+            > .filter-select-wrap {
+                width: calc(50% - 12px);
+            }   
         }
     }
 
@@ -59,7 +65,7 @@
         &::after {
             content: '';
             position: absolute;
-            right: 20px;
+            right: 0;
             bottom: 35px;
             width: 10px;
             height: 10px;
@@ -118,6 +124,8 @@
         border-bottom: 1px solid $white;
         outline: none;
         color: rgba(255, 255, 255, 0.9);
+        width: 100%;
+        flex-shrink: 1;
 
         &::placeholder {
             color: rgba(255, 255, 255, 0.45);

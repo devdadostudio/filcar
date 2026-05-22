@@ -15,11 +15,13 @@ get_template_part('parts/case-studies-carousel', null, [
 
         <div class="row filters-row">
             <div class="col-12 sp-py-5">
-                <?php get_template_part('parts/case-studies-filters'); ?>
+                <div class="filters-row__inner">
+                    <?php get_template_part('parts/case-studies-filters'); ?>
+                </div>
             </div>
         </div>
 
-        <div class="row" id="case-studies-grid">
+        <div class="row sp-row-gap-4" id="case-studies-grid">
             <?php
             $case_studies_query = new WP_Query([
                 'post_type'      => 'caso-studio',

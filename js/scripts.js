@@ -1776,8 +1776,9 @@ if(searchInPage){
 
 jQuery(document).ready(function () {
   setTimeout(() => {
-    jQuery('.carousel-cards.case-studies .post-card-content .case-card-title').verticalTextAligner();
-    jQuery('.carousel-cards.case-studies .post-card-content .case-card-excerpt').verticalTextAligner();
+    jQuery('.post-card-content .case-card-title').verticalTextAligner();
+    jQuery('.post-card-content .case-card-excerpt').verticalTextAligner();
+
   }, 500);
 
   const megamenus = document.querySelectorAll(".flc-headmenu > .nav-item > .megamenu");
