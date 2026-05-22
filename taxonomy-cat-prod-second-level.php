@@ -102,9 +102,23 @@ $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_im
         </div>
     </section>
 
-    <section id="prodotti" class="category-products-placeholder js-category-anchor-panel" data-anchor-target="#prodotti">
+    <section id="prodotti" class="category-products-placeholder js-category-anchor-panel sp-pt-4 sp-lg-pt-7 sp-sxl-pt-10 sp-pb-3 sp-lg-pb-8 sp-sxl-pb-15 sp-uxl-pb-19" data-anchor-target="#prodotti">
         <div class="container-fluid">
-            <h2 class="h1 fw-normal text-grey-500">Prodotti</h2>
+            <div class="row">
+                <div class="col-12">
+                    <div class="title-products-grid">
+                        <div class="title-products-grid__inner">
+                            <span class="d-block number-2 fw-normal text-grey-300">01</span>
+                            <h2 class="subtitle-1 fw-normal text-primary text-uppercase sp-pt-2 mb-0">Prodotti</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="category-products-grid row">
+                <div class="">
+                    
+                </div>
+            </div>
         </div>
     </section>
 

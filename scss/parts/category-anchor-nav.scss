@@ -177,10 +177,28 @@
 }
 
 .category-products-placeholder {
-  height: 100vh;
   background-color: #fff;
   display: flex;
   align-items: center;
+  .title-products-grid {
+    width: 100%;
+    display: flex;
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      bottom: 0;
+      left: 0;
+      background: $primary;
+    }
+    .title-products-grid__inner {
+      padding-right: 4rem;
+      background: $white;
+      z-index: 1;
+    }
+  }
 }
 
 .category-anchor-sections {
