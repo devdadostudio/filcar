@@ -92,7 +92,7 @@ $section_classes = [
         </div>
 
         <div class="arredo-text-images-card__media-wrap">
-            <div class="row arredo-text-images-card__media-row">
+            <div class="row arredo-text-images-card__media-row aspect-ratio-3x1">
                 <?php if ($image_left) : ?>
                     <div class="col-lg-5 d-none d-lg-block">
                         <figure class="arredo-text-images-card__figure arredo-text-images-card__figure--left">
