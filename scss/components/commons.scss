@@ -223,8 +223,18 @@ body {
 .pointer-evemts-none {
   pointer-events: none;
 }
-.h-100vh-header {
-  min-height: calc(100vh - #{$header-bar-height});
+body {
+  .h-100vh-header, .h-100vh-header-desk{
+    min-height: calc(100vh - #{$header-bar-height});
+    @include media-breakpoint-down(lg) {
+      min-height: auto !important;
+    }
+  }
+  &.site-header-hidden {
+    .h-100vh-header, .h-100vh-header-desk{
+      min-height: 100vh;
+    }
+  }
 }
 
 .user-select-none {

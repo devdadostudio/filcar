@@ -17,7 +17,7 @@ $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_im
 ?>
 
 <main id="main-content-category" class="bg-primary">
-    <section class="position-relative section-hero-product section-hero-cat-prod-second d-flex align-items-center">
+    <section class="position-relative h-100vh-header-desk overflow-hidden d-flex flex-column header-tax-category">
         <?php
         get_template_part('parts/breadcrumbs', null, [
             'variant' => 'light',
@@ -27,10 +27,10 @@ $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_im
         ]);
         ?>
 
-        <div class="container-fluid-left-llg position-relative text-container category-second-hero__inner">
-            <div class="row align-items-center">
-                <div class="col-12 col-lg-4 order-2 order-lg-1">
-                    <div class="product-hero__content category-second-hero__content text-white">
+        <div class="container-fluid-left-llg position-relative text-container h-100 flex-grow-1 d-flex flex-column">
+            <div class="row h-100 flex-grow-1">
+                <div class="col-12 col-lg-4">
+                    <div class="product-hero__content category-second-hero__content text-white sp-py-4 sp-sxl-py-9 sp-uxl-py-17">
                         <?php if ($parent_term && !is_wp_error($parent_term)) : ?>
                             <div class="product-3 fw-normal text-uppercase sp-mb-3">
                                 <?php echo esc_html($parent_term->name); ?>
@@ -40,18 +40,34 @@ $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_im
                             <?php echo esc_html($term->name); ?>
                         </h1>
                         <?php if (!empty($term->description)) : ?>
-                            <div class="regular">
+                            <div class="regular mb-0-p">
                                 <?php echo wp_kses_post(wpautop($term->description)); ?>
                             </div>
                         <?php endif; ?>
-                        <div class="cta-content">
-                            <a href="#prodotti" class="btn btn-outline-primary">Prodotti <i class="icon icon-filcar-icon-arrow-downr"></i></a>
-                        </div>
+                        <?php
+                        $type_cta = get_field('type_cta', $term_key);
+                        $link = get_field('link', $term_key);
+                        if ($type_cta == 'link') {
+                            if(!empty($link)){
+                                echo '<div class="cta-content sp-mt-4 sp-sxl-mt-7">';
+                                echo '<a href="' . esc_url($link['url']) . '" class="btn btn-secondary-2" target="' . $link['target'] . '"><span>' . esc_html($link['title']) . '</span></a>';
+                                echo '</div>';
+                            }
+                        } elseif ($type_cta == 'download') {
+                            $txt_cta = get_field('txt_cta', $term_key);
+                            $file = get_field('file', $term_key);
+                            if($file){
+                                echo '<div class="cta-content">';
+                                echo '<a href="' . esc_url($file['url']) . '" class="btn btn-secondary-2" download><span>' . esc_html($txt_cta) . '<i class="icon-filcar-icon-document"></i></span></a>';
+                                echo '</div>';
+                            }
+                        }
+                        ?>
                     </div>
                 </div>
-                <div class="col-12 col-lg-7 offset-lg-1 order-1 order-lg-2 sp-mb-8 sp-lg-mb-0 category-second-hero__visual-col">
-                    <div class="category-second-hero__visual">
-                        <figure class="category-second-hero__image respimg sp-mb-0">
+                <div class="col-12 col-lg-7 offset-lg-1 category-second-hero__visual-col">
+                    <div class="category-second-hero__visual h-100">
+                        <figure class="respimg sp-mb-0 position-absolute h-100 w-100">
                             <?php
                             if ($hero_image_id) {
                                 echo wp_get_attachment_image($hero_image_id, 'full', false, [
@@ -123,4 +139,4 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <?php
-get_footer();
+get_footer(null, ['footer-color' => 'white']);

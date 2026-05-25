@@ -1,4 +1,12 @@
-        <?php if(!is_page('contatti')) get_template_part('parts/contact-form'); ?>
+        <?php
+        if(!is_page('contatti')){
+            if(isset($args['footer-color']) && $args['footer-color'] == 'white'){
+                get_template_part('parts/contact-form', null, ['footer-color' => 'white']);
+            }else{
+                get_template_part('parts/contact-form');
+            }
+        }
+        ?>
         <footer class="flc-main-footer bg-blog text-white sp-pt-8 sp-md-pt-5 sp-sxl-pt-16 sp-uxl-pt-23 sp-pb-6 sp-md-pb-18 sp-lg-pb-9 sp-sxl-pb-12">
             <div class="container-fluid">
                 <div class="row">

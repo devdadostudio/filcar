@@ -1,0 +1,17 @@
+.header-tax-category{
+    .category-second-hero__visual{
+        > figure{
+            @include media-breakpoint-down(lg){
+                position: relative !important;
+                aspect-ratio: 4/3 !important;
+            }
+        }
+    }
+    .category-second-hero__content{
+        .cta-content{
+            @include media-breakpoint-down(lg){
+                padding-bottom: 0 !important;
+            }
+        }
+    }
+}

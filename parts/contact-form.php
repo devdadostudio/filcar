@@ -18,7 +18,7 @@ if (!$img_mob_url) {
 $page_title = get_the_title();
 ?>
 
-<section id="contactForm" class="contact-form-block position-relative overflow-hidden sp-pt-6 sp-pb-0 sp-md-pt-13 sp-llg-pt-13 <?php echo !is_page_template('page-download.php') ? 'bg-grey' : 'bg-primary'; ?>">
+<section id="contactForm" class="contact-form-block position-relative overflow-hidden sp-pt-6 sp-pb-0 sp-md-pt-13 sp-llg-pt-13 <?php if(isset($args['footer-color']) && $args['footer-color'] == 'white'){ echo 'bg-white';}else{ echo !is_page_template('page-download.php') ? 'bg-grey' : 'bg-primary'; } ?>">
 	<div class="container-fluid">
 		<div class="row g-3 g-lg-4 align-items-stretch sp-px-2">
 
