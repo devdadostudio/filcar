@@ -2,6 +2,23 @@
 $args = $args ?? [];
 $field_values = !empty($args['field_values']) && is_array($args['field_values']) ? $args['field_values'] : [];
 $field_source = $args['field_source'] ?? null;
+$content_has_value = static function ($value) use (&$content_has_value) {
+    if (is_array($value)) {
+        if (!empty($value['ID']) || !empty($value['url'])) {
+            return true;
+        }
+
+        foreach ($value as $item) {
+            if ($content_has_value($item)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    return is_string($value) ? trim($value) !== '' : ($value !== null && $value !== false && $value !== '');
+};
 $get_value = static function ($name) use ($field_values, $field_source) {
     if (array_key_exists($name, $field_values)) {
         return $field_values[$name];
@@ -14,12 +31,12 @@ $sectionBg = $get_value('section_bg');
 $content = $get_value('technical_text_scroll');
 $content = is_array($content) ? $content : [];
 
-if (!$content && $field_source) {
+if (!$content_has_value($content) && $field_source) {
     $direct_content = get_field('technical_text_scroll', $field_source);
-    $content = is_array($direct_content) ? $direct_content : [];
+    $content = is_array($direct_content) && $content_has_value($direct_content) ? $direct_content : $content;
 }
 
-if (!$content) {
+if (!$content_has_value($content)) {
     $content = array_intersect_key($field_values, array_flip([
         'text',
         'testo',

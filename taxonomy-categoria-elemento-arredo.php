@@ -95,7 +95,7 @@ $line_block_has_content = static function ($values, $group_name) use ($line_bloc
     return false;
 };
 
-$render_line_block = static function ($slug, $group_name, $block_id) use ($term_key, $line_block_has_content) {
+$render_line_block = static function ($slug, $group_name, $block_id) use ($term, $term_key, $line_block_has_content, $term_value_has_content) {
     $values = function_exists('get_field') ? get_field($group_name, $term_key) : [];
     $values = is_array($values) ? $values : [];
     $clone_key = $group_name . '_clone';
@@ -104,10 +104,10 @@ $render_line_block = static function ($slug, $group_name, $block_id) use ($term_
         $values = array_merge($values[$clone_key], $values);
     }
 
-    if ($group_name === 'technical_text_scroll_block' && empty($values['technical_text_scroll'])) {
+    if ($group_name === 'technical_text_scroll_block' && !$term_value_has_content($values['technical_text_scroll'] ?? null)) {
         $legacy_content = function_exists('get_field') ? get_field('technical_text_scroll', $term_key) : null;
 
-        if (is_array($legacy_content)) {
+        if (is_array($legacy_content) && $term_value_has_content($legacy_content)) {
             $values['technical_text_scroll'] = $legacy_content;
         }
 
@@ -115,6 +115,27 @@ $render_line_block = static function ($slug, $group_name, $block_id) use ($term_
 
         if ($legacy_section_bg !== null && $legacy_section_bg !== false && $legacy_section_bg !== '') {
             $values['section_bg'] = $legacy_section_bg;
+        }
+    }
+
+    if ($group_name === 'progettazione_png_sequence_nav') {
+        $current_frames_folder = trim((string) ($values['frames_folder'] ?? ''));
+        $default_frames_folder = 'assets/img/progettazione-sequence';
+        $should_use_term_folder = $current_frames_folder === '' || $current_frames_folder === $default_frames_folder;
+
+        if ($should_use_term_folder) {
+            $term_frames_folders = [
+                'assets/sequenza-' . $term->slug,
+                'assets/img/sequenza-' . $term->slug,
+                'assets/img/progettazione-sequence-' . $term->slug,
+            ];
+
+            foreach ($term_frames_folders as $term_frames_folder) {
+                if (is_dir(trailingslashit(get_template_directory()) . $term_frames_folder)) {
+                    $values['frames_folder'] = $term_frames_folder;
+                    break;
+                }
+            }
         }
     }
 
@@ -135,8 +156,8 @@ $render_line_block = static function ($slug, $group_name, $block_id) use ($term_
         <?php
         $render_line_block('hero-image-hotspots', 'hero_image_hotspots', 'linea-' . $term->term_id . '-hero');
         $render_line_block('technical-text-scroll', 'technical_text_scroll_block', 'linea-' . $term->term_id . '-technical-text');
-        $render_line_block('carousel-highlights', 'carousel_highlights', 'linea-' . $term->term_id . '-highlights');
         $render_line_block('arredo-text-images-card', 'arredo_text_images_card', 'linea-' . $term->term_id . '-arredo');
+        $render_line_block('carousel-highlights', 'carousel_highlights', 'linea-' . $term->term_id . '-highlights');
         $render_line_block('progettazione-png-sequence-nav', 'progettazione_png_sequence_nav', 'linea-' . $term->term_id . '-progettazione');
         $render_line_block('catalogs-launch', 'catalogs_launch', 'linea-' . $term->term_id . '-cataloghi');
         ?>
