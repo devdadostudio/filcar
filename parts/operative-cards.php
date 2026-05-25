@@ -1,5 +1,6 @@
 <?php
 $content = get_field('operative_cards');
+$section_bg = get_field('section_bg');
 $content = is_array($content) ? $content : [];
 
 $eyebrow = ($content['eyebrow'] ?? '') ?: (get_field('eyebrow') ?: get_field('subtitle'));
@@ -44,7 +45,7 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'operative-cards-' . (
 
 <section
     id="<?php echo esc_attr($block_id); ?>"
-    class="operative-cards js-expandable-cards operative-cards--count-<?php echo esc_attr($cards_count); ?>"
+    class="<?php echo $section_bg; ?> operative-cards js-expandable-cards operative-cards--count-<?php echo esc_attr($cards_count); ?>"
     data-cards-count="<?php echo esc_attr($cards_count); ?>"
 >
     <div class="container-fluid operative-cards__inner">

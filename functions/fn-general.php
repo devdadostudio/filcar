@@ -305,6 +305,23 @@ function registra_tassonomia_elementi_arredo() {
 
 add_action( 'init', 'registra_tassonomia_elementi_arredo' );
 
+add_filter('pre_handle_404', function ($preempt, $wp_query) {
+    if (is_admin() || !$wp_query instanceof WP_Query) {
+        return $preempt;
+    }
+
+    $queried_object = $wp_query->get_queried_object();
+
+    if ($wp_query->is_tax('categoria-elemento-arredo') && $queried_object instanceof WP_Term) {
+        $wp_query->is_404 = false;
+        status_header(200);
+
+        return true;
+    }
+
+    return $preempt;
+}, 10, 2);
+
 function filcar_get_image_url($image_field) {
 	if (empty($image_field)) {
 		return '';

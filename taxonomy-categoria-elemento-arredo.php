@@ -14,9 +14,115 @@ $parent_term = !empty($term->parent) ? get_term($term->parent, $term->taxonomy) 
 $hero_image = function_exists('get_field') ? get_field('img_cat', $term_key) : null;
 $hero_image_id = is_array($hero_image) && !empty($hero_image['ID']) ? (int) $hero_image['ID'] : 0;
 $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_image['alt'] : $term->name;
+$is_linea = function_exists('get_field') ? (bool) get_field('linea', $term_key) : false;
+
+$term_value_has_content = static function ($value) use (&$term_value_has_content) {
+    if (is_array($value)) {
+        if (!empty($value['ID']) || !empty($value['url'])) {
+            return true;
+        }
+
+        foreach ($value as $item) {
+            if ($term_value_has_content($item)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    if (is_string($value)) {
+        return trim($value) !== '';
+    }
+
+    return $value !== null && $value !== false && $value !== '';
+};
+
+$line_block_content_fields = [
+    'hero_image_hotspots' => [
+        'desktop_image',
+        'mobile_image',
+        'kicker',
+        'logo_icon',
+        'title',
+        'text',
+        'points',
+    ],
+    'carousel_highlights' => [
+        'items',
+    ],
+    'arredo_text_images_card' => [
+        'logo_icon',
+        'title',
+        'text',
+        'image_left',
+        'image_main',
+        'link_card',
+    ],
+    'progettazione_png_sequence_nav' => [
+        'floating_cta',
+        'intro_label',
+        'intro_title',
+        'intro_text',
+        'fullscreen_intro',
+        'sequence_points',
+        'ergonomia_title',
+        'ergonomia_text',
+        'ergonomia_slides',
+        'elementi_title',
+        'elementi_text',
+    ],
+    'catalogs_launch' => [
+        'title',
+        'txt',
+        'cta',
+        'img',
+    ],
+];
+
+$line_block_has_content = static function ($values, $group_name) use ($line_block_content_fields, $term_value_has_content) {
+    $fields = $line_block_content_fields[$group_name] ?? array_keys($values);
+
+    foreach ($fields as $field_name) {
+        if (array_key_exists($field_name, $values) && $term_value_has_content($values[$field_name])) {
+            return true;
+        }
+    }
+
+    return false;
+};
+
+$render_line_block = static function ($slug, $group_name, $block_id) use ($term_key, $line_block_has_content) {
+    $values = function_exists('get_field') ? get_field($group_name, $term_key) : [];
+    $values = is_array($values) ? $values : [];
+    $clone_key = $group_name . '_clone';
+
+    if (!empty($values[$clone_key]) && is_array($values[$clone_key])) {
+        $values = array_merge($values[$clone_key], $values);
+    }
+
+    if (!$line_block_has_content($values, $group_name)) {
+        return;
+    }
+
+    get_template_part('parts/' . $slug, null, [
+        'block_id' => $block_id,
+        'field_source' => $term_key,
+        'field_values' => $values,
+    ]);
+};
 ?>
 
 <main id="main-content-category" class="bg-primary">
+    <?php if ($is_linea) : ?>
+        <?php
+        $render_line_block('hero-image-hotspots', 'hero_image_hotspots', 'linea-' . $term->term_id . '-hero');
+        $render_line_block('carousel-highlights', 'carousel_highlights', 'linea-' . $term->term_id . '-highlights');
+        $render_line_block('arredo-text-images-card', 'arredo_text_images_card', 'linea-' . $term->term_id . '-arredo');
+        $render_line_block('progettazione-png-sequence-nav', 'progettazione_png_sequence_nav', 'linea-' . $term->term_id . '-progettazione');
+        $render_line_block('catalogs-launch', 'catalogs_launch', 'linea-' . $term->term_id . '-cataloghi');
+        ?>
+    <?php else : ?>
     <section class="position-relative h-74vh-header-desk overflow-hidden d-flex flex-column header-tax-category">
         <?php
         get_template_part('parts/breadcrumbs', null, [
@@ -104,6 +210,7 @@ $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_im
             <?php endif; ?>
         </div>
     </section>
+    <?php endif; ?>
 </main>
 
 <script>

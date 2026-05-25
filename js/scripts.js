@@ -1383,8 +1383,15 @@ filcarOnLayoutRefresh(initParallaxSectorBlock);
 
 function initHeroHotspotPositionDetector() {
   const params = new URLSearchParams(window.location.search);
+  const detectorParams = [
+    "acf-hotpoint",
+    "acf-hotspot",
+    "acf-hotspot-position",
+    "ACF-hotspot-position",
+    "ACF-svg-position",
+  ];
 
-  if (!params.has("ACF-hotspot-position") && !params.has("ACF-svg-position")) {
+  if (!detectorParams.some((param) => params.has(param))) {
     return;
   }
 
@@ -1403,7 +1410,7 @@ function initHeroHotspotPositionDetector() {
       const coords = `["${x}%","${y}%"]`;
       const fields = `desktop_x: ${x}%\ndesktop_y: ${y}%`;
 
-      console.log("HOTSPOT COORDINATES");
+      console.log("HERO HOTSPOT COORDINATES");
       console.log(fields);
       console.log(coords);
 
