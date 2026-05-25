@@ -17,7 +17,7 @@ $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_im
 ?>
 
 <main id="main-content-category" class="bg-primary">
-    <section class="position-relative h-100vh-header-desk overflow-hidden d-flex flex-column header-tax-category">
+    <section class="position-relative h-74vh-header-desk overflow-hidden d-flex flex-column header-tax-category">
         <?php
         get_template_part('parts/breadcrumbs', null, [
             'variant' => 'light',
@@ -57,7 +57,7 @@ $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_im
                             $txt_cta = get_field('txt_cta', $term_key);
                             $file = get_field('file', $term_key);
                             if($file){
-                                echo '<div class="cta-content">';
+                                echo '<div class="cta-content sp-mt-4 sp-sxl-mt-7">';
                                 echo '<a href="' . esc_url($file['url']) . '" class="btn btn-secondary-2" download><span>' . esc_html($txt_cta) . '<i class="icon-filcar-icon-document"></i></span></a>';
                                 echo '</div>';
                             }
@@ -96,7 +96,7 @@ $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_im
                 </div>
             </div>
             <?php if ( have_posts() ) : ?>
-                <div class="category-products-grid row sp-pt-5 sp-lg-pt-10 sp-sxl-pt-12 sp-uxl-pt-10 sp-row-gap-3 sp-lg-row-gap-4 sp-row-gap-3 sp-lg-row-gap-4">
+                <div class="category-products-grid row sp-pt-5 sp-lg-pt-10 sp-sxl-pt-12 sp-uxl-pt-10 sp-row-gap-7">
                     <?php while ( have_posts() ) : the_post(); ?>
                         <?php get_template_part('parts/card/card', 'element', ['card_class' => 'col-12 col-lg-4', 'prod_id' => get_the_ID()]); ?>
                     <?php endwhile; ?>

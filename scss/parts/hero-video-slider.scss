@@ -202,13 +202,15 @@
   &__news-title {
     display: block;
     text-transform: uppercase;
+    padding-right: 30px;
   }
 
   &__news-icon {
     position: absolute;
-    top: 18px;
-    right: 18px;
+    top: 20px;
+    right: 10px;
     line-height: 1;
+    font-size: 40px;
   }
 
   @media (max-height: 820px) and (min-width: 1024px) {
