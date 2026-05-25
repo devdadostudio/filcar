@@ -1411,3 +1411,20 @@ add_action('acf/init', function () {
     }
     
 });
+
+add_filter('acf/get_field_groups', function ($field_groups) {
+    if (!is_admin()) {
+        return $field_groups;
+    }
+
+    $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+    $taxonomy = $screen && !empty($screen->taxonomy) ? $screen->taxonomy : ($_GET['taxonomy'] ?? $_POST['taxonomy'] ?? '');
+
+    if ($taxonomy !== 'categoria-elemento-arredo') {
+        return $field_groups;
+    }
+
+    return array_values(array_filter($field_groups, static function ($group) {
+        return !empty($group['key']) && $group['key'] === 'group_6a107af9e3eb7';
+    }));
+});

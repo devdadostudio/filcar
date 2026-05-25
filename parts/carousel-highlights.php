@@ -1,5 +1,9 @@
 <?php
-$block_id = !empty($block['anchor']) ? $block['anchor'] : 'carousel-highlights-' . ($block['id'] ?? uniqid());
+$block = $block ?? [];
+$args = $args ?? [];
+$field_values = !empty($args['field_values']) && is_array($args['field_values']) ? $args['field_values'] : [];
+$field_source = $args['field_source'] ?? null;
+$block_id = !empty($args['block_id']) ? $args['block_id'] : (!empty($block['anchor']) ? $block['anchor'] : 'carousel-highlights-' . ($block['id'] ?? uniqid()));
 
 $script_path = get_template_directory() . '/js/carousel-highlights.js';
 if (file_exists($script_path)) {
@@ -12,8 +16,12 @@ if (file_exists($script_path)) {
     );
 }
 
-$get_value = static function ($name, $key = '') use ($block) {
-    $value = get_field($name);
+$get_value = static function ($name, $key = '') use ($block, $field_values, $field_source) {
+    if (array_key_exists($name, $field_values)) {
+        return $field_values[$name];
+    }
+
+    $value = $field_source ? get_field($name, $field_source) : get_field($name);
 
     if (($value === null || $value === false || $value === '') && $key && !empty($block['data'][$key])) {
         $value = $block['data'][$key];

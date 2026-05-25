@@ -1,8 +1,19 @@
 <?php
-$title = get_field('title');
-$txt = get_field('txt');
-$cta = get_field('cta');
-$img = get_field('img');
+$args = $args ?? [];
+$field_values = !empty($args['field_values']) && is_array($args['field_values']) ? $args['field_values'] : [];
+$field_source = $args['field_source'] ?? null;
+$get_value = static function ($name) use ($field_values, $field_source) {
+    if (array_key_exists($name, $field_values)) {
+        return $field_values[$name];
+    }
+
+    return $field_source ? get_field($name, $field_source) : get_field($name);
+};
+
+$title = $get_value('title');
+$txt = $get_value('txt');
+$cta = $get_value('cta');
+$img = $get_value('img');
 ?>
 <section id="catalogs-launch" class="section sp-py-9" data-anchor="catalogs-launch">
     <div class="container-fluid">
@@ -14,12 +25,16 @@ $img = get_field('img');
                 </div>
                 <?php
                 if (!empty($cta)) :
-                    $cta_img = $cta['img_cta']['ID'];
-                    $cta_txt = $cta['txt_cta'];
-                    $link_cta = $cta['link_cta'];
+                    $cta_image = $cta['img_cta'] ?? null;
+                    $cta_img = is_array($cta_image) && !empty($cta_image['ID']) ? (int) $cta_image['ID'] : (is_numeric($cta_image) ? (int) $cta_image : 0);
+                    $cta_txt = $cta['txt_cta'] ?? '';
+                    $link_cta = $cta['link_cta'] ?? '';
+                    $link_url = is_array($link_cta) ? ($link_cta['url'] ?? '') : $link_cta;
+                    $link_target = is_array($link_cta) && !empty($link_cta['target']) ? $link_cta['target'] : '_self';
                 ?>
+                <?php if ($link_url && $cta_txt) : ?>
                 <div class="catalogs-launch-cta sp-mt-4 sp-lg-mt-0">
-                    <a href="<?php echo esc_url($link_cta); ?>" class="rounded overflow-hidden sp-lg-pr-8 align-items-center text-decoration-none">
+                    <a href="<?php echo esc_url($link_url); ?>" class="rounded overflow-hidden sp-lg-pr-8 align-items-center text-decoration-none" target="<?php echo esc_attr($link_target); ?>"<?php echo $link_target === '_blank' ? ' rel="noopener"' : ''; ?>>
                         <?php
                         if($cta_img) :
                             echo wp_get_attachment_image($cta_img, 'catalogs-launch-cta-img', false, ['class' => 'catalogs-launch-cta-img']);
@@ -33,6 +48,7 @@ $img = get_field('img');
                         </div>
                     </a>
                 </div>
+                <?php endif; ?>
                 <?php endif; ?>
             </div>
             <div class="col-12 col-lg-6 offset-lg-1 catalogs-launch-img">

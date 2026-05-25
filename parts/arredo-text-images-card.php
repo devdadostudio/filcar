@@ -1,12 +1,24 @@
 <?php
-$block_id = !empty($block['anchor']) ? $block['anchor'] : 'arredo-text-images-card-' . ($block['id'] ?? uniqid());
-$variant = get_field('variant') === 'dark' ? 'dark' : 'light';
-$logo_icon = get_field('logo_icon');
-$title = get_field('title');
-$text = get_field('text');
-$image_left = get_field('image_left');
-$image_main = get_field('image_main');
-$link_card = get_field('link_card');
+$block = $block ?? [];
+$args = $args ?? [];
+$field_values = !empty($args['field_values']) && is_array($args['field_values']) ? $args['field_values'] : [];
+$field_source = $args['field_source'] ?? null;
+$block_id = !empty($args['block_id']) ? $args['block_id'] : (!empty($block['anchor']) ? $block['anchor'] : 'arredo-text-images-card-' . ($block['id'] ?? uniqid()));
+$get_value = static function ($name) use ($field_values, $field_source) {
+    if (array_key_exists($name, $field_values)) {
+        return $field_values[$name];
+    }
+
+    return $field_source ? get_field($name, $field_source) : get_field($name);
+};
+
+$variant = $get_value('variant') === 'dark' ? 'dark' : 'light';
+$logo_icon = $get_value('logo_icon');
+$title = $get_value('title');
+$text = $get_value('text');
+$image_left = $get_value('image_left');
+$image_main = $get_value('image_main');
+$link_card = $get_value('link_card');
 
 $get_image_id = static function ($image) {
     if (is_array($image) && !empty($image['ID'])) {
