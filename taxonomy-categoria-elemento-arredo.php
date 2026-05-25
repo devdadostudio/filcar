@@ -51,6 +51,9 @@ $line_block_content_fields = [
     'carousel_highlights' => [
         'items',
     ],
+    'technical_text_scroll_block' => [
+        'technical_text_scroll',
+    ],
     'arredo_text_images_card' => [
         'logo_icon',
         'title',
@@ -101,6 +104,20 @@ $render_line_block = static function ($slug, $group_name, $block_id) use ($term_
         $values = array_merge($values[$clone_key], $values);
     }
 
+    if ($group_name === 'technical_text_scroll_block' && empty($values['technical_text_scroll'])) {
+        $legacy_content = function_exists('get_field') ? get_field('technical_text_scroll', $term_key) : null;
+
+        if (is_array($legacy_content)) {
+            $values['technical_text_scroll'] = $legacy_content;
+        }
+
+        $legacy_section_bg = function_exists('get_field') ? get_field('section_bg', $term_key) : null;
+
+        if ($legacy_section_bg !== null && $legacy_section_bg !== false && $legacy_section_bg !== '') {
+            $values['section_bg'] = $legacy_section_bg;
+        }
+    }
+
     if (!$line_block_has_content($values, $group_name)) {
         return;
     }
@@ -117,6 +134,7 @@ $render_line_block = static function ($slug, $group_name, $block_id) use ($term_
     <?php if ($is_linea) : ?>
         <?php
         $render_line_block('hero-image-hotspots', 'hero_image_hotspots', 'linea-' . $term->term_id . '-hero');
+        $render_line_block('technical-text-scroll', 'technical_text_scroll_block', 'linea-' . $term->term_id . '-technical-text');
         $render_line_block('carousel-highlights', 'carousel_highlights', 'linea-' . $term->term_id . '-highlights');
         $render_line_block('arredo-text-images-card', 'arredo_text_images_card', 'linea-' . $term->term_id . '-arredo');
         $render_line_block('progettazione-png-sequence-nav', 'progettazione_png_sequence_nav', 'linea-' . $term->term_id . '-progettazione');

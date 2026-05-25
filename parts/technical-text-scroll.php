@@ -1,7 +1,48 @@
 <?php
-$sectionBg = get_field('section_bg');
-$content = get_field('technical_text_scroll');
+$args = $args ?? [];
+$field_values = !empty($args['field_values']) && is_array($args['field_values']) ? $args['field_values'] : [];
+$field_source = $args['field_source'] ?? null;
+$get_value = static function ($name) use ($field_values, $field_source) {
+    if (array_key_exists($name, $field_values)) {
+        return $field_values[$name];
+    }
+
+    return $field_source ? get_field($name, $field_source) : get_field($name);
+};
+
+$sectionBg = $get_value('section_bg');
+$content = $get_value('technical_text_scroll');
 $content = is_array($content) ? $content : [];
+
+if (!$content && $field_source) {
+    $direct_content = get_field('technical_text_scroll', $field_source);
+    $content = is_array($direct_content) ? $direct_content : [];
+}
+
+if (!$content) {
+    $content = array_intersect_key($field_values, array_flip([
+        'text',
+        'testo',
+        'main_text',
+        'testo_principale',
+        'body',
+        'intro',
+        'intro_text',
+        'testo_intro',
+        'cta',
+        'link',
+        'cta_block',
+        'has_technical_background',
+        'technical_background_enabled',
+        'show_technical_background',
+        'background_tecnico',
+        'technical_image',
+        'immagine_tecnica',
+        'technical_background_image',
+        'background_tecnico_immagine',
+        'image',
+    ]));
+}
 
 if (!function_exists('filcar_tts_field')) {
     function filcar_tts_field(array $content, array $keys, $fallback = '') {
@@ -63,7 +104,8 @@ $cta_title = is_array($cta) ? (($cta['title'] ?? '') ?: __('Scopri', 'filcar')) 
 $cta_target = is_array($cta) ? ($cta['target'] ?? '') : '';
 $show_technical_bg = $has_technical_bg && $technical_image['url'];
 
-$block_id = !empty($block['anchor']) ? $block['anchor'] : 'technical-text-scroll-' . ($block['id'] ?? uniqid());
+$block = $block ?? [];
+$block_id = !empty($args['block_id']) ? $args['block_id'] : (!empty($block['anchor']) ? $block['anchor'] : 'technical-text-scroll-' . ($block['id'] ?? uniqid()));
 $section_classes = [
     'technical-text-scroll',
     'js-technical-text-scroll',
