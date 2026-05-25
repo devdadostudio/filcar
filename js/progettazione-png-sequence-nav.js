@@ -47,6 +47,9 @@
       let lastCanvasWidth = 0;
       let lastCanvasHeight = 0;
       let resizeRefreshFrame = null;
+      let sourceFrameWidth = 1200;
+      let sourceFrameHeight = 675;
+      let sourceFrameSizeReady = false;
 
       if (frameScript) {
         try {
@@ -105,6 +108,30 @@
 
         return Number.isFinite(value) ? gsap.utils.clamp(0, 1, value) : fallback;
       });
+      const sequenceStartProgress = pointStops[0] ?? 0;
+      const rawSequenceEndProgress = pointStops[pointStops.length - 1] ?? 1;
+      const sequenceEndProgress =
+        rawSequenceEndProgress > sequenceStartProgress
+          ? rawSequenceEndProgress
+          : 1;
+      const sequenceProgressSpan = Math.max(
+        sequenceEndProgress - sequenceStartProgress,
+        0.0001,
+      );
+      const scrollProgressToFrameProgress = (progress) =>
+        gsap.utils.clamp(
+          0,
+          1,
+          sequenceStartProgress +
+            gsap.utils.clamp(0, 1, progress) * sequenceProgressSpan,
+        );
+      const frameProgressToScrollProgress = (progress) =>
+        gsap.utils.clamp(
+          0,
+          1,
+          (gsap.utils.clamp(0, 1, progress) - sequenceStartProgress) /
+            sequenceProgressSpan,
+        );
 
       const resizeCanvas = () => {
         const width = Math.round(canvas.clientWidth || canvas.width);
@@ -122,6 +149,34 @@
         ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
         return true;
+      };
+
+      const applySourceFrameSize = (image) => {
+        if (
+          sourceFrameSizeReady ||
+          !image ||
+          !image.naturalWidth ||
+          !image.naturalHeight
+        ) {
+          return;
+        }
+
+        sourceFrameSizeReady = true;
+        sourceFrameWidth = image.naturalWidth;
+        sourceFrameHeight = image.naturalHeight;
+
+        canvas.width = sourceFrameWidth;
+        canvas.height = sourceFrameHeight;
+        canvas.setAttribute("width", sourceFrameWidth);
+        canvas.setAttribute("height", sourceFrameHeight);
+
+        if (canvas.parentElement) {
+          canvas.parentElement.style.aspectRatio = `${sourceFrameWidth} / ${sourceFrameHeight}`;
+        }
+
+        lastCanvasWidth = 0;
+        lastCanvasHeight = 0;
+        syncCanvasSize(true);
       };
 
       const syncCanvasSize = (refreshTriggers = false) => {
@@ -347,7 +402,7 @@
 
         return (
           sequenceTrigger.start +
-          gsap.utils.clamp(0, 1, progress) *
+          frameProgressToScrollProgress(progress) *
             (sequenceTrigger.end - sequenceTrigger.start)
         );
       };
@@ -362,8 +417,8 @@
       };
 
       resizeCanvas();
-      renderSequence(0);
-      setActivePoint(0);
+      renderSequence(sequenceStartProgress);
+      setActivePoint(sequenceStartProgress);
 
       const canvasResizeObserver =
         "ResizeObserver" in window
@@ -375,14 +430,18 @@
         canvasResizeObserver.observe(canvas.parentElement);
       }
 
-      frameUrls.forEach((url) => {
+      frameUrls.forEach((url, index) => {
         const image = new Image();
         image.onload = () => {
+          if (index === 0) {
+            applySourceFrameSize(image);
+          }
+
           loadedFrames += 1;
           renderSequence(currentSequenceProgress);
         };
-        image.src = url;
         frames.push(image);
+        image.src = url;
       });
 
       if (!reduceMotion) {
@@ -400,7 +459,7 @@
               renderSequence(currentSequenceProgress);
             },
             onUpdate: (self) => {
-              const progress = gsap.utils.clamp(0, 1, self.progress);
+              const progress = scrollProgressToFrameProgress(self.progress);
               renderSequence(progress);
               setActivePoint(progress);
             },
@@ -421,7 +480,7 @@
               renderSequence(currentSequenceProgress);
             },
             onUpdate: (self) => {
-              const progress = gsap.utils.clamp(0, 1, self.progress);
+              const progress = scrollProgressToFrameProgress(self.progress);
               renderSequence(progress);
               setActivePoint(progress);
             },

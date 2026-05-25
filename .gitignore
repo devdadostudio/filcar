@@ -9,6 +9,7 @@
 # Log files
 *.log
 .DS_Store
+/assets/sequenza-mono/
 /img
 style.css
 style.css.map

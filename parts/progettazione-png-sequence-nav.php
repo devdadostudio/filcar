@@ -106,16 +106,32 @@ $composition_cards = [
 
 $frames_folder = $normalize_relative_path((string) $get_value('frames_folder', 'field_progettazione_png_sequence_nav_frames_folder'));
 $frame_urls = [];
+$frame_width = 1200;
+$frame_height = 675;
 
 if ($frames_folder) {
     $frames_dir = trailingslashit(get_template_directory()) . $frames_folder;
     $frames_uri = trailingslashit(get_template_directory_uri()) . $frames_folder;
 
     if (is_dir($frames_dir)) {
-        $frame_files = glob(trailingslashit($frames_dir) . '*.png');
-        $frame_files = is_array($frame_files) ? $frame_files : [];
+        $frame_files = [];
+
+        foreach (['png', 'webp', 'jpg', 'jpeg'] as $extension) {
+            $matches = glob(trailingslashit($frames_dir) . '*.' . $extension);
+            $frame_files = array_merge($frame_files, is_array($matches) ? $matches : []);
+        }
 
         natsort($frame_files);
+        $frame_files = array_values($frame_files);
+
+        if (!empty($frame_files[0]) && is_file($frame_files[0])) {
+            $frame_size = getimagesize($frame_files[0]);
+
+            if (is_array($frame_size) && !empty($frame_size[0]) && !empty($frame_size[1])) {
+                $frame_width = (int) $frame_size[0];
+                $frame_height = (int) $frame_size[1];
+            }
+        }
 
         foreach ($frame_files as $frame_file) {
             if (is_file($frame_file)) {
@@ -161,6 +177,17 @@ $nav_items = [
     ],
 ];
 $compositions_number = str_pad((string) count($nav_items), 2, '0', STR_PAD_LEFT);
+
+$frame_to_progress = static function ($frame_number, $fallback_progress) use ($frame_urls) {
+    if (!is_numeric($frame_number) || empty($frame_urls)) {
+        return $fallback_progress;
+    }
+
+    $frame_index = (int) $frame_number - 1;
+    $last_index = max(count($frame_urls) - 1, 1);
+
+    return max(0, min(1, $frame_index / $last_index));
+};
 ?>
 
 <section id="<?php echo esc_attr($block_id); ?>" class="<?php echo esc_attr($section_class); ?>">
@@ -176,7 +203,11 @@ $compositions_number = str_pad((string) count($nav_items), 2, '0', STR_PAD_LEFT)
                             data-anchor-id="<?php echo esc_attr($item['id']); ?>"
                             data-type="<?php echo esc_attr($item['type']); ?>"
                             <?php if ($item['type'] === 'sequence') : ?>
-                                data-sequence-progress="<?php echo esc_attr($item['progress']); ?>"
+                                <?php
+                                $nav_point = $sequence_points[$index] ?? [];
+                                $nav_progress = $frame_to_progress($nav_point['sequence_frame'] ?? null, $item['progress']);
+                                ?>
+                                data-sequence-progress="<?php echo esc_attr(max(0, min(1, $nav_progress))); ?>"
                             <?php endif; ?>
                         >
                             <span class="number-3 anchor-number text-white"><?php echo esc_html($item['number']); ?></span><?php echo esc_html($item['label']); ?>
@@ -192,8 +223,8 @@ $compositions_number = str_pad((string) count($nav_items), 2, '0', STR_PAD_LEFT)
                 <div class="container-fluid">
                     <div class="progettazione-sequence-nav__stage">
                         <div class="progettazione-sequence-nav__media js-sequence-anchor-media">
-                            <div class="progettazione-sequence-nav__canvas-wrap">
-                                <canvas class="progettazione-sequence-nav__canvas js-sequence-anchor-canvas" width="1200" height="675" aria-label="<?php esc_attr_e('Sequenza di progettazione', 'filcar'); ?>"></canvas>
+                            <div class="progettazione-sequence-nav__canvas-wrap" style="aspect-ratio: <?php echo esc_attr($frame_width . ' / ' . $frame_height); ?>;">
+                                <canvas class="progettazione-sequence-nav__canvas js-sequence-anchor-canvas" width="<?php echo esc_attr($frame_width); ?>" height="<?php echo esc_attr($frame_height); ?>" aria-label="<?php esc_attr_e('Sequenza di progettazione', 'filcar'); ?>"></canvas>
                             </div>
                         </div>
 
@@ -203,7 +234,7 @@ $compositions_number = str_pad((string) count($nav_items), 2, '0', STR_PAD_LEFT)
                                 $number = str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT);
                                 $title = $point['title'] ?? '';
                                 $text = $point['text'] ?? '';
-                                $progress = isset($point['sequence_progress']) && is_numeric($point['sequence_progress']) ? (float) $point['sequence_progress'] / 100 : ($index / 2);
+                                $progress = $frame_to_progress($point['sequence_frame'] ?? null, $index / 2);
                                 $progress = max(0, min(1, $progress));
                                 $anchor_id = $nav_items[$index]['id'];
                             ?>
