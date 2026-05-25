@@ -892,7 +892,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
       section.dataset.expandableCardsReady = "true";
 
+      const clearActiveCards = () => {
+        cards.forEach((card, cardIndex) => {
+          const value = card.querySelector(".expandable-cards__value");
+
+          card.classList.remove("is-active");
+          card.setAttribute("aria-expanded", "false");
+
+          if (value) {
+            value.classList.remove("number-1");
+            value.classList.add("number-2");
+          }
+        });
+      };
+
       const setActiveCard = (index) => {
+        const activeCard = cards[index];
+
+        if (activeCard && activeCard.classList.contains("is-active")) {
+          clearActiveCards();
+          return;
+        }
+
         cards.forEach((card, cardIndex) => {
           const isActive = cardIndex === index;
           const value = card.querySelector(".expandable-cards__value");

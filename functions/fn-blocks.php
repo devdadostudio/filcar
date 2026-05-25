@@ -75,6 +75,15 @@ add_action('acf/init', function () {
             'post_types' => ['page', 'product'],
         ]);
         acf_register_block_type([
+            'name' => 'operative-cards',
+            'title' => __('CARD ATTREZZATURE OPERATIVE'),
+            'render_template' => get_template_directory() . '/parts/operative-cards.php',
+            'category' => 'layout',
+            'icon' => 'screenoptions',
+            'mode' => 'edit',
+            'post_types' => ['page', 'product'],
+        ]);
+        acf_register_block_type([
             'name' => 'hero-product',
             'title' => __('HERO PRODOTTO'),
             'render_template' => get_template_directory() . '/parts/products/hero-products-static.php',
@@ -1297,6 +1306,99 @@ add_action('acf/init', function () {
                         'param' => 'block',
                         'operator' => '==',
                         'value' => 'acf/arredo-text-images-card',
+                    ],
+                ],
+            ],
+            'position' => 'normal',
+            'style' => 'default',
+            'label_placement' => 'top',
+            'instruction_placement' => 'label',
+            'active' => true,
+        ]);
+
+        acf_add_local_field_group([
+            'key' => 'group_operative_cards',
+            'title' => __('Card attrezzature operative', 'filcar'),
+            'fields' => [
+                [
+                    'key' => 'field_operative_cards_group',
+                    'label' => __('Card attrezzature operative', 'filcar'),
+                    'name' => 'operative_cards',
+                    'type' => 'group',
+                    'layout' => 'block',
+                    'sub_fields' => [
+                        [
+                            'key' => 'field_operative_cards_eyebrow',
+                            'label' => __('Titoletto', 'filcar'),
+                            'name' => 'eyebrow',
+                            'type' => 'text',
+                        ],
+                        [
+                            'key' => 'field_operative_cards_title',
+                            'label' => __('Titolo', 'filcar'),
+                            'name' => 'title',
+                            'type' => 'textarea',
+                            'rows' => 2,
+                            'new_lines' => 'br',
+                        ],
+                        [
+                            'key' => 'field_operative_cards_cards',
+                            'label' => __('Card', 'filcar'),
+                            'name' => 'cards',
+                            'type' => 'repeater',
+                            'layout' => 'block',
+                            'button_label' => __('Aggiungi card', 'filcar'),
+                            'min' => 1,
+                            'max' => 5,
+                            'sub_fields' => [
+                                [
+                                    'key' => 'field_operative_cards_card_title',
+                                    'label' => __('Titolo card', 'filcar'),
+                                    'name' => 'title_card',
+                                    'type' => 'textarea',
+                                    'rows' => 2,
+                                    'new_lines' => 'br',
+                                ],
+                                [
+                                    'key' => 'field_operative_cards_card_image_inactive',
+                                    'label' => __('Immagine', 'filcar'),
+                                    'name' => 'image_inactive',
+                                    'type' => 'image',
+                                    'return_format' => 'array',
+                                    'preview_size' => 'medium',
+                                    'library' => 'all',
+                                ],
+                                [
+                                    'key' => 'field_operative_cards_card_image_active',
+                                    'label' => __('Immagine attiva', 'filcar'),
+                                    'name' => 'image_active',
+                                    'type' => 'image',
+                                    'return_format' => 'array',
+                                    'preview_size' => 'medium',
+                                    'library' => 'all',
+                                    'instructions' => __('Opzionale. Se vuota viene usata l’immagine principale.', 'filcar'),
+                                ],
+                                [
+                                    'key' => 'field_operative_cards_card_description',
+                                    'label' => __('Descrizione', 'filcar'),
+                                    'name' => 'description',
+                                    'type' => 'wysiwyg',
+                                    'tabs' => 'all',
+                                    'toolbar' => 'basic',
+                                    'media_upload' => 0,
+                                    'delay' => 0,
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'location' => [
+                [
+                    [
+                        'param' => 'block',
+                        'operator' => '==',
+                        'value' => 'acf/operative-cards',
                     ],
                 ],
             ],
