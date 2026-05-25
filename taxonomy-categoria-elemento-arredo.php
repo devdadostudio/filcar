@@ -246,4 +246,4 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <?php
-get_footer(null, ['footer-color' => 'white']);
+get_footer(null, ['footer-color' => 'bg-white']);

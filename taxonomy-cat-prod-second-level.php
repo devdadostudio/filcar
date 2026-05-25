@@ -58,11 +58,11 @@ $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_im
                 <div class="col-12 col-lg-4 order-2 order-lg-1">
                     <div class="product-hero__content category-second-hero__content text-grey-500">
                         <?php if ($parent_term && !is_wp_error($parent_term)) : ?>
-                            <div class="product-3 fw-normal text-uppercase sp-mb-3">
+                            <div class="product-3 fw-normal text-uppercase sp-mb-3 text-primary">
                                 <?php echo esc_html($parent_term->name); ?>
                             </div>
                         <?php endif; ?>
-                        <h1 class="h1 extralight sp-mb-3 sp-sxl-mb-4 sp-uxl-mb-5">
+                        <h1 class="h1 extralight sp-mb-3 sp-sxl-mb-4 sp-uxl-mb-5 text-primary">
                             <?php echo esc_html($term->name); ?>
                         </h1>
                         <?php if (!empty($term->description)) : ?>
@@ -161,7 +161,7 @@ $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_im
                     </article>
 
                     <article id="criteri-di-scelta" class="category-anchor-panel js-category-anchor-panel" data-anchor-target="#criteri-di-scelta">
-                        <div class="category-anchor-panel__number">03</div>
+                        <div class="category-anchor-panel__number number-3">03</div>
                         <h2 class="category-anchor-panel__title h1 fw-normal">Criteri di scelta di un arrotolatore per aspirazione gas di scarico</h2>
                         <div class="category-anchor-panel__body p-big fw-normal">
                             <p>La scelta di un arrotolatore deve tenere conto di diversi fattori tecnici legati all’impianto di aspirazione e all’ambiente operativo. Tra i principali parametri rientrano la lunghezza e il diametro del tubo, la portata d’aria richiesta e lo spazio disponibile per l’installazione.</p>
@@ -171,7 +171,7 @@ $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_im
                     </article>
 
                     <article id="manutenzione-sicurezza" class="category-anchor-panel js-category-anchor-panel" data-anchor-target="#manutenzione-sicurezza">
-                        <div class="category-anchor-panel__number">04</div>
+                        <div class="category-anchor-panel__number number-3">04</div>
                         <h2 class="category-anchor-panel__title h1 fw-normal">Manutenzione e sicurezza</h2>
                         <div class="category-anchor-panel__body p-big fw-normal">
                             <p>Una corretta manutenzione aiuta a preservare nel tempo la funzionalità dell’arrotolatore e la sicurezza dell’operatore. È consigliabile verificare periodicamente lo stato del tubo, il corretto riavvolgimento e l’efficienza del sistema di arresto.</p>
@@ -180,7 +180,7 @@ $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_im
                     </article>
 
                     <article id="applicazioni" class="category-anchor-panel js-category-anchor-panel" data-anchor-target="#applicazioni">
-                        <div class="category-anchor-panel__number">05</div>
+                        <div class="category-anchor-panel__number number-3">05</div>
                         <h2 class="category-anchor-panel__title h1 fw-normal">Applicazioni</h2>
                         <div class="category-anchor-panel__body p-big fw-normal">
                             <p>Gli arrotolatori trovano applicazione in officine auto, centri revisione, concessionarie, reparti manutenzione e ambienti industriali dove è necessario gestire l’aspirazione dei gas di scarico in modo ordinato e sicuro.</p>
@@ -188,7 +188,7 @@ $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_im
                     </article>
 
                     <article id="faq" class="category-anchor-panel category-anchor-panel--faq js-category-anchor-panel" data-anchor-target="#faq">
-                        <div class="category-anchor-panel__number">06</div>
+                        <div class="category-anchor-panel__number number-3">06</div>
                         <h2 class="category-anchor-panel__title h1 fw-normal">FAQ</h2>
                         <div class="category-anchor-faq accordion" id="categoryAnchorFaq">
                             <div class="accordion-item">
@@ -244,4 +244,4 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <?php
-get_footer();
+get_footer(null, ['footer-color' => 'bg-grey-500']);

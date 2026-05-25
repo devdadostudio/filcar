@@ -6,7 +6,7 @@ $txt_blocks = get_field('txt_blocks');
     <div class="section-inner container-fluid">
         <div class="row">
             <div class="col-12 col-lg-5 sp-mb-4 sp-lg-mb-0">
-                <figure class="respimg rounded overflow-hidden h-100 w-100 img-figure">
+                <figure class="respimg rounded overflow-hidden h-100 w-100 img-figure aspect-ratio-1x1">
                     <img src="<?php echo $img['url']; ?>" alt="<?php echo $img['alt']; ?>" class="w-100">
                 </figure>
             </div>

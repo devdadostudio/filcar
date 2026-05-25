@@ -211,6 +211,12 @@
     right: 10px;
     line-height: 1;
     font-size: 40px;
+    &:before{
+      @include media-breakpoint-down(lg) {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+    }
   }
 
   @media (max-height: 820px) and (min-width: 1024px) {
@@ -223,7 +229,7 @@
     --hero-video-slider-content-gap: 140px;
   }
 
-  @include media-breakpoint-down(llg) {
+  @include media-breakpoint-down(lg) {
     min-height: auto;
     background: #17191b;
 
@@ -287,7 +293,6 @@
       position: relative;
       display: block;
       height: auto;
-      padding: 60px 0 24px;
     }
 
     &__bottom-grid {

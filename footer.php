@@ -1,7 +1,7 @@
         <?php
         if(!is_page('contatti')){
-            if(isset($args['footer-color']) && $args['footer-color'] == 'white'){
-                get_template_part('parts/contact-form', null, ['footer-color' => 'white']);
+            if(isset($args['footer-color'])){
+                get_template_part('parts/contact-form', null, ['footer-color' => $args['footer-color']]);
             }else{
                 get_template_part('parts/contact-form');
             }
