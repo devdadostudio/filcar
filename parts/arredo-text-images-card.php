@@ -125,7 +125,7 @@ $section_classes = [
 
         <?php if ($has_card) : ?>
             <div class="row arredo-text-images-card__card-row">
-                <div class="col-12 col-lg-5 offset-lg-7 col-sxl-4 offset-sxl-8">
+                <div class="col-12 col-lg-5 offset-lg-7 col-sxl-3 offset-sxl-9">
                     <a class="hero-sector__card arredo-text-images-card__card<?php echo !$card_image ? ' arredo-text-images-card__card--no-media' : ''; ?>" href="<?php echo esc_url($card_url); ?>" target="<?php echo esc_attr($card_target); ?>"<?php echo $card_target === '_blank' ? ' rel="noopener"' : ''; ?>>
                         <?php if ($card_image) : ?>
                             <span class="hero-sector__card-media">
