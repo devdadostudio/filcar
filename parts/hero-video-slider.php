@@ -93,8 +93,8 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'hero-video-slider-' .
 
     <div class="hero-video-slider__bottom">
         <div class="container-fluid">
-            <div class="hero-video-slider__bottom-grid">
-                <div class="hero-video-slider__nav" role="tablist" aria-label="<?php esc_attr_e('Slide hero', 'filcar'); ?>">
+            <div class="hero-video-slider__bottom-grid row">
+                <div class="hero-video-slider__nav col-12 col-lg-8" role="tablist" aria-label="<?php esc_attr_e('Slide hero', 'filcar'); ?>">
                     <?php foreach ($slides as $index => $slide) :
                         $label = $slide['label'] ?? '';
                     ?>
@@ -110,7 +110,7 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'hero-video-slider-' .
                 </div>
 
                 <?php if ($news_url && $news_title) : ?>
-                    <a class="hero-video-slider__news" href="<?php echo esc_url($news_url); ?>">
+                    <a class="hero-video-slider__news col-8 col-md-6 col-lg-4 col-xl-3 offset-xl-1 sp-mb-4 sp-lg-mb-0" href="<?php echo esc_url($news_url); ?>">
                         <span class="hero-video-slider__news-title h6 light"><?php echo esc_html($news_title); ?></span>
                         <i class="hero-video-slider__news-icon icon icon-filcar-icon-arrow-upr"></i>
                     </a>

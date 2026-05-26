@@ -115,9 +115,6 @@
   }
 
   &__bottom-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(360px, 22vw);
-    gap: 40px;
     align-items: center;
     width: 100%;
   }
@@ -126,7 +123,6 @@
     display: flex;
     gap: 14px;
     align-items: flex-start;
-    max-width: 790px;
   }
 
   &__tab {
@@ -190,12 +186,19 @@
         rgba(255, 255, 255, 0) 52%
       ),
       linear-gradient(180deg, rgba(23, 25, 27, 0) 0%, #17191b 100%);
-    overflow: hidden;
     transform: translateY(-50%);
 
     &:hover {
       color: $white;
       border-color: rgba(255, 255, 255, 0.28);
+    }
+    &:after{
+      content: "";
+      width: 200px;
+      position: absolute;
+      height: 3px;
+      background: $secondary;
+      bottom: -2px;
     }
   }
 
@@ -215,6 +218,7 @@
       @include media-breakpoint-down(lg) {
         margin-left: 0 !important;
         margin-right: 0 !important;
+        font-size: 25px;
       }
     }
   }
@@ -323,7 +327,6 @@
 
     &__news {
       order: 2;
-      width: 181px;
       min-height: 78px;
       margin-top: 10px;
       margin-bottom: 0;

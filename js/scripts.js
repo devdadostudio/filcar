@@ -146,7 +146,7 @@ jQuery(document).ready(function () {
     });
   }
 
-  initHeroVideoSlider();
+  //initHeroVideoSlider();
 
   jQuery(".carousel-text-2").owlCarousel({
     loop: false,
