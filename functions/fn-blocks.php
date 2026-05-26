@@ -727,6 +727,18 @@ add_action('acf/init', function () {
                     'rows' => 5,
                     'new_lines' => 'br',
                 ],
+                [
+                    'key'               => 'field_progettazione_png_sequence_nav_compositions',
+                    'label'             => __('Composizioni', 'filcar'),
+                    'name'              => 'product',
+                    'type'              => 'post_object',
+                    'post_type'         => ['product'],
+                    'taxonomy'          => ['cat-prod:65'],
+                    'allow_null'        => 1,
+                    'multiple'          => 1,
+                    'return_format'     => 'object',
+                    'ui'                => 1,
+                ],
             ],
             'location' => [
                 [

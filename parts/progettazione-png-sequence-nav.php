@@ -337,11 +337,11 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
                     <div class="row progettazione-sequence-nav__compositions-grid">
                         <?php foreach ($composition_cards as $index => $composition_title) : ?>
                             <div class="col-6 col-lg-3 progettazione-sequence-nav__composition-col">
-                                <article class="progettazione-sequence-nav__composition-card">
+                                <a href="" class="progettazione-sequence-nav__composition-card aspect-ratio-7x8">
                                     <div class="progettazione-sequence-nav__composition-overlay">
                                         <span><?php echo esc_html($composition_title); ?></span>
                                     </div>
-                                </article>
+                                </a>
                             </div>
                         <?php endforeach; ?>
                     </div>
