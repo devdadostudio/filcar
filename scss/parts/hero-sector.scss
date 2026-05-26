@@ -115,17 +115,14 @@
     display: grid;
     grid-template-columns: 132px minmax(0, 1fr);
     align-items: stretch;
-    min-height: 106px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    //border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 6px;
     color: $white;
     text-decoration: none;
     background: rgba(23, 25, 27, 0.72);
     backdrop-filter: blur(8px);
     overflow: hidden;
-    transition:
-      border-color 200ms ease,
-      background-color 200ms ease;
+    transition: background-color 200ms ease;
 
     &:hover {
       color: $white;
