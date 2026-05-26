@@ -20,6 +20,11 @@ switch($section_bg) {
         $text_cl = 'text-white';
         $btn_style = 'btn-secondary-2';
         break;
+    case 'bg-grey-200':
+        $subtitle_cl = 'text-secondary';
+        $text_cl = 'text-primary';
+        $btn_style = 'btn-secondary-1';
+        break;
 }
 if(!empty($sections_block)) {
     $sections_block_c = count($sections_block);
@@ -56,16 +61,16 @@ if(!empty($sections_block)) {
                         <?php
                         if($subtitle_block) :
                         ?>
-                        <div class="product-3 fw-normal <?php echo $subtitle_cl; ?> sp-mb-4">
+                        <div class="product-3 fw-normal <?php echo $subtitle_cl; ?> sp-mb-5">
                             <?php echo $subtitle_block; ?>
                         </div>
                         <?php
                         endif;
                         ?>
-                        <h2 class="h3 fw-normal <?php echo $text_cl; ?> sp-mb-4">
+                        <h2 class="h2 light <?php echo $text_cl; ?> sp-mb-5">
                             <?php echo $title_block; ?>
                         </h2>
-                        <div class="h7 fw-normal <?php echo $text_cl; ?> sp-mb-4">
+                        <div class="regular<?php echo $text_cl; ?> sp-mb-5">
                             <?php echo $txt_block; ?>
                         </div>
                         <?php if($cta_block) : ?>

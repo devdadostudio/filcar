@@ -186,6 +186,16 @@ add_action('acf/init', function () {
         ]);
 
         acf_register_block_type([
+            'name' => 'img-txt-2',
+            'title' => __('Immagini + testo affiancato variazione'),
+            'render_template' => get_template_directory() . '/parts/img-txt-2.php',
+            'category' => 'layout',
+            'icon' => 'format-gallery',
+            'mode' => 'edit',
+            'post_types' => ['page', 'product'],
+        ]);
+
+        acf_register_block_type([
             'name' => 'txt-cta-carousel',
             'title' => __('Testo + CTA + carosello'),
             'render_template' => get_template_directory() . '/parts/txt-cta-carousel.php',
@@ -350,6 +360,15 @@ add_action('acf/init', function () {
             'name' => 'videos-block',
             'title' => __('Video'),
             'render_template' => get_template_directory() . '/parts/videos-block.php',
+            'category' => 'layout',
+            'icon' => 'format-gallery',
+            'mode' => 'edit',
+            'post_types' => ['page'],
+        ]);
+        acf_register_block_type([
+            'name' => 'azienda-image-text',
+            'title' => __('Azienda immagine + testo'),
+            'render_template' => get_template_directory() . '/parts/azienda-image-text.php',
             'category' => 'layout',
             'icon' => 'format-gallery',
             'mode' => 'edit',
