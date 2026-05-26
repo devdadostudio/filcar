@@ -245,10 +245,6 @@
     gap: clamp(8px, 1.1vw, 18px);
   }
 
-  &__compositions-text {
-    max-width: 760px;
-  }
-
   &__compositions-grid {
     row-gap: 24px;
   }
@@ -273,7 +269,6 @@
     right: 0;
     bottom: 0;
     left: 0;
-    min-height: 100px;
     display: flex;
     align-items: center;
     padding: 18px 20px;

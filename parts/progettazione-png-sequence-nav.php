@@ -92,18 +92,6 @@ $section_ergonomia_text = $get_value('ergonomia_text', 'field_progettazione_png_
 $ergonomia_slides = $get_value('ergonomia_slides', 'field_progettazione_png_sequence_nav_ergonomia_slides');
 $ergonomia_slides = is_array($ergonomia_slides) ? array_values($ergonomia_slides) : [];
 
-$composition_text = __('Soluzioni configurate dai nostri esperti per rispondere a ogni esigenza operativa, sfruttando la flessibilità estrema della linea Mono. La struttura completamente modulare permette di creare composizioni capaci di evolversi nel tempo e di garantire sempre la massima funzionalità, organizzazione e continuità operativa.', 'filcar');
-$composition_cards = [
-    __('Composizione con parete attrezzata', 'filcar'),
-    __('Banco con accessori integrati', 'filcar'),
-    __('Postazione modulare completa', 'filcar'),
-    __('Banco doppio con contenimento', 'filcar'),
-    __('Banco operativo lineare', 'filcar'),
-    __('Modulo con pannello portautensili', 'filcar'),
-    __('Configurazione compatta', 'filcar'),
-    __('Banco essenziale su ruote', 'filcar'),
-];
-
 $frames_folder = $normalize_relative_path((string) $get_value('frames_folder', 'field_progettazione_png_sequence_nav_frames_folder'));
 $frame_urls = [];
 $frame_width = 1200;
@@ -319,7 +307,13 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
                     </div>
                 <?php endif; ?>
             </section>
-
+            <?php
+            $compositions = $get_value('compositions', 'field_progettazione_png_sequence_nav_compositions');
+            $compositions_title = $get_value('compositions_title', 'field_progettazione_png_sequence_nav_compositions_title');
+            $composition_text = $get_value('compositions_text', 'field_progettazione_png_sequence_nav_compositions_text');
+            if(!empty($compositions)) {
+                $compositions_c = count($compositions);
+            ?>
             <section id="<?php echo esc_attr($block_id); ?>-composizioni" class="progettazione-sequence-nav__compositions js-sequence-anchor-section" data-anchor-id="composizioni">
                 <div class="container-fluid">
                     <div class="row progettazione-sequence-nav__compositions-head">
@@ -335,18 +329,32 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
                     </div>
 
                     <div class="row progettazione-sequence-nav__compositions-grid">
-                        <?php foreach ($composition_cards as $index => $composition_title) : ?>
-                            <div class="col-6 col-lg-3 progettazione-sequence-nav__composition-col">
-                                <a href="" class="progettazione-sequence-nav__composition-card aspect-ratio-7x8">
-                                    <div class="progettazione-sequence-nav__composition-overlay">
-                                        <span><?php echo esc_html($composition_title); ?></span>
+                        <?php for($i = 0; $i < $compositions_c; $i++) : ?>
+                            <div class="col-6 col-lg-3 progettazione-sequence-nav__composition-col card-product">
+                                <a href="<?php echo get_the_permalink($compositions[$i]->ID); ?>" class="progettazione-sequence-nav__composition-card aspect-ratio-7x8 rounded overflow-hidden product-card">
+                                    <figure class="aspect-ratio-7x8 respimg overflow-hidden rounded">
+                                        <?php
+                                        echo wp_get_attachment_image(
+                                            get_post_thumbnail_id($compositions[$i]->ID),
+                                            '',
+                                            false,
+                                            ['class' => '', 'loading' => 'lazy']
+                                        );
+                                        ?>
+                                    </figure>
+                                    <div class="card-link-arrow">
+                                        <i class="icon-filcar-icon-arrow-upr"></i>
+                                    </div>
+                                    <div class="progettazione-sequence-nav__composition-overlay p-smaller">
+                                        <span><?php echo get_the_title($compositions[$i]->ID); ?></span>
                                     </div>
                                 </a>
                             </div>
-                        <?php endforeach; ?>
+                        <?php endfor; ?>
                     </div>
                 </div>
             </section>
+            <?php } ?>
         </div>
     </div>
 
