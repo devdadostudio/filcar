@@ -110,6 +110,7 @@ $text = filcar_tts_field($content, ['text', 'testo', 'main_text', 'testo_princip
 $intro = filcar_tts_field($content, ['intro', 'intro_text', 'testo_intro']);
 $cta = filcar_tts_field($content, ['cta', 'link', 'cta_block']);
 $has_technical_bg = (bool) filcar_tts_field($content, ['has_technical_background', 'technical_background_enabled', 'show_technical_background', 'background_tecnico'], false);
+$has_viewport_height = (bool) filcar_tts_field($content, ['altezza_blocco', 'viewport_height', 'full_height'], true);
 $technical_image = filcar_tts_image(filcar_tts_field($content, ['technical_image', 'immagine_tecnica', 'technical_background_image', 'background_tecnico_immagine', 'image']));
 
 if (!$text) {
@@ -138,6 +139,10 @@ if ($intro) {
 
 if ($cta_url) {
     $section_classes[] = 'technical-text-scroll--has-cta';
+}
+
+if ($has_viewport_height) {
+    $section_classes[] = 'min-h-100vh';
 }
 ?>
 

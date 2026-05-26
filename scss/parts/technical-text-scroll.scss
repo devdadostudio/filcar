@@ -2,7 +2,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  min-height: clamp(520px, 74vh, 780px);
+  //min-height: clamp(520px, 74vh, 780px);
   padding: clamp(72px, 10vw, 136px) 0;
   overflow: hidden;
   background: $grey600;
@@ -43,7 +43,7 @@
 
   &__content {
     width: min(100%, 1180px);
-    padding-left: clamp(28px, 3.1vw, 56px);
+    //padding-left: clamp(28px, 3.1vw, 56px);
   }
 
   &__text {
@@ -72,7 +72,7 @@
   }
 
   &:not(.technical-text-scroll--has-intro) &__content {
-    padding-top: clamp(30px, 5vw, 82px);
+    //padding-top: clamp(30px, 5vw, 82px);
   }
 
   &:not(.technical-text-scroll--has-technical-bg) &__content {
