@@ -67,14 +67,15 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'prefooter-contatti-' 
                                             <?php endif; ?>
                                         </div>
                                         <?php if ($left_text) : ?>
-                                            <div class="col-6 sp-mt-4 sp-mt-lg-8">
+                                            <div class="col-4 sp-mt-4 sp-mt-lg-8">
                                                 <?php echo wp_kses_post($left_text); ?>
                                             </div>
                                         <?php endif; ?>
 
                                         <?php if ($address_text) : ?>
-                                            <div class="col-6">
-                                                <?php echo wp_kses_post($address_text); ?>
+                                            <div class="col-4 offset-2">
+                                                <div class="<?php echo esc_attr($text_cl); ?> prefooter-contacts__addressblock"><?php echo wp_kses_post($address_text); ?></div>
+                                                
                                             </div>
                                         <?php endif; ?>
                                     </div>
