@@ -83,7 +83,7 @@ $section_classes = [
             </div>
 
             <?php if ($text) : ?>
-                <div class="col-12 col-lg-7 offset-lg-1">
+                <div class="col-12 col-lg-8">
                     <div class="arredo-text-images-card__text p-big regular">
                         <?php echo wp_kses_post(wpautop($text)); ?>
                     </div>
@@ -94,7 +94,7 @@ $section_classes = [
         <div class="arredo-text-images-card__media-wrap">
             <div class="row arredo-text-images-card__media-row aspect-ratio-3x1">
                 <?php if ($image_left) : ?>
-                    <div class="col-lg-5 d-none d-lg-block">
+                    <div class="col-lg-4 offset-lg-1 d-none d-lg-block">
                         <figure class="arredo-text-images-card__figure arredo-text-images-card__figure--left">
                             <?php
                             echo wp_get_attachment_image($get_image_id($image_left), 'full', false, [
