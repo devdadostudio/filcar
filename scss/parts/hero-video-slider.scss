@@ -87,14 +87,8 @@
     gap: 6px;
     min-width: 76px;
     margin-top: 42px;
-    padding: 9px 16px;
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    border-radius: 3px;
     color: $white;
     text-decoration: none;
-    transition:
-      background-color 200ms ease,
-      color 200ms ease;
 
     &:hover {
       color: $primary;
@@ -284,7 +278,7 @@
     }
 
     &__cta {
-      position: absolute;
+      position: absolute !important;
       right: 24px;
       bottom: 24px;
       left: 24px;

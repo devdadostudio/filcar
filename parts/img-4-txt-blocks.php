@@ -26,10 +26,8 @@ $txt_blocks = get_field('txt_blocks');
                                         <h3 class="h3 fw-normal">
                                             <?php echo $txt_block['title']; ?>
                                         </h3>
-                                        <div class="mb-0-p">
-                                            <p class="fw-normal text-grey-600">
-                                                <?php echo $txt_block['txt']; ?>
-                                            </p>
+                                        <div class="fw-normal text-grey-600 mb-0-p">
+                                            <?php echo $txt_block['txt']; ?>
                                         </div>
                                     </div>
                                 </div>

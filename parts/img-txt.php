@@ -56,20 +56,20 @@ if(!empty($sections_block)) {
                         <?php
                         if($subtitle_block) :
                         ?>
-                        <div class="product-3 fw-normal <?php echo $subtitle_cl; ?> sp-mb-4">
+                        <div class="product-3 fw-normal <?php echo $subtitle_cl; ?> sp-mb-2">
                             <?php echo $subtitle_block; ?>
                         </div>
                         <?php
                         endif;
                         ?>
-                        <h2 class="h3 fw-normal <?php echo $text_cl; ?> sp-mb-4">
+                        <h2 class="h3 fw-normal <?php echo $text_cl; ?> sp-mb-3">
                             <?php echo $title_block; ?>
                         </h2>
                         <div class="h7 fw-normal <?php echo $text_cl; ?> sp-mb-4">
                             <?php echo $txt_block; ?>
                         </div>
                         <?php if($cta_block) : ?>
-                        <a class="btn <?php echo $btn_style; ?>" href="<?php echo $cta_block['url']; ?>"><span><?php echo $cta_block['title']; ?><span class="icon-filcar-icon-arrow-upr"></span></span></a>
+                        <a class="btn <?php echo $btn_style; ?> text-capitalize" href="<?php echo $cta_block['url']; ?>"><span><?php echo $cta_block['title']; ?><span class="icon-filcar-icon-arrow-upr"></span></span></a>
                         <?php endif; ?>
                     </div>
                 </div>

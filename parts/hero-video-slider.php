@@ -80,9 +80,9 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'hero-video-slider-' .
                         <?php endif; ?>
                         
                         <?php if ($slide_cta_url) : ?>
-                            <a class="hero-video-slider__cta p-small" href="<?php echo esc_url($slide_cta_url); ?>" target="<?php echo esc_attr($slide_cta_target); ?>">
-                                <span><?php echo esc_html($slide_cta_title); ?></span>
-                                <i class="icon icon-filcar-icon-arrow-upr"></i>
+                            <a class="hero-video-slider__cta btn btn-secondary-2" href="<?php echo esc_url($slide_cta_url); ?>" target="<?php echo esc_attr($slide_cta_target); ?>">
+                                <span><?php echo esc_html($slide_cta_title); ?>
+                                <i class="icon icon-filcar-icon-arrow-upr"></i></span>
                             </a>
                         <?php endif; ?>
                     </div>
