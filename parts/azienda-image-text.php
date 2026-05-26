@@ -30,7 +30,7 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'azienda-image-text-' 
     <div class="container-fluid">
         <?php if ($image_url) : ?>
             <div class="row align-items-center">
-                <div class="col-lg-10 offset-lg-1 az-image-text__image-container">
+                <div class="col-lg-10 offset-lg-1 az-image-text__image-container h-lg-50vh">
                     <?php
                     if ($image_id) {
                         echo wp_get_attachment_image($image_id, 'full', false, [

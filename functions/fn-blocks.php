@@ -374,6 +374,15 @@ add_action('acf/init', function () {
             'mode' => 'edit',
             'post_types' => ['page'],
         ]);
+         acf_register_block_type([
+            'name' => 'prefooter-contatti',
+            'title' => __('Prefooter contatti'),
+            'render_template' => get_template_directory() . '/parts/prefooter-contatti.php',
+            'category' => 'layout',
+            'icon' => 'format-gallery',
+            'mode' => 'edit',
+            'post_types' => ['page'],
+        ]);
     }
 
     if (function_exists('acf_add_local_field_group')) {
