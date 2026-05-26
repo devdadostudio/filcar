@@ -338,9 +338,6 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
                         <?php foreach ($composition_cards as $index => $composition_title) : ?>
                             <div class="col-6 col-lg-3 progettazione-sequence-nav__composition-col">
                                 <article class="progettazione-sequence-nav__composition-card">
-                                    <div class="progettazione-sequence-nav__composition-placeholder" aria-hidden="true">
-                                        <span class="progettazione-sequence-nav__composition-shape progettazione-sequence-nav__composition-shape--<?php echo esc_attr(($index % 4) + 1); ?>"></span>
-                                    </div>
                                     <div class="progettazione-sequence-nav__composition-overlay">
                                         <span><?php echo esc_html($composition_title); ?></span>
                                     </div>
