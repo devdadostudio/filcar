@@ -15,7 +15,7 @@
 
   &__intro-media {
     width: 100%;
-    margin: clamp(128px, 18vh, 220px) 0 0;
+    margin: clamp(80px, 18vh, 100px) 0 clamp(140px, 18vh, 180px) 0;
     overflow: hidden;
 
     img {
