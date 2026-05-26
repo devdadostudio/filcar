@@ -1415,6 +1415,25 @@ add_action('acf/init', function () {
                                     'media_upload' => 0,
                                     'delay' => 0,
                                 ],
+                                [
+                                    'key' => 'field_operative_card_link_text',
+                                    'label' => __('Testo link', 'filcar'),
+                                    'name' => 'link_text',
+                                    'type' => 'text',
+                                ],
+                                [
+                                    'key'           => 'field_operative_cards_card_taxonomy',
+                                    'label'         => __('Categoria collegata', 'filcar'),
+                                    'name'          => 'taxonomy_term',
+                                    'type'          => 'taxonomy',
+                                    'taxonomy'      => 'cat-prod', // sostituisci con la tua tassonomia (es. 'product_cat')
+                                    'field_type'    => 'select',   // select = singola scelta
+                                    'multiple'      => 0,
+                                    'allow_null'    => 1,
+                                    'return_format' => 'id',       // oppure 'object'
+                                    'save_terms'    => 0,
+                                    'load_terms'    => 0,
+                                ],
                             ],
                         ],
                     ],

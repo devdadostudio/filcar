@@ -82,6 +82,8 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'operative-cards-' . (
                 $link_url = is_array($link) ? ($link['url'] ?? '') : '';
                 $link_title = is_array($link) ? (($link['title'] ?? '') ?: $card_title) : '';
                 $link_target = is_array($link) ? ($link['target'] ?? '') : '';
+                $link_text = ($card['link_text'] ?? '') ?: __('Scopri', 'filcar');
+                $taxonomy_term = ($card['taxonomy_term'] ?? null);
                 ?>
                 <article
                     class="operative-cards__card expandable-cards__card <?php echo esc_attr($active_image_class); ?>"
@@ -107,7 +109,15 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'operative-cards-' . (
                         <?php endif; ?>
 
                         <?php if ($description) : ?>
-                            <div class="operative-cards__description p-smaller"><?php echo wp_kses_post($description); ?></div>
+                            <div class="operative-cards__description subtitle-2 text-grey-400"><?php echo wp_kses_post($description); ?></div>
+                        <?php endif; ?>
+
+                        <?php if($taxonomy_term) : ?>
+                            <div class="operative-cards__taxonomy">
+                                <a class="btn btn-secondary-2" href="<?php echo esc_url(get_term_link($taxonomy_term)); ?>">
+                                    <span><?php echo $link_text; ?> <i class="icon-filcar-icon-arrow-upr" aria-hidden="true"></i></span>
+                                </a>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </article>
