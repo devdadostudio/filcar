@@ -27,13 +27,7 @@
     line-height: 0.78;
   }
 
-  &__title {
-    max-width: 520px;
-  }
-
   &__text {
-    max-width: 940px;
-
     p + p {
       margin-top: 1.5rem;
     }
@@ -74,15 +68,23 @@
     width: 100%;
     border-color: rgba(255, 255, 255, 0.08);
     background:
-      linear-gradient(0deg, rgba(29, 29, 31, 0.10) 0%, rgba(29, 29, 31, 0.10) 100%),
-      rgba(71, 71, 75, 0.50);
+      linear-gradient(
+        0deg,
+        rgba(29, 29, 31, 0.1) 0%,
+        rgba(29, 29, 31, 0.1) 100%
+      ),
+      rgba(71, 71, 75, 0.5);
     backdrop-filter: blur(22.5px);
     -webkit-backdrop-filter: blur(22.5px);
 
     &:hover {
       border-color: rgba(255, 255, 255, 0.26);
       background:
-        linear-gradient(0deg, rgba(29, 29, 31, 0.18) 0%, rgba(29, 29, 31, 0.18) 100%),
+        linear-gradient(
+          0deg,
+          rgba(29, 29, 31, 0.18) 0%,
+          rgba(29, 29, 31, 0.18) 100%
+        ),
         rgba(71, 71, 75, 0.62);
     }
 
