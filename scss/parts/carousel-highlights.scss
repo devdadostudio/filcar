@@ -19,7 +19,7 @@
 
   &__inner {
     width: 100%;
-    padding: clamp(70px, 9vh, 116px) 0 clamp(92px, 13vh, 150px);
+    padding: clamp(70px, 9vh, 116px) 0 clamp(56px, 8vh, 94px);
   }
 
   &__container {
@@ -164,15 +164,10 @@
   }
 
   &__controls {
-    position: absolute;
-    right: 0;
-    bottom: clamp(40px, 6vh, 72px);
-    left: auto;
-    z-index: 5;
     display: flex;
     justify-content: flex-end;
     gap: 9px;
-    margin: 0;
+    margin: clamp(22px, 3vh, 34px) 0 0;
     pointer-events: none;
   }
 
@@ -243,7 +238,7 @@
 
     &__inner {
       padding-top: 58px;
-      padding-bottom: 92px;
+      padding-bottom: 48px;
     }
 
     &__title {
@@ -298,7 +293,7 @@
     }
 
     &__controls {
-      bottom: 36px;
+      margin-top: 28px;
     }
   }
 }
