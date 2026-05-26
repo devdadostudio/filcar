@@ -41,11 +41,11 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'hero-video-' . ($bloc
                 <div class="col-12 col-lg-9 col-xl-8 col-uxl-7">
                     <div class="hero-video-normal-slider__copy">
                         <?php if ($label) : ?>
-                            <p class="hero-video-normal-slider__label product-3 fw-normal text-uppercase"><?php echo esc_html($label); ?></p>
+                            <h1 class="hero-video-normal-slider__label product-3 fw-normal text-uppercase"><?php echo esc_html($label); ?></h1>
                         <?php endif; ?>
 
                         <?php if ($title) : ?>
-                            <h1 class="hero-video-normal-slider__title h0 extralight"><?php echo $title; ?></h1>
+                            <h2 class="hero-video-normal-slider__title h0 extralight"><?php echo $title; ?></h2>
                         <?php endif; ?>
 
                         <?php if ($text) : ?>
