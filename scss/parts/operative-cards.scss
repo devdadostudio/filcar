@@ -167,12 +167,24 @@
       opacity 260ms ease,
       transform 320ms ease;
   }
+  &__taxonomy {
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateY(12px);
+  }
 
   &__card.is-active &__description {
     max-height: 180px;
     margin-top: 18px;
     opacity: 1;
     transform: translateY(0);
+  }
+  &__card.is-active &__taxonomy {
+    height: auto;
+    opacity: 1;
+    transform: translateY(0);
+
   }
 
   &__controls {
