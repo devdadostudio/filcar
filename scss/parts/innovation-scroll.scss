@@ -113,7 +113,7 @@
     }
   }
 
-  @include media-breakpoint-down(llg) {
+  @include media-breakpoint-down(lg) {
     overflow: visible;
 
     &__pin {
@@ -145,12 +145,12 @@
     }
 
     &__title {
-      max-width: 350px;
+      max-width: 100%;
       margin-bottom: 34px;
     }
 
     &__body {
-      max-width: 350px;
+      max-width: 100%;
     }
 
     &__bar {

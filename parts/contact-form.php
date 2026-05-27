@@ -86,7 +86,7 @@ $page_title = get_the_title();
 				</div>
 			</div>
 
-			<div class="col-12 col-lg-6 sp-mb-4">
+			<div class="col-12 col-lg-6 sp-lg-mb-4">
 				<div class="contact-form-block__content h-100 d-flex flex-column sp-pt-2sp-lg-pt-4 sp-xl-pt-6 sp-lg-pl-4 sp-xl-pl-6 sp-lg-pr-4 sp-xl-pr-6 justify-content-center">
 
 					<?php 
