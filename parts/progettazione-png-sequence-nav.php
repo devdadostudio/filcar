@@ -387,7 +387,7 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
             <?php endif; ?>
 
             <?php if ($has_elements) : ?>
-                <section id="<?php echo esc_attr($block_id); ?>-elementi" class="progettazione-sequence-nav__compositions js-sequence-anchor-section" data-anchor-id="elementi">
+                <section id="<?php echo esc_attr($block_id); ?>-elementi" class="progettazione-sequence-nav__compositions bg-light js-sequence-anchor-section" data-anchor-id="elementi">
                     <div class="container-fluid">
                         <div class="row progettazione-sequence-nav__compositions-head">
                             <div class="col-12 col-lg-6">
@@ -409,7 +409,7 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
                                 get_template_part('parts/card/card-elementi', null, [
                                     'term_id' => $element_term->term_id,
                                     'taxonomy' => $element_term->taxonomy,
-                                    'class' => 'col-6 col-lg-3',
+                                    'class' => 'col-12 col-md-6 col-lg-4',
                                     'name_class' => 'h5',
                                     'class_figure' => 'aspect-ratio-1x1',
                                 ]);
