@@ -104,9 +104,11 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: $grid-gutter-width;
+    row-gap: $grid-gutter-width;
   }
 
   &__card-item {
+    display: flex;
     min-width: 0;
   }
 
@@ -123,6 +125,7 @@
     backdrop-filter: blur(8px);
     overflow: hidden;
     transition: background-color 200ms ease;
+    width: 100%;
 
     &:hover {
       color: $white;

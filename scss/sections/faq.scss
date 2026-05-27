@@ -1,61 +1,75 @@
-#faq{
+#faq {
+  .accordion {
+    border-top: 1px solid $white;
+    .accordion-header {
+      .accordion-button {
+        align-items: start;
+        &:after {
+          margin-top: 1rem;
+          @include media-breakpoint-down(uxl) {
+            margin-top: 0.7rem;
+          }
+          @include media-breakpoint-down(md) {
+            margin-top: 0.2rem;
+          }
+        }
+      }
+    }
+  }
+  &.bg-primary {
     .accordion {
-        border-top: 1px solid $white;
+      .accordion-item {
+        border-color: $white;
         .accordion-header {
-            .accordion-button {
-                align-items: start;
-                &:after {
-                    margin-top: 1rem;
-                    @include media-breakpoint-down(uxl) {
-                        margin-top: 0.7rem;
-                    }
-                    @include media-breakpoint-down(md) {
-                        margin-top: 0.2rem;
-                    }
-                }
+          .accordion-button {
+            &:after {
+              background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
             }
+          }
         }
+      }
     }
-    &.bg-primary {
-        .accordion {
-            .accordion-item {
-                border-color: $white;
-                .accordion-header {
-                    .accordion-button {
-                        &:after {
-                            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
-                        }
-                    }
-                }
+  }
+  &.bg-white {
+    .accordion {
+      .accordion-item {
+        border-color: $primary;
+        .accordion-header {
+          .accordion-button {
+            &:after {
+              color: $primary;
             }
+          }
         }
+      }
     }
-    &.bg-white {
-        .accordion {
-            .accordion-item {
-                border-color: $primary;
-                .accordion-header {
-                    .accordion-button {
-                        &:after {
-                            color: $primary;
-                        }
-                    }
-                }
+  }
+  &.bg-secondary {
+    .accordion {
+      .accordion-item {
+        border-color: $white;
+        .accordion-header {
+          .accordion-button {
+            &:after {
+              color: $white;
             }
+          }
         }
+      }
     }
-    &.bg-secondary {
-        .accordion {
-            .accordion-item {
-                border-color: $white;
-                .accordion-header {
-                    .accordion-button {
-                        &:after {
-                            color: $white;
-                        }
-                    }
-                }
+  }
+  &.category-anchor-panel {
+    .accordion {
+      .accordion-item {
+        border-color: $white;
+        .accordion-header {
+          .accordion-button {
+            &:after {
+              color: $white;
             }
+          }
         }
+      }
     }
+  }
 }

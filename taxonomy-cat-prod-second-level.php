@@ -10,36 +10,97 @@ if (!$term || is_wp_error($term) || !($term instanceof WP_Term)) {
 
 $term_key = $term->taxonomy . '_' . $term->term_id;
 $parent_term = !empty($term->parent) ? get_term($term->parent, $term->taxonomy) : null;
+
+$hero_image = function_exists('get_field') ? get_field('img_cat', $term_key) : null;
+$hero_image_id = is_array($hero_image) && !empty($hero_image['ID']) ? (int) $hero_image['ID'] : 0;
+$hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_image['alt'] : $term->name;
+
+$get_acf_group = function ($field_name) use ($term_key) {
+    if (!function_exists('get_field')) {
+        return [];
+    }
+
+    $field = get_field($field_name, $term_key);
+
+    return is_array($field) ? $field : [];
+};
+
+$get_acf_text = function ($field, $key) {
+    return is_array($field) && !empty($field[$key]) ? $field[$key] : '';
+};
+
+$content_sections = [];
+$acf_sections = [
+    [
+        'field' => 'caratteristiche',
+        'id' => 'caratteristiche',
+        'label' => __('Caratteristiche e funzionamento', 'filcar'),
+        'title_class' => 'h2 light',
+        'body_class' => 'p-big',
+    ],
+    [
+        'field' => 'criteri',
+        'id' => 'criteri-di-scelta',
+        'label' => __('Criteri di scelta', 'filcar'),
+        'title_class' => 'h1 fw-normal',
+        'body_class' => 'p-big fw-normal',
+    ],
+    [
+        'field' => 'manutenzione',
+        'id' => 'manutenzione-sicurezza',
+        'label' => __('Manutenzione e sicurezza', 'filcar'),
+        'title_class' => 'h1 fw-normal',
+        'body_class' => 'p-big fw-normal',
+    ],
+    [
+        'field' => 'applicazioni',
+        'id' => 'applicazioni',
+        'label' => __('Applicazioni', 'filcar'),
+        'title_class' => 'h1 fw-normal',
+        'body_class' => 'p-big fw-normal',
+    ],
+];
+
+foreach ($acf_sections as $section_config) {
+    $section_field = $get_acf_group($section_config['field']);
+    $section_title = $get_acf_text($section_field, 'titolo');
+    $section_text = $get_acf_text($section_field, 'testo');
+
+    if (empty($section_title) && empty($section_text)) {
+        continue;
+    }
+
+    $content_sections[] = array_merge($section_config, [
+        'title' => $section_title,
+        'text' => $section_text,
+    ]);
+}
+
+$faq_field = $get_acf_group('faqs');
+$faq_items = !empty($faq_field['blocco_faq']) && is_array($faq_field['blocco_faq']) ? array_values(array_filter($faq_field['blocco_faq'], function ($faq_item) {
+    return is_array($faq_item) && !empty($faq_item['titolo']) && !empty($faq_item['testo']);
+})) : [];
+
 $anchor_items = [
     [
         'url' => '#prodotti',
         'label' => __('Prodotti', 'filcar'),
     ],
-    [
-        'url' => '#caratteristiche',
-        'label' => __('Caratteristiche e funzionamento', 'filcar'),
-    ],
-    [
-        'url' => '#criteri-di-scelta',
-        'label' => __('Criteri di scelta', 'filcar'),
-    ],
-    [
-        'url' => '#manutenzione-sicurezza',
-        'label' => __('Manutenzione e sicurezza', 'filcar'),
-    ],
-    [
-        'url' => '#applicazioni',
-        'label' => __('Applicazioni', 'filcar'),
-    ],
-    [
-        'url' => '#faq',
-        'label' => __('FAQ', 'filcar'),
-    ],
 ];
 
-$hero_image = function_exists('get_field') ? get_field('img_cat', $term_key) : null;
-$hero_image_id = is_array($hero_image) && !empty($hero_image['ID']) ? (int) $hero_image['ID'] : 0;
-$hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_image['alt'] : $term->name;
+foreach ($content_sections as $section) {
+    $anchor_items[] = [
+        'url' => '#' . $section['id'],
+        'label' => $section['label'],
+    ];
+}
+
+if (!empty($faq_items)) {
+    $anchor_items[] = [
+        'url' => '#faq',
+        'label' => __('FAQ', 'filcar'),
+    ];
+}
 ?>
 
 <main id="main-content-category" class="bg-grey-200">
@@ -120,6 +181,14 @@ $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_im
                         <?php get_template_part('parts/card/card', 'product', ['card_class' => 'col-6 col-lg-3']); ?>
                     <?php endwhile; ?>
                 </div>
+            <?php else : ?>
+                <div class="row sp-pt-5 sp-lg-pt-10 sp-sxl-pt-12 sp-uxl-pt-10">
+                    <div class="col-12">
+                        <p class="p-big fw-normal text-primary mb-0">
+                            <?php esc_html_e('Non ci sono prodotti in questa categoria', 'filcar'); ?>
+                        </p>
+                    </div>
+                </div>
             <?php endif; ?>
         </div>
     </section>
@@ -150,61 +219,55 @@ $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_im
                 </aside>
 
                 <div class="col-12 col-lg-6 offset-lg-1 category-anchor-sections__content">
-                    <article id="caratteristiche" class="category-anchor-panel js-category-anchor-panel" data-anchor-target="#caratteristiche">
-                        <div class="category-anchor-panel__number number-3">02</div>
-                        <h2 class="category-anchor-panel__title h2 light">Caratteristiche e funzionamento degli arrotolatori gas di scarico</h2>
-                        <div class="category-anchor-panel__body p-big">
-                            <p>L’arrotolatore gas di scarico a riavvolgimento meccanico è costituito da un tamburo su cui viene avvolto il tubo di aspirazione, azionato da un sistema a molla che permette il recupero automatico del tubo dopo l’utilizzo. Questo sistema garantisce semplicità costruttiva, affidabilità nel tempo e ridotta manutenzione.</p>
-                            <p>Gli arrotolatori per officina sono progettati per essere installati a parete o a soffitto, consentendo una gestione ergonomica delle postazioni di aspirazione. Il meccanismo di arresto consente di bloccare il tubo alla lunghezza desiderata, migliorando l’operatività e la sicurezza durante l’uso.</p>
-                            <p>Grazie alla struttura metallica e ai componenti dimensionati per cicli intensivi, questi arrotolatori risultano adatti a contesti professionali dove è richiesta continuità di servizio e resistenza a sollecitazioni meccaniche.</p>
-                        </div>
-                    </article>
-
-                    <article id="criteri-di-scelta" class="category-anchor-panel js-category-anchor-panel" data-anchor-target="#criteri-di-scelta">
-                        <div class="category-anchor-panel__number number-3">03</div>
-                        <h2 class="category-anchor-panel__title h1 fw-normal">Criteri di scelta di un arrotolatore per aspirazione gas di scarico</h2>
-                        <div class="category-anchor-panel__body p-big fw-normal">
-                            <p>La scelta di un arrotolatore deve tenere conto di diversi fattori tecnici legati all’impianto di aspirazione e all’ambiente operativo. Tra i principali parametri rientrano la lunghezza e il diametro del tubo, la portata d’aria richiesta e lo spazio disponibile per l’installazione.</p>
-                            <p>Un arrotolatore del tubo di aspirazione gas di scarico meccanico deve essere selezionato in funzione del tipo di veicoli serviti, della frequenza di utilizzo e del layout dell’officina. In postazioni con elevato turnover di veicoli, è preferibile optare per soluzioni robuste con sistemi di blocco affidabili e tamburi dimensionati per cicli frequenti.</p>
-                            <p>La compatibilità con i sistemi di canalizzazione esistenti e con eventuali accessori di aspirazione rappresenta un ulteriore elemento da considerare per garantire efficienza e continuità operativa.</p>
-                        </div>
-                    </article>
-
-                    <article id="manutenzione-sicurezza" class="category-anchor-panel js-category-anchor-panel" data-anchor-target="#manutenzione-sicurezza">
-                        <div class="category-anchor-panel__number number-3">04</div>
-                        <h2 class="category-anchor-panel__title h1 fw-normal">Manutenzione e sicurezza</h2>
-                        <div class="category-anchor-panel__body p-big fw-normal">
-                            <p>Una corretta manutenzione aiuta a preservare nel tempo la funzionalità dell’arrotolatore e la sicurezza dell’operatore. È consigliabile verificare periodicamente lo stato del tubo, il corretto riavvolgimento e l’efficienza del sistema di arresto.</p>
-                            <p>La manutenzione programmata riduce il rischio di usura anomala e contribuisce a mantenere costante la qualità dell’aspirazione nelle aree di lavoro.</p>
-                        </div>
-                    </article>
-
-                    <article id="applicazioni" class="category-anchor-panel js-category-anchor-panel" data-anchor-target="#applicazioni">
-                        <div class="category-anchor-panel__number number-3">05</div>
-                        <h2 class="category-anchor-panel__title h1 fw-normal">Applicazioni</h2>
-                        <div class="category-anchor-panel__body p-big fw-normal">
-                            <p>Gli arrotolatori trovano applicazione in officine auto, centri revisione, concessionarie, reparti manutenzione e ambienti industriali dove è necessario gestire l’aspirazione dei gas di scarico in modo ordinato e sicuro.</p>
-                        </div>
-                    </article>
-
-                    <article id="faq" class="category-anchor-panel category-anchor-panel--faq js-category-anchor-panel" data-anchor-target="#faq">
-                        <div class="category-anchor-panel__number number-3">06</div>
-                        <h2 class="category-anchor-panel__title h1 fw-normal">FAQ</h2>
-                        <div class="category-anchor-faq accordion" id="categoryAnchorFaq">
-                            <div class="accordion-item">
-                                <h3 class="accordion-header" id="categoryAnchorFaqHeadingOne">
-                                    <button class="accordion-button collapsed h5 fw-normal" type="button" data-bs-toggle="collapse" data-bs-target="#categoryAnchorFaqOne" aria-expanded="false" aria-controls="categoryAnchorFaqOne">
-                                        A cosa serve un arrotolatore per aspirazione gas di scarico?
-                                    </button>
-                                </h3>
-                                <div id="categoryAnchorFaqOne" class="accordion-collapse collapse" aria-labelledby="categoryAnchorFaqHeadingOne" data-bs-parent="#categoryAnchorFaq">
-                                    <div class="accordion-body p-big fw-normal">
-                                        Serve a gestire il tubo di aspirazione in modo ordinato e sicuro, permettendo di aspirare i fumi dei veicoli direttamente alla fonte e riavvolgere il tubo automaticamente dopo l’utilizzo.
-                                    </div>
-                                </div>
+                    <?php if (empty($content_sections) && empty($faq_items)) : ?>
+                        <div class="category-anchor-panel">
+                            <div class="category-anchor-panel__body p-big fw-normal">
+                                <?php esc_html_e('La categoria non ha al momento contenuti', 'filcar'); ?>
                             </div>
                         </div>
-                    </article>
+                    <?php else : ?>
+                        <?php foreach ($content_sections as $section_index => $section) : ?>
+                            <article id="<?php echo esc_attr($section['id']); ?>" class="category-anchor-panel js-category-anchor-panel" data-anchor-target="#<?php echo esc_attr($section['id']); ?>">
+                                <div class="category-anchor-panel__number number-3"><?php echo esc_html(str_pad((string) ($section_index + 2), 2, '0', STR_PAD_LEFT)); ?></div>
+                                <?php if (!empty($section['title'])) : ?>
+                                    <h2 class="category-anchor-panel__title <?php echo esc_attr($section['title_class']); ?>"><?php echo esc_html($section['title']); ?></h2>
+                                <?php endif; ?>
+                                <?php if (!empty($section['text'])) : ?>
+                                    <div class="category-anchor-panel__body <?php echo esc_attr($section['body_class']); ?>">
+                                        <?php echo wp_kses_post($section['text']); ?>
+                                    </div>
+                                <?php endif; ?>
+                            </article>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+
+                    <?php if (!empty($faq_items)) : ?>
+                        <?php $faq_number = count($content_sections) + 2; ?>
+                        <article id="faq" class="category-anchor-panel category-anchor-panel--faq js-category-anchor-panel" data-anchor-target="#faq">
+                            <div class="category-anchor-panel__number number-3"><?php echo esc_html(str_pad((string) $faq_number, 2, '0', STR_PAD_LEFT)); ?></div>
+                            <h2 class="category-anchor-panel__title h1 fw-normal">FAQ</h2>
+                            <div class="category-anchor-faq accordion" id="categoryAnchorFaqAccordion">
+                                <?php foreach ($faq_items as $faq_index => $faq_item) : ?>
+                                    <?php
+                                    $faq_heading_id = 'categoryAnchorFaqHeading' . $faq_index;
+                                    $faq_collapse_id = 'categoryAnchorFaqCollapse' . $faq_index;
+                                    ?>
+                                    <div class="accordion-item text-white">
+                                        <div class="accordion-header" id="<?php echo esc_attr($faq_heading_id); ?>">
+                                            <div class="accordion-button collapsed mb-0-p h5 sp-gap-2 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#<?php echo esc_attr($faq_collapse_id); ?>" aria-expanded="false" aria-controls="<?php echo esc_attr($faq_collapse_id); ?>">
+                                                <?php echo esc_html($faq_item['titolo']); ?>
+                                            </div>
+                                        </div>
+                                        <div id="<?php echo esc_attr($faq_collapse_id); ?>" class="accordion-collapse collapse" aria-labelledby="<?php echo esc_attr($faq_heading_id); ?>" data-bs-parent="#categoryAnchorFaqAccordion">
+                                            <div class="accordion-body text-white">
+                                                <?php echo wp_kses_post($faq_item['testo']); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </article>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
