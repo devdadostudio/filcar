@@ -47,8 +47,13 @@ if(!empty($sections_block)) {
             $class_img_block = 'col-12 col-lg-6 offset-lg-1';
             $class_text_block = 'col-12 col-lg-5';
         }
+        if($sections_block_c > 1 && $sections_block_c == $i + 1) {
+            $class_section_padding = 'sp-pt-11 sp-pb-6';
+        }else{
+            $class_section_padding = 'sp-pt-11 sp-pb-0';
+        }
 ?>
-        <section class="img-txt sp-pt-11 sp-pb-6 sp-lg-py-16 sp-sxl-py-23 <?php echo $section_bg; ?>">
+        <section class="img-txt <?php echo $class_section_padding; ?> sp-lg-py-16 sp-sxl-py-23 <?php echo $section_bg; ?>">
             <div class="container-fluid">
                 <div class="row align-items-center <?php echo $class_section; ?>">
                     <div class="<?php echo $class_img_block; ?>">
@@ -61,20 +66,20 @@ if(!empty($sections_block)) {
                         <?php
                         if($subtitle_block) :
                         ?>
-                        <div class="product-3 fw-normal <?php echo $subtitle_cl; ?> sp-mb-5">
+                        <div class="product-3 fw-normal <?php echo $subtitle_cl; ?>">
                             <?php echo $subtitle_block; ?>
                         </div>
                         <?php
                         endif;
                         ?>
-                        <h2 class="h2 light <?php echo $text_cl; ?> sp-mb-5">
+                        <h2 class="h2 light <?php echo $text_cl; ?> sp-mt-5">
                             <?php echo $title_block; ?>
                         </h2>
-                        <div class="regular<?php echo $text_cl; ?> sp-mb-5">
+                        <div class="regular<?php echo $text_cl; ?> sp-mt-5 mb-0-p">
                             <?php echo $txt_block; ?>
                         </div>
                         <?php if($cta_block) : ?>
-                        <a class="btn <?php echo $btn_style; ?>" href="<?php echo $cta_block['url']; ?>"><span><?php echo $cta_block['title']; ?><span class="icon-filcar-icon-arrow-upr"></span></span></a>
+                        <a class="btn <?php echo $btn_style; ?> sp-mt-5" href="<?php echo $cta_block['url']; ?>"><span><?php echo $cta_block['title']; ?><span class="icon-filcar-icon-arrow-upr"></span></span></a>
                         <?php endif; ?>
                     </div>
                 </div>

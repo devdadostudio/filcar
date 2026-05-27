@@ -2,6 +2,10 @@
   .prefooter-contacts__addressblock.text-white {
     a {
       color: #fff;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }

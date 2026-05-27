@@ -63,7 +63,8 @@ $has_card = $card_url && $card_label;
 $section_classes = [
     'arredo-text-images-card',
     'arredo-text-images-card--' . $variant,
-    'sp-py-10',
+    'sp-pt-10',
+    'sp-pb-0',
     'sp-lg-py-16',
     'sp-sxl-py-20',
 ];
