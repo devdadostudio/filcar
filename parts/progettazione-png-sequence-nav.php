@@ -91,6 +91,25 @@ $section_ergonomia_title = $get_value('ergonomia_title', 'field_progettazione_pn
 $section_ergonomia_text = $get_value('ergonomia_text', 'field_progettazione_png_sequence_nav_ergonomia_text');
 $ergonomia_slides = $get_value('ergonomia_slides', 'field_progettazione_png_sequence_nav_ergonomia_slides');
 $ergonomia_slides = is_array($ergonomia_slides) ? array_values($ergonomia_slides) : [];
+$ergonomia_slides = array_values(array_filter($ergonomia_slides, static function ($slide) use ($get_image_data) {
+    $image = is_array($slide) && array_key_exists('image', $slide) ? $slide['image'] : $slide;
+    [$slide_url] = $get_image_data($image);
+
+    return (bool) $slide_url;
+}));
+
+$show_elements = (bool) $get_value('show_elements', 'field_progettazione_png_sequence_nav_show_elements');
+$elements_title = $get_value('elementi_title', 'field_progettazione_png_sequence_nav_elementi_title');
+$elements_text = $get_value('elementi_text', 'field_progettazione_png_sequence_nav_elementi_text');
+
+$compositions = $get_value('compositions', 'field_progettazione_png_sequence_nav_compositions');
+$compositions = is_array($compositions) ? array_values(array_filter($compositions)) : [];
+$compositions_title = $get_value('compositions_title', 'field_progettazione_png_sequence_nav_compositions_title');
+$composition_text = $get_value('compositions_text', 'field_progettazione_png_sequence_nav_compositions_text');
+
+$has_ergonomia = trim((string) $section_ergonomia_title) !== '' || trim((string) $section_ergonomia_text) !== '' || !empty($ergonomia_slides);
+$has_elements = $show_elements || trim((string) $elements_title) !== '' || trim((string) $elements_text) !== '';
+$has_compositions = !empty($compositions);
 
 $frames_folder = $normalize_relative_path((string) $get_value('frames_folder', 'field_progettazione_png_sequence_nav_frames_folder'));
 $frame_urls = [];
@@ -151,20 +170,48 @@ $nav_items = [
         'type' => 'sequence',
         'progress' => 1,
     ],
-    [
+];
+
+if ($has_ergonomia) {
+    $nav_items[] = [
         'id' => 'ergonomia',
-        'number' => '04',
+        'number' => str_pad((string) (count($nav_items) + 1), 2, '0', STR_PAD_LEFT),
         'label' => __('Ergonomia', 'filcar'),
         'type' => 'section',
-    ],
-    [
+    ];
+}
+
+if ($has_elements) {
+    $nav_items[] = [
+        'id' => 'elementi',
+        'number' => str_pad((string) (count($nav_items) + 1), 2, '0', STR_PAD_LEFT),
+        'label' => __('Elementi', 'filcar'),
+        'type' => 'section',
+    ];
+}
+
+if ($has_compositions) {
+    $nav_items[] = [
         'id' => 'composizioni',
-        'number' => '05',
+        'number' => str_pad((string) (count($nav_items) + 1), 2, '0', STR_PAD_LEFT),
         'label' => __('Composizioni', 'filcar'),
         'type' => 'section',
-    ],
-];
-$compositions_number = str_pad((string) count($nav_items), 2, '0', STR_PAD_LEFT);
+    ];
+}
+
+$ergonomia_number = '';
+$elements_number = '';
+$compositions_number = '';
+
+foreach ($nav_items as $nav_item) {
+    if ($nav_item['id'] === 'ergonomia') {
+        $ergonomia_number = $nav_item['number'];
+    } elseif ($nav_item['id'] === 'elementi') {
+        $elements_number = $nav_item['number'];
+    } elseif ($nav_item['id'] === 'composizioni') {
+        $compositions_number = $nav_item['number'];
+    }
+}
 
 $frame_to_progress = static function ($frame_number, $fallback_progress) use ($frame_urls) {
     if (!is_numeric($frame_number) || empty($frame_urls)) {
@@ -264,54 +311,69 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
                 </div>
             </div>
 
-            <section id="<?php echo esc_attr($block_id); ?>-ergonomia" class="progettazione-sequence-nav__ergonomia js-sequence-anchor-section" data-anchor-id="ergonomia">
-                <div class="container-fluid progettazione-sequence-nav__ergonomia-copy">
-                    <div class="row justify-content-center text-center">
-                        <div class="col-12 col-lg-9 col-uxl-7">
-                            <div class="product-3 text-secondary">04</div>
-                            <?php if ($section_ergonomia_title) : ?>
-                                <h2 class="h3 light sp-mt-2 sp-md-mt-3 sp-lg-mt-4 text-white"><?php echo esc_html($section_ergonomia_title); ?></h2>
-                            <?php endif; ?>
-                            <?php if ($section_ergonomia_text) : ?>
-                                <div class="p-big light text-white sp-mt-2 sp-md-mt-3 sp-lg-mt-4"><?php echo wp_kses_post(wpautop($section_ergonomia_text)); ?></div>
-                            <?php endif; ?>
+            <?php if ($has_ergonomia) : ?>
+                <section id="<?php echo esc_attr($block_id); ?>-ergonomia" class="progettazione-sequence-nav__ergonomia js-sequence-anchor-section" data-anchor-id="ergonomia">
+                    <div class="container-fluid progettazione-sequence-nav__ergonomia-copy">
+                        <div class="row justify-content-center text-center">
+                            <div class="col-12 col-lg-9 col-uxl-7">
+                                <?php if ($ergonomia_number) : ?>
+                                    <div class="product-3 text-secondary"><?php echo esc_html($ergonomia_number); ?></div>
+                                <?php endif; ?>
+                                <?php if ($section_ergonomia_title) : ?>
+                                    <h2 class="h3 light sp-mt-2 sp-md-mt-3 sp-lg-mt-4 text-white"><?php echo esc_html($section_ergonomia_title); ?></h2>
+                                <?php endif; ?>
+                                <?php if ($section_ergonomia_text) : ?>
+                                    <div class="p-big light text-white sp-mt-2 sp-md-mt-3 sp-lg-mt-4"><?php echo wp_kses_post(wpautop($section_ergonomia_text)); ?></div>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <?php if (!empty($ergonomia_slides)) : ?>
-                    <div class="progettazione-sequence-nav__ergonomia-carousel js-sequence-ergonomia-carousel">
-                        <div class="progettazione-sequence-nav__ergonomia-track">
-                            <?php foreach ($ergonomia_slides as $index => $slide) :
-                                $image = is_array($slide) && array_key_exists('image', $slide) ? $slide['image'] : $slide;
-                                [$slide_url, $slide_alt] = $get_image_data($image);
+                    <?php if (!empty($ergonomia_slides)) : ?>
+                        <div class="progettazione-sequence-nav__ergonomia-carousel js-sequence-ergonomia-carousel">
+                            <div class="progettazione-sequence-nav__ergonomia-track">
+                                <?php foreach ($ergonomia_slides as $index => $slide) :
+                                    $image = is_array($slide) && array_key_exists('image', $slide) ? $slide['image'] : $slide;
+                                    [$slide_url, $slide_alt] = $get_image_data($image);
+                                ?>
+                                    <figure class="progettazione-sequence-nav__ergonomia-slide<?php echo $index === 0 ? ' is-active' : ''; ?>">
+                                        <img src="<?php echo esc_url($slide_url); ?>" alt="<?php echo esc_attr($slide_alt); ?>" loading="lazy">
+                                    </figure>
+                                <?php endforeach; ?>
+                            </div>
 
-                                if (!$slide_url) {
-                                    continue;
-                                }
-                            ?>
-                                <figure class="progettazione-sequence-nav__ergonomia-slide<?php echo $index === 0 ? ' is-active' : ''; ?>">
-                                    <img src="<?php echo esc_url($slide_url); ?>" alt="<?php echo esc_attr($slide_alt); ?>" loading="lazy">
-                                </figure>
-                            <?php endforeach; ?>
+                            <?php if (count($ergonomia_slides) > 1) : ?>
+                                <button class="progettazione-sequence-nav__ergonomia-control progettazione-sequence-nav__ergonomia-control--prev js-sequence-ergonomia-prev" type="button" aria-label="<?php esc_attr_e('Slide precedente', 'filcar'); ?>">
+                                    <span aria-hidden="true">‹</span>
+                                </button>
+                                <button class="progettazione-sequence-nav__ergonomia-control progettazione-sequence-nav__ergonomia-control--next js-sequence-ergonomia-next" type="button" aria-label="<?php esc_attr_e('Slide successiva', 'filcar'); ?>">
+                                    <span aria-hidden="true">›</span>
+                                </button>
+                            <?php endif; ?>
                         </div>
+                    <?php endif; ?>
+                </section>
+            <?php endif; ?>
 
-                        <?php if (count($ergonomia_slides) > 1) : ?>
-                            <button class="progettazione-sequence-nav__ergonomia-control progettazione-sequence-nav__ergonomia-control--prev js-sequence-ergonomia-prev" type="button" aria-label="<?php esc_attr_e('Slide precedente', 'filcar'); ?>">
-                                <span aria-hidden="true">‹</span>
-                            </button>
-                            <button class="progettazione-sequence-nav__ergonomia-control progettazione-sequence-nav__ergonomia-control--next js-sequence-ergonomia-next" type="button" aria-label="<?php esc_attr_e('Slide successiva', 'filcar'); ?>">
-                                <span aria-hidden="true">›</span>
-                            </button>
-                        <?php endif; ?>
+            <?php if ($has_elements) : ?>
+                <section id="<?php echo esc_attr($block_id); ?>-elementi" class="progettazione-sequence-nav__plain-section js-sequence-anchor-section" data-anchor-id="elementi">
+                    <div class="container-fluid">
+                        <div class="row justify-content-center text-center">
+                            <div class="col-12 col-lg-9 col-uxl-7">
+                                <?php if ($elements_number) : ?>
+                                    <div class="product-3 text-secondary"><?php echo esc_html($elements_number); ?></div>
+                                <?php endif; ?>
+                                <h2 class="h3 light sp-mt-2 sp-md-mt-3 sp-lg-mt-4 text-white"><?php echo esc_html($elements_title ?: __('Elementi', 'filcar')); ?></h2>
+                                <?php if ($elements_text) : ?>
+                                    <div class="p-big light text-white sp-mt-2 sp-md-mt-3 sp-lg-mt-4"><?php echo wp_kses_post(wpautop($elements_text)); ?></div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
                     </div>
-                <?php endif; ?>
-            </section>
-            <?php
-            $compositions = $get_value('compositions', 'field_progettazione_png_sequence_nav_compositions');
-            $compositions_title = $get_value('compositions_title', 'field_progettazione_png_sequence_nav_compositions_title');
-            $composition_text = $get_value('compositions_text', 'field_progettazione_png_sequence_nav_compositions_text');
-            if(!empty($compositions)) {
+                </section>
+            <?php endif; ?>
+
+            <?php if ($has_compositions) :
                 $compositions_c = count($compositions);
             ?>
             <section id="<?php echo esc_attr($block_id); ?>-composizioni" class="progettazione-sequence-nav__compositions js-sequence-anchor-section" data-anchor-id="composizioni">
@@ -320,11 +382,13 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
                         <div class="col-12 col-lg-6">
                             <div class="progettazione-sequence-nav__compositions-title">
                                 <div class="progettazione-sequence-nav__compositions-number number-2"><?php echo esc_html($compositions_number); ?></div>
-                                <h2 class="progettazione-sequence-nav__compositions-heading subtitle-1"><?php esc_html_e('Composizioni', 'filcar'); ?></h2>
+                                <h2 class="progettazione-sequence-nav__compositions-heading subtitle-1"><?php echo esc_html($compositions_title ?: __('Composizioni', 'filcar')); ?></h2>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
-                            <p class="progettazione-sequence-nav__compositions-text"><?php echo esc_html($composition_text); ?></p>
+                            <?php if ($composition_text) : ?>
+                                <p class="progettazione-sequence-nav__compositions-text"><?php echo esc_html($composition_text); ?></p>
+                            <?php endif; ?>
                         </div>
                     </div>
 
@@ -354,7 +418,7 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
                     </div>
                 </div>
             </section>
-            <?php } ?>
+            <?php endif; ?>
         </div>
     </div>
 

@@ -72,8 +72,12 @@ $line_block_content_fields = [
         'ergonomia_title',
         'ergonomia_text',
         'ergonomia_slides',
+        'show_elements',
         'elementi_title',
         'elementi_text',
+        'compositions',
+        'compositions_title',
+        'compositions_text',
     ],
     'catalogs_launch' => [
         'title',
