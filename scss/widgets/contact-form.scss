@@ -117,6 +117,9 @@ $contactFormRadius: 6px;
   p {
     color: $grey800;
   }
+  @include media-breakpoint-down(lg) {
+    text-align: center;
+  }
 }
 
 .contact-form-block__text h2,
@@ -241,6 +244,9 @@ $contactFormRadius: 6px;
   }
   .wpcf7-form .cf7-submit-wrap > button {
     padding: 8px 80px;
+    @include media-breakpoint-down(lg) {
+      padding: 8px 20px;
+    }
   }
   .wpcf7-spinner {
     margin: 12px 0 0;

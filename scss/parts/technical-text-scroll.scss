@@ -65,6 +65,12 @@
 
   &__cta {
     margin-top: clamp(26px, 3vw, 44px);
+    @include media-breakpoint-down(lg) {
+      width: 100%;
+      > span{
+        justify-content: center;
+      }
+    }
   }
 
   &:not(.technical-text-scroll--has-intro) {

@@ -59,7 +59,7 @@
                             <?php filcar_main_menu_nav(); ?>
                         </div>
                     </div>
-                    <div class="flc-nav-container d-flex align-items-center sp-gap-4 sp-md-gap-3 sp-xl-gap-6 sp-sxl-gap-7 g-col-6 g-col-lg-4 justify-content-end">
+                    <div class="flc-nav-container d-flex align-items-center sp-gap-2 sp-md-gap-3 sp-xl-gap-6 sp-sxl-gap-7 g-col-6 g-col-lg-4 justify-content-end">
                         <div class="search-toggle text-white cursor-pointer">
                             <i class="icon-filcar-icon-arrow-zoom"></i>
                         </div>
@@ -67,7 +67,7 @@
                             Contatti
                             <span class="icon-filcar-icon-arrow-upr"></span>
                         </a>
-                        <a class="btn no-btn text-white" href="">
+                        <a class="btn no-btn text-white d-none d-lg-block" href="">
                             IT
                             <span class="icon-filcar-icon-arrow-downr"></span>
                         </a>

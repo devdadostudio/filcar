@@ -22,7 +22,7 @@ $page_title = get_the_title();
 	<div class="container-fluid">
 		<div class="row g-3 g-lg-4 align-items-stretch sp-px-2">
 
-			<div class="col-12 col-lg-6 sp-mb-4">
+			<div class="col-12 col-lg-6 sp-lg-mb-4">
 				<div class="contact-form-block__media position-relative h-100">
 					<figure class="contact-form-block__figure mb-0 h-100 position-relative">
 
@@ -87,13 +87,21 @@ $page_title = get_the_title();
 			</div>
 
 			<div class="col-12 col-lg-6 sp-mb-4">
-				<div class="contact-form-block__content h-100 d-flex flex-column sp-pt-4 sp-xl-pt-6 sp-pl-4 sp-xl-pl-6 sp-pr-4 sp-xl-pr-6 justify-content-center">
+				<div class="contact-form-block__content h-100 d-flex flex-column sp-pt-2sp-lg-pt-4 sp-xl-pt-6 sp-lg-pl-4 sp-xl-pl-6 sp-lg-pr-4 sp-xl-pr-6 justify-content-center">
 
 					<?php 
                     $page_title = get_the_title();
                     if ($block_text) : ?>
 						<div class="contact-form-block__text sp-mb-3">
-                            <h2 class="h5"><?php echo $block_subtitle; ?> <span class="h5"><?php echo esc_html($page_title); ?></span>?</h2>
+							<?php if(is_singular('product')){ ?>
+								<h2 class="h5"><?php echo $block_subtitle; ?> <span class="h5"><?php echo esc_html($page_title); ?></span>?</h2>
+							<?php
+							}else{
+							?>
+								<h2 class="h5"><?php echo "Richiedi informazioni"; ?></h2>
+							<?php
+							}
+							?>
                             <div class="p-small"><?php echo $block_text; ?></div>
 						</div>
 					<?php endif; ?>

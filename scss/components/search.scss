@@ -24,6 +24,9 @@
                 padding: 0 1rem;
                 color: $white;
                 outline: none;
+                @include media-breakpoint-down(lg) {
+                    width: 100%;
+                }
             }
             .search-submit {
                 aspect-ratio: 1;
