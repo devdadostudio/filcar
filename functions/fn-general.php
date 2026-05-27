@@ -266,7 +266,10 @@ function register_taxonomy_products() {
         'show_ui'           => true,
         'show_admin_column' => true,
         'query_var'         => true,
-        'rewrite'           => array( 'slug' => 'cat-prod' ),
+        'rewrite'           => array(
+            'slug'         => 'catalogo',
+            'hierarchical' => true,
+        ),
         'show_in_rest'      => true
     );
 
@@ -296,7 +299,10 @@ function registra_tassonomia_elementi_arredo() {
         'show_ui'           => true,
         'show_admin_column' => true,
         'query_var'         => true,
-        'rewrite'           => array( 'slug' => 'catalogo' ),
+        'rewrite'           => array(
+            'slug'         => 'catalogo',
+            'hierarchical' => true,
+        ),
         'show_in_rest'      => true
     );
 
@@ -305,6 +311,68 @@ function registra_tassonomia_elementi_arredo() {
 
 add_action( 'init', 'registra_tassonomia_elementi_arredo' );
 
+function filcar_get_taxonomy_term_by_path($taxonomy, $path) {
+    $slugs = array_values(array_filter(explode('/', trim((string) $path, '/'))));
+
+    if (empty($slugs)) {
+        return null;
+    }
+
+    $terms = get_terms(array(
+        'taxonomy'   => $taxonomy,
+        'slug'       => end($slugs),
+        'hide_empty' => false,
+    ));
+
+    if (is_wp_error($terms) || empty($terms)) {
+        return null;
+    }
+
+    $expected_ancestors = array_slice($slugs, 0, -1);
+
+    foreach ($terms as $term) {
+        $ancestor_ids = array_reverse(get_ancestors($term->term_id, $taxonomy, 'taxonomy'));
+        $ancestor_slugs = array();
+
+        foreach ($ancestor_ids as $ancestor_id) {
+            $ancestor = get_term($ancestor_id, $taxonomy);
+
+            if ($ancestor && !is_wp_error($ancestor)) {
+                $ancestor_slugs[] = $ancestor->slug;
+            }
+        }
+
+        if ($ancestor_slugs === $expected_ancestors) {
+            return $term;
+        }
+    }
+
+    return null;
+}
+
+add_filter('request', function ($query_vars) {
+    if (empty($query_vars['categoria-elemento-arredo'])) {
+        return $query_vars;
+    }
+
+    $path = $query_vars['categoria-elemento-arredo'];
+
+    if (filcar_get_taxonomy_term_by_path('categoria-elemento-arredo', $path)) {
+        return $query_vars;
+    }
+
+    $product_term = filcar_get_taxonomy_term_by_path('cat-prod', $path);
+
+    if ($product_term instanceof WP_Term) {
+        unset($query_vars['categoria-elemento-arredo']);
+        $query_vars['taxonomy'] = 'cat-prod';
+        $query_vars['term'] = $product_term->slug;
+        $query_vars['cat-prod'] = $path;
+    }
+
+    return $query_vars;
+});
+
 add_filter('pre_handle_404', function ($preempt, $wp_query) {
     if (is_admin() || !$wp_query instanceof WP_Query) {
         return $preempt;
@@ -312,7 +380,7 @@ add_filter('pre_handle_404', function ($preempt, $wp_query) {
 
     $queried_object = $wp_query->get_queried_object();
 
-    if ($wp_query->is_tax('categoria-elemento-arredo') && $queried_object instanceof WP_Term) {
+    if (($wp_query->is_tax('categoria-elemento-arredo') || $wp_query->is_tax('cat-prod')) && $queried_object instanceof WP_Term) {
         $wp_query->is_404 = false;
         status_header(200);
 
