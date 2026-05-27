@@ -55,6 +55,22 @@ $get_image_data = static function ($image) {
     return [$image_url, $image_alt];
 };
 
+$current_term = null;
+$queried_object = get_queried_object();
+
+if ($queried_object instanceof WP_Term) {
+    $current_term = $queried_object;
+} elseif (is_string($field_source) && strpos($field_source, '_') !== false) {
+    $term_separator_position = strrpos($field_source, '_');
+    $term_taxonomy = substr($field_source, 0, $term_separator_position);
+    $term_id = (int) substr($field_source, $term_separator_position + 1);
+    $field_source_term = $term_id ? get_term($term_id, $term_taxonomy) : null;
+
+    if ($field_source_term instanceof WP_Term && !is_wp_error($field_source_term)) {
+        $current_term = $field_source_term;
+    }
+}
+
 $theme_variant = $get_value('theme_variant', 'field_progettazione_png_sequence_nav_theme_variant');
 $theme_variant = in_array($theme_variant, ['dark', 'light'], true) ? $theme_variant : 'dark';
 $section_class = 'progettazione-sequence-nav progettazione-sequence-nav--' . $theme_variant . ' js-progettazione-sequence-nav';
@@ -101,6 +117,21 @@ $ergonomia_slides = array_values(array_filter($ergonomia_slides, static function
 $show_elements = (bool) $get_value('show_elements', 'field_progettazione_png_sequence_nav_show_elements');
 $elements_title = $get_value('elementi_title', 'field_progettazione_png_sequence_nav_elementi_title');
 $elements_text = $get_value('elementi_text', 'field_progettazione_png_sequence_nav_elementi_text');
+$element_terms = [];
+
+if ($show_elements && $current_term instanceof WP_Term) {
+    $child_terms = get_terms([
+        'taxonomy' => $current_term->taxonomy,
+        'parent' => $current_term->term_id,
+        'hide_empty' => false,
+        'orderby' => 'name',
+        'order' => 'ASC',
+    ]);
+
+    if (!is_wp_error($child_terms) && is_array($child_terms)) {
+        $element_terms = $child_terms;
+    }
+}
 
 $compositions = $get_value('compositions', 'field_progettazione_png_sequence_nav_compositions');
 $compositions = is_array($compositions) ? array_values(array_filter($compositions)) : [];
@@ -108,7 +139,7 @@ $compositions_title = $get_value('compositions_title', 'field_progettazione_png_
 $composition_text = $get_value('compositions_text', 'field_progettazione_png_sequence_nav_compositions_text');
 
 $has_ergonomia = trim((string) $section_ergonomia_title) !== '' || trim((string) $section_ergonomia_text) !== '' || !empty($ergonomia_slides);
-$has_elements = $show_elements || trim((string) $elements_title) !== '' || trim((string) $elements_text) !== '';
+$has_elements = $show_elements && !empty($element_terms);
 $has_compositions = !empty($compositions);
 
 $frames_folder = $normalize_relative_path((string) $get_value('frames_folder', 'field_progettazione_png_sequence_nav_frames_folder'));
@@ -356,18 +387,34 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
             <?php endif; ?>
 
             <?php if ($has_elements) : ?>
-                <section id="<?php echo esc_attr($block_id); ?>-elementi" class="progettazione-sequence-nav__plain-section js-sequence-anchor-section" data-anchor-id="elementi">
+                <section id="<?php echo esc_attr($block_id); ?>-elementi" class="progettazione-sequence-nav__compositions js-sequence-anchor-section" data-anchor-id="elementi">
                     <div class="container-fluid">
-                        <div class="row justify-content-center text-center">
-                            <div class="col-12 col-lg-9 col-uxl-7">
-                                <?php if ($elements_number) : ?>
-                                    <div class="product-3 text-secondary"><?php echo esc_html($elements_number); ?></div>
-                                <?php endif; ?>
-                                <h2 class="h3 light sp-mt-2 sp-md-mt-3 sp-lg-mt-4 text-white"><?php echo esc_html($elements_title ?: __('Elementi', 'filcar')); ?></h2>
+                        <div class="row progettazione-sequence-nav__compositions-head">
+                            <div class="col-12 col-lg-6">
+                                <div class="progettazione-sequence-nav__compositions-title">
+                                    <div class="progettazione-sequence-nav__compositions-number number-2"><?php echo esc_html($elements_number); ?></div>
+                                    <h2 class="progettazione-sequence-nav__compositions-heading subtitle-1"><?php echo esc_html($elements_title ?: __('Elementi', 'filcar')); ?></h2>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
                                 <?php if ($elements_text) : ?>
-                                    <div class="p-big light text-white sp-mt-2 sp-md-mt-3 sp-lg-mt-4"><?php echo wp_kses_post(wpautop($elements_text)); ?></div>
+                                    <div class="progettazione-sequence-nav__compositions-text"><?php echo wp_kses_post(wpautop($elements_text)); ?></div>
                                 <?php endif; ?>
                             </div>
+                        </div>
+
+                        <div class="row progettazione-sequence-nav__compositions-grid">
+                            <?php foreach ($element_terms as $element_term) : ?>
+                                <?php
+                                get_template_part('parts/card/card-elementi', null, [
+                                    'term_id' => $element_term->term_id,
+                                    'taxonomy' => $element_term->taxonomy,
+                                    'class' => 'col-6 col-lg-3',
+                                    'name_class' => 'h5',
+                                    'class_figure' => 'aspect-ratio-1x1',
+                                ]);
+                                ?>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </section>
