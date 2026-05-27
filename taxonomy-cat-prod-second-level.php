@@ -29,6 +29,7 @@ $get_acf_text = function ($field, $key) {
     return is_array($field) && !empty($field[$key]) ? $field[$key] : '';
 };
 
+$technical_text_scroll = $get_acf_group('sezione_testo_animato');
 $content_sections = [];
 $acf_sections = [
     [
@@ -162,6 +163,14 @@ if (!empty($faq_items)) {
             </div>
         </div>
     </section>
+
+    <?php
+    get_template_part('parts/technical-text-scroll', null, [
+        'field_values' => $technical_text_scroll,
+        'field_source' => $term_key,
+        'block_id' => 'category-technical-text-scroll',
+    ]);
+    ?>
 
     <section id="prodotti" class="category-products-placeholder js-category-anchor-panel sp-pt-4 sp-lg-pt-7 sp-sxl-pt-10 sp-pb-3 sp-lg-pb-8 sp-sxl-pb-15 sp-uxl-pb-19" data-anchor-target="#prodotti">
         <div class="container-fluid">
