@@ -302,7 +302,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const navWrap = document.querySelector(".js-anchor-nav-wrap");
   const navLinks = gsap.utils.toArray(".anchor-link");
   const sections = gsap.utils.toArray(".js-section");
-  const stickyButton = document.querySelector(".button-sticky-container");
+  const stickyButton = document.querySelector(
+    ".product-anchor-content .button-sticky-container:not(.button-sticky-container--global)",
+  );
+  const globalStickyButtons = gsap.utils.toArray(
+    ".button-sticky-container--global",
+  );
   const panoramica = document.querySelector("#panoramica");
   const correlati = document.querySelector("#correlati");
 
@@ -456,7 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 
-  if (stickyButton) {
+  if (stickyButton && panoramica && correlati) {
     stickyButton.classList.remove("is-visible");
   }
 
@@ -478,6 +483,21 @@ document.addEventListener("DOMContentLoaded", () => {
       onLeaveBack: showButton,
     });
   }
+
+  globalStickyButtons.forEach((button) => {
+    const contactForm = document.querySelector("#contactForm");
+    button.classList.remove("is-visible");
+
+    ScrollTrigger.create({
+      start: () => (ScrollTrigger.maxScroll(window) || 0) * 0.1,
+      endTrigger: contactForm || undefined,
+      end: contactForm ? "top bottom" : "max",
+      onEnter: () => button.classList.add("is-visible"),
+      onLeaveBack: () => button.classList.remove("is-visible"),
+      onLeave: () => button.classList.remove("is-visible"),
+      onEnterBack: () => button.classList.add("is-visible"),
+    });
+  });
 
   window.addEventListener("load", () => {
     const hash = window.location.hash;
