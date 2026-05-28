@@ -6,6 +6,8 @@
   --carousel-highlight-media-hover-height: calc(var(--carousel-highlight-card-unit) * 300 / 327);
 
   position: relative;
+  z-index: 10;
+  isolation: isolate;
   background: $primary;
   color: $white;
   overflow: hidden;
