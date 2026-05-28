@@ -69,10 +69,10 @@
     &::before {
       background-color: #{$secondary};
     }
-    svg > path{
+    svg > path {
       stroke: #{$white};
     }
-    &:hover svg > path{
+    &:hover svg > path {
       stroke: #{$white};
     }
   }
@@ -98,10 +98,10 @@
     &::before {
       background-color: #{$secondary};
     }
-    svg > path{
+    svg > path {
       stroke: #{$primary};
     }
-    &:hover svg > path{
+    &:hover svg > path {
       stroke: #{$white};
     }
   }
@@ -128,10 +128,10 @@
     &::before {
       background-color: #{$primary};
     }
-    svg > path{
+    svg > path {
       stroke: #{$primary};
     }
-    &:hover svg > path{
+    &:hover svg > path {
       stroke: #{$white};
     }
   }
@@ -153,23 +153,23 @@
     --bs-btn-disabled-border-color: #{$grey-disabled};
 
     --bs-btn-border-width: 1px;
-    
+
     &::before {
       background-color: #{$white};
     }
-    svg > path{
+    svg > path {
       stroke: #{$white};
     }
-    &:hover svg > path{
+    &:hover svg > path {
       stroke: #{$primary};
     }
   }
-  &.w-icon > span{
+  &.w-icon > span {
     display: flex;
     align-items: center;
     gap: 0.5rem;
   }
-  &.button-cta{
+  /* &.button-cta{
     background-color: #47474B80;
     color: #ffffff;
     white-space: nowrap;
@@ -189,8 +189,30 @@
       justify-content: center;
       align-items: center;
     }
+  } */
+  &.button-cta {
+    background-color: #47474b80;
+    color: #ffffff;
+    white-space: nowrap;
+    padding: 0.25rem 0.25rem 0.25rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    &:after {
+      content: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOCIgaGVpZ2h0PSIxNSIgdmlld0JveD0iMCAwIDggMTUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0wLjUwMDUwMiAxNC4xMTIzTDYuNTk2NzkgOC4wMTY5MkM2Ljk4ODI3IDcuNjI1NSA2Ljk4ODI3IDYuOTg5NDcgNi41OTY3OSA2LjU5ODA0TDAuNDk5MDAyIDAuNTAxMDI0IiBzdHJva2U9IndoaXRlIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+");
+      position: relative;
+      display: inline-flex;
+      background: $secondary;
+      width: 30px;
+      height: 30px;
+      aspect-ratio: 1;
+      border-radius: 4px;
+      color: #ffffff;
+      justify-content: center;
+      align-items: center;
+    }
   }
-  &.no-btn{
+  &.no-btn {
     padding: 0 !important;
     border: none !important;
   }
@@ -202,5 +224,5 @@
 .btn-100-mb {
   @include media-breakpoint-down(lg) {
     width: 100% !important;
-  } 
+  }
 }
