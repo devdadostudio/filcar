@@ -1381,6 +1381,49 @@ function initParallaxSectorBlock() {
 document.addEventListener("DOMContentLoaded", initParallaxSectorBlock);
 filcarOnLayoutRefresh(initParallaxSectorBlock);
 
+function initArredoTextImagesPatternParallax() {
+  if (!window.gsap || !window.ScrollTrigger) return;
+
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  if (reduceMotion) return;
+
+  document.querySelectorAll(".arredo-text-images-card").forEach((block) => {
+    if (block.dataset.arredoPatternReady === "true") return;
+
+    const pattern = block.querySelector(".js-arredo-text-images-pattern");
+
+    if (!pattern) return;
+
+    block.dataset.arredoPatternReady = "true";
+
+    const setPatternY = gsap.quickTo(pattern, "y", {
+      duration: 0.5,
+      ease: "power2.out",
+    });
+
+    ScrollTrigger.create({
+      trigger: block,
+      start: "top bottom",
+      end: "bottom top",
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        setPatternY(gsap.utils.mapRange(0, 1, -80, 110, self.progress));
+      },
+      onRefresh: (self) => {
+        gsap.set(pattern, {
+          y: gsap.utils.mapRange(0, 1, -80, 110, self.progress),
+        });
+      },
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initArredoTextImagesPatternParallax);
+filcarOnLayoutRefresh(initArredoTextImagesPatternParallax);
+
 function initHeroHotspotPositionDetector() {
   const params = new URLSearchParams(window.location.search);
   const detectorParams = [

@@ -72,6 +72,8 @@ $section_classes = [
 
 <section id="<?php echo esc_attr($block_id); ?>" class="<?php echo esc_attr(implode(' ', $section_classes)); ?>">
     <div class="container-fluid">
+        <span class="arredo-text-images-card__pattern js-arredo-text-images-pattern" style="background-image: url('<?php echo esc_url(get_template_directory_uri() . '/assets/img/pattern1.png'); ?>');" aria-hidden="true"></span>
+
         <div class="row arredo-text-images-card__intro">
             <div class="col-12 col-lg-4">
                 <?php if ($logo_icon) : ?>
