@@ -497,7 +497,7 @@
             trigger: floatingCard,
             start: "bottom bottom-=24",
             endTrigger: ergonomiaSection,
-            end: "top top-=120",
+            end: "top top-=260",
             pin: floatingCard,
             pinSpacing: false,
             pinReparent: true,

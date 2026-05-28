@@ -97,7 +97,7 @@ if (is_array($floating_cta_link)) {
 }
 
 [$floating_cta_image_url, $floating_cta_image_alt] = $get_image_data($floating_cta_image);
-$has_floating_cta = $floating_cta_title && $floating_cta_url;
+$has_floating_cta = $floating_cta_title || $floating_cta_image_url;
 
 $sequence_points = $get_value('sequence_points', 'field_progettazione_png_sequence_nav_sequence_points');
 $sequence_points = is_array($sequence_points) ? array_values($sequence_points) : [];
@@ -320,18 +320,26 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
                                     <?php if ($index === 0 && $has_floating_cta) : ?>
                                         <div class="progettazione-sequence-nav__floating-card js-sequence-anchor-floating-card">
                                             <div class="hero-sector__card-item">
-                                                <a class="hero-sector__card progettazione-sequence-nav__floating-card-link<?php echo !$floating_cta_image_url ? ' progettazione-sequence-nav__floating-card-link--no-media' : ''; ?>" href="<?php echo esc_url($floating_cta_url); ?>" target="<?php echo esc_attr($floating_cta_target); ?>"<?php echo $floating_cta_target === '_blank' ? ' rel="noopener"' : ''; ?>>
+                                                <?php if ($floating_cta_url) : ?>
+                                                    <a class="hero-sector__card progettazione-sequence-nav__floating-card-link<?php echo !$floating_cta_image_url ? ' progettazione-sequence-nav__floating-card-link--no-media' : ''; ?>" href="<?php echo esc_url($floating_cta_url); ?>" target="<?php echo esc_attr($floating_cta_target); ?>"<?php echo $floating_cta_target === '_blank' ? ' rel="noopener"' : ''; ?>>
+                                                <?php else : ?>
+                                                    <div class="hero-sector__card progettazione-sequence-nav__floating-card-link<?php echo !$floating_cta_image_url ? ' progettazione-sequence-nav__floating-card-link--no-media' : ''; ?>">
+                                                <?php endif; ?>
                                                     <?php if ($floating_cta_image_url) : ?>
                                                         <span class="hero-sector__card-media">
                                                             <img src="<?php echo esc_url($floating_cta_image_url); ?>" alt="<?php echo esc_attr($floating_cta_image_alt); ?>" loading="lazy">
                                                         </span>
                                                     <?php endif; ?>
 
-                                                    <span class="hero-sector__card-copy">
-                                                        <span class="hero-sector__card-title p-big"><?php echo esc_html($floating_cta_title); ?></span>
-                                                        <i class="hero-sector__card-icon icon icon-filcar-icon-arrow-downr" aria-hidden="true"></i>
-                                                    </span>
-                                                </a>
+                                                    <?php if ($floating_cta_title) : ?>
+                                                        <span class="hero-sector__card-copy">
+                                                            <span class="hero-sector__card-title p-big"><?php echo esc_html($floating_cta_title); ?></span>
+                                                            <?php if ($floating_cta_url) : ?>
+                                                                <i class="hero-sector__card-icon icon icon-filcar-icon-arrow-downr" aria-hidden="true"></i>
+                                                            <?php endif; ?>
+                                                        </span>
+                                                    <?php endif; ?>
+                                                <?php echo $floating_cta_url ? '</a>' : '</div>'; ?>
                                             </div>
                                         </div>
                                     <?php endif; ?>
