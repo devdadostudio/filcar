@@ -60,7 +60,7 @@ if (!function_exists('filcar_psb_image_data')) {
 }
 
 if (!function_exists('filcar_psb_term_link_data')) {
-    function filcar_psb_term_link_data($term_value, $taxonomy = 'cat-prod') {
+    function filcar_psb_term_link_data($term_value) {
         $data = [
             'url' => '',
             'title' => '',
@@ -68,9 +68,13 @@ if (!function_exists('filcar_psb_term_link_data')) {
 
         if ($term_value instanceof WP_Term) {
             $term = $term_value;
+        } elseif (is_string($term_value) && strpos($term_value, ':') !== false) {
+            [$taxonomy, $term_id] = explode(':', $term_value, 2);
+            $term = get_term((int) $term_id, $taxonomy);
         } elseif (is_numeric($term_value)) {
-            $term = get_term((int) $term_value, $taxonomy);
+            $term = get_term((int) $term_value);
         } elseif (is_array($term_value) && !empty($term_value['term_id'])) {
+            $taxonomy = $term_value['taxonomy'] ?? '';
             $term = get_term((int) $term_value['term_id'], $taxonomy);
         } else {
             $term = null;
