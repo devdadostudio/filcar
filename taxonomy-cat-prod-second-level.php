@@ -31,41 +31,35 @@ $get_acf_text = function ($field, $key) {
 
 $technical_text_scroll = $get_acf_group('sezione_testo_animato');
 $content_sections = [];
-$acf_sections = [
+$acf_sections = get_field('sections_content', $term_key);
+/* $acf_sections = [
     [
         'field' => 'caratteristiche',
         'id' => 'caratteristiche',
         'label' => __('Caratteristiche e funzionamento', 'filcar'),
-        'title_class' => 'h2 light',
-        'body_class' => 'p-big',
     ],
     [
         'field' => 'criteri',
         'id' => 'criteri-di-scelta',
         'label' => __('Criteri di scelta', 'filcar'),
-        'title_class' => 'h1 fw-normal',
-        'body_class' => 'p-big fw-normal',
     ],
     [
         'field' => 'manutenzione',
         'id' => 'manutenzione-sicurezza',
         'label' => __('Manutenzione e sicurezza', 'filcar'),
-        'title_class' => 'h1 fw-normal',
-        'body_class' => 'p-big fw-normal',
     ],
     [
         'field' => 'applicazioni',
         'id' => 'applicazioni',
         'label' => __('Applicazioni', 'filcar'),
-        'title_class' => 'h1 fw-normal',
-        'body_class' => 'p-big fw-normal',
     ],
-];
+]; */
 
 foreach ($acf_sections as $section_config) {
-    $section_field = $get_acf_group($section_config['field']);
-    $section_title = $get_acf_text($section_field, 'titolo');
-    $section_text = $get_acf_text($section_field, 'testo');
+    $section_title = $section_config['title'];
+    $section_text = $section_config['txt'];
+    $section_label = $section_config['title_index'];
+    $section_id = str_replace(' ', '-', strtolower($section_label));
 
     if (empty($section_title) && empty($section_text)) {
         continue;
@@ -74,6 +68,8 @@ foreach ($acf_sections as $section_config) {
     $content_sections[] = array_merge($section_config, [
         'title' => $section_title,
         'text' => $section_text,
+        'id' => $section_id,
+        'label' => $section_label,
     ]);
 }
 
@@ -226,7 +222,6 @@ if (!empty($faq_items)) {
                         <?php endif; ?>
                     </div>
                 </aside>
-
                 <div class="col-12 col-lg-6 offset-lg-1 category-anchor-sections__content">
                     <?php if (empty($content_sections) && empty($faq_items)) : ?>
                         <div class="category-anchor-panel">
@@ -239,10 +234,10 @@ if (!empty($faq_items)) {
                             <article id="<?php echo esc_attr($section['id']); ?>" class="category-anchor-panel js-category-anchor-panel" data-anchor-target="#<?php echo esc_attr($section['id']); ?>">
                                 <div class="category-anchor-panel__number number-3"><?php echo esc_html(str_pad((string) ($section_index + 2), 2, '0', STR_PAD_LEFT)); ?></div>
                                 <?php if (!empty($section['title'])) : ?>
-                                    <h2 class="category-anchor-panel__title <?php echo esc_attr($section['title_class']); ?>"><?php echo esc_html($section['title']); ?></h2>
+                                    <h2 class="category-anchor-panel__title h2 light"><?php echo esc_html($section['title']); ?></h2>
                                 <?php endif; ?>
                                 <?php if (!empty($section['text'])) : ?>
-                                    <div class="category-anchor-panel__body <?php echo esc_attr($section['body_class']); ?>">
+                                    <div class="category-anchor-panel__body p-big fw-normal">
                                         <?php echo wp_kses_post($section['text']); ?>
                                     </div>
                                 <?php endif; ?>

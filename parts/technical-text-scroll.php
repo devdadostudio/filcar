@@ -129,9 +129,7 @@ $section_classes = [
     'js-technical-text-scroll',
 ];
 
-if ($show_technical_bg) {
-    $section_classes[] = 'technical-text-scroll--has-technical-bg';
-}
+$section_classes[] = 'technical-text-scroll--has-technical-bg';
 
 if ($intro) {
     $section_classes[] = 'technical-text-scroll--has-intro';
@@ -149,6 +147,8 @@ if ($has_viewport_height) {
 <section id="<?php echo esc_attr($block_id); ?>" class="<?php echo esc_attr(implode(' ', $section_classes)); ?> <?php echo $sectionBg; ?>">
     <?php if ($show_technical_bg) : ?>
         <img class="technical-text-scroll__technical-bg" src="<?php echo esc_url($technical_image['url']); ?>" alt="" aria-hidden="true">
+    <?php else : ?>
+        <img class="technical-text-scroll__technical-bg" src="https://placehold.co/600x400/F0ABFC/FFF" alt="" aria-hidden="true">
     <?php endif; ?>
 
     <div class="container-fluid technical-text-scroll__inner">
