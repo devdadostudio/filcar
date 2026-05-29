@@ -385,14 +385,8 @@
 
       const scrollToSection = (target) => {
         const offset = getHeaderHeight() + 8;
-
-        if (smoother) {
-          smoother.scrollTo(target, true, `top top+=${offset}`);
-          return;
-        }
-
         const y = target.getBoundingClientRect().top + getScrollTop() - offset;
-        scrollToY(y);
+        scrollToY(y, null, true);
       };
 
       const getSequenceScrollY = (progress) => {
@@ -488,16 +482,17 @@
         }
 
         if (floatingCard && !isMobileViewport()) {
-          const ergonomiaSection =
-            sections.find((section) => section.dataset.anchorId === "ergonomia") ||
-            sections[0] ||
+          const endSection =
+            sections.find((section) => section.dataset.anchorId === "composizioni") ||
+            sections.find((section) => section.dataset.anchorId === "elementi") ||
+            sections[sections.length - 1] ||
             scroll;
 
           ScrollTrigger.create({
             trigger: floatingCard,
             start: "bottom bottom-=24",
-            endTrigger: ergonomiaSection,
-            end: "top top-=260",
+            endTrigger: endSection,
+            end: "bottom bottom-=24",
             pin: floatingCard,
             pinSpacing: false,
             pinReparent: true,

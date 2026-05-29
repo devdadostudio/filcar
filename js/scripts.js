@@ -1,3 +1,92 @@
+const filcarInitialScrollLock = (() => {
+  if (window.location.hash) return null;
+
+  let locked = true;
+  let previousHtmlOverflow = "";
+  let previousHtmlScrollBehavior = "";
+  let previousBodyOverflow = "";
+  let htmlLocked = false;
+  let bodyLocked = false;
+
+  const scrollKeys = new Set([
+    " ",
+    "ArrowDown",
+    "ArrowUp",
+    "End",
+    "Home",
+    "PageDown",
+    "PageUp",
+  ]);
+
+  const preventScroll = (event) => {
+    if (!locked) return;
+    event.preventDefault();
+    window.scrollTo(0, 0);
+  };
+
+  const preventScrollKeys = (event) => {
+    if (!locked || !scrollKeys.has(event.key)) return;
+    event.preventDefault();
+    window.scrollTo(0, 0);
+  };
+
+  const lock = () => {
+    if (!htmlLocked) {
+      previousHtmlOverflow = document.documentElement.style.overflow;
+      previousHtmlScrollBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.overflow = "hidden";
+      document.documentElement.style.scrollBehavior = "auto";
+      htmlLocked = true;
+    }
+
+    window.scrollTo(0, 0);
+
+    if (document.body && !bodyLocked) {
+      previousBodyOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      bodyLocked = true;
+    }
+  };
+
+  const unlock = () => {
+    if (!locked) return;
+
+    locked = false;
+    document.documentElement.style.overflow = previousHtmlOverflow;
+    document.documentElement.style.scrollBehavior = previousHtmlScrollBehavior;
+
+    if (document.body && bodyLocked) {
+      document.body.style.overflow = previousBodyOverflow;
+    }
+
+    window.removeEventListener("wheel", preventScroll, { capture: true });
+    window.removeEventListener("touchmove", preventScroll, { capture: true });
+    window.removeEventListener("keydown", preventScrollKeys, { capture: true });
+  };
+
+  window.addEventListener("wheel", preventScroll, {
+    passive: false,
+    capture: true,
+  });
+  window.addEventListener("touchmove", preventScroll, {
+    passive: false,
+    capture: true,
+  });
+  window.addEventListener("keydown", preventScrollKeys, {
+    passive: false,
+    capture: true,
+  });
+
+  lock();
+  document.addEventListener("DOMContentLoaded", lock, { once: true });
+  window.addEventListener("load", () => window.setTimeout(unlock, 700), {
+    once: true,
+  });
+  window.setTimeout(unlock, 6000);
+
+  return { unlock };
+})();
+
 jQuery(document).ready(function () {
   function initHeroVideoSlider() {
     document.querySelectorAll(".js-hero-video-slider").forEach((slider) => {
@@ -196,6 +285,11 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const filcarLayoutRefreshCallbacks = [];
 let filcarLayoutRefreshTimer = null;
+
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+
 const filcarStartAtTop = filcarShouldStartAtTop();
 
 function filcarShouldStartAtTop() {
@@ -215,10 +309,6 @@ function filcarShouldStartAtTop() {
 
 function filcarForceStartAtTop() {
   if (!filcarStartAtTop) return;
-
-  if ("scrollRestoration" in history) {
-    history.scrollRestoration = "manual";
-  }
 
   const previousScrollBehavior = document.documentElement.style.scrollBehavior;
 

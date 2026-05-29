@@ -46,6 +46,7 @@
       let activeIndex = 0;
       let resizeFrame = null;
       let layoutSignature = "";
+      let canBuildPinnedTrigger = document.readyState === "complete";
 
       const isMobileViewport = () =>
         window.matchMedia("(max-width: 767.98px)").matches;
@@ -185,6 +186,8 @@
       setTrackX(0);
 
       const createScrollTrigger = (preserveProgress = false) => {
+        if (!canBuildPinnedTrigger) return;
+
         const previousProgress =
           preserveProgress && trigger ? trigger.progress : null;
 
@@ -240,7 +243,24 @@
         }
       };
 
-      createScrollTrigger();
+      const createScrollTriggerWhenReady = () => {
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => {
+            canBuildPinnedTrigger = true;
+            createScrollTrigger();
+            scheduleScrollRefresh(null, 80);
+            window.setTimeout(() => scheduleScrollRefresh(null, 0), 360);
+          });
+        });
+      };
+
+      if (document.readyState === "complete") {
+        createScrollTriggerWhenReady();
+      } else {
+        window.addEventListener("load", createScrollTriggerWhenReady, {
+          once: true,
+        });
+      }
 
       const refreshCarousel = () => {
         const nextSignature = [
@@ -297,15 +317,6 @@
         { passive: true },
       );
 
-      window.addEventListener(
-        "load",
-        () => {
-          createScrollTrigger(true);
-          scheduleScrollRefresh(null, 40);
-          window.setTimeout(() => scheduleScrollRefresh(null, 0), 280);
-        },
-        { once: true },
-      );
     });
   }
 
