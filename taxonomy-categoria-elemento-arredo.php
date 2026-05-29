@@ -166,7 +166,7 @@ $render_line_block = static function ($slug, $group_name, $block_id) use ($term,
         $render_line_block('catalogs-launch', 'catalogs_launch', 'linea-' . $term->term_id . '-cataloghi');
         ?>
     <?php else : ?>
-    <section class="position-relative h-74vh-header-desk overflow-hidden d-flex flex-column header-tax-category">
+    <section class="position-relative h-100vh-header-desk overflow-hidden d-flex flex-column header-tax-category">
         <?php
         get_template_part('parts/breadcrumbs', null, [
             'variant' => 'light',
@@ -289,4 +289,4 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <?php
-get_footer(null, ['footer-color' => 'bg-grey-200']);
+get_footer(null, ['footer-color' => 'bg-white']);

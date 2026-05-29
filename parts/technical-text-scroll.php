@@ -120,7 +120,7 @@ if (!$text) {
 $cta_url = is_array($cta) ? ($cta['url'] ?? '') : '';
 $cta_title = is_array($cta) ? (($cta['title'] ?? '') ?: __('Scopri', 'filcar')) : '';
 $cta_target = is_array($cta) ? ($cta['target'] ?? '') : '';
-$show_technical_bg = $has_technical_bg && $technical_image['url'];
+$show_technical_bg = $has_technical_bg;
 
 $block = $block ?? [];
 $block_id = !empty($args['block_id']) ? $args['block_id'] : (!empty($block['anchor']) ? $block['anchor'] : 'technical-text-scroll-' . ($block['id'] ?? uniqid()));
@@ -129,7 +129,9 @@ $section_classes = [
     'js-technical-text-scroll',
 ];
 
-$section_classes[] = 'technical-text-scroll--has-technical-bg';
+if ($show_technical_bg) {
+    $section_classes[] = 'technical-text-scroll--has-technical-bg';
+}
 
 if ($intro) {
     $section_classes[] = 'technical-text-scroll--has-intro';
@@ -145,11 +147,19 @@ if ($has_viewport_height) {
 ?>
 
 <section id="<?php echo esc_attr($block_id); ?>" class="<?php echo esc_attr(implode(' ', $section_classes)); ?> <?php echo $sectionBg; ?>">
-    <?php if ($show_technical_bg) : ?>
-        <img class="technical-text-scroll__technical-bg" src="<?php echo esc_url($technical_image['url']); ?>" alt="" aria-hidden="true">
-    <?php else : ?>
-        <img class="technical-text-scroll__technical-bg" src="https://placehold.co/600x400/F0ABFC/FFF" alt="" aria-hidden="true">
-    <?php endif; ?>
+    <?php
+    if ($show_technical_bg) :
+        if(!empty($technical_image['url'])):
+    ?>
+            <img class="technical-text-scroll__technical-bg" src="<?php echo esc_url($technical_image['url']); ?>" alt="" aria-hidden="true">
+    <?php
+        else :
+    ?>
+            <img class="technical-text-scroll__technical-bg" src="https://placehold.co/600x400/F0ABFC/FFF" alt="" aria-hidden="true">
+    <?php
+        endif;
+    endif;
+    ?>
 
     <div class="container-fluid technical-text-scroll__inner">
         <?php if ($intro) : ?>

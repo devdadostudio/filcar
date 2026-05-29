@@ -47,7 +47,7 @@
                                 <?php echo $row['desc']; ?>
                             </div>
                             <div class="cell accessory-cta-cell">
-                                <?php if ($row['link']['url']) : ?>
+                                <?php if ($row && $row['link']['url']) : ?>
                                 <a href="<?php echo esc_url($row['link']['url']); ?>" class="btn btn-secondary-1 w-icon accessory-btn text-capitalize">
                                     <span>
                                         Vedi prodotto
