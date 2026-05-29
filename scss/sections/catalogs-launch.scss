@@ -59,8 +59,9 @@
           font-size: 14px;
         }
         .catalogs-launch-cta-arrow {
+          visibility: hidden;
           opacity: 0;
-          transform: translateY(-6px);
+          transform: translateY(-8px);
           transition:
             opacity 200ms ease,
             transform 200ms ease;
@@ -69,11 +70,17 @@
           margin-left: -2px;
         }
       }
-      &:hover {
-        .catalogs-launch-cta-arrow {
-          opacity: 1;
-          transform: translateY(0);
-        }
+    }
+    &:hover,
+    &:focus-within,
+    &:active,
+    > a:hover,
+    > a:focus-visible,
+    > a:active {
+      .catalogs-launch-cta-arrow {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
       }
     }
   }
