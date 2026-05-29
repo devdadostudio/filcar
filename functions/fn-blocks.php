@@ -1,5 +1,52 @@
 <?php
 
+if (!function_exists('filcar_get_linkable_taxonomy_terms_choices')) {
+    function filcar_get_linkable_taxonomy_terms_choices() {
+        $choices = [];
+        $taxonomies = get_taxonomies(['public' => true], 'objects');
+        $fallback_taxonomies = [
+            'category',
+            'post_tag',
+            'categoria-caso-studio',
+            'tag-caso-studio',
+            'cat-prod',
+            'categoria-elemento-arredo',
+        ];
+
+        foreach ($fallback_taxonomies as $taxonomy_name) {
+            if (!isset($taxonomies[$taxonomy_name]) && taxonomy_exists($taxonomy_name)) {
+                $taxonomies[$taxonomy_name] = get_taxonomy($taxonomy_name);
+            }
+        }
+
+        foreach ($taxonomies as $taxonomy_name => $taxonomy) {
+            if (!$taxonomy || empty($taxonomy->public)) {
+                continue;
+            }
+
+            $terms = get_terms([
+                'taxonomy' => $taxonomy_name,
+                'hide_empty' => false,
+            ]);
+
+            if (is_wp_error($terms) || empty($terms)) {
+                continue;
+            }
+
+            foreach ($terms as $term) {
+                $choices[$taxonomy->labels->singular_name][$taxonomy_name . ':' . $term->term_id] = $term->name;
+            }
+        }
+
+        return $choices;
+    }
+}
+
+add_filter('acf/load_field/key=field_parallax_sector_block_item_cta_taxonomy', function ($field) {
+    $field['choices'] = filcar_get_linkable_taxonomy_terms_choices();
+    return $field;
+});
+
 add_action('acf/init', function () {
     if (function_exists('acf_register_block_type')) {
         acf_register_block_type([
@@ -1028,7 +1075,7 @@ add_action('acf/init', function () {
                             'type' => 'button_group',
                             'choices' => [
                                 'link' => __('Link normale', 'filcar'),
-                                'taxonomy' => __('Categoria prodotto', 'filcar'),
+                                'taxonomy' => __('Tassonomia', 'filcar'),
                             ],
                             'default_value' => 'link',
                             'return_format' => 'value',
@@ -1038,7 +1085,7 @@ add_action('acf/init', function () {
                             'label' => __('Titolo CTA', 'filcar'),
                             'name' => 'cta_title',
                             'type' => 'text',
-                            'instructions' => __('Seconda riga della card CTA. Se vuota usa il titolo del link o il nome della categoria.', 'filcar'),
+                            'instructions' => __('Seconda riga della card CTA. Se vuota usa il titolo del link o il nome del termine.', 'filcar'),
                         ],
                         [
                             'key' => 'field_parallax_sector_block_item_cta_link',
@@ -1058,16 +1105,14 @@ add_action('acf/init', function () {
                         ],
                         [
                             'key' => 'field_parallax_sector_block_item_cta_taxonomy',
-                            'label' => __('Categoria prodotto CTA', 'filcar'),
+                            'label' => __('Termine CTA', 'filcar'),
                             'name' => 'cta_taxonomy',
-                            'type' => 'taxonomy',
-                            'taxonomy' => 'cat-prod',
-                            'field_type' => 'select',
+                            'type' => 'select',
+                            'choices' => filcar_get_linkable_taxonomy_terms_choices(),
                             'allow_null' => 1,
-                            'add_term' => 0,
-                            'save_terms' => 0,
-                            'load_terms' => 0,
-                            'return_format' => 'id',
+                            'ui' => 1,
+                            'ajax' => 0,
+                            'return_format' => 'value',
                             'conditional_logic' => [
                                 [
                                     [

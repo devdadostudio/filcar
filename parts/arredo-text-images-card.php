@@ -72,6 +72,8 @@ $section_classes = [
 
 <section id="<?php echo esc_attr($block_id); ?>" class="<?php echo esc_attr(implode(' ', $section_classes)); ?>">
     <div class="container-fluid">
+        <span class="arredo-text-images-card__pattern js-arredo-text-images-pattern" style="background-image: url('<?php echo esc_url(get_template_directory_uri() . '/assets/img/pattern1.png'); ?>');" aria-hidden="true"></span>
+
         <div class="row arredo-text-images-card__intro">
             <div class="col-12 col-lg-4">
                 <?php if ($logo_icon) : ?>
@@ -126,7 +128,7 @@ $section_classes = [
 
         <?php if ($has_card) : ?>
             <div class="row arredo-text-images-card__card-row">
-                <div class="col-12 col-lg-5 offset-lg-7 col-sxl-3 offset-sxl-9">
+                <div class="col-12 col-lg-4 offset-lg-8 col-xxl-3 offset-xxl-9">
                     <a class="hero-sector__card arredo-text-images-card__card<?php echo !$card_image ? ' arredo-text-images-card__card--no-media' : ''; ?>" href="<?php echo esc_url($card_url); ?>" target="<?php echo esc_attr($card_target); ?>"<?php echo $card_target === '_blank' ? ' rel="noopener"' : ''; ?>>
                         <?php if ($card_image) : ?>
                             <span class="hero-sector__card-media">

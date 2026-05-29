@@ -289,4 +289,4 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <?php
-get_footer(null, ['footer-color' => 'bg-white']);
+get_footer(null, ['footer-color' => 'bg-grey-200']);

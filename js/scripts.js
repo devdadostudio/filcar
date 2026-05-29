@@ -302,7 +302,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const navWrap = document.querySelector(".js-anchor-nav-wrap");
   const navLinks = gsap.utils.toArray(".anchor-link");
   const sections = gsap.utils.toArray(".js-section");
-  const stickyButton = document.querySelector(".button-sticky-container");
+  const stickyButton = document.querySelector(
+    ".product-anchor-content .button-sticky-container:not(.button-sticky-container--global)",
+  );
+  const globalStickyButtons = gsap.utils.toArray(
+    ".button-sticky-container--global",
+  );
   const panoramica = document.querySelector("#panoramica");
   const correlati = document.querySelector("#correlati");
 
@@ -456,7 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 
-  if (stickyButton) {
+  if (stickyButton && panoramica && correlati) {
     stickyButton.classList.remove("is-visible");
   }
 
@@ -478,6 +483,21 @@ document.addEventListener("DOMContentLoaded", () => {
       onLeaveBack: showButton,
     });
   }
+
+  globalStickyButtons.forEach((button) => {
+    const contactForm = document.querySelector("#contactForm");
+    button.classList.remove("is-visible");
+
+    ScrollTrigger.create({
+      start: () => (ScrollTrigger.maxScroll(window) || 0) * 0.1,
+      endTrigger: contactForm || undefined,
+      end: contactForm ? "top bottom" : "max",
+      onEnter: () => button.classList.add("is-visible"),
+      onLeaveBack: () => button.classList.remove("is-visible"),
+      onLeave: () => button.classList.remove("is-visible"),
+      onEnterBack: () => button.classList.add("is-visible"),
+    });
+  });
 
   window.addEventListener("load", () => {
     const hash = window.location.hash;
@@ -1380,6 +1400,49 @@ function initParallaxSectorBlock() {
 
 document.addEventListener("DOMContentLoaded", initParallaxSectorBlock);
 filcarOnLayoutRefresh(initParallaxSectorBlock);
+
+function initArredoTextImagesPatternParallax() {
+  if (!window.gsap || !window.ScrollTrigger) return;
+
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  if (reduceMotion) return;
+
+  document.querySelectorAll(".arredo-text-images-card").forEach((block) => {
+    if (block.dataset.arredoPatternReady === "true") return;
+
+    const pattern = block.querySelector(".js-arredo-text-images-pattern");
+
+    if (!pattern) return;
+
+    block.dataset.arredoPatternReady = "true";
+
+    const setPatternY = gsap.quickTo(pattern, "y", {
+      duration: 0.5,
+      ease: "power2.out",
+    });
+
+    ScrollTrigger.create({
+      trigger: block,
+      start: "top bottom",
+      end: "bottom top",
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        setPatternY(gsap.utils.mapRange(0, 1, -80, 110, self.progress));
+      },
+      onRefresh: (self) => {
+        gsap.set(pattern, {
+          y: gsap.utils.mapRange(0, 1, -80, 110, self.progress),
+        });
+      },
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initArredoTextImagesPatternParallax);
+filcarOnLayoutRefresh(initArredoTextImagesPatternParallax);
 
 function initHeroHotspotPositionDetector() {
   const params = new URLSearchParams(window.location.search);

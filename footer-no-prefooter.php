@@ -63,6 +63,7 @@
                 </div>
             </div>
         </footer>
+        <?php get_template_part('parts/floating-cta'); ?>
 		<?php wp_footer(); ?>
 	</body>
 </html>

@@ -11,6 +11,19 @@
       "(prefers-reduced-motion: reduce)",
     ).matches;
     const smoother = window.ScrollSmoother ? window.ScrollSmoother.get() : null;
+    let refreshTimer = null;
+
+    const scheduleScrollRefresh = (callback, delay = 80) => {
+      window.clearTimeout(refreshTimer);
+      refreshTimer = window.setTimeout(() => {
+        window.requestAnimationFrame(() => {
+          if (typeof callback === "function") callback();
+          ScrollTrigger.sort();
+          ScrollTrigger.refresh();
+          ScrollTrigger.update();
+        });
+      }, delay);
+    };
 
     blocks.forEach((block) => {
       if (block.dataset.carouselHighlightsReady === "true") return;
@@ -31,6 +44,8 @@
       let maxX = 0;
       let cardStops = [];
       let activeIndex = 0;
+      let resizeFrame = null;
+      let layoutSignature = "";
 
       const isMobileViewport = () =>
         window.matchMedia("(max-width: 767.98px)").matches;
@@ -169,7 +184,10 @@
       measure();
       setTrackX(0);
 
-      const createScrollTrigger = () => {
+      const createScrollTrigger = (preserveProgress = false) => {
+        const previousProgress =
+          preserveProgress && trigger ? trigger.progress : null;
+
         if (trigger) {
           trigger.kill();
           trigger = null;
@@ -203,6 +221,7 @@
           pinSpacing: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
+          refreshPriority: 1,
           onRefreshInit: () => {
             measure();
           },
@@ -215,15 +234,65 @@
           },
           onLeave: () => setTrackX(maxX),
         });
+
+        if (previousProgress !== null) {
+          setTrackX(previousProgress * maxX);
+        }
       };
 
       createScrollTrigger();
 
+      const refreshCarousel = () => {
+        const nextSignature = [
+          Math.round(pin.offsetWidth),
+          Math.round(pin.offsetHeight),
+          Math.round(viewport.clientWidth),
+          Math.round(track.scrollWidth),
+        ].join(":");
+
+        if (nextSignature === layoutSignature) return;
+
+        layoutSignature = nextSignature;
+        measure();
+        setTrackX(Math.min(getCurrentX(), maxX));
+        scheduleScrollRefresh(null, 60);
+      };
+
+      const scheduleCarouselRebuild = () => {
+        if (resizeFrame) {
+          window.cancelAnimationFrame(resizeFrame);
+        }
+
+        resizeFrame = window.requestAnimationFrame(() => {
+          resizeFrame = null;
+          createScrollTrigger(true);
+          scheduleScrollRefresh(null, 40);
+        });
+      };
+
+      const watchedImages = Array.from(block.querySelectorAll("img"));
+
+      watchedImages.forEach((image) => {
+        if (image.complete) return;
+        image.addEventListener("load", refreshCarousel, { once: true });
+        image.addEventListener("error", refreshCarousel, { once: true });
+      });
+
+      const layoutObserver =
+        "ResizeObserver" in window
+          ? new ResizeObserver(() => refreshCarousel())
+          : null;
+
+      if (layoutObserver) {
+        layoutObserver.observe(pin);
+        layoutObserver.observe(viewport);
+        layoutObserver.observe(track);
+      }
+
       window.addEventListener(
         "resize",
         () => {
-          createScrollTrigger();
-          ScrollTrigger.refresh();
+          scheduleCarouselRebuild();
         },
         { passive: true },
       );
@@ -231,8 +300,9 @@
       window.addEventListener(
         "load",
         () => {
-          createScrollTrigger();
-          ScrollTrigger.refresh();
+          createScrollTrigger(true);
+          scheduleScrollRefresh(null, 40);
+          window.setTimeout(() => scheduleScrollRefresh(null, 0), 280);
         },
         { once: true },
       );

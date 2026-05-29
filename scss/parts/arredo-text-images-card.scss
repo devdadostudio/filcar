@@ -1,10 +1,36 @@
 .arredo-text-images-card {
+  position: relative;
+  overflow: hidden;
   background: $white;
   color: $primary;
+
+  > .container-fluid {
+    position: relative;
+    z-index: 1;
+  }
 
   &--dark {
     background: $primary;
     color: $white;
+  }
+
+  &__pattern {
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    bottom: 0;
+    width: 15vw;
+    height: 72%;
+    pointer-events: none;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: contain;
+    opacity: 1;
+    will-change: transform;
+  }
+
+  &--dark &__pattern {
+    opacity: 1;
   }
 
   &__intro {
@@ -37,6 +63,8 @@
   }
 
   &__media-wrap {
+    position: relative;
+    z-index: 1;
     margin-right: clamp(44px, 5.6vw, 96px);
 
     .row {
@@ -60,6 +88,8 @@
   }
 
   &__card-row {
+    position: relative;
+    z-index: 1;
     margin-top: -6.5rem;
   }
 
@@ -93,6 +123,12 @@
   }
 
   @include media-breakpoint-down(lg) {
+    &__pattern {
+      bottom: 0;
+      width: 28vw;
+      height: 46%;
+    }
+
     &__intro {
       margin-bottom: 2.75rem;
     }

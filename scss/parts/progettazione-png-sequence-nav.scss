@@ -107,7 +107,7 @@
     z-index: 80;
     width: min(360px, 32vw);
     margin-top: clamp(72px, 10vh, 128px);
-    margin-left: clamp(220px, 19vw, 360px);
+    margin-left: auto;
 
     .hero-sector__card-item {
       width: 100%;
@@ -124,7 +124,7 @@
 
   &__stage {
     display: grid;
-    grid-template-columns: minmax(0, 52%) minmax(420px, 36%);
+    grid-template-columns: minmax(0, 52%) minmax(420px, 1fr);
     column-gap: clamp(32px, 3.6vw, 72px);
     align-items: start;
     width: 100%;
@@ -215,8 +215,8 @@
     position: relative;
     padding-top: clamp(96px, 13vh, 168px);
     padding-bottom: clamp(96px, 13vh, 168px);
-    background: inherit;
-    color: currentColor;
+    background: $light;
+    color: $primary;
   }
 
   &__compositions-head {

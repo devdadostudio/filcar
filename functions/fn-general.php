@@ -64,6 +64,39 @@ function get_icon($name) {
     return $icons[$name] ?? '';
 }
 
+function filcar_get_current_acf_source_id() {
+    if (is_tax()) {
+        $term = get_queried_object();
+
+        if ($term instanceof WP_Term) {
+            return $term->taxonomy . '_' . $term->term_id;
+        }
+    }
+
+    if (is_singular()) {
+        return get_the_ID();
+    }
+
+    return null;
+}
+
+function filcar_should_show_general_floating_cta() {
+    if (!function_exists('get_field') || is_singular('product') || is_page_template('static-prodotto.php')) {
+        return false;
+    }
+
+    $source_id = filcar_get_current_acf_source_id();
+
+    if (!$source_id) {
+        return false;
+    }
+
+    $cta = get_field('general_floating_cta', $source_id);
+    $visible = is_array($cta) ? ($cta['floating_cta_visible'] ?? false) : false;
+
+    return (bool) $visible;
+}
+
 function registra_custom_post_type_settori() {
 
     $labels = array(
