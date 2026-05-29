@@ -34,13 +34,13 @@ $img = $get_value('img');
                 ?>
                 <?php if ($link_url && $cta_txt) : ?>
                 <div class="catalogs-launch-cta sp-mt-4 sp-lg-mt-0">
-                    <a href="<?php echo esc_url($link_url); ?>" class="rounded overflow-hidden sp-lg-pr-8 align-items-center text-decoration-none" target="<?php echo esc_attr($link_target); ?>"<?php echo $link_target === '_blank' ? ' rel="noopener"' : ''; ?>>
+                    <a href="<?php echo esc_url($link_url); ?>" class="rounded overflow-hidden sp-lg-pr-6 align-items-center text-decoration-none" target="<?php echo esc_attr($link_target); ?>"<?php echo $link_target === '_blank' ? ' rel="noopener"' : ''; ?>>
                         <?php
                         if($cta_img) :
                             echo wp_get_attachment_image($cta_img, 'catalogs-launch-cta-img', false, ['class' => 'catalogs-launch-cta-img']);
                         endif;
                         ?>
-                        <div class="catalogs-launch-cta-txt p-small text-white">
+                        <div class="catalogs-launch-cta-txt sp-py-3 p-small text-white">
                             <?php echo $cta_txt; ?>
                             <div class="catalogs-launch-cta-arrow">
                                 <i class="icon-filcar-icon-arrow-downr"></i>
