@@ -8,7 +8,7 @@ $card_class = $args['card_class'];
             $img = get_post_thumbnail_id($prod_id);
             if($img) :
         ?>
-            <figure class="aspect-ratio-1x1 rounded overflow-hidden respimg bg-primary">
+            <figure class="aspect-ratio-4x3 rounded overflow-hidden respimg bg-primary">
                 <img src="<?php echo wp_get_attachment_image_url($img, 'elements-thumb'); ?>" alt="" class="">
             </figure>
         <?php endif; ?>
