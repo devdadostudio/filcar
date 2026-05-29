@@ -482,8 +482,13 @@
         }
 
         if (floatingCard && !isMobileViewport()) {
+          const compositionsSectionIndex = sections.findIndex(
+            (section) => section.dataset.anchorId === "composizioni"
+          );
+          const sectionBeforeCompositions =
+            compositionsSectionIndex > 0 ? sections[compositionsSectionIndex - 1] : null;
           const endSection =
-            sections.find((section) => section.dataset.anchorId === "composizioni") ||
+            sectionBeforeCompositions ||
             sections.find((section) => section.dataset.anchorId === "elementi") ||
             sections[sections.length - 1] ||
             scroll;
@@ -492,7 +497,7 @@
             trigger: floatingCard,
             start: "bottom bottom-=24",
             endTrigger: endSection,
-            end: "bottom bottom-=24",
+            end: "top bottom-=24",
             pin: floatingCard,
             pinSpacing: false,
             pinReparent: true,
