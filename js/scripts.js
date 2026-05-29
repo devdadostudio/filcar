@@ -663,8 +663,6 @@ const firstVideo = document.querySelector("video");
 
 if (firstVideo) {
   firstVideo.addEventListener("pause", (e) => {
-    console.log("Pausa triggerata da:", e.target);
-    console.log("Tempo attuale video:", e.target.currentTime);
   });
 }
 
@@ -1563,10 +1561,6 @@ function initHeroHotspotPositionDetector() {
       const coords = `["${x}%","${y}%"]`;
       const fields = `desktop_x: ${x}%\ndesktop_y: ${y}%`;
 
-      console.log("HERO HOTSPOT COORDINATES");
-      console.log(fields);
-      console.log(coords);
-
       hero.style.setProperty("--debug-hotspot-x", `${x}%`);
       hero.style.setProperty("--debug-hotspot-y", `${y}%`);
 
@@ -1976,10 +1970,8 @@ jQuery(document).ready(function () {
           });
 
           if (anyOpen) {
-            console.log("add");
             parentHeader.addClass("menu-open");
           } else {
-            console.log("remove");
             parentHeader.removeClass("menu-open");
           }
         }

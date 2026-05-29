@@ -97,6 +97,9 @@ body {
         position: relative;
         font-family: $headings-font-family;
         font-size: 18px;
+        &:hover {
+          text-decoration: underline;
+        }
         @include media-breakpoint-down(uxl) {
           font-size: 16px;
         }
