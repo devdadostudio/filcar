@@ -17,7 +17,7 @@ $thumbnail = function_exists('get_field') ? get_field('img_cat', $taxonomy . '_'
 $thumbnail_id = is_array($thumbnail) && !empty($thumbnail['ID']) ? (int) $thumbnail['ID'] : 0;
 $thumbnail_alt = is_array($thumbnail) && !empty($thumbnail['alt']) ? $thumbnail['alt'] : $term->name;
 $card_class = $args['class'] ?? '';
-$figure_class = $args['class_figure'] ?? 'aspect-ratio-1x1';
+$figure_class = $args['class_figure'] ?? 'aspect-ratio-4x3';
 $name_class = $args['name_class'] ?? 'h5';
 ?>
 
