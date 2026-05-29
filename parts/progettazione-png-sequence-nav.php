@@ -419,7 +419,7 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
                                     'taxonomy' => $element_term->taxonomy,
                                     'class' => 'col-12 col-md-6 col-lg-4',
                                     'name_class' => 'h5',
-                                    'class_figure' => 'aspect-ratio-1x1',
+                                    'class_figure' => 'aspect-ratio-4x3',
                                 ]);
                                 ?>
                             <?php endforeach; ?>
