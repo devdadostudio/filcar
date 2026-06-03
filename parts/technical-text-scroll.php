@@ -168,7 +168,7 @@ if ($has_viewport_height) {
             </div>
         <?php endif; ?>
 
-        <div class="technical-text-scroll__content">
+        <div class="technical-text-scroll__content <?php if ($intro) : ?>technical-text-scroll__content--has-intro<?php endif; ?>">
             <div class="technical-text-scroll__text js-technical-text-scroll-text h4">
                 <?php echo wp_kses_post($text); ?>
             </div>

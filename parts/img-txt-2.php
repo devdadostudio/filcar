@@ -47,11 +47,12 @@ if(!empty($sections_block)) {
             $class_img_block = 'col-12 col-lg-6 offset-lg-1';
             $class_text_block = 'col-12 col-lg-5';
         }
-        if($sections_block_c > 1 && $sections_block_c == $i + 1) {
+        /* if($sections_block_c > 1 && $sections_block_c == $i + 1) {
             $class_section_padding = 'sp-pt-11 sp-pb-6';
         }else{
             $class_section_padding = 'sp-pt-11 sp-pb-0';
-        }
+        } */
+       $class_section_padding = 'sp-pt-11 sp-pb-6';
 ?>
         <section class="img-txt <?php echo $class_section_padding; ?> sp-lg-py-16 sp-sxl-py-23 <?php echo $section_bg; ?>">
             <div class="container-fluid">
