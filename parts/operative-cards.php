@@ -52,7 +52,7 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'operative-cards-' . (
         <?php if ($eyebrow || $title) : ?>
             <header class="operative-cards__header">
                 <?php if ($eyebrow) : ?>
-                    <div class="operative-cards__eyebrow"><?php echo esc_html($eyebrow); ?></div>
+                    <div class="operative-cards__eyebrow product-3"><?php echo esc_html($eyebrow); ?></div>
                 <?php endif; ?>
 
                 <?php if ($title) : ?>

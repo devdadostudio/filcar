@@ -60,11 +60,11 @@ $section_classes = [
         <?php if ($eyebrow || $title) : ?>
             <header class="expandable-cards__header">
                 <?php if ($eyebrow) : ?>
-                    <div class="expandable-cards__eyebrow"><?php echo esc_html($eyebrow); ?></div>
+                    <div class="expandable-cards__eyebrow product-3 semibold"><?php echo esc_html($eyebrow); ?></div>
                 <?php endif; ?>
 
                 <?php if ($title) : ?>
-                    <h2 class="expandable-cards__title"><?php echo esc_html($title); ?></h2>
+                    <h2 class="expandable-cards__title h3 light"><?php echo esc_html($title); ?></h2>
                 <?php endif; ?>
             </header>
         <?php endif; ?>
@@ -151,12 +151,14 @@ $section_classes = [
                                 <?php endif; ?>
 
                                 <?php if ($link_url) : ?>
-                                    <a class="expandable-cards__link btn btn-secondary-2 w-icon" href="<?php echo esc_url($link_url); ?>"<?php echo $link_target ? ' target="' . esc_attr($link_target) . '"' : ''; ?><?php echo $link_target === '_blank' ? ' rel="noopener"' : ''; ?>>
+                                    <a class="expandable-cards__link btn btn-secondary-2 w-icon <?php if ($variant === 'products' && $product_icon) : ?>expandable-cards__link-product<?php endif; ?>" href="<?php echo esc_url($link_url); ?>"<?php echo $link_target ? ' target="' . esc_attr($link_target) . '"' : ''; ?><?php echo $link_target === '_blank' ? ' rel="noopener"' : ''; ?>>
                                         <span>
+                                            <span>
                                             <?php echo esc_html($link_title); ?>
                                             <?php if ($variant === 'products' && $product_icon) : ?>
                                                 <i class="expandable-cards__link-product-icon <?php echo esc_attr($product_icon); ?>" aria-hidden="true"></i>
                                             <?php endif; ?>
+                                            </span>
                                             <span class="icon-filcar-icon-arrow-upr"></span>
                                         </span>
                                     </a>

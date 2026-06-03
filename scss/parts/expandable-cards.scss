@@ -332,6 +332,19 @@
 
     .expandable-cards__link {
       width: min(100%, 214px);
+      &-product{
+        width: auto;
+        .icon-logo-mono {
+          font-size: 12px;
+          position: relative;
+          top: -2px;
+        }
+        .icon-logo-dual, .icon-logo-infinity {
+          font-size: 15px;
+          position: relative;
+          top: -2px;
+        }
+      }
     }
   }
 

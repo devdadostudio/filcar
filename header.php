@@ -29,7 +29,7 @@
         <link rel="preload" href="<?php echo get_template_directory_uri(); ?>/fonts/woff2/IBMPlexSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
         <link rel="preload" href="<?php echo get_template_directory_uri(); ?>/fonts/woff2/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
-        <link rel="stylesheet" href="https://use.typekit.net/gww6khf.css">
+        <link rel="stylesheet" href="https://use.typekit.net/oxv5uwy.css">
         <!-- Preload fonts -->
         
 		<?php wp_head(); ?>

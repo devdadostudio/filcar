@@ -1012,6 +1012,7 @@ document.addEventListener("DOMContentLoaded", () => {
             value.classList.add("number-2");
           }
         });
+        updateSectionState();
       };
 
       const setActiveCard = (index) => {
@@ -1034,6 +1035,14 @@ document.addEventListener("DOMContentLoaded", () => {
             value.classList.toggle("number-2", !isActive);
           }
         });
+        updateSectionState();
+      };
+
+      const updateSectionState = () => {
+        const hasActive = cards.some((card) =>
+          card.classList.contains("is-active")
+        );
+        section.classList.toggle("is-active", hasActive);
       };
 
       cards.forEach((card, index) => {

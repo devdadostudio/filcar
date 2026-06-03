@@ -55,7 +55,7 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'innovation-scroll-' .
 
         <div class="container-fluid innovation-scroll__content">
             <div class="innovation-scroll__content-grid">
-                <h3 class="innovation-scroll__title light"><?php echo esc_html($heading); ?></h3>
+                <h3 class="innovation-scroll__title light sp-mt-5 sp-lg-mt-0"><?php echo esc_html($heading); ?></h3>
                 <div class="innovation-scroll__body">
                     <?php echo wp_kses_post($body); ?>
                 </div>
