@@ -44,8 +44,8 @@
   &__content {
     width: 100%;
     //padding-left: clamp(28px, 3.1vw, 56px);
-    &--has-intro{
-      width: min(100%, 1180px);
+    &--has-intro {
+      //width: min(100%, 1180px);
     }
   }
 
@@ -70,7 +70,7 @@
     margin-top: clamp(26px, 3vw, 44px);
     @include media-breakpoint-down(lg) {
       width: 100%;
-      > span{
+      > span {
         justify-content: center;
       }
     }

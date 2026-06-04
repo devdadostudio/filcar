@@ -1611,8 +1611,11 @@ function initHeroHotspotAnimations() {
       y: 10,
     });
 
+    const pointStagger = 0.36;
+    const cardDelay = 0.22;
+
     const timeline = gsap.timeline({
-      delay: 0.35,
+      delay: 0.55,
       defaults: { ease: "power2.out" },
     });
 
@@ -1620,8 +1623,16 @@ function initHeroHotspotAnimations() {
       const card = point.querySelector(".hero-image-hotspots__point-card");
 
       timeline
-        .to(point, { autoAlpha: 1, scale: 1, duration: 0.36 }, index * 0.18)
-        .to(card, { autoAlpha: 1, y: 0, duration: 0.34 }, index * 0.18 + 0.12);
+        .to(
+          point,
+          { autoAlpha: 1, scale: 1, duration: 0.56 },
+          index * pointStagger,
+        )
+        .to(
+          card,
+          { autoAlpha: 1, y: 0, duration: 0.48 },
+          index * pointStagger + cardDelay,
+        );
     });
   });
 }
