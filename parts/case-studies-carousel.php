@@ -50,7 +50,7 @@ if ($case_studies_query->have_posts()) :
     ]);
     ?>
     <div class="case-studies-carousel__head container-fluid">
-        <div class="case-studies-carousel__kicker product-3 fw-bold">
+        <div class="case-studies-carousel__kicker product-3 fw-semibold">
             <?php echo esc_html($kicker); ?>
         </div>
         <h1 class="case-studies-carousel__title mb-0 h0 extralight">

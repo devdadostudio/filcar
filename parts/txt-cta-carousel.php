@@ -42,7 +42,7 @@ if(!empty($items)) {
                             endif;
                             if($txt_block) :
                             ?>
-                            <div class="<?php echo $txt_type ? 'h5 fw-light' : 'fw-normal'; ?> text-primary mb-0-p">
+                            <div class="<?php echo $txt_type ? 'h5 fw-light' : 'fw-normal'; ?> text-primary mb-0-p sp-lh-130">
                                 <?php echo $txt_block; ?>
                             </div>
                             <?php

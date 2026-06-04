@@ -356,7 +356,7 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
                         <div class="row justify-content-center text-center">
                             <div class="col-12 col-lg-9 col-uxl-7">
                                 <?php if ($ergonomia_number) : ?>
-                                    <div class="product-3 text-secondary"><?php echo esc_html($ergonomia_number); ?></div>
+                                    <div class="number-3 text-secondary"><?php echo esc_html($ergonomia_number); ?></div>
                                 <?php endif; ?>
                                 <?php if ($section_ergonomia_title) : ?>
                                     <h2 class="h3 light sp-mt-2 sp-md-mt-3 sp-lg-mt-4 text-white"><?php echo esc_html($section_ergonomia_title); ?></h2>

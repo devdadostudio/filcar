@@ -69,7 +69,7 @@ if ($frames_folder) {
             <div class="row justify-content-center text-center">
                 <div class="col-12 col-lg-8 col-uxl-6">
                     <?php if ($intro_label) : ?>
-                        <div class="product-3 text-secondary"><?php echo esc_html($intro_label); ?></div>
+                        <div class="number-3 text-secondary"><?php echo esc_html($intro_label); ?></div>
                     <?php endif; ?>
 
                     <?php if ($intro_title) : ?>

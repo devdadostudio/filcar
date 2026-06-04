@@ -57,7 +57,7 @@ $items = is_array($items) ? array_values($items) : [];
         <div class="carousel-highlights__inner">
             <div class="container-fluid carousel-highlights__container">
                 <?php if ($title) : ?>
-                    <h2 class="carousel-highlights__title subtitle-1 h3 light"><?php echo esc_html($title); ?></h2>
+                    <h2 class="carousel-highlights__title h3 light"><?php echo esc_html($title); ?></h2>
                 <?php endif; ?>
 
                 <?php if (!empty($items)) : ?>
