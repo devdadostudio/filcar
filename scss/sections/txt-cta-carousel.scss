@@ -1,70 +1,72 @@
-.txt-cta-carousel{
-    .container-fluid{
-        position: relative;
-        &:before{
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            background: #ffffff;
-            height: 100%;
-            z-index: 1;
-            width: 1.5rem;
-            @include media-breakpoint-up(md) {
-                width: 3rem;
-            }
-            @include media-breakpoint-up(lg) {
-                width: 5rem;
-            }
-            @include media-breakpoint-up(sxl) {
-                width: 6rem;
-            }
-            @include media-breakpoint-up(uxl) {
-                width: 10.5rem;
-            }
-        }
-        .carousel-cards{
-            .owl-stage-outer{
-                overflow: visible !important;
-                .owl-stage{
-                    padding-left: 0 !important;
-
-                }
-            }
-            .owl-nav{
-                margin-top: 2rem;
-                display: flex;
-                gap: 1rem;
-                @include media-breakpoint-up(lg) {
-                    margin-top: 4.3rem;
-                }
-                @include media-breakpoint-up(sxl) {
-                    margin-top: 6rem;
-                }
-                > button{
-                    width: 45px;
-                    aspect-ratio: 1;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    background-color: $grey400;
-                    color: $white;
-                    border-radius: 6px;
-                    &.owl-prev{
-                        > span{
-                            display: block;
-                            transform: rotate(180deg);
-                        }
-                    }
-                }
-            }
-        }
+.txt-cta-carousel {
+  .container-fluid {
+    position: relative;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #ffffff;
+      height: 100%;
+      z-index: 1;
+      width: 1.5rem;
+      @include media-breakpoint-up(md) {
+        width: 3rem;
+      }
+      @include media-breakpoint-up(lg) {
+        width: 5rem;
+      }
+      @include media-breakpoint-up(sxl) {
+        width: 6rem;
+      }
+      @include media-breakpoint-up(uxl) {
+        width: 10.5rem;
+      }
     }
-    &.bg-grey-200{
-        .container-fluid{
-            &:before{
-                background: $grey200;
-            }
+    .carousel-cards {
+      .owl-stage-outer {
+        overflow: visible !important;
+        .owl-stage {
+          padding-left: 0 !important;
         }
+      }
+      .owl-nav {
+        margin-top: 2rem;
+        display: flex;
+        gap: 1rem;
+        @include media-breakpoint-up(lg) {
+          margin-top: 4.3rem;
+        }
+        @include media-breakpoint-up(sxl) {
+          margin-top: 6rem;
+        }
+        > button {
+          width: 45px;
+          aspect-ratio: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: $grey400;
+          color: $white;
+          border-radius: 6px;
+          &.owl-prev {
+            > span {
+              display: block;
+              transform: rotate(180deg);
+            }
+          }
+        }
+      }
     }
+  }
+  .txt-cta-carousel-inner {
+    flex: 1;
+  }
+  &.bg-grey-200 {
+    .container-fluid {
+      &:before {
+        background: $grey200;
+      }
+    }
+  }
 }

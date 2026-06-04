@@ -20,38 +20,42 @@ if(!empty($items)) {
 ?>
     <section class="txt-cta-carousel sp-py-11 sp-lg-py-16 sp-sxl-py-23 overflow-hidden <?php echo $section_bg; ?>">
         <div class="container-fluid">
-            <div class="row <?php if($type_cards == 'case-studies') : ?>align-items-center<?php endif; ?>">
+            <!-- <div class="row <?php //if($type_cards == 'case-studies') : ?>align-items-center<?php //endif; ?>"> -->
+            <div class="row">
                 <div class="<?php echo $section_bg; ?> col-12 col-lg-4 sp-py-0 sp-lg-py-7 txt-container d-flex flex-column position-relative z-1">
-                    <div>
-                        <?php
-                        if($subtitle_block) :
-                        ?>
-                        <div class="product-3 fw-normal text-secondary sp-mb-3">
-                            <?php echo $subtitle_block; ?>
+                    <div class="d-flex flex-column txt-cta-carousel-inner <?php if($type_cards == 'case-studies') : ?>justify-content-center<?php endif; ?>">
+                        <div>
+                            <?php
+                            if($subtitle_block) :
+                            ?>
+                            <div class="product-3 fw-normal text-secondary sp-mb-3">
+                                <?php echo $subtitle_block; ?>
+                            </div>
+                            <?php
+                            endif;
+                            if($title_block) :
+                            ?>
+                            <div class="<?php echo $title_type ? 'h2' : 'h3'; ?> fw-light text-primary mb-0-p sp-mb-5">
+                                <?php echo $title_block; ?>
+                            </div>
+                            <?php
+                            endif;
+                            if($txt_block) :
+                            ?>
+                            <div class="<?php echo $txt_type ? 'h5 fw-light' : 'fw-normal'; ?> text-primary mb-0-p">
+                                <?php echo $txt_block; ?>
+                            </div>
+                            <?php
+                            endif;
+                            ?>
                         </div>
-                        <?php
-                        endif;
-                        if($title_block) :
-                        ?>
-                        <div class="<?php echo $title_type ? 'h2' : 'h3'; ?> fw-light text-primary mb-0-p sp-mb-5">
-                            <?php echo $title_block; ?>
+                        <div>
+                            <?php if($cta_block) : ?>
+                            <a class="btn btn-secondary-1 <?php if($txt_block) : ?>sp-mt-4 sp-lg-mt-5 sp-sxl-mt-8<?php endif; ?> btn-100-mb" href="<?php echo $cta_block['url']; ?>"><span><?php echo $cta_block['title']; ?><span class="icon-filcar-icon-arrow-upr"></span></span></a>
+                            <?php endif; ?>
                         </div>
-                        <?php
-                        endif;
-                        if($txt_block) :
-                        ?>
-                        <div class="<?php echo $txt_type ? 'h5 fw-light' : 'fw-normal'; ?> text-primary mb-0-p">
-                            <?php echo $txt_block; ?>
-                        </div>
-                        <?php
-                        endif;
-                        ?>
                     </div>
-                    <div>
-                        <?php if($cta_block) : ?>
-                        <a class="btn btn-secondary-1 <?php if($txt_block) : ?>sp-mt-4 sp-lg-mt-5 sp-sxl-mt-8<?php endif; ?> btn-100-mb" href="<?php echo $cta_block['url']; ?>"><span><?php echo $cta_block['title']; ?><span class="icon-filcar-icon-arrow-upr"></span></span></a>
-                        <?php endif; ?>
-                    </div>
+                    
                 </div>
                 <?php if($items_c > 0) : ?>
                     <div class="col-12 col-lg-8 position-relative z-0 sp-mt-4 sp-lg-mt-0">
