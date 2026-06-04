@@ -241,3 +241,17 @@ $vw-values: (
       font-weight: 600;
     }
 }
+// _line-height.scss
+
+@mixin generate-line-heights($prefix: 'sp-lh', $min: 100, $max: 200, $step: 10) {
+  @for $i from 0 through calc(($max - $min) / $step) {
+    $value: $min + ($i * $step);
+
+    .#{$prefix}-#{$value} {
+      line-height: #{$value * 0.01};
+    }
+  }
+}
+
+// Utilizzo
+@include generate-line-heights();
