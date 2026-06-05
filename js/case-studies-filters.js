@@ -29,6 +29,7 @@
                 action:  'filter_case_studies',
                 nonce:   caseStudiesAjax.nonce,
                 paged:   page,
+                posts_per_page: caseStudiesAjax.posts_per_page || 3,
                 settore: filters.settore,
                 tag:     filters.tag,
                 search:  filters.search,

@@ -29,6 +29,7 @@
                 action:   'filter_blog_posts',
                 nonce:    blogPostsAjax.nonce,
                 paged:    page,
+                posts_per_page: blogPostsAjax.posts_per_page || 3,
                 category: filters.category,
                 tag:      filters.tag,
                 search:   filters.search,

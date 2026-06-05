@@ -5,8 +5,10 @@ Template Name: Casi studio
 
 get_header();
 
+$posts_per_page = filcar_get_posts_per_page_field(get_queried_object_id());
+
 get_template_part('parts/case-studies-carousel', null, [
-    'posts_per_page' => 3,
+    'posts_per_page' => $posts_per_page,
 ]);
 ?>
 
@@ -27,7 +29,7 @@ get_template_part('parts/case-studies-carousel', null, [
                 'post_type'      => 'caso-studio',
                 'post_status'    => 'publish',
                 'paged'          => get_query_var('paged') ?: 1,
-                'posts_per_page' => 3,
+                'posts_per_page' => $posts_per_page,
                 'order'          => 'DESC',
             ]);
 

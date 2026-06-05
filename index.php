@@ -56,9 +56,11 @@ $featured_post_id = 0;
 
     <?php
     $paged = max(1, get_query_var('paged'), get_query_var('page'));
+    $posts_page_id = (int) get_option('page_for_posts');
+    $posts_per_page = filcar_get_posts_per_page_field($posts_page_id);
     $blog_posts = new WP_Query(array(
         'post_type' => 'post',
-        'posts_per_page' => 3,
+        'posts_per_page' => $posts_per_page,
         'post_status' => 'publish',
         'ignore_sticky_posts' => true,
         'post__not_in' => $featured_post_id ? array($featured_post_id) : array(),

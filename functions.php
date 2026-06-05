@@ -523,6 +523,60 @@ function get_embed_url($info) {
     return '';
 }
 
+function filcar_get_posts_per_page_field($post_id = null, $default = 3) {
+    $post_ids = [];
+
+    if ($post_id) {
+        $post_ids[] = (int) $post_id;
+    }
+
+    if (is_home() && !is_front_page()) {
+        $post_ids[] = (int) get_option('page_for_posts');
+    } elseif (is_singular() || is_page()) {
+        $post_ids[] = (int) get_queried_object_id();
+    } elseif (is_tax('categoria-caso-studio')) {
+        $post_ids[] = filcar_get_case_studies_page_id();
+    }
+
+    $post_ids = array_unique(array_filter($post_ids));
+
+    foreach ($post_ids as $candidate_post_id) {
+        $posts_per_page = (int) get_field('numero_articoli', $candidate_post_id);
+
+        if ($posts_per_page > 0) {
+            return $posts_per_page;
+        }
+    }
+
+    $posts_per_page = (int) get_field('numero_articoli');
+
+    return $posts_per_page > 0 ? $posts_per_page : (int) $default;
+}
+
+function filcar_get_case_studies_page_id() {
+    static $page_id = null;
+
+    if ($page_id !== null) {
+        return $page_id;
+    }
+
+    $page_ids = get_posts([
+        'post_type'              => 'page',
+        'post_status'            => 'publish',
+        'posts_per_page'         => 1,
+        'fields'                 => 'ids',
+        'meta_key'               => '_wp_page_template',
+        'meta_value'             => 'page-casi-studio.php',
+        'no_found_rows'          => true,
+        'update_post_meta_cache' => false,
+        'update_post_term_cache' => false,
+    ]);
+
+    $page_id = $page_ids ? (int) $page_ids[0] : 0;
+
+    return $page_id;
+}
+
 
 
 
@@ -543,8 +597,9 @@ add_action('wp_enqueue_scripts', function () {
     );
 
     wp_localize_script('case-studies-filters', 'caseStudiesAjax', [
-        'ajaxurl' => admin_url('admin-ajax.php'),
-        'nonce'   => wp_create_nonce('case_studies_filter_nonce'),
+        'ajaxurl'       => admin_url('admin-ajax.php'),
+        'nonce'         => wp_create_nonce('case_studies_filter_nonce'),
+        'posts_per_page' => filcar_get_posts_per_page_field(get_queried_object_id()),
     ]);
 });
 
@@ -561,8 +616,9 @@ add_action('wp_enqueue_scripts', function () {
     );
 
     wp_localize_script('blog-filters', 'blogPostsAjax', [
-        'ajaxurl' => admin_url('admin-ajax.php'),
-        'nonce'   => wp_create_nonce('blog_posts_filter_nonce'),
+        'ajaxurl'       => admin_url('admin-ajax.php'),
+        'nonce'         => wp_create_nonce('blog_posts_filter_nonce'),
+        'posts_per_page' => filcar_get_posts_per_page_field((int) get_option('page_for_posts')),
     ]);
 });
 
@@ -577,11 +633,12 @@ function handle_filter_case_studies() {
     $sector_id = intval($_POST['settore'] ?? 0);
     $tag       = sanitize_text_field($_POST['tag'] ?? '');
     $search    = sanitize_text_field($_POST['search'] ?? '');
+    $posts_per_page = max(1, intval($_POST['posts_per_page'] ?? 3));
 
     $args = [
         'post_type'      => 'caso-studio',
         'post_status'    => 'publish',
-        'posts_per_page' => 3,
+        'posts_per_page' => $posts_per_page,
         'paged'          => $paged,
         'order'          => 'DESC',
     ];
@@ -674,6 +731,7 @@ function handle_filter_blog_posts() {
     $category = sanitize_text_field($_POST['category'] ?? '');
     $tag      = sanitize_text_field($_POST['tag'] ?? '');
     $search   = sanitize_text_field($_POST['search'] ?? '');
+    $posts_per_page = max(1, intval($_POST['posts_per_page'] ?? 3));
 
     $latest_posts = get_posts([
         'post_type'              => 'post',
@@ -689,7 +747,7 @@ function handle_filter_blog_posts() {
     $args = [
         'post_type'           => 'post',
         'post_status'         => 'publish',
-        'posts_per_page'      => 3,
+        'posts_per_page'      => $posts_per_page,
         'paged'               => $paged,
         'order'               => 'DESC',
         'ignore_sticky_posts' => true,
