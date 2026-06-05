@@ -2,6 +2,20 @@
 $content = get_field('content');
 if(!empty($content)) {
     $content_c = count($content);
+    $thumb = get_post_thumbnail_id(get_the_ID());
+    $case_sidebar_image = is_singular('caso-studio') && function_exists('get_field') ? get_field('immagine_alternativa_case', get_the_ID()) : null;
+    $case_sidebar_image_id = is_array($case_sidebar_image) && !empty($case_sidebar_image['ID']) ? (int) $case_sidebar_image['ID'] : 0;
+    $base_sidebar_image_id = $case_sidebar_image_id ?: $thumb;
+    $base_sidebar_image_alt = is_array($case_sidebar_image) && !empty($case_sidebar_image['alt']) ? $case_sidebar_image['alt'] : get_the_title($base_sidebar_image_id);
+    $sidebar_images = [];
+
+    for ($i = 0; $i < $content_c; $i++) {
+        if (empty($content[$i]['img']) || !is_array($content[$i]['img'])) {
+            continue;
+        }
+
+        $sidebar_images[$i] = $content[$i]['img'];
+    }
 ?>
 <section class="post-content bg-white">
     <div class="container-fluid">
@@ -29,18 +43,33 @@ if(!empty($content)) {
                                 ?>
                             </ul>
                         </div>
-                        <?php
-                            $thumb = get_post_thumbnail_id(get_the_ID());
-                            if($thumb) :
-                        ?>
+                        <?php if($base_sidebar_image_id || !empty($sidebar_images)) : ?>
                             <div class="post-content__sidebar_img sp-mt-6 sp-lg-mt-9">
-                                <figure class="aspect-ratio-1x1 rounded overflow-hidden respimg">
-                                    <img src="<?php echo esc_url(wp_get_attachment_image_url($thumb, 'sidebar-img-blog')); ?>" alt="<?php echo esc_attr(get_the_title($thumb)); ?>">
-                                </figure>
+                                <div class="post-content__sidebar_img-stack aspect-ratio-1x1 rounded overflow-hidden respimg js-post-content-sidebar-image-stack">
+                                    <?php if($base_sidebar_image_id) : ?>
+                                        <figure class="post-content__sidebar_img-layer sp-mb-0 is-active" data-sidebar-image-target="base">
+                                            <?php echo wp_get_attachment_image($base_sidebar_image_id, 'square', false, ['alt' => esc_attr($base_sidebar_image_alt)]); ?>
+                                        </figure>
+                                    <?php endif; ?>
+
+                                    <?php foreach ($sidebar_images as $sidebar_image_index => $sidebar_image) : ?>
+                                        <?php
+                                            $sidebar_image_id = !empty($sidebar_image['ID']) ? (int) $sidebar_image['ID'] : 0;
+                                            $sidebar_image_alt = !empty($sidebar_image['alt']) ? $sidebar_image['alt'] : ($content[$sidebar_image_index]['title'] ?? get_the_title());
+                                        ?>
+                                        <figure class="post-content__sidebar_img-layer sp-mb-0<?php echo !$base_sidebar_image_id && array_key_first($sidebar_images) === $sidebar_image_index ? ' is-active' : ''; ?>" data-sidebar-image-target="#post-content-section-<?php echo esc_attr($sidebar_image_index); ?>">
+                                            <?php
+                                                if ($sidebar_image_id) {
+                                                    echo wp_get_attachment_image($sidebar_image_id, 'square', false, ['alt' => esc_attr($sidebar_image_alt)]);
+                                                } elseif (!empty($sidebar_image['url'])) {
+                                                    echo '<img src="' . esc_url($sidebar_image['url']) . '" alt="' . esc_attr($sidebar_image_alt) . '">';
+                                                }
+                                            ?>
+                                        </figure>
+                                    <?php endforeach; ?>
+                                </div>
                             </div>
-                        <?php
-                            endif;
-                        ?>
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php } ?>
@@ -83,11 +112,38 @@ if(!empty($content)) {
 </section>
 <?php } ?>
 
+<style>
+.post-content__sidebar_img-stack {
+    position: relative;
+}
+
+.post-content__sidebar_img-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+}
+
+.post-content__sidebar_img-layer.is-active {
+    opacity: 1;
+}
+
+.post-content__sidebar_img-layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+</style>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
 
     const sections = document.querySelectorAll('.post-content__item[id^="post-content-section-"]');
     const navLinks = document.querySelectorAll('.sidebar-index-item a');
+    const imageStack = document.querySelector('.js-post-content-sidebar-image-stack');
+    const imageLayers = imageStack ? Array.from(imageStack.querySelectorAll('[data-sidebar-image-target]')) : [];
 
     if (!sections.length || !navLinks.length) return;
 
@@ -109,9 +165,29 @@ if(!empty($content)) {
 
     function updateActiveLink() {
         const activeIndex = getActiveIndex();
+        const activeSection = sections[activeIndex];
+        const activeTarget = activeSection ? '#' + activeSection.id : '';
 
         navLinks.forEach(function (link, i) {
             link.closest('.sidebar-index-item').classList.toggle('is-active', i === activeIndex);
+        });
+
+        updateActiveImage(activeTarget);
+    }
+
+    function updateActiveImage(target) {
+        if (!imageLayers.length) return;
+
+        const activeLayer = imageLayers.find(function (layer) {
+            return layer.dataset.sidebarImageTarget === target;
+        }) || imageLayers.find(function (layer) {
+            return layer.dataset.sidebarImageTarget === 'base';
+        });
+
+        if (!activeLayer) return;
+
+        imageLayers.forEach(function (layer) {
+            layer.classList.toggle('is-active', layer === activeLayer);
         });
     }
 

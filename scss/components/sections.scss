@@ -1,238 +1,242 @@
-.section-inner .subtitle-header{
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+.section-inner .subtitle-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  &:after {
+    content: "";
+    width: 100%;
+    height: 1px;
+    background: $grey500;
+  }
+  &.subtitle-after-white {
     &:after {
-        content: "";
-        width: 100%;
-        height: 1px;
-        background: $grey500;
+      background: $white;
     }
-    &.subtitle-after-white {
-        &:after {
-            background: $white;
-        }
-    }
-    > .h6 {
-        margin-bottom: 0;
-    }
+  }
+  > .h6 {
+    margin-bottom: 0;
+  }
 }
 
+.filters-row {
+  position: sticky;
+  top: calc(var(--admin-offset) + var(--site-header-offset));
+  z-index: 10;
+  transition: top 0.35s ease;
 
-
-
-.filters-row{
-    &__inner{
-        padding: 0 12px;
-    }
+  &__inner {
+    padding: 0 12px;
+  }
 }
 
 .filters-bar {
+  display: flex;
+  gap: 16px;
+
+  @media (max-width: 991px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  // ── Dropdowns ───────────────────────────────────────────────────────────
+  &__dropdowns {
     display: flex;
-    gap: 16px;
+    align-items: center;
+    gap: 0;
+    flex: 1;
+    background-color: #5a5a5a;
+    border-radius: 8px;
+    overflow: hidden;
+
+    @include media-breakpoint-down(lg) {
+      > .filter-select-wrap {
+        width: calc(50% - 12px);
+      }
+    }
+  }
+
+  // ── Singolo wrapper select ───────────────────────────────────────────────
+  .filter-select-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+
+    // Chevron custom
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 35px;
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: rotate(45deg);
+      pointer-events: none;
+      transition: transform 0.2s ease;
+    }
+  }
+
+  .filter-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: rgba(255, 255, 255, 0.6);
+    width: 100%;
+    padding-right: 24px; // spazio per il chevron
+    cursor: pointer;
+
+    option {
+      background-color: #3a3a3a;
+      color: #fff;
+    }
+
+    &:focus {
+      color: #fff;
+    }
+  }
+
+  // ── Search ───────────────────────────────────────────────────────────────
+  .filter-search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #5a5a5a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+
+    @media (max-width: 1199px) {
+      min-width: 200px;
+    }
 
     @media (max-width: 991px) {
-        flex-direction: column;
-        align-items: stretch;
+      min-width: unset;
+      width: 100%;
+    }
+  }
+
+  .filter-search {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid $white;
+    outline: none;
+    color: rgba(255, 255, 255, 0.9);
+    width: 100%;
+    flex-shrink: 1;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.45);
     }
 
-    // ── Dropdowns ───────────────────────────────────────────────────────────
-    &__dropdowns {
-        display: flex;
-        align-items: center;
-        gap: 0;
-        flex: 1;
-        background-color: #5a5a5a;
-        border-radius: 8px;
-        overflow: hidden;
-
-        @include media-breakpoint-down(lg) {
-            > .filter-select-wrap {
-                width: calc(50% - 12px);
-            }   
-        }
+    &:focus::placeholder {
+      color: rgba(255, 255, 255, 0.25);
     }
+  }
 
-    // ── Singolo wrapper select ───────────────────────────────────────────────
-    .filter-select-wrap {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        cursor: pointer;
-
-        // Chevron custom
-        &::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            bottom: 35px;
-            width: 10px;
-            height: 10px;
-            border-right: 2px solid #fff;
-            border-bottom: 2px solid #fff;
-            transform: rotate(45deg);
-            pointer-events: none;
-            transition: transform 0.2s ease;
-        }
+  .filter-search-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color 0.2s ease;
+    flex-shrink: 0;
+    padding: 0;
+    &:hover {
+      color: #fff;
     }
-
-    .filter-select {
-        appearance: none;
-        -webkit-appearance: none;
-        background: transparent;
-        border: none;
-        outline: none;
-        color: rgba(255, 255, 255, 0.6);
-        width: 100%;
-        padding-right: 24px; // spazio per il chevron
-        cursor: pointer;
-
-        option {
-            background-color: #3a3a3a;
-            color: #fff;
-        }
-
-        &:focus {
-            color: #fff;
-        }
+    > svg {
+      width: 24px;
+      height: 24px;
+      @include media-breakpoint-down(sxl) {
+        width: 16px;
+        height: 16px;
+      }
     }
-
-    // ── Search ───────────────────────────────────────────────────────────────
-    .filter-search-wrap {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        background-color: #5a5a5a;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 8px;
-
-        @media (max-width: 1199px) {
-            min-width: 200px;
-        }
-
-        @media (max-width: 991px) {
-            min-width: unset;
-            width: 100%;
-        }
-    }
-
-    .filter-search {
-        flex: 1;
-        background: transparent;
-        border: none;
-        border-bottom: 1px solid $white;
-        outline: none;
-        color: rgba(255, 255, 255, 0.9);
-        width: 100%;
-        flex-shrink: 1;
-
-        &::placeholder {
-            color: rgba(255, 255, 255, 0.45);
-        }
-
-        &:focus::placeholder {
-            color: rgba(255, 255, 255, 0.25);
-        }
-    }
-
-    .filter-search-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        color: rgba(255, 255, 255, 0.6);
-        transition: color 0.2s ease;
-        flex-shrink: 0;
-        padding: 0;
-        &:hover {
-            color: #fff;
-        }
-        > svg{
-            width: 24px;
-            height: 24px;
-            @include media-breakpoint-down(sxl) {
-                width: 16px;
-                height: 16px;
-            }
-        }
-    }
+  }
 }
 
 // ── Paginazione ───────────────────────────────────────────────────────────────
 #case-studies-pagination {
-    margin-top: 40px;
+  margin-top: 40px;
 
-    .cs-pagination {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 16px;
+  .cs-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .cs-page-prev,
+  .cs-page-next {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    line-height: 1;
+    color: #1a1a1a;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    user-select: none;
+
+    &:hover {
+      color: $primary;
     }
 
-    .cs-page-prev,
-    .cs-page-next {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 28px;
-        line-height: 1;
-        color: #1a1a1a;
-        text-decoration: none;
-        cursor: pointer;
-        transition: color 0.2s ease;
-        user-select: none;
-
-        &:hover {
-            color: $primary;
-        }
-
-        &.is-disabled {
-            color: rgba(0, 0, 0, 0.2);
-            cursor: default;
-            pointer-events: none;
-        }
+    &.is-disabled {
+      color: rgba(0, 0, 0, 0.2);
+      cursor: default;
+      pointer-events: none;
     }
+  }
 
-    .cs-page-info {
-        font-size: 16px;
-        font-weight: 400;
-        color: #1a1a1a;
-        text-align: center;
-        line-height: 1;
-        position: relative;
-        top: 2px;
-    }
+  .cs-page-info {
+    font-size: 16px;
+    font-weight: 400;
+    color: #1a1a1a;
+    text-align: center;
+    line-height: 1;
+    position: relative;
+    top: 2px;
+  }
 }
 
 // ── Loader spinner ────────────────────────────────────────────────────────────
 #case-studies-loader {
-    .spinner {
-        display: inline-block;
-        width: 28px;
-        height: 28px;
-        border: 3px solid rgba(123, 79, 212, 0.2);
-        border-top-color: $primary;
-        border-radius: 50%;
-        animation: cs-spin 0.7s linear infinite;
-    }
+  .spinner {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    border: 3px solid rgba(123, 79, 212, 0.2);
+    border-top-color: $primary;
+    border-radius: 50%;
+    animation: cs-spin 0.7s linear infinite;
+  }
 }
 
 @keyframes cs-spin {
-    to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 // ── Nessun risultato ──────────────────────────────────────────────────────────
 .no-results {
-    font-size: 15px;
-    color: #888;
-    text-align: center;
-    padding: 3rem 0;
+  font-size: 15px;
+  color: #888;
+  text-align: center;
+  padding: 3rem 0;
 }
 
 // ── Transizione griglia durante il fetch ──────────────────────────────────────
 #case-studies-grid {
-    transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease;
 }

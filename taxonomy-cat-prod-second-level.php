@@ -14,6 +14,10 @@ $parent_term = !empty($term->parent) ? get_term($term->parent, $term->taxonomy) 
 $hero_image = function_exists('get_field') ? get_field('img_cat', $term_key) : null;
 $hero_image_id = is_array($hero_image) && !empty($hero_image['ID']) ? (int) $hero_image['ID'] : 0;
 $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_image['alt'] : $term->name;
+$anchor_alt_image = function_exists('get_field') ? get_field('immagine_alternativa', $term_key) : null;
+$anchor_base_image = is_array($anchor_alt_image) && !empty($anchor_alt_image['ID']) ? $anchor_alt_image : $hero_image;
+$anchor_base_image_id = is_array($anchor_base_image) && !empty($anchor_base_image['ID']) ? (int) $anchor_base_image['ID'] : 0;
+$anchor_base_image_alt = is_array($anchor_base_image) && !empty($anchor_base_image['alt']) ? $anchor_base_image['alt'] : $term->name;
 
 $get_acf_group = function ($field_name) use ($term_key) {
     if (!function_exists('get_field')) {
@@ -31,7 +35,7 @@ $get_acf_text = function ($field, $key) {
 
 $technical_text_scroll = $get_acf_group('sezione_testo_animato');
 $content_sections = [];
-$acf_sections = get_field('sections_content', $term_key);
+$acf_sections = function_exists('get_field') ? get_field('sections_content', $term_key) : [];
 /* $acf_sections = [
     [
         'field' => 'caratteristiche',
@@ -55,11 +59,14 @@ $acf_sections = get_field('sections_content', $term_key);
     ],
 ]; */
 
+$acf_sections = is_array($acf_sections) ? $acf_sections : [];
+
 foreach ($acf_sections as $section_config) {
     $section_title = $section_config['title'];
     $section_text = $section_config['txt'];
     $section_label = $section_config['title_index'];
     $section_id = str_replace(' ', '-', strtolower($section_label));
+    $section_image = !empty($section_config['immagine_sezione']) && is_array($section_config['immagine_sezione']) ? $section_config['immagine_sezione'] : [];
 
     if (empty($section_title) && empty($section_text)) {
         continue;
@@ -70,10 +77,29 @@ foreach ($acf_sections as $section_config) {
         'text' => $section_text,
         'id' => $section_id,
         'label' => $section_label,
+        'image' => $section_image,
     ]);
 }
 
+$anchor_section_images = [];
+
+foreach ($content_sections as $section) {
+    if (empty($section['image']['ID'])) {
+        continue;
+    }
+
+    $anchor_section_images[$section['id']] = [
+        'id' => (int) $section['image']['ID'],
+        'alt' => !empty($section['image']['alt']) ? $section['image']['alt'] : $section['title'],
+    ];
+}
+
+$has_anchor_section_images = !empty($anchor_section_images);
+
 $faq_field = $get_acf_group('faqs');
+$faq_image = !empty($faq_field['immagine_faq']) && is_array($faq_field['immagine_faq']) ? $faq_field['immagine_faq'] : [];
+$faq_image_id = !empty($faq_image['ID']) ? (int) $faq_image['ID'] : 0;
+$faq_image_alt = !empty($faq_image['alt']) ? $faq_image['alt'] : __('FAQ', 'filcar');
 $faq_items = !empty($faq_field['blocco_faq']) && is_array($faq_field['blocco_faq']) ? array_values(array_filter($faq_field['blocco_faq'], function ($faq_item) {
     return is_array($faq_item) && !empty($faq_item['titolo']) && !empty($faq_item['testo']);
 })) : [];
@@ -211,14 +237,38 @@ if (!empty($faq_items)) {
                         ]);
                         ?>
 
-                        <?php if ($hero_image_id) : ?>
-                            <figure class="category-anchor-sections__image respimg sp-mb-0 d-none d-lg-flex">
-                                <?php
-                                echo wp_get_attachment_image($hero_image_id, 'full', false, [
-                                    'alt' => esc_attr($hero_image_alt),
-                                ]);
-                                ?>
-                            </figure>
+                        <?php if ($anchor_base_image_id || $has_anchor_section_images || $faq_image_id) : ?>
+                            <div class="category-anchor-sections__image category-anchor-sections__image-stack respimg sp-mb-0 d-none d-lg-flex js-category-anchor-image-stack">
+                                <?php if ($anchor_base_image_id) : ?>
+                                    <figure class="category-anchor-sections__image-layer sp-mb-0 is-active" data-anchor-image-target="base">
+                                        <?php
+                                        echo wp_get_attachment_image($anchor_base_image_id, 'full', false, [
+                                            'alt' => esc_attr($anchor_base_image_alt),
+                                        ]);
+                                        ?>
+                                    </figure>
+                                <?php endif; ?>
+
+                                <?php foreach ($anchor_section_images as $anchor_image_id => $anchor_image) : ?>
+                                    <figure class="category-anchor-sections__image-layer sp-mb-0<?php echo !$anchor_base_image_id && array_key_first($anchor_section_images) === $anchor_image_id ? ' is-active' : ''; ?>" data-anchor-image-target="#<?php echo esc_attr($anchor_image_id); ?>">
+                                        <?php
+                                        echo wp_get_attachment_image($anchor_image['id'], 'full', false, [
+                                            'alt' => esc_attr($anchor_image['alt']),
+                                        ]);
+                                        ?>
+                                    </figure>
+                                <?php endforeach; ?>
+
+                                <?php if ($faq_image_id) : ?>
+                                    <figure class="category-anchor-sections__image-layer sp-mb-0<?php echo !$anchor_base_image_id && !$has_anchor_section_images ? ' is-active' : ''; ?>" data-anchor-image-target="#faq">
+                                        <?php
+                                        echo wp_get_attachment_image($faq_image_id, 'full', false, [
+                                            'alt' => esc_attr($faq_image_alt),
+                                        ]);
+                                        ?>
+                                    </figure>
+                                <?php endif; ?>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </aside>
@@ -278,18 +328,59 @@ if (!empty($faq_items)) {
     </section>
 </main>
 
+<style>
+.category-anchor-sections__image-stack {
+    position: relative;
+}
+
+.category-anchor-sections__image-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+}
+
+.category-anchor-sections__image-layer.is-active {
+    opacity: 1;
+}
+
+.category-anchor-sections__image-layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+</style>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     if (!('IntersectionObserver' in window)) return;
 
     const links = Array.from(document.querySelectorAll('.category-anchor-nav__link[href^="#"]'));
     const panels = Array.from(document.querySelectorAll('.js-category-anchor-panel'));
+    const imageStack = document.querySelector('.js-category-anchor-image-stack');
+    const imageLayers = imageStack ? Array.from(imageStack.querySelectorAll('[data-anchor-image-target]')) : [];
 
     if (!links.length || !panels.length) return;
 
     const setActive = function (target) {
         links.forEach(function (link) {
             link.classList.toggle('is-active', link.getAttribute('href') === target);
+        });
+
+        if (!imageLayers.length) return;
+
+        const activeLayer = imageLayers.find(function (layer) {
+            return layer.dataset.anchorImageTarget === target;
+        }) || imageLayers.find(function (layer) {
+            return layer.dataset.anchorImageTarget === 'base';
+        });
+
+        if (!activeLayer) return;
+
+        imageLayers.forEach(function (layer) {
+            layer.classList.toggle('is-active', layer === activeLayer);
         });
     };
 
