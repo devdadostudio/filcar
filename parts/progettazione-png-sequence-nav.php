@@ -354,7 +354,7 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
                 <section id="<?php echo esc_attr($block_id); ?>-ergonomia" class="progettazione-sequence-nav__ergonomia js-sequence-anchor-section" data-anchor-id="ergonomia">
                     <div class="container-fluid progettazione-sequence-nav__ergonomia-copy">
                         <div class="row justify-content-center text-center">
-                            <div class="col-12 col-lg-9 col-uxl-7">
+                            <div class="col-12 col-lg-10">
                                 <?php if ($ergonomia_number) : ?>
                                     <div class="number-3 text-secondary"><?php echo esc_html($ergonomia_number); ?></div>
                                 <?php endif; ?>

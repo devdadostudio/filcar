@@ -727,6 +727,52 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
+
+  const desktopMegamenus = document.querySelectorAll(
+    ".flc-headmenu > .nav-item > .megamenu",
+  );
+
+  desktopMegamenus.forEach((menu) => {
+    let closeTimer = null;
+    const toggle = menu.previousElementSibling;
+
+    if (!toggle) {
+      return;
+    }
+
+    toggle.addEventListener("show.bs.dropdown", function () {
+      clearTimeout(closeTimer);
+      menu.classList.remove("is-closing");
+      menu.dataset.allowDropdownClose = "";
+    });
+
+    toggle.addEventListener("hide.bs.dropdown", function (e) {
+      if (menu.dataset.allowDropdownClose === "true") {
+        menu.dataset.allowDropdownClose = "";
+        menu.classList.remove("is-closing");
+        return;
+      }
+
+      e.preventDefault();
+      clearTimeout(closeTimer);
+      menu.classList.add("is-closing");
+
+      closeTimer = setTimeout(function () {
+        const dropdown =
+          toggle && window.bootstrap
+            ? bootstrap.Dropdown.getOrCreateInstance(toggle)
+            : null;
+
+        menu.dataset.allowDropdownClose = "true";
+
+        if (dropdown) {
+          dropdown.hide();
+        } else {
+          menu.classList.remove("show", "is-closing");
+        }
+      }, 280);
+    });
+  });
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -735,11 +781,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 1. Apertura Menu Mobile
   if (toggleBtn && rightNav) {
+    let rightNavCloseTimer = null;
+    const rightNavTransitionDuration = 300;
+
     toggleBtn.addEventListener("click", function (e) {
       e.preventDefault();
-      this.classList.toggle("is-active");
-      rightNav.classList.toggle("is-active");
-      document.body.classList.toggle("menu-open");
+
+      if (rightNav.classList.contains("is-active")) {
+        clearTimeout(rightNavCloseTimer);
+        rightNav.classList.add("is-closing");
+
+        rightNavCloseTimer = setTimeout(function () {
+          toggleBtn.classList.remove("is-active");
+          rightNav.classList.remove("is-active", "is-closing");
+          document.body.classList.remove("menu-open");
+        }, rightNavTransitionDuration);
+
+        return;
+      }
+
+      clearTimeout(rightNavCloseTimer);
+      this.classList.add("is-active");
+      rightNav.classList.remove("is-closing");
+      rightNav.classList.add("is-active");
+      document.body.classList.add("menu-open");
     });
   }
 
@@ -1984,9 +2049,9 @@ jQuery(document).ready(function () {
         if (mutation.attributeName === "class") {
           const parentHeader = jQuery(".flc-headmenu");
           
-          // Controlla se ALMENO UNO dei megamenu ha la classe "show"
+          // Controlla se ALMENO UNO dei megamenu e' aperto o in fade-out
           const anyOpen = Array.from(megamenus).some(function (m) {
-            return m.classList.contains("show");
+            return m.classList.contains("show") || m.classList.contains("is-closing");
           });
 
           if (anyOpen) {
