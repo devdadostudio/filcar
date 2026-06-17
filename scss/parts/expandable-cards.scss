@@ -390,6 +390,11 @@
       &::-webkit-scrollbar {
         display: none;
       }
+
+      &::after {
+        content: "";
+        flex: 0 0 calc(clamp(64px, 16vw, 120px) + (var(--bs-gutter-x) * 0.5));
+      }
     }
 
     &__card,
