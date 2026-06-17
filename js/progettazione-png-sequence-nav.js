@@ -482,13 +482,11 @@
         }
 
         if (floatingCard && !isMobileViewport()) {
-          const compositionsSectionIndex = sections.findIndex(
+          const compositionsSection = sections.find(
             (section) => section.dataset.anchorId === "composizioni"
           );
-          const sectionBeforeCompositions =
-            compositionsSectionIndex > 0 ? sections[compositionsSectionIndex - 1] : null;
           const endSection =
-            sectionBeforeCompositions ||
+            compositionsSection ||
             sections.find((section) => section.dataset.anchorId === "elementi") ||
             sections[sections.length - 1] ||
             scroll;

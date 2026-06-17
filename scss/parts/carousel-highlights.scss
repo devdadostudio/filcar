@@ -257,6 +257,10 @@
       width: var(--carousel-highlight-card-unit);
     }
 
+    &__end-spacer {
+      display: none;
+    }
+
     &__copy {
       min-height: 62px;
       padding: 14px 10px 16px;
