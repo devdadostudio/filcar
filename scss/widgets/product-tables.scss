@@ -15,7 +15,7 @@ $tableHeight: 80px;
   overflow: auto;
   position: relative;
   margin: -8px -12px;
-  padding: 8px 12px;
+  padding: 8px 0;
 }
 
 .table-row {
@@ -60,17 +60,17 @@ $tableHeight: 80px;
   position: relative;
 }
 
-.tech-table::before {
+/* .tech-table::before {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 12px;
   top: $tableHeight;
   height: 1px;
   background: rgba(0, 0, 0, 0.12);
   z-index: 24;
   pointer-events: none;
-}
+  width: calc(100% - 24px);
+} */
 
 @include media-breakpoint-up(xl) {
   .fake-table {

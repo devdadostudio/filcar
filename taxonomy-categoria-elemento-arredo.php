@@ -289,4 +289,9 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <?php
-get_footer(null, ['footer-color' => 'bg-white']);
+if ($is_linea) :
+    get_footer(null, ['footer-color' => 'bg-grey-100']);
+else:
+    get_footer(null, ['footer-color' => 'bg-white']);
+endif;
+?>

@@ -50,8 +50,14 @@
       gap: 1.5rem;
       @include media-breakpoint-down(lg) {
         width: 100%;
-        .catalogs-launch-cta-img {
+      }
+      .catalogs-launch-cta-img {
+        max-width: 120px;
+        height: auto;
+        @include media-breakpoint-down(lg) {
           width: 50%;
+          max-height: 120px;
+          object-fit: cover;
         }
       }
       .catalogs-launch-cta-txt {

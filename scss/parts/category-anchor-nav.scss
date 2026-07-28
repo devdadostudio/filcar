@@ -6,7 +6,39 @@
 
   @include media-breakpoint-down(lg) {
     min-height: 0;
-    height: auto;
+    height: calc(100vh - 120px);
+    .text-container {
+      height: calc(100% - 50px);
+      > .row{
+        height: 100%;
+        align-items: flex-start !important;
+        position: relative;
+        > div:not(.category-second-hero__visual-col) {
+          height: calc(50% - 3.5rem);
+          align-items: flex-start;
+          position: relative;
+          .product-hero__content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            .category-hero-subtitle {
+              display: none;
+            }
+          }
+        }
+        .category-second-hero__visual-col {
+          height: 50%;
+          .category-second-hero__visual {
+            height: 100%;
+            .category-second-hero__image {
+              height: 100%;
+              max-height: none;
+            }
+          }
+        }
+      }
+    }
   }
 
   @include media-breakpoint-up(lg) {
@@ -208,6 +240,7 @@
 
   @include media-breakpoint-down(lg) {
     padding: 1.5rem 0 8rem;
+    background: $grey500;
   }
 
   &__aside {

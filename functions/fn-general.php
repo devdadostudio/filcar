@@ -423,6 +423,46 @@ add_filter('pre_handle_404', function ($preempt, $wp_query) {
     return $preempt;
 }, 10, 2);
 
+function filcar_add_blog_base_to_post_permalink($permalink, $post, $leavename) {
+    if (!$post instanceof WP_Post || $post->post_type !== 'post') {
+        return $permalink;
+    }
+
+    $slug = $leavename ? '%postname%' : $post->post_name;
+
+    if ($slug === '') {
+        return $permalink;
+    }
+
+    return home_url(user_trailingslashit('blog/' . $slug));
+}
+
+add_filter('post_link', 'filcar_add_blog_base_to_post_permalink', 10, 3);
+
+function filcar_add_blog_post_rewrite_rules() {
+    add_rewrite_rule(
+        '^blog/([^/]+)/?$',
+        'index.php?name=$matches[1]',
+        'top'
+    );
+}
+
+add_action('init', 'filcar_add_blog_post_rewrite_rules');
+
+function filcar_flush_blog_post_rewrite_rules_once() {
+    $rewrite_version = '2026-06-30-blog-post-base';
+
+    if (get_option('filcar_blog_post_rewrite_version') === $rewrite_version) {
+        return;
+    }
+
+    filcar_add_blog_post_rewrite_rules();
+    flush_rewrite_rules(false);
+    update_option('filcar_blog_post_rewrite_version', $rewrite_version, false);
+}
+
+add_action('init', 'filcar_flush_blog_post_rewrite_rules_once', 20);
+
 function filcar_get_image_url($image_field) {
 	if (empty($image_field)) {
 		return '';

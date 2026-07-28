@@ -44,7 +44,8 @@
     align-items: center;
     gap: 0;
     flex: 1;
-    background-color: #5a5a5a;
+    background: linear-gradient(0deg, rgba(29, 29, 31, 0.60) 0%, rgba(29, 29, 31, 0.60) 100%), linear-gradient(135deg, rgba(71, 71, 75, 0.04) 0%, rgba(71, 71, 75, 0.09) 100%);
+    backdrop-filter: blur(15px);
     border-radius: 8px;
     overflow: hidden;
 
@@ -105,7 +106,8 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background-color: #5a5a5a;
+    background: linear-gradient(0deg, rgba(29, 29, 31, 0.60) 0%, rgba(29, 29, 31, 0.60) 100%), linear-gradient(135deg, rgba(71, 71, 75, 0.04) 0%, rgba(71, 71, 75, 0.09) 100%);
+    backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
 

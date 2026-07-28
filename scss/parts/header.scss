@@ -387,6 +387,22 @@ body {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
+  .accordion-body .list-unstyled {
+    .icon-big {
+      @include media-breakpoint-down(lg) {
+        position: relative;
+        top: -1px;
+        &.icon-logo-mono {
+          font-size: 12px;
+        }
+      }
+      @include media-breakpoint-down(md) {
+        &.icon-logo-mono {
+          font-size: 10px;
+        }
+      }
+    }
+  }
 }
 .flc-search-container {
   width: 100vw !important;

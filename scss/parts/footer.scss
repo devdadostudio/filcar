@@ -10,6 +10,22 @@
       justify-content: space-between;
     }
   }
+  .menu-item-type-custom{
+    .icon-logo-mono{
+      @include media-breakpoint-down(lg){
+        font-size: 11px;
+      }
+      @include media-breakpoint-down(md){
+        font-size: 7px;
+      }
+    }
+    i{
+      @include media-breakpoint-down(lg){
+        position: relative;
+        top: -1px;
+      }
+    }
+  }
   .social-container-footer {
     gap: 4rem;
     @include media-breakpoint-down(sxl) {

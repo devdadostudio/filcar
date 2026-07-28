@@ -149,17 +149,15 @@
         const targetY = trigger.start + safeX;
 
         if (smoother) {
-          smoother.scrollTo(targetY, false);
-          ScrollTrigger.update();
-          setActiveByX(safeX);
+          smoother.scrollTo(targetY, true);
           return;
         }
 
         if (window.gsap && window.ScrollToPlugin) {
           gsap.to(window, {
             scrollTo: { y: targetY, autoKill: false },
-            duration: isMobileViewport() ? 0.55 : 0.24,
-            ease: isMobileViewport() ? "power2.out" : "power1.out",
+            duration: isMobileViewport() ? 0.55 : 0.32,
+            ease: "power2.out",
             overwrite: "auto",
             onUpdate: () => ScrollTrigger.update(),
             onComplete: () => ScrollTrigger.update(),

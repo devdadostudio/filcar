@@ -37,7 +37,7 @@ $img = $get_value('img');
                     <a href="<?php echo esc_url($link_url); ?>" class="rounded overflow-hidden sp-lg-pr-6 align-items-center text-decoration-none" target="<?php echo esc_attr($link_target); ?>"<?php echo $link_target === '_blank' ? ' rel="noopener"' : ''; ?>>
                         <?php
                         if($cta_img) :
-                            echo wp_get_attachment_image($cta_img, 'catalogs-launch-cta-img', false, ['class' => 'catalogs-launch-cta-img']);
+                            echo wp_get_attachment_image($cta_img, 'full', false, ['class' => 'catalogs-launch-cta-img']);
                         endif;
                         ?>
                         <div class="catalogs-launch-cta-txt sp-py-3 p-small text-white">

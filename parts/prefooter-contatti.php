@@ -87,9 +87,9 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'prefooter-contatti-' 
 
             <?php if ($image_id) : ?>
                 <div class="col-12 col-md-6 col-lg-4">
-                    <div class="respimg">
+                    <div class="respimg aspect-ratio-1x1 rounded overflow-hidden">
                         <?php
-                        echo wp_get_attachment_image($image_id, 'full', false, [
+                        echo wp_get_attachment_image($image_id, 'sidebar-img-blog', false, [
                             'alt' => esc_attr($image_alt),
                         ]);
                         ?>

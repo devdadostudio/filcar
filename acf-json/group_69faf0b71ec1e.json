@@ -20,6 +20,7 @@
                 "bg-white": "Bianco",
                 "bg-primary": "Grigio scuro",
                 "bg-secondary": "Blu",
+                "bg-grey-800": "Grigio scuro\/chiaro",
                 "bg-grey-600": "Grigio chiaro",
                 "bg-grey-200": "Grigio light"
             },
@@ -41,6 +42,20 @@
                 "param": "block",
                 "operator": "==",
                 "value": "acf\/img-txt"
+            }
+        ],
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/faq"
+            }
+        ],
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/technical-text-scroll"
             }
         ],
         [
@@ -70,5 +85,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1779782283
+    "modified": 1780482430
 }

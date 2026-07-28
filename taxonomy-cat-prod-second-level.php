@@ -141,14 +141,16 @@ if (!empty($faq_items)) {
             <div class="row align-items-center">
                 <div class="col-12 col-lg-4 order-2 order-lg-1">
                     <div class="product-hero__content category-second-hero__content text-grey-500">
-                        <?php if ($parent_term && !is_wp_error($parent_term)) : ?>
-                            <div class="product-3 fw-normal text-uppercase sp-mb-3 text-primary">
-                                <?php echo esc_html($parent_term->name); ?>
-                            </div>
-                        <?php endif; ?>
-                        <h1 class="h1 extralight sp-mb-3 sp-sxl-mb-4 sp-uxl-mb-5 text-primary">
-                            <?php echo esc_html($term->name); ?>
-                        </h1>
+                        <div>
+                            <?php if ($parent_term && !is_wp_error($parent_term)) : ?>
+                                <div class="product-3 fw-normal text-uppercase sp-mb-3 text-primary category-hero-subtitle">
+                                    <?php echo esc_html($parent_term->name); ?>
+                                </div>
+                            <?php endif; ?>
+                            <h1 class="h1 extralight sp-mb-3 sp-sxl-mb-4 sp-uxl-mb-5 text-primary">
+                                <?php echo esc_html($term->name); ?>
+                            </h1>
+                        </div>
                         <?php if (!empty($term->description)) : ?>
                             <div class="p-big regular">
                                 <?php echo wp_kses_post(wpautop($term->description)); ?>

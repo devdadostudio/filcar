@@ -27,6 +27,9 @@
     background-size: contain;
     opacity: 1;
     will-change: transform;
+    @include media-breakpoint-down(lg) {
+      display: none;
+    }
   }
 
   &--dark &__pattern {

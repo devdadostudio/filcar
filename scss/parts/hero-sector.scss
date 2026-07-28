@@ -15,6 +15,9 @@
 
   &__media {
     object-fit: cover;
+    @include media-breakpoint-down(lg) {
+      object-position: right;
+    }
   }
 
   &__shade {
@@ -57,6 +60,10 @@
     min-height: calc(100svh - var(--site-header-height, #{$header-bar-height}));
     padding-top: 9rem;
     padding-bottom: clamp(240px, 28vh, 320px);
+
+    @include media-breakpoint-between(llg, xl) {
+      padding-bottom: 450px;
+    }
   }
 
   &__copy {

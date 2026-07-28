@@ -82,6 +82,26 @@
     overflow-y: auto; /* Se ci sono tanti prodotti, scrolla solo qui */
     display: flex;
     align-items: center;
+    .attrezzature-panel {
+        .list-unstyled {
+            > li{
+                a {
+                    position: relative;
+                    &:hover {
+                        &::after {
+                            font-family: "fontello";
+                            content: "";
+                            position: absolute;
+                            right: -10px;
+                            top: calc(50% + 3px);
+                            transform: translate(100%, -50%);
+                            color: $secondary;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 /* Applichiamo le dimensioni a entrambi i tipi di megamenu speciali */
@@ -152,8 +172,15 @@
     padding-right: 15px; /* Evita sovrapposizione con scrollbar */
 }
 
-.arredo-tecnico-menu__lvl3-link .icon-big{
-    font-size: 18px;
+.arredo-tecnico-menu__lvl3-link{
+    .icon-big{
+        font-size: 18px;
+        position: relative;
+        top: -1px;
+        &.icon-logo-mono{
+            font-size: 13px;
+        }
+    }
 }
 
 .arredo-tecnico-menu__row:not(:last-of-type) {

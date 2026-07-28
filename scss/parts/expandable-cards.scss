@@ -269,6 +269,9 @@
     .expandable-cards__reveal {
       z-index: 2;
       width: min(42%, 620px);
+      @include media-breakpoint-down(xl) {
+        width: min(60%, 620px);
+      }
     }
 
     .expandable-cards__card-title {

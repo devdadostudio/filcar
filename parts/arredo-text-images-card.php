@@ -64,7 +64,7 @@ $section_classes = [
     'arredo-text-images-card',
     'arredo-text-images-card--' . $variant,
     'sp-pt-10',
-    'sp-pb-0',
+    'sp-pb-7',
     'sp-lg-py-16',
     'sp-sxl-py-20',
 ];

@@ -864,6 +864,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const intro = section.querySelector(".innovation-scroll__intro");
       const content = section.querySelector(".innovation-scroll__content");
       const bar = section.querySelector(".innovation-scroll__bar");
+      let windowWidth = window.innerWidth;
+      let minH;
+      if(windowWidth > 991){ minH = 450 }else{ minH = 200 }
 
       if (!pin || !media || !intro || !content) return;
 
@@ -877,7 +880,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const getMediaWidth = () =>
         isMobileViewport() ? "calc(100% - 48px)" : "73.2vw";
       const getMediaHeight = () =>
-        isMobileViewport() ? 193 : Math.min(window.innerHeight * 0.64, 620);
+        isMobileViewport() ? minH : Math.min(window.innerHeight * 0.64, 620);
       const getMediaY = () =>
         isMobileViewport()
           ? Math.max(78, Math.min(112, window.innerHeight * 0.13))
