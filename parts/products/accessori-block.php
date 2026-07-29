@@ -12,7 +12,7 @@
     <div class="container-fluid-left">
 
         <div class="table-shell sp-mt-4 sp-xl-mt-6">
-            <div class="table-scroll">
+            <div class="table-scroll table-scroll-no-y">
                 <div class="fake-table accessories-table"
                     style="
                         --grid-mobile: <?php echo esc_attr($grid_template_mobile); ?>;

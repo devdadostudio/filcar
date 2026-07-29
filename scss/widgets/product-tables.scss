@@ -11,11 +11,14 @@ $tableHeight: 80px;
 
 .table-scroll {
   width: calc(100% + 24px);
-  max-height: 30vh;
+  /* max-height: 30vh; */
   overflow: auto;
   position: relative;
   margin: -8px -12px;
   padding: 8px 0;
+  &.table-scroll-no-y {
+    max-height: none;
+  }
 }
 
 .table-row {

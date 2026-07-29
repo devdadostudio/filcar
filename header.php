@@ -51,7 +51,7 @@
                 <div class="flc-main-nav-inner grid sp-gap-3">
                     <nav class="flc-main-header g-col-6 g-col-lg-4">
                         <a class="flc-main-brand flc-logo font-0" href="<?php echo home_url(); ?>">
-                            <img src="<?php echo get_home_url(); ?>/wp-content/uploads/2026/04/filcar_logo.svg" alt="Logo">
+                            <img src="<?php echo get_home_url(); ?>/wp-content/uploads/2026/07/filcar_logo.svg" alt="Logo">
                         </a>
                     </nav>
                     <div class="flc-nav-container align-items-lg-center d-none d-lg-flex g-col-4 justify-content-center">

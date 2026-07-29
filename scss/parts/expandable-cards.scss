@@ -80,7 +80,7 @@
     img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       object-position: center bottom;
       filter: grayscale(100%);
     }
@@ -119,7 +119,7 @@
 
   &__card--image-left &__bg-image,
   &__card--image-left &__card-bg img {
-    object-position: left center;
+    object-position: left bottom;
   }
 
   &__card--image-right &__bg-image,
@@ -184,9 +184,28 @@
     position: relative;
     z-index: 2;
     .icon-logo-mono {
-      font-size: 16px;
-      @include media-breakpoint-down(uxl) {
-        font-size: 12px;
+      font-size: 31px;
+      &:before{
+        margin: 0;
+      }
+      @include media-breakpoint-down(sxl) {
+        font-size: 25px;
+      }
+      @include media-breakpoint-down(md) {
+        font-size: 18px;
+      }
+    }
+    .icon-logo-dual,
+    .icon-logo-infinity{
+      font-size: 41px;
+      @include media-breakpoint-down(sxl) {
+        font-size: 33px;
+      }
+      @include media-breakpoint-down(md) {
+        font-size: 22px;
+      }
+      &:before{
+        margin: 0;
       }
     }
   }
@@ -315,7 +334,7 @@
     }
 
     .expandable-cards__card:not(.is-active) .expandable-cards__card-bg {
-      width: 100%;
+      width: 80%;
     }
 
     .expandable-cards__card.is-active .expandable-cards__bg-image--active,

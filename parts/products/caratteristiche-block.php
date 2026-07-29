@@ -170,7 +170,21 @@ $compatibility_c = count($compatibility);
                                     }
                                     ?>
                                     <div class="cell head-l2 table-2 <?php echo $separator_class; ?>">
-                                        <?php echo esc_html($col['label']); ?>
+                                        <?php echo wp_kses($col['label'], [
+                                            'img' => [
+                                                'src'      => [],
+                                                'alt'      => [],
+                                                'class'    => [],
+                                                'width'    => [],
+                                                'height'   => [],
+                                                'srcset'   => [],
+                                                'sizes'    => [],
+                                                'loading'  => [],
+                                                'decoding' => [],
+                                            ],
+                                            'br'   => [],
+                                            'span' => ['class' => []],
+                                        ]); ?>
                                     </div>
                                 <?php endforeach; ?>
 
@@ -388,13 +402,24 @@ $compatibility_c = count($compatibility);
 
                         $k = $item['displacement_type'] ?? '';
 
-                        $map = [
+                        /* $map = [
                             'Motoveicoli'                => ['key' => 'moto',    'label' => '🏍'],
                             'Veicoli piccola cilindrata' => ['key' => 'auto',    'label' => '🚗'],
                             'Veicoli grande cilindrata'  => ['key' => 'suv',     'label' => '🚙'],
                             'Autobus e autosnodati'      => ['key' => 'van',     'label' => '🚐'],
                             'Veicoli Autoarticolati'     => ['key' => 'truck',   'label' => '🚚'],
                             'Macchine movimento terra'   => ['key' => 'tractor', 'label' => '🚜'],
+                        ]; */
+
+                        $icons_uri = get_template_directory_uri() . '/assets/icons-cilindrate/';
+
+                        $map = [
+                            'Motoveicoli'                => ['key' => 'moto',    'label' => '<img decoding="async" src="' . esc_url($icons_uri . 'moto-aligned-left-transparent.svg') . '" alt="Compatibilità Motoveicoli">'],
+                            'Veicoli piccola cilindrata' => ['key' => 'auto',    'label' => '<img decoding="async" src="' . esc_url($icons_uri . 'auto-aligned-left-transparent.svg') . '" alt="Compatibilità Veicoli piccola cilindrata">'],
+                            'Veicoli grande cilindrata'  => ['key' => 'suv',     'label' => '<img decoding="async" src="' . esc_url($icons_uri . 'supercar-aligned-left-transparent.svg') . '" alt="Compatibilità Veicoli grande cilindrata">'],
+                            'Autobus e autosnodati'      => ['key' => 'van',     'label' => '<img decoding="async" src="' . esc_url($icons_uri . 'autobus-aligned-left-transparent.svg') . '" alt="Compatibilità Autobus e autosnodati">'],
+                            'Veicoli Autoarticolati'     => ['key' => 'truck',   'label' => '<img decoding="async" src="' . esc_url($icons_uri . 'articolato-aligned-left-transparent.svg') . '" alt="Compatibilità Veicoli Autoarticolati">'],
+                            'Macchine movimento terra'   => ['key' => 'tractor', 'label' => '<img decoding="async" src="' . esc_url($icons_uri . 'mezzi-pesanti-aligned-left-transparent.svg') . '" alt="Compatibilità Macchine movimento terra">'],
                         ];
 
                         if (isset($map[$k])) {

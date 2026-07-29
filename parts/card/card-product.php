@@ -1,5 +1,5 @@
 <?php
-$prod_id = get_the_ID();
+$prod_id = $args['prod_id'] ?? get_the_ID();
 
 ?>
 <div class="<?php echo $args['card_class']; ?> card-product">

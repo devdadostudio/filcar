@@ -12,7 +12,7 @@ if($related_c > 0) :
                 <?php
                 for($i = 0; $i < $related_c; $i++) :
                     $prod_id = $related[$i];
-                    get_template_part('parts/card/card', 'product', ['card_class' => 'col-6 col-xl-3']);
+                    get_template_part('parts/card/card', 'product', ['card_class' => 'col-6 col-xl-3', 'prod_id' => $prod_id]);
                 endfor; ?>
             </div>
         </div>

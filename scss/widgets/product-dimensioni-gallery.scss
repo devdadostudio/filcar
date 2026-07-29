@@ -84,7 +84,7 @@ $dimensionFrameBg: #f7d7da;
   .dimensions-gallery-frame {
     height: auto;
     .dimensions-gallery-image {
-      object-fit: cover !important;
+      object-fit: contain !important;
     }
   }
 }

@@ -115,8 +115,8 @@
                 ],
             ],
         ];
-
-        $dimension_mod_width = 'minmax(120px, 1.4fr)';
+        
+        $dimension_mod_width = 'minmax(120px, 2fr)';
 
         $dimension_grid_parts = [];
         $dimension_grid_parts[] = $dimension_mod_width;

@@ -522,3 +522,35 @@ function registra_custom_post_type_pubblicazioni() {
 }
 
 add_action( 'init', 'registra_custom_post_type_pubblicazioni' );
+
+/**
+ * Rimuove il crumb dell'archivio "Prodotti" dai breadcrumb di Yoast
+ * (singoli prodotti e archivi della tassonomia cat-prod).
+ */
+function filcar_remove_product_archive_from_breadcrumbs( $crumbs ) {
+    if ( ! is_array( $crumbs ) ) {
+        return $crumbs;
+    }
+
+    $archive_url = get_post_type_archive_link( 'product' );
+
+    $filtered = array_filter( $crumbs, function ( $crumb ) use ( $archive_url ) {
+        if ( ! is_array( $crumb ) ) {
+            return true;
+        }
+
+        if ( isset( $crumb['ptarchive'] ) && $crumb['ptarchive'] === 'product' ) {
+            return false;
+        }
+
+        if ( $archive_url && isset( $crumb['url'] ) && untrailingslashit( $crumb['url'] ) === untrailingslashit( $archive_url ) ) {
+            return false;
+        }
+
+        return true;
+    } );
+
+    return array_values( $filtered );
+}
+
+add_filter( 'wpseo_breadcrumb_links', 'filcar_remove_product_archive_from_breadcrumbs' );

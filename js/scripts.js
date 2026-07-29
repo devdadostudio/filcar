@@ -773,6 +773,66 @@ document.addEventListener("DOMContentLoaded", function () {
       }, 280);
     });
   });
+
+  /**
+   * 3. CHIUSURA ALLO SCROLL
+   * Se arredo-tecnico-megamenu o attrezzature-megamenu sono aperti,
+   * lo scroll della pagina li chiude.
+   */
+  const scrollCloseMegamenus = document.querySelectorAll(
+    ".flc-headmenu > .nav-item > .megamenu.arredo-tecnico-megamenu, .flc-headmenu > .nav-item > .megamenu.attrezzature-megamenu",
+  );
+
+  if (scrollCloseMegamenus.length) {
+    const scrollCloseThreshold = 10;
+
+    const getScrollPosition = function () {
+      const smoother = window.ScrollSmoother ? ScrollSmoother.get() : null;
+      if (smoother) return smoother.scrollTop();
+      return window.pageYOffset || window.scrollY || 0;
+    };
+
+    let lastScrollPosition = getScrollPosition();
+
+    const closeMegamenusOnScroll = function () {
+      const currentPosition = getScrollPosition();
+
+      const openMenus = Array.from(scrollCloseMegamenus).filter(function (menu) {
+        return (
+          menu.classList.contains("show") &&
+          !menu.classList.contains("is-closing")
+        );
+      });
+
+      // Nessun megamenu aperto: teniamo solo traccia della posizione
+      if (!openMenus.length) {
+        lastScrollPosition = currentPosition;
+        return;
+      }
+
+      // Ignoriamo micro-spostamenti (es. assestamenti di layout)
+      if (Math.abs(currentPosition - lastScrollPosition) < scrollCloseThreshold) {
+        return;
+      }
+
+      lastScrollPosition = currentPosition;
+
+      openMenus.forEach(function (menu) {
+        const toggle = menu.previousElementSibling;
+        if (!toggle) return;
+
+        if (window.bootstrap) {
+          bootstrap.Dropdown.getOrCreateInstance(toggle).hide();
+        } else {
+          menu.classList.remove("show");
+        }
+      });
+    };
+
+    window.addEventListener("scroll", closeMegamenusOnScroll, {
+      passive: true,
+    });
+  }
 });
 
 document.addEventListener("DOMContentLoaded", function () {

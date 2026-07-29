@@ -53,7 +53,7 @@
         foreach ($table_headings as $i => $heading) {
             if ($i === 0) {
                 // prima colonna Mod
-                $dimension_grid_parts[] = 'minmax(120px,1.4fr)';
+                $dimension_grid_parts[] = 'minmax(180px,2fr)';
             } else {
                 // tutte le altre colonne dimensioni
                 $dimension_grid_parts[] = 'minmax(74px,1fr)';

@@ -1,6 +1,7 @@
 .section-hero-product{
     @include media-breakpoint-down(lg) { 
         flex-direction: column;
+        background: #ffffff;
         .text-container{
             flex-grow: 1;
             align-items: center;
@@ -14,8 +15,8 @@
             min-height: 50vh;
         }
         .column-img-bg-product{
-            background-image: url('/flcsite/wp-content/themes/filcar/img/bg_prod.jpg');
-            background-size: cover;
+            background-image: url('/wp-content/themes/filcar/img/bg_prod.jpg');
+            background-size: 230% 100%;
             background-repeat: no-repeat;
             background-position: center;
             .img-container{

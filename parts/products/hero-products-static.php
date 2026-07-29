@@ -2,7 +2,7 @@
     $subtitle_hero = get_field('subtitle_hero');
     $txt_hero = get_field('txt_hero');
 ?>
-<section class="position-relative section-hero-product d-flex align-items-center h-100vh-header">
+<section class="position-relative section-hero-product d-flex align-items-center h-100vh-header section">
     <?php
     get_template_part('parts/breadcrumbs', null, [
         'variant' => 'light',
@@ -20,14 +20,14 @@
             </figure>
         </div>
     </div>
-    <div class="container-fluid position-relative text-container">
+    <div class="container-fluid position-relative text-container sp-py-4 sp-md-pt-8 sp-md-pb-10 sp-lg-pt-0 sp-lg-pb-0">
         <div class="row">
-            <div class="col-12 col-lg-5">
+            <div class="col-12 col-lg-4">
                 <div class="product-hero__content text-grey-500">
                     <?php the_title('<h1 class="product-1 fw-normal sp-mb-3 sp-sxl-mb-4 sp-uxl-mb-5">', '</h1>'); ?>
                     <!-- subtitle -->
                     <?php if ($subtitle_hero) : ?>
-                        <div class="h5 fw-light sp-mb-3 sp-sxl-mb-5 sp-uxl-mb-7">
+                        <div class="h5 fw-light sp-mb-3 sp-sxl-mb-5 sp-uxl-mb-7 sp-lh-130">
                             <?php echo $subtitle_hero; ?>
                         </div>
                     <?php endif; ?>

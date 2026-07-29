@@ -48,19 +48,7 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'hero-video-slider-' .
             $poster = $slide['poster'] ?? null;
             $poster_url = is_array($poster) ? ($poster['url'] ?? '') : (is_numeric($poster) ? wp_get_attachment_image_url($poster, 'full') : $poster);
             $slide_cta = $slide['cta'] ?? null;
-            $slide_cta_url = '';
-            $slide_cta_title = '';
-            $slide_cta_target = '_self';
-
-            if ($slide_cta) {
-                $term = get_term((int) $slide_cta, 'cat-prod');
-
-                if ($term && !is_wp_error($term)) {
-                    $term_link = get_term_link($term);
-                    $slide_cta_url = !is_wp_error($term_link) ? $term_link : '';
-                    $slide_cta_title = __('Scopri', 'filcar');
-                }
-            }
+            $slide_cta_text = $slide['cta_txt'] ?? null;
         ?>
             <article class="hero-video-slider__slide <?php echo $index === 0 ? 'is-active' : ''; ?>" data-slide-index="<?php echo esc_attr($index); ?>">
                 <?php if ($video_url) : ?>
@@ -79,9 +67,9 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'hero-video-slider-' .
                             <h2 class="hero-video-slider__title h0 extralight"><?php echo esc_html($title); ?></h2>
                         <?php endif; ?>
                         
-                        <?php if ($slide_cta_url) : ?>
-                            <a class="hero-video-slider__cta btn btn-secondary-2" href="<?php echo esc_url($slide_cta_url); ?>" target="<?php echo esc_attr($slide_cta_target); ?>">
-                                <span><?php echo esc_html($slide_cta_title); ?>
+                        <?php if ($slide_cta) : ?>
+                            <a class="hero-video-slider__cta btn btn-secondary-2" href="<?php echo esc_url($slide_cta); ?>">
+                                <span><?php echo esc_html($slide_cta_text); ?>
                                 <i class="icon icon-filcar-icon-arrow-upr"></i></span>
                             </a>
                         <?php endif; ?>

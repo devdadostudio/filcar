@@ -109,7 +109,11 @@ $page_title = get_the_title();
 					<div class="contact-form-block__form">
 						<?php
 						if ($form) {
-							echo do_shortcode('[contact-form-7 id="' . esc_attr($form) . '" title="Contattaci"]');
+							if(is_single() && 'product' == get_post_type()){
+								echo do_shortcode('[contact-form-7 id="9f66728" title="form prodotti"]');
+							}else{
+								echo do_shortcode('[contact-form-7 id="' . esc_attr($form) . '" title="Contattaci"]');
+							}
 						}
 						?>
 					</div>
