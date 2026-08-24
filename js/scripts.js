@@ -1083,9 +1083,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!words.length) return;
 
       const setProgress = (progress) => {
+        const acceleratedProgress = Math.min(progress / 0.68, 1);
         const easedProgress = window.gsap
-          ? window.gsap.parseEase("power1.out")(progress)
-          : progress;
+          ? window.gsap.parseEase("power2.out")(acceleratedProgress)
+          : acceleratedProgress;
         const activeWords = Math.ceil(easedProgress * words.length);
 
         words.forEach((word, index) => {
@@ -1105,7 +1106,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       ScrollTrigger.create({
         trigger: section,
-        start: "center bottom-=10%",
+        start: "top 66%",
         end: "bottom 52%",
         scrub: true,
         invalidateOnRefresh: true,
