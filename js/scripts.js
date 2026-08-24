@@ -679,10 +679,44 @@ if (firstVideo) {
  * Funzione per calcolare l'altezza dinamica del megamenu
  */
 
+function getSearchOverlay() {
+  return document.querySelector(".flc-search-container");
+}
+
+function getSearchOverlayInput() {
+  const searchContainer = getSearchOverlay();
+  return searchContainer ? searchContainer.querySelector('input[name="s"]') : null;
+}
+
+function openSearchOverlay() {
+  const searchContainer = getSearchOverlay();
+  if (!searchContainer) {
+    return;
+  }
+
+  searchContainer.classList.add("show");
+
+  const searchInput = getSearchOverlayInput();
+  if (searchInput) {
+    // Il focus va dato dopo che il pannello e' effettivamente visibile
+    requestAnimationFrame(function () {
+      searchInput.focus();
+      searchInput.select();
+    });
+  }
+}
+
 function closeSearchOverlay() {
-  const searchContainer = document.querySelector(".flc-search-container");
-  if (searchContainer) {
-    searchContainer.classList.remove("show");
+  const searchContainer = getSearchOverlay();
+  if (!searchContainer) {
+    return;
+  }
+
+  searchContainer.classList.remove("show");
+
+  const searchInput = getSearchOverlayInput();
+  if (searchInput) {
+    searchInput.value = "";
   }
 }
 
@@ -1254,7 +1288,13 @@ document.addEventListener("DOMContentLoaded", function () {
   if (searchToggle) {
     searchToggle.addEventListener("click", function (e) {
       e.preventDefault();
-      searchContainer.classList.toggle("show");
+
+      if (searchContainer && searchContainer.classList.contains("show")) {
+        closeSearchOverlay();
+        return;
+      }
+
+      openSearchOverlay();
     });
   }
   const searchCloses = document.querySelectorAll(".search-close");
@@ -1265,7 +1305,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const activeContainer = searchClose.closest(".flc-search-container, .megamenu");
 
         if (!activeContainer && searchContainer) {
-          searchContainer.classList.remove("show");
+          closeSearchOverlay();
           return;
         }
 
@@ -1274,7 +1314,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (activeContainer.classList.contains("flc-search-container")) {
-          activeContainer.classList.remove("show");
+          closeSearchOverlay();
           return;
         }
 
