@@ -670,6 +670,13 @@ if (firstVideo) {
  * Funzione per calcolare l'altezza dinamica del megamenu
  */
 
+function closeSearchOverlay() {
+  const searchContainer = document.querySelector(".flc-search-container");
+  if (searchContainer) {
+    searchContainer.classList.remove("show");
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   /**
    * 1. GESTIONE CLICK ATTREZZATURE OPERATIVE
@@ -741,6 +748,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     toggle.addEventListener("show.bs.dropdown", function () {
+      if (
+        menu.classList.contains("arredo-tecnico-megamenu") ||
+        menu.classList.contains("attrezzature-megamenu")
+      ) {
+        closeSearchOverlay();
+      }
+
       clearTimeout(closeTimer);
       menu.classList.remove("is-closing");
       menu.dataset.allowDropdownClose = "";
@@ -846,6 +860,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     toggleBtn.addEventListener("click", function (e) {
       e.preventDefault();
+      closeSearchOverlay();
 
       if (rightNav.classList.contains("is-active")) {
         clearTimeout(rightNavCloseTimer);
@@ -1232,11 +1247,34 @@ document.addEventListener("DOMContentLoaded", function () {
       searchContainer.classList.toggle("show");
     });
   }
-  const searchClose = document.querySelector(".search-close");
-  if (searchClose) {
-    searchClose.addEventListener("click", function (e) {
-      e.preventDefault();
-      searchContainer.classList.remove("show");
+  const searchCloses = document.querySelectorAll(".search-close");
+  if (searchCloses.length) {
+    searchCloses.forEach(function (searchClose) {
+      searchClose.addEventListener("click", function (e) {
+        e.preventDefault();
+        const activeContainer = searchClose.closest(".flc-search-container, .megamenu");
+
+        if (!activeContainer && searchContainer) {
+          searchContainer.classList.remove("show");
+          return;
+        }
+
+        if (!activeContainer) {
+          return;
+        }
+
+        if (activeContainer.classList.contains("flc-search-container")) {
+          activeContainer.classList.remove("show");
+          return;
+        }
+
+        const dropdownToggle = activeContainer.previousElementSibling;
+        if (dropdownToggle && window.bootstrap) {
+          bootstrap.Dropdown.getOrCreateInstance(dropdownToggle).hide();
+        } else {
+          activeContainer.classList.remove("show", "is-closing");
+        }
+      });
     });
   }
   const searchSubmit = document.querySelector(".search-submit");

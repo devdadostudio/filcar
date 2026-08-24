@@ -99,7 +99,7 @@ $block_id = !empty($block['anchor']) ? $block['anchor'] : 'hero-video-slider-' .
 
                 <?php if ($news_url && $news_title) : ?>
                     <a class="hero-video-slider__news col-8 col-md-6 col-lg-4 col-xl-3 offset-xl-1 sp-mb-4 sp-lg-mb-0" href="<?php echo esc_url($news_url); ?>">
-                        <span class="hero-video-slider__news-title h6 light"><?php echo esc_html($news_title); ?></span>
+                        <span class="hero-video-slider__news-title h7 light"><?php echo esc_html($news_title); ?></span>
                         <i class="hero-video-slider__news-icon icon icon-filcar-icon-arrow-upr"></i>
                     </a>
                 <?php endif; ?>

@@ -64,6 +64,16 @@
     align-items: center;
 }
 
+.megamenu-close-container {
+    z-index: 2;
+    pointer-events: none;
+
+    .search-close {
+        cursor: pointer;
+        pointer-events: auto;
+    }
+}
+
 /* Colonna sinistra (Sidebar) */
 .attrezzature-sidebar {
     height: 100%;

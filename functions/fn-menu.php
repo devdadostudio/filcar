@@ -262,22 +262,32 @@ class Custom_Submenu_Walker extends Walker_Nav_Menu
         if ( $depth === 0 ) {
             if ( $this->is_arredo_tecnico ) {
                 $this->render_arredo_tecnico( $output, $indent );
+                $output .= "{$indent}</div>\n";
                 $this->is_arredo_tecnico = false; $this->arredo_tree = [];
             } elseif ( $this->is_attrezzature ) {
                 $this->render_attrezzature_operative( $output, $indent );
+                $output .= "{$indent}</div>\n";
                 $this->is_attrezzature = false; $this->attrezzature_tree = [];
             } else {
                 $output .= "{$indent}\t</div></div></div>\n";
-            }
-            if ($this->is_arredo_tecnico || $this->is_attrezzature) {
-                $output .= "{$indent}</div>\n";
             }
         } elseif ( $depth === 1 && !$this->is_arredo_tecnico && !$this->is_attrezzature ) {
             $output .= "{$indent}\t\t\t</ul></div>\n";
         }
     }
 
+    private function render_megamenu_close( &$output, $indent ) {
+        $output .= "{$indent}<div class=\"container-fluid megamenu-close-container position-absolute top-0 start-0 w-100 sp-pt-5\">\n";
+        $output .= "{$indent}\t<div class=\"row\">\n";
+        $output .= "{$indent}\t\t<div class=\"offset-6 col-6 d-flex justify-content-end text-white\">\n";
+        $output .= "{$indent}\t\t\t<div class=\"search-close\" role=\"button\" aria-label=\"" . esc_attr__( 'Chiudi menu', 'filcar' ) . "\"><i class=\"icon-filcar-icon-close\"></i></div>\n";
+        $output .= "{$indent}\t\t</div>\n";
+        $output .= "{$indent}\t</div>\n";
+        $output .= "{$indent}</div>\n";
+    }
+
     private function render_attrezzature_operative( &$output, $indent ) {
+        $this->render_megamenu_close( $output, $indent );
         $output .= "{$indent}<div class=\"container-fluid sp-py-11\">\n";
         $output .= "{$indent}\t<div class=\"attrezzature-wrapper row\">\n";
         $output .= "{$indent}\t\t<div class=\"attrezzature-sidebar col-12 col-lg-6 sp-pt-\">\n";
@@ -309,6 +319,7 @@ class Custom_Submenu_Walker extends Walker_Nav_Menu
     }
 
     private function render_arredo_tecnico( &$output, $indent ) {
+        $this->render_megamenu_close( $output, $indent );
         $output .= "{$indent}\t<div class=\"inner-container-small arredo-tecnico-scroll-container sp-py-9 sp-lg-py-11 sp-sxl-py-13\">\n";
         
         foreach ( $this->arredo_tree as $idx => $node ) {
