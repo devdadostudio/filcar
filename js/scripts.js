@@ -1,3 +1,23 @@
+function filcarGetNavigationType() {
+  const navigationEntry = performance.getEntriesByType
+    ? performance.getEntriesByType("navigation")[0]
+    : null;
+
+  return navigationEntry
+    ? navigationEntry.type
+    : performance.navigation && performance.navigation.type === 1
+      ? "reload"
+      : "navigate";
+}
+
+function filcarScrollWindowToTop() {
+  const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+
+  document.documentElement.style.scrollBehavior = "auto";
+  window.scrollTo(0, 0);
+  document.documentElement.style.scrollBehavior = previousScrollBehavior;
+}
+
 const filcarInitialScrollLock = (() => {
   if (window.location.hash) return null;
 
@@ -295,14 +315,7 @@ const filcarStartAtTop = filcarShouldStartAtTop();
 function filcarShouldStartAtTop() {
   if (window.location.hash) return false;
 
-  const navigationEntry = performance.getEntriesByType
-    ? performance.getEntriesByType("navigation")[0]
-    : null;
-  const navigationType = navigationEntry
-    ? navigationEntry.type
-    : performance.navigation && performance.navigation.type === 1
-      ? "reload"
-      : "navigate";
+  const navigationType = filcarGetNavigationType();
 
   return navigationType === "reload" || navigationType === "back_forward";
 }
@@ -310,11 +323,7 @@ function filcarShouldStartAtTop() {
 function filcarForceStartAtTop() {
   if (!filcarStartAtTop) return;
 
-  const previousScrollBehavior = document.documentElement.style.scrollBehavior;
-
-  document.documentElement.style.scrollBehavior = "auto";
-  window.scrollTo(0, 0);
-  document.documentElement.style.scrollBehavior = previousScrollBehavior;
+  filcarScrollWindowToTop();
 }
 
 filcarForceStartAtTop();
@@ -1752,14 +1761,12 @@ function initHeroHotspotPositionDetector() {
 }
 
 function initHeroHotspotAnimations() {
-  if (!window.gsap) return;
-
   const reduceMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
   ).matches;
   const isMobile = window.matchMedia("(max-width: 991px)").matches;
 
-  if (reduceMotion || isMobile) return;
+  if (reduceMotion || isMobile || !window.gsap) return;
 
   document.querySelectorAll(".js-hero-image-hotspots").forEach((hero) => {
     if (hero.dataset.hotspotAnimationReady === "true") return;
@@ -1772,17 +1779,7 @@ function initHeroHotspotAnimations() {
 
     hero.dataset.hotspotAnimationReady = "true";
 
-    gsap.set(points, { autoAlpha: 0, scale: 0.86 });
-    gsap.set(hero.querySelectorAll(".hero-image-hotspots__point-card"), {
-      autoAlpha: 0,
-      y: 10,
-    });
-
-    const pointStagger = 0.36;
-    const cardDelay = 0.22;
-
     const timeline = gsap.timeline({
-      delay: 0.55,
       defaults: { ease: "power2.out" },
     });
 
@@ -1790,15 +1787,15 @@ function initHeroHotspotAnimations() {
       const card = point.querySelector(".hero-image-hotspots__point-card");
 
       timeline
-        .to(
+        .from(
           point,
-          { autoAlpha: 1, scale: 1, duration: 0.56 },
-          index * pointStagger,
+          { autoAlpha: 0, scale: 0.92, duration: 0.24 },
+          index * 0.06,
         )
-        .to(
+        .from(
           card,
-          { autoAlpha: 1, y: 0, duration: 0.48 },
-          index * pointStagger + cardDelay,
+          { autoAlpha: 0, y: 6, duration: 0.2 },
+          index * 0.06 + 0.04,
         );
     });
   });

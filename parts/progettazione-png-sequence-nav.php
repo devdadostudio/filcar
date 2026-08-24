@@ -317,7 +317,8 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
                                         <div class="progettazione-sequence-nav__point-text p-normal"><?php echo wp_kses_post(wpautop($text)); ?></div>
                                     <?php endif; ?>
 
-                                    <?php if ($index === 0 && $has_floating_cta) : ?>
+                                    <?php // TODO: floating CTA temporaneamente disattivata; riattivare se torna utile nella sequenza PNG. ?>
+                                    <?php if (false && $index === 0 && $has_floating_cta) : ?>
                                         <div class="progettazione-sequence-nav__floating-card js-sequence-anchor-floating-card">
                                             <div class="hero-sector__card-item">
                                                 <?php if ($floating_cta_url) : ?>

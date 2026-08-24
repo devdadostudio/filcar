@@ -10,7 +10,7 @@ if (file_exists($script_path)) {
     wp_enqueue_script(
         'filcar-carousel-highlights',
         get_template_directory_uri() . '/js/carousel-highlights.js',
-        ['gsap', 'scrollTrigger', 'scrollToPlugin'],
+        [],
         filemtime($script_path),
         true
     );
@@ -98,10 +98,6 @@ $items = is_array($items) ? array_values($items) : [];
                                     </div>
                                 </article>
                             <?php endforeach; ?>
-
-                            <?php if (count($items) >= 4) : ?>
-                                <div class="carousel-highlights__end-spacer" aria-hidden="true"></div>
-                            <?php endif; ?>
                         </div>
                     </div>
 

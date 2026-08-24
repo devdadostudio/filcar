@@ -14,7 +14,6 @@
 
   &__pin {
     position: relative;
-    min-height: 100svh;
     display: flex;
     align-items: center;
   }
@@ -46,6 +45,7 @@
     gap: var(--carousel-highlight-gap);
     width: max-content;
     will-change: transform;
+    transition: transform 0.55s ease;
   }
 
   &__card {
@@ -68,12 +68,6 @@
   &__card--wide {
     flex-basis: calc((var(--carousel-highlight-card-unit) * 2) + var(--carousel-highlight-gap));
     width: calc((var(--carousel-highlight-card-unit) * 2) + var(--carousel-highlight-gap));
-  }
-
-  &__end-spacer {
-    flex: 0 0 calc(var(--carousel-highlight-card-unit) * 1.2);
-    width: calc(var(--carousel-highlight-card-unit) * 1.2);
-    pointer-events: none;
   }
 
   &__media {
@@ -233,11 +227,6 @@
     --carousel-highlight-media-height: calc(var(--carousel-highlight-card-unit) * 421 / 327);
     --carousel-highlight-media-hover-height: calc(var(--carousel-highlight-card-unit) * 300 / 327);
 
-    &__pin {
-      min-height: auto;
-      align-items: flex-start;
-    }
-
     &__inner {
       padding-top: 58px;
       padding-bottom: 48px;
@@ -255,10 +244,6 @@
     &__card--wide {
       flex-basis: var(--carousel-highlight-card-unit);
       width: var(--carousel-highlight-card-unit);
-    }
-
-    &__end-spacer {
-      display: none;
     }
 
     &__copy {

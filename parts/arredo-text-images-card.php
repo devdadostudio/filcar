@@ -127,26 +127,22 @@ $section_classes = [
         </div>
 
         <?php if ($has_card) : ?>
-            <div class="row arredo-text-images-card__card-row">
-                <div class="col-12 col-lg-4 offset-lg-8 col-xxl-3 offset-xxl-9">
-                    <a class="hero-sector__card arredo-text-images-card__card<?php echo !$card_image ? ' arredo-text-images-card__card--no-media' : ''; ?>" href="<?php echo esc_url($card_url); ?>" target="<?php echo esc_attr($card_target); ?>"<?php echo $card_target === '_blank' ? ' rel="noopener"' : ''; ?>>
-                        <?php if ($card_image) : ?>
-                            <span class="hero-sector__card-media">
-                                <?php
-                                echo wp_get_attachment_image($get_image_id($card_image), 'medium', false, [
-                                    'alt' => $get_image_alt($card_image, wp_strip_all_tags($card_label)),
-                                    'loading' => 'lazy',
-                                ]);
-                                ?>
-                            </span>
-                        <?php endif; ?>
-                        <span class="hero-sector__card-copy">
-                            <span class="hero-sector__card-title p-big"><?php echo wp_kses_post($card_label); ?></span>
-                            <i class="hero-sector__card-icon icon icon-filcar-icon-arrow-downr" aria-hidden="true"></i>
-                        </span>
-                    </a>
-                </div>
-            </div>
+            <a class="hero-sector__card arredo-text-images-card__card<?php echo !$card_image ? ' arredo-text-images-card__card--no-media' : ''; ?>" href="<?php echo esc_url($card_url); ?>" target="<?php echo esc_attr($card_target); ?>"<?php echo $card_target === '_blank' ? ' rel="noopener"' : ''; ?>>
+                <?php if ($card_image) : ?>
+                    <span class="hero-sector__card-media">
+                        <?php
+                        echo wp_get_attachment_image($get_image_id($card_image), 'medium', false, [
+                            'alt' => $get_image_alt($card_image, wp_strip_all_tags($card_label)),
+                            'loading' => 'lazy',
+                        ]);
+                        ?>
+                    </span>
+                <?php endif; ?>
+                <span class="hero-sector__card-copy">
+                    <span class="hero-sector__card-title p-big"><?php echo wp_kses_post($card_label); ?></span>
+                    <i class="hero-sector__card-icon icon icon-filcar-icon-arrow-downr" aria-hidden="true"></i>
+                </span>
+            </a>
         <?php endif; ?>
     </div>
 </section>
