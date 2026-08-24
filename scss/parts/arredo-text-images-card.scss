@@ -5,7 +5,6 @@
   color: $primary;
 
   > .container-fluid {
-    position: relative;
     z-index: 1;
   }
 
@@ -90,14 +89,14 @@
     object-fit: cover;
   }
 
-  &__card-row {
-    position: relative;
-    z-index: 1;
-    margin-top: -6.5rem;
-  }
-
   &__card {
+    position: absolute;
+    right: 36px;
+    bottom: 36px;
+    z-index: 3;
     width: 100%;
+    max-width: 288px;
+    grid-template-columns: 120px minmax(0, 1fr);
     border-color: rgba(255, 255, 255, 0.08);
     background:
       linear-gradient(
@@ -122,6 +121,42 @@
 
     &--no-media {
       grid-template-columns: 1fr;
+    }
+  }
+
+  &__card {
+    .hero-sector__card-media {
+      min-height: 112px;
+    }
+
+    .hero-sector__card-copy {
+      padding: 18px 18px 18px 22px;
+    }
+  }
+
+  @include media-breakpoint-up(uxl) {
+    &__card {
+      right: 45px;
+      bottom: 45px;
+      max-width: 320px;
+      grid-template-columns: 134px minmax(0, 1fr);
+
+      .hero-sector__card-media {
+        min-height: 120px;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(uxxl) {
+    &__card {
+      right: 64px;
+      bottom: 64px;
+      max-width: 352px;
+      grid-template-columns: 146px minmax(0, 1fr);
+
+      .hero-sector__card-media {
+        min-height: 128px;
+      }
     }
   }
 
@@ -164,12 +199,12 @@
       }
     }
 
-    &__card-row {
-      margin-top: 1.25rem;
-    }
-
     &__card {
+      position: static;
+      width: 100%;
       max-width: none;
+      margin-top: 1.25rem;
+      grid-template-columns: 132px minmax(0, 1fr);
     }
     
   }
