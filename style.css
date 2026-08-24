@@ -19422,7 +19422,6 @@ body {
 }
 .carousel-highlights__pin {
   position: relative;
-  min-height: 100svh;
   display: flex;
   align-items: center;
 }
@@ -19441,7 +19440,7 @@ body {
 }
 .carousel-highlights__viewport {
   width: 100%;
-  overflow: visible;
+  overflow: hidden;
 }
 .carousel-highlights__track {
   display: flex;
@@ -19449,6 +19448,7 @@ body {
   gap: var(--carousel-highlight-gap);
   width: max-content;
   will-change: transform;
+  transition: transform 0.55s ease;
 }
 .carousel-highlights__card {
   flex: 0 0 var(--carousel-highlight-card-unit);
@@ -19466,11 +19466,6 @@ body {
 .carousel-highlights__card--wide {
   flex-basis: calc(var(--carousel-highlight-card-unit) * 2 + var(--carousel-highlight-gap));
   width: calc(var(--carousel-highlight-card-unit) * 2 + var(--carousel-highlight-gap));
-}
-.carousel-highlights__end-spacer {
-  flex: 0 0 calc(var(--carousel-highlight-card-unit) * 1.2);
-  width: calc(var(--carousel-highlight-card-unit) * 1.2);
-  pointer-events: none;
 }
 .carousel-highlights__media {
   position: relative;
@@ -19602,10 +19597,6 @@ body {
     --carousel-highlight-media-height: calc(var(--carousel-highlight-card-unit) * 421 / 327);
     --carousel-highlight-media-hover-height: calc(var(--carousel-highlight-card-unit) * 300 / 327);
   }
-  .carousel-highlights__pin {
-    min-height: auto;
-    align-items: flex-start;
-  }
   .carousel-highlights__inner {
     padding-top: 58px;
     padding-bottom: 48px;
@@ -19620,9 +19611,6 @@ body {
   .carousel-highlights__card--wide {
     flex-basis: var(--carousel-highlight-card-unit);
     width: var(--carousel-highlight-card-unit);
-  }
-  .carousel-highlights__end-spacer {
-    display: none;
   }
   .carousel-highlights__copy {
     min-height: 62px;
