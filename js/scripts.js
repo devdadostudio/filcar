@@ -1,10 +1,48 @@
-const filcarInitialScrollLock = (() => {
-  if (window.location.hash) return null;
-  if (
+function filcarGetNavigationType() {
+  const navigationEntry = performance.getEntriesByType
+    ? performance.getEntriesByType("navigation")[0]
+    : null;
+
+  return navigationEntry
+    ? navigationEntry.type
+    : performance.navigation && performance.navigation.type === 1
+      ? "reload"
+      : "navigate";
+}
+
+function filcarIsFurnitureHotspotsPage() {
+  return (
     document.querySelector(".js-hero-image-hotspots") ||
     (document.body &&
       document.body.classList.contains("tax-categoria-elemento-arredo"))
-  ) {
+  );
+}
+
+function filcarScrollWindowToTop() {
+  const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+
+  document.documentElement.style.scrollBehavior = "auto";
+  window.scrollTo(0, 0);
+  document.documentElement.style.scrollBehavior = previousScrollBehavior;
+}
+
+const filcarInitialScrollLock = (() => {
+  if (window.location.hash) return null;
+
+  if (filcarIsFurnitureHotspotsPage()) {
+    filcarScrollWindowToTop();
+    document.addEventListener("DOMContentLoaded", filcarScrollWindowToTop, {
+      once: true,
+    });
+    window.addEventListener(
+      "load",
+      () => {
+        filcarScrollWindowToTop();
+        window.setTimeout(filcarScrollWindowToTop, 80);
+      },
+      { once: true },
+    );
+
     return null;
   }
 
@@ -302,14 +340,7 @@ const filcarStartAtTop = filcarShouldStartAtTop();
 function filcarShouldStartAtTop() {
   if (window.location.hash) return false;
 
-  const navigationEntry = performance.getEntriesByType
-    ? performance.getEntriesByType("navigation")[0]
-    : null;
-  const navigationType = navigationEntry
-    ? navigationEntry.type
-    : performance.navigation && performance.navigation.type === 1
-      ? "reload"
-      : "navigate";
+  const navigationType = filcarGetNavigationType();
 
   return navigationType === "reload" || navigationType === "back_forward";
 }
@@ -317,11 +348,7 @@ function filcarShouldStartAtTop() {
 function filcarForceStartAtTop() {
   if (!filcarStartAtTop) return;
 
-  const previousScrollBehavior = document.documentElement.style.scrollBehavior;
-
-  document.documentElement.style.scrollBehavior = "auto";
-  window.scrollTo(0, 0);
-  document.documentElement.style.scrollBehavior = previousScrollBehavior;
+  filcarScrollWindowToTop();
 }
 
 filcarForceStartAtTop();
