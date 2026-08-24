@@ -19440,7 +19440,7 @@ body {
 }
 .carousel-highlights__viewport {
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
 }
 .carousel-highlights__track {
   display: flex;

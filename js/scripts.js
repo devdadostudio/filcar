@@ -10,14 +10,6 @@ function filcarGetNavigationType() {
       : "navigate";
 }
 
-function filcarIsFurnitureHotspotsPage() {
-  return (
-    document.querySelector(".js-hero-image-hotspots") ||
-    (document.body &&
-      document.body.classList.contains("tax-categoria-elemento-arredo"))
-  );
-}
-
 function filcarScrollWindowToTop() {
   const previousScrollBehavior = document.documentElement.style.scrollBehavior;
 
@@ -28,23 +20,6 @@ function filcarScrollWindowToTop() {
 
 const filcarInitialScrollLock = (() => {
   if (window.location.hash) return null;
-
-  if (filcarIsFurnitureHotspotsPage()) {
-    filcarScrollWindowToTop();
-    document.addEventListener("DOMContentLoaded", filcarScrollWindowToTop, {
-      once: true,
-    });
-    window.addEventListener(
-      "load",
-      () => {
-        filcarScrollWindowToTop();
-        window.setTimeout(filcarScrollWindowToTop, 80);
-      },
-      { once: true },
-    );
-
-    return null;
-  }
 
   let locked = true;
   let previousHtmlOverflow = "";

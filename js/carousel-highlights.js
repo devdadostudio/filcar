@@ -36,9 +36,11 @@
 
       const setActiveByIndex = (index) => {
         activeIndex = Math.max(0, Math.min(index, cardStops.length - 1));
+        const activeX = cardStops[activeIndex] || 0;
 
         cards.forEach((card, cardIndex) => {
-          card.classList.toggle("is-active", cardIndex === activeIndex);
+          const cardX = Math.max(0, Math.min(card.offsetLeft, maxX));
+          card.classList.toggle("is-active", Math.abs(cardX - activeX) < 1);
         });
 
         setControls();
@@ -49,22 +51,36 @@
         block.classList.toggle("is-scrollable", maxX > 1);
         block.classList.toggle("is-static", maxX <= 1);
 
-        cardStops = cards.map((card) =>
-          Math.max(0, Math.min(card.offsetLeft, maxX)),
-        );
+        cardStops = cards.reduce((stops, card) => {
+          const stop = Math.round(Math.max(0, Math.min(card.offsetLeft, maxX)));
+          const lastStop = stops[stops.length - 1];
 
-        if (cardStops.length) {
-          cardStops[cardStops.length - 1] = maxX;
+          if (lastStop === undefined || Math.abs(lastStop - stop) > 1) {
+            stops.push(stop);
+          }
+
+          return stops;
+        }, []);
+
+        if (maxX > 1 && Math.abs(cardStops[cardStops.length - 1] - maxX) > 1) {
+          cardStops.push(maxX);
         }
 
         setActiveByIndex(Math.min(activeIndex, cardStops.length - 1));
       };
 
-      const goToCard = (index) => {
+      const setTrackPosition = (x, animate = true) => {
+        track.style.transition = animate
+          ? "transform 650ms cubic-bezier(0.22, 1, 0.36, 1)"
+          : "none";
+        track.style.transform = `translate3d(${-x}px, 0, 0)`;
+      };
+
+      const goToCard = (index, animate = true) => {
         const safeIndex = Math.max(0, Math.min(index, cardStops.length - 1));
         const targetX = cardStops[safeIndex] || 0;
 
-        track.style.transform = `translate3d(${-targetX}px, 0, 0)`;
+        setTrackPosition(targetX, animate);
         setActiveByIndex(safeIndex);
       };
 
@@ -73,7 +89,7 @@
 
       const refreshCarousel = () => {
         measure();
-        goToCard(activeIndex);
+        goToCard(activeIndex, false);
       };
 
       const scheduleRefresh = () => {
