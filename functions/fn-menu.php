@@ -294,9 +294,9 @@ class Custom_Submenu_Walker extends Walker_Nav_Menu
         $output .= "{$indent}\t\t\t<ul class=\"list-unstyled mb-0\">\n";
         foreach ( $this->attrezzature_tree as $idx => $node ) {
             $active = ($idx === 0) ? 'is-active' : '';
-            $img_html = $node['image'] ? "<figure class=\"aspect-ration-3x2 rounded figure-img-left-links respimg overflow-hidden\"><img src='{$node['image']}'></figure>" : "";
+            $img_html = $node['image'] ? "<figure class=\"aspect-ratio-16x9 rounded figure-img-left-links respimg overflow-hidden\"><img src='{$node['image']}'></figure>" : "";
             $output .= "{$indent}\t\t\t\t<li class=\"attrezzature-trigger {$active} d-flex align-items-start row\" style=\"cursor:pointer;\" data-bs-target=\"#attr-pane-{$idx}\">\n";
-            $output .= "{$indent}\t\t\t\t\t<div class=\"col-6 d-flex justify-content-end\">{$img_html}</div><div class=\"col-6 d-flex align-items-start\"><span class=\"h7 fw-normal text-grey-600\">" . esc_html($node['item']->title) . "</span></div>\n";
+            $output .= "{$indent}\t\t\t\t\t<div class=\"col-6 d-flex justify-content-end\">{$img_html}</div><div class=\"col-6 d-flex align-items-start\"><span class=\"h7-sxl-subtitle-2 fw-normal text-grey-600\">" . esc_html($node['item']->title) . "</span></div>\n";
             $output .= "{$indent}\t\t\t\t</li>\n";
         }
         $output .= "{$indent}\t\t\t</ul>\n";
@@ -306,9 +306,9 @@ class Custom_Submenu_Walker extends Walker_Nav_Menu
         foreach ( $this->attrezzature_tree as $idx => $node ) {
             $display = ($idx === 0) ? 'd-block' : 'd-none';
             $output .= "{$indent}\t\t\t<div class=\"attrezzature-panel {$display} sp-ml-0 sp-lg-ml-14 sp-sxl-ml-15\" id=\"attr-pane-{$idx}\">\n";
-            $output .= "{$indent}\t\t\t\t<ul class=\"list-unstyled d-flex flex-column sp-row-gap-3\">\n";
+            $output .= "{$indent}\t\t\t\t<ul class=\"list-unstyled d-flex flex-column sp-row-gap-2 sp-sxl-row-gap-3\">\n";
             foreach ( $node['children'] as $child ) {
-                $output .= "{$indent}\t\t\t\t\t<li class=\"col\"><a href=\"" . esc_url($child->url) . "\" class=\"text-white-50 text-decoration-none hover-white p-big\">" . esc_html($child->title) . "</a></li>\n";
+                $output .= "{$indent}\t\t\t\t\t<li class=\"col\"><a href=\"" . esc_url($child->url) . "\" class=\"text-white-50 text-decoration-none hover-white p-big-sxl-p-small\">" . esc_html($child->title) . "</a></li>\n";
             }
             $output .= "{$indent}\t\t\t\t</ul>\n";
             $output .= "{$indent}\t\t\t</div>\n";

@@ -129,7 +129,7 @@
                                     </div>
                                 </div>
                                 <div class="search-container">
-                                    <div class="col-12 sp-px-0 sp-md-px-6 sp-sxl-px-16">
+                                    <div class="col-12 col-md-10 offset-md-1 col-sxl-8 offset-sxl-2 sp-px-0 sp-md-px-6 sp-sxl-px-16">
                                         <?php get_search_form(); ?>
                                     </div>
                                 </div>
