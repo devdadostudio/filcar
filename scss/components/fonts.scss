@@ -568,6 +568,15 @@ h7,
   }
 }
 
+.p-smallest {
+  font-size: 12px;
+  line-height: 150%;
+  font-family: "Inter", sans-serif;
+  @include media-breakpoint-down(lg) {
+    font-size: 10px;
+  }
+}
+
 .h0 {
   font-size: 88px;
   font-weight: 400;

@@ -94,11 +94,17 @@ $page_title = get_the_title();
                     if ($block_text) : ?>
 						<div class="contact-form-block__text">
 							<?php if(is_singular('product')){ ?>
-								<h2 class="h5"><?php echo $block_subtitle; ?> <span class="h5"><?php echo esc_html($page_title); ?></span>?</h2>
+								<h2 class="h6 lh-sm"><?php echo $block_subtitle; ?> <span class="h6 fw-bold"><?php echo esc_html($page_title); ?></span>?</h2>
+							<?php
+							}elseif(is_tax('cat-prod') || is_tax('categoria-elemento-arredo')){
+								$queried_term = get_queried_object();
+								$term_name    = ($queried_term instanceof WP_Term) ? $queried_term->name : '';
+								?>
+								<h2 class="h6 lh-sm"><?php echo $block_subtitle; ?> <span class="h6 fw-bold"><?php echo esc_html($term_name); ?></span>? Compila il form.</h2>
 							<?php
 							}else{
 							?>
-								<h2 class="h5"><?php echo "Richiedi informazioni, compila il form."; ?></h2>
+								<h2 class="h6 lh-sm"><?php echo "Richiedi informazioni, compila il form."; ?></h2>
 							<?php
 							}
 							?>
@@ -110,6 +116,10 @@ $page_title = get_the_title();
 						if ($form) {
 							if(is_single() && 'product' == get_post_type()){
 								echo do_shortcode('[contact-form-7 id="9f66728" title="form prodotti"]');
+							}elseif(is_tax('cat-prod')){
+								echo do_shortcode('[contact-form-7 id="3cad3a4" title="Form categorie"]');
+							}elseif(is_tax('categoria-elemento-arredo')){
+								echo do_shortcode('[contact-form-7 id="3cad3a4" title="Form categorie"]');
 							}else{
 								echo do_shortcode('[contact-form-7 id="' . esc_attr($form) . '" title="Contattaci"]');
 							}

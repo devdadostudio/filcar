@@ -154,8 +154,11 @@ $contactFormRadius: 6px;
     label {
       display: block;
       margin-bottom: 8px;
-      @extend .p-smaller;
       line-height: 1.3;
+      font-size: 12px;
+      @include media-breakpoint-down(lg) {
+        font-size: 10px;
+      }
     }
   }
   &:not(.contact-form-section) {
@@ -178,10 +181,13 @@ $contactFormRadius: 6px;
     border-radius: $contactFormRadius;
     background-color: transparent;
     box-shadow: none;
-    @extend .p-smaller;
     color: #111318;
+    font-size: 14px;
     @include media-breakpoint-down(uxl) {
       padding: 5px 19px;
+    }
+    @include media-breakpoint-down(lg) {
+      font-size: 12px;
     }
   }
   .form-control::placeholder,
@@ -202,11 +208,8 @@ $contactFormRadius: 6px;
     .wpcf7-list-item-label {
       display: inline;
       position: relative;
-      top: 3px;
-      @include media-breakpoint-down(uxl) {
-        top: 4px;
-      }
-      @include media-breakpoint-down(md) {
+      top: 4px;
+      @include media-breakpoint-down(lg) {
         top: 5px;
       }
     }
@@ -219,12 +222,9 @@ $contactFormRadius: 6px;
       align-items: flex-start;
       gap: 14px;
       line-height: 1.5;
-      font-size: 12px;
+      font-size: 10px;
       font-family: "Inter", sans-serif;
-      @include media-breakpoint-down(sxl) {
-        font-size: 10px;
-      }
-      @include media-breakpoint-down(md) {
+      @include media-breakpoint-down(lg) {
         font-size: 9px;
       }
     }
