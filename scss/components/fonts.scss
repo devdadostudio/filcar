@@ -397,9 +397,11 @@ h5,
   }
   @include media-breakpoint-down($breakpoint1) {
     font-size: 28px;
+    line-height: 130%;
   }
   @include media-breakpoint-down($breakpoint2) {
     font-size: 20px;
+    line-height: 130%;
   }
 }
 
@@ -714,7 +716,7 @@ h7,
   }
 }
 
-.h7-sxl-subtitle-2{
+.h7-sxl-subtitle-2 {
   /*** ho creato un exted copy in custom-menu ***/
   font-size: 28px;
   font-weight: 400;
@@ -733,7 +735,7 @@ h7,
     font-size: 14px;
   }
 }
-.p-big-sxl-p-small{
+.p-big-sxl-p-small {
   font-size: 24px;
   line-height: 140%;
   font-family: "Inter", sans-serif;

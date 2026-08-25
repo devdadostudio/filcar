@@ -25,6 +25,7 @@
 
   &__image {
     object-fit: cover;
+    object-position: center bottom;
   }
 
   &__shade {
@@ -173,6 +174,18 @@
 
   @include media-breakpoint-down(lg) {
     min-height: calc(100svh - var(--site-header-height, 48px));
+
+    &__image {
+      right: auto;
+      left: 50%;
+      width: auto;
+      min-width: 100%;
+      max-width: none;
+      height: 100%;
+      object-fit: cover;
+      object-position: center bottom;
+      transform: translateX(-50%);
+    }
 
     &__shade {
       background: linear-gradient(
