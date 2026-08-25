@@ -7,7 +7,7 @@
             }
         }
         ?>
-        <footer class="flc-main-footer bg-blog text-white sp-pt-8 sp-md-pt-5 sp-sxl-pt-16 sp-uxl-pt-23 sp-pb-6 sp-md-pb-18 sp-lg-pb-9 sp-sxl-pb-12">
+        <footer class="flc-main-footer bg-blog text-white sp-pt-8 sp-md-pt-5 sp-lg-pt-10 sp-sxl-pt-16 sp-uxl-pt-23 sp-pb-6 sp-md-pb-18 sp-lg-pb-9 sp-sxl-pb-12">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12 col-lg-3 first-column-container sp-mb-6 sp-lg-mb-0">
