@@ -50,6 +50,10 @@ $contactFormRadius: 6px;
   position: absolute;
   height: 100%;
   width: 100%;
+  @include media-breakpoint-down(lg) {
+    position: relative;
+    aspect-ratio: 4 / 3;
+  }
   .filcar-simbol {
     position: absolute;
     bottom: -22%;
@@ -158,6 +162,7 @@ $contactFormRadius: 6px;
     .cf7-field {
       label {
         color: #2c3138;
+        margin-bottom: 4px;
       }
     }
     .cf7-consent {
@@ -199,7 +204,10 @@ $contactFormRadius: 6px;
       position: relative;
       top: 3px;
       @include media-breakpoint-down(uxl) {
-        top: 2px;
+        top: 4px;
+      }
+      @include media-breakpoint-down(md) {
+        top: 5px;
       }
     }
     .wpcf7-form-control-wrap {
@@ -210,26 +218,28 @@ $contactFormRadius: 6px;
       display: flex;
       align-items: flex-start;
       gap: 14px;
-      @extend .p-smaller;
       line-height: 1.5;
+      font-size: 12px;
+      font-family: "Inter", sans-serif;
+      @include media-breakpoint-down(sxl) {
+        font-size: 10px;
+      }
+      @include media-breakpoint-down(md) {
+        font-size: 9px;
+      }
     }
     input[type="checkbox"] {
       appearance: none;
       -webkit-appearance: none;
-      width: 30px;
-      height: 30px;
+      width: 23px;
+      height: 23px;
       margin: 0;
       border: 1px solid #7a7f87;
       border-radius: $contactFormRadius;
       background: transparent;
       position: relative;
       cursor: pointer;
-      flex: 0 0 30px;
-      @include media-breakpoint-down(uxl) {
-        width: 23px;
-        height: 23px;
-        flex: 0 0 23px;
-      }
+      flex: 0 0 23px;
     }
     input[type="checkbox"]:checked::after {
       content: "";
@@ -311,12 +321,6 @@ $contactFormRadius: 6px;
     min-height: 48px;
     padding: 10px 18px;
     font-size: 14px;
-  }
-
-  .contact-form-block .cf7-consent .wpcf7-acceptance {
-    gap: 12px;
-    font-size: 12px;
-    line-height: 1.45;
   }
 
   .contact-form-block .cf7-consent input[type="checkbox"] {

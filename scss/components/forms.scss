@@ -11,7 +11,7 @@ input[type=submit] {
 .wpcf7-form{
     font-size: 12px;
     > .row{
-        row-gap: 1.5rem;
+        row-gap: 1rem;
         @include media-breakpoint-down(md) {
             row-gap: 20px;
         }
@@ -34,9 +34,9 @@ input[type=submit] {
         label{
             display: flex;
             align-items: start;
-            gap: 30px;
+            gap: 20px;
             @include media-breakpoint-down(md) {
-                gap: 24px;
+                gap: 10px;
             }
             input[type="checkbox"]{
                 min-width: 20px;

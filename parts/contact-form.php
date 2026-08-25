@@ -24,7 +24,7 @@ $page_title = get_the_title();
 
 			<div class="col-12 col-lg-6 sp-lg-mb-4">
 				<div class="contact-form-block__media position-relative">
-					<figure class="contact-form-block__figure mb-0 position-relative">
+					<figure class="contact-form-block__figure mb-0">
 
 						<?php if ($img_url) : ?>
 							<img class="contact-form-block__img d-none d-md-block" src="<?php echo esc_url($img_url); ?>" alt="<?php echo esc_attr($block_title ?: 'Contatti'); ?>">
@@ -92,17 +92,16 @@ $page_title = get_the_title();
 					<?php 
                     $page_title = get_the_title();
                     if ($block_text) : ?>
-						<div class="contact-form-block__text sp-mb-3">
+						<div class="contact-form-block__text">
 							<?php if(is_singular('product')){ ?>
 								<h2 class="h5"><?php echo $block_subtitle; ?> <span class="h5"><?php echo esc_html($page_title); ?></span>?</h2>
 							<?php
 							}else{
 							?>
-								<h2 class="h5"><?php echo "Richiedi informazioni"; ?></h2>
+								<h2 class="h5"><?php echo "Richiedi informazioni, compila il form."; ?></h2>
 							<?php
 							}
 							?>
-                            <div class="p-small"><?php echo $block_text; ?></div>
 						</div>
 					<?php endif; ?>
 
