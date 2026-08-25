@@ -3,7 +3,7 @@ $prod_id = get_the_ID();
 $card_class = $args['card_class'];
 ?>
 <div class="<?php echo esc_attr($card_class); ?>">
-    <a href="<?php echo get_the_permalink($prod_id); ?>" class="card-element text-decoration-none">
+    <div class="card-element text-decoration-none">
         <?php
             $img = get_post_thumbnail_id($prod_id);
             if($img) :
@@ -23,5 +23,5 @@ $card_class = $args['card_class'];
             <?php echo $excerpt; ?>
         </div>
         <?php endif; ?>
-    </a>
+    </div>
 </div>

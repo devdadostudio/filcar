@@ -215,6 +215,104 @@ function registra_custom_post_type_elementi_arredo() {
 
 add_action( 'init', 'registra_custom_post_type_elementi_arredo' );
 
+function filcar_get_deepest_elemento_arredo_term($post_id) {
+    $terms = get_the_terms($post_id, 'categoria-elemento-arredo');
+
+    if (is_wp_error($terms) || empty($terms)) {
+        return null;
+    }
+
+    $terms_with_depth = array_map(function ($term) {
+        $children = get_terms(array(
+            'taxonomy'   => 'categoria-elemento-arredo',
+            'parent'     => $term->term_id,
+            'hide_empty' => false,
+            'fields'     => 'ids',
+        ));
+
+        return array(
+            'term'     => $term,
+            'depth'    => count(get_ancestors($term->term_id, 'categoria-elemento-arredo', 'taxonomy')),
+            'is_leaf'  => !is_wp_error($children) && empty($children),
+        );
+    }, $terms);
+
+    $sort_terms = function ($term_data_a, $term_data_b) {
+        if ($term_data_a['depth'] === $term_data_b['depth']) {
+            return strcasecmp($term_data_a['term']->name, $term_data_b['term']->name);
+        }
+
+        return $term_data_b['depth'] <=> $term_data_a['depth'];
+    };
+
+    $third_level_terms = array_filter($terms_with_depth, function ($term_data) {
+        return $term_data['depth'] >= 2;
+    });
+
+    if (!empty($third_level_terms)) {
+        usort($third_level_terms, $sort_terms);
+        return $third_level_terms[0]['term'];
+    }
+
+    $leaf_terms = array_filter($terms_with_depth, function ($term_data) {
+        return $term_data['is_leaf'];
+    });
+
+    if (!empty($leaf_terms)) {
+        usort($leaf_terms, $sort_terms);
+        return $leaf_terms[0]['term'];
+    }
+
+    usort($terms_with_depth, $sort_terms);
+
+    return $terms_with_depth[0]['term'] ?? null;
+}
+
+function filcar_get_elemento_arredo_category_url($post_id) {
+    $term = filcar_get_deepest_elemento_arredo_term($post_id);
+
+    if (!$term instanceof WP_Term) {
+        return '';
+    }
+
+    $term_link = get_term_link($term);
+
+    if (is_wp_error($term_link)) {
+        return '';
+    }
+
+    return $term_link . '#prodotti';
+}
+
+function filcar_filter_elemento_arredo_permalink($post_link, $post, $leavename, $sample) {
+    if (!$post instanceof WP_Post || $post->post_type !== 'elementi-arredo' || $sample) {
+        return $post_link;
+    }
+
+    $category_url = filcar_get_elemento_arredo_category_url($post->ID);
+
+    return $category_url ?: $post_link;
+}
+
+add_filter('post_type_link', 'filcar_filter_elemento_arredo_permalink', 10, 4);
+
+function filcar_redirect_single_elemento_arredo_to_category() {
+    if (is_admin() || !is_singular('elementi-arredo')) {
+        return;
+    }
+
+    $category_url = filcar_get_elemento_arredo_category_url(get_queried_object_id());
+
+    if (!$category_url) {
+        return;
+    }
+
+    wp_safe_redirect($category_url, 301);
+    exit;
+}
+
+add_action('template_redirect', 'filcar_redirect_single_elemento_arredo_to_category');
+
 function registra_tassonomia_caso_studio() {
     $labels = array(
         'name'              => 'Categorie caso studio',

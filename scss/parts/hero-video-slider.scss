@@ -434,35 +434,39 @@
   }
 
   @include media-breakpoint-down(llg) {
-    min-height: auto;
+    --hero-video-normal-mobile-height: max(
+      443px,
+      calc(100svh - var(--site-header-height, 48px))
+    );
+    min-height: var(--hero-video-normal-mobile-height);
     background: #17191b;
 
     &__stage {
       position: relative;
-      min-height: 443px;
+      min-height: var(--hero-video-normal-mobile-height);
     }
 
     &__video {
-      top: 158px;
-      height: 256px;
+      inset: 0;
+      height: 100%;
     }
 
     &__shade {
       background:
         linear-gradient(
           180deg,
-          #17191b 0,
-          #17191b 158px,
-          rgba(23, 25, 27, 0.08) 258px,
-          #17191b 100%
+          rgba(23, 25, 27, 0.92) 0,
+          rgba(23, 25, 27, 0.72) 32%,
+          rgba(23, 25, 27, 0.12) 58%,
+          rgba(23, 25, 27, 0.86) 100%
         ),
-        linear-gradient(180deg, rgba(23, 25, 27, 0) 40%, #17191b 100%);
+        linear-gradient(180deg, rgba(23, 25, 27, 0.12) 0, #17191b 100%);
     }
 
     &__content {
-      min-height: 443px;
-      align-items: flex-start;
-      padding: 62px 24px 0;
+      min-height: var(--hero-video-normal-mobile-height);
+      align-items: flex-end;
+      padding: 62px 24px 92px;
     }
 
     &__copy {
