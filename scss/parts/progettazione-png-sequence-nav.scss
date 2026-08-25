@@ -262,6 +262,12 @@
     background-image: url("img/comp_bg.webp");
     background-size: 100% 100%;
     background-position: center center;
+
+    .card-link-arrow {
+      @include media-breakpoint-down(sxl) {
+        font-size: 32px;
+      }
+    }
   }
 
   &__composition-overlay {
