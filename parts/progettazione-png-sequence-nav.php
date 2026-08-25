@@ -418,8 +418,8 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
                                 get_template_part('parts/card/card-elementi', null, [
                                     'term_id' => $element_term->term_id,
                                     'taxonomy' => $element_term->taxonomy,
-                                    'class' => 'col-12 col-md-6 col-lg-4',
-                                    'name_class' => 'h5',
+                                    'class' => 'col-6 col-md-4 col-xl-3',
+                                    'name_class' => 'h7',
                                     'class_figure' => 'aspect-ratio-4x3',
                                 ]);
                                 ?>
@@ -450,7 +450,7 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
 
                     <div class="row progettazione-sequence-nav__compositions-grid">
                         <?php for($i = 0; $i < $compositions_c; $i++) : ?>
-                            <div class="col-6 col-lg-3 progettazione-sequence-nav__composition-col card-product">
+                            <div class="col-6 col-md-4 col-xl-3 progettazione-sequence-nav__composition-col card-product">
                                 <a href="<?php echo get_the_permalink($compositions[$i]->ID); ?>" class="progettazione-sequence-nav__composition-card aspect-ratio-7x8 rounded overflow-hidden product-card">
                                     <figure class="aspect-ratio-7x8 respimg overflow-hidden rounded">
                                         <?php

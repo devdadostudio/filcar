@@ -211,7 +211,7 @@ if (!empty($faq_items)) {
             <?php if ( have_posts() ) : ?>
                 <div class="category-products-grid row sp-pt-5 sp-lg-pt-10 sp-sxl-pt-12 sp-uxl-pt-10 sp-row-gap-3 sp-lg-row-gap-4">
                     <?php while ( have_posts() ) : the_post(); ?>
-                        <?php get_template_part('parts/card/card', 'product', ['card_class' => 'col-6 col-lg-3']); ?>
+                        <?php get_template_part('parts/card/card', 'product', ['card_class' => 'col-6 col-md-4 col-xl-3']); ?>
                     <?php endwhile; ?>
                 </div>
             <?php else : ?>

@@ -25,6 +25,9 @@
                     right: 20px;
                     transition: 0.3s ease-in-out;
                     visibility: hidden;
+                    @include media-breakpoint-down(sxl) {
+                        font-size: 35px;
+                    }
                 }
             }
         }

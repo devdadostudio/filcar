@@ -247,7 +247,7 @@ $render_line_block = static function ($slug, $group_name, $block_id) use ($term,
             <?php if ( have_posts() ) : ?>
                 <div class="category-products-grid row sp-pt-5 sp-lg-pt-10 sp-sxl-pt-12 sp-uxl-pt-10 sp-row-gap-7">
                     <?php while ( have_posts() ) : the_post(); ?>
-                        <?php get_template_part('parts/card/card', 'element', ['card_class' => 'col-12 col-lg-4', 'prod_id' => get_the_ID()]); ?>
+                        <?php get_template_part('parts/card/card', 'element', ['card_class' => 'col-6 col-md-4 col-xl-3', 'prod_id' => get_the_ID()]); ?>
                     <?php endwhile; ?>
                 </div>
             <?php endif; ?>

@@ -3,24 +3,24 @@ body {
   background-color: var(--bs-body-bg) !important;
 }
 
-$primary: #17191B;
-$secondary: #0085DD;
+$primary: #17191b;
+$secondary: #0085dd;
 $light: #fff;
 
-$grey900: #23272B;
-$grey800: #47474B;
+$grey900: #23272b;
+$grey800: #47474b;
 $grey600: #707479;
-$grey500: #8E9195;
-$grey400: #B2B4B7;
-$grey300: #CACACC;
-$grey200: #EBEBEB;
+$grey500: #8e9195;
+$grey400: #b2b4b7;
+$grey300: #cacacc;
+$grey200: #ebebeb;
 
-$blue400: #CCE7FF;
-$blue200: #E6F3FC;
+$blue400: #cce7ff;
+$blue200: #e6f3fc;
 
-$grey-disabled: #797A79;
+$grey-disabled: #797a79;
 $grey: $grey200;
-$blog-txt: #17191B;
+$blog-txt: #17191b;
 $black-opacity: rgba(33, 33, 33, 0.95);
 
 $btn-border-radius: 0;
@@ -47,14 +47,14 @@ $header-bar-height-admin-uxl: 111px;
 $grid-breakpoints: (
   xs: 0,
   sm: 576px,
-  md: 768px,
+  md: 767px,
   lg: 992px,
   llg: 1024px,
   xl: 1200px,
   xxl: 1400px,
-  sxl: 1537px,
+  sxl: 1560px,
   uxl: 1920px,
-  uxxl: 2047px
+  uxxl: 2047px,
 ) !default;
 
 //new grid gutter width

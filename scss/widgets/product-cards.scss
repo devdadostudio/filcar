@@ -37,6 +37,9 @@
           top: 30px;
           font-size: 45px;
           visibility: hidden;
+          @include media-breakpoint-down(sxl) {
+            font-size: 32px;
+          }
           @include media-breakpoint-down(lg) {
             font-size: 30px;
             right: 15px;
@@ -81,6 +84,9 @@
       top: 30px;
       font-size: 45px;
       visibility: hidden;
+      @include media-breakpoint-down(sxl) {
+        font-size: 32px;
+      }
       @include media-breakpoint-down(lg) {
         font-size: 30px;
         right: 15px;

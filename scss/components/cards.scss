@@ -34,6 +34,7 @@
         @include media-breakpoint-down(sxl) {
             top: 30px;
             right: 30px;
+            font-size: 35px;
         }
         @include media-breakpoint-down(lg) {
             top: 40px;
