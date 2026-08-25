@@ -19417,8 +19417,13 @@ body {
     margin-left: 0;
   }
   .progettazione-sequence-nav__ergonomia {
-    padding-top: 72px;
-    padding-bottom: 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
   .progettazione-sequence-nav__ergonomia-carousel {
     margin-top: 48px;
@@ -19439,8 +19444,13 @@ body {
     right: 12px;
   }
   .progettazione-sequence-nav__compositions {
-    padding-top: 48px;
-    padding-bottom: 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
   .progettazione-sequence-nav__composition-overlay {
     min-height: 86px;
@@ -42637,8 +42647,12 @@ body.site-header-visible .search-sticky-wrapper .search-in-page {
   }
 }
 #catalogs-launch .catalogs-launch-img img {
+  display: block;
+  width: auto;
   max-width: 100%;
+  height: auto;
   max-height: 80vh;
+  margin-left: auto;
 }
 #catalogs-launch .catalogs-launch-title i {
   position: relative;
@@ -42670,9 +42684,8 @@ body.site-header-visible .search-sticky-wrapper .search-in-page {
 }
 @media (max-width: 991.98px) {
   #catalogs-launch .catalogs-launch-cta {
-    position: absolute;
     display: block;
-    width: calc(100% - 24px);
+    width: 100%;
   }
 }
 #catalogs-launch .catalogs-launch-cta > a {
@@ -42725,6 +42738,38 @@ body.site-header-visible .search-sticky-wrapper .search-in-page {
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
+}
+@media (max-width: 991.98px) {
+  #catalogs-launch .row {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: start;
+    row-gap: 1rem;
+  }
+  #catalogs-launch .row > .col-12:first-child {
+    display: contents;
+  }
+  #catalogs-launch .catalogs-launch-title {
+    order: 1;
+    margin-bottom: 0.75rem;
+  }
+  #catalogs-launch .catalogs-launch-text {
+    order: 2;
+    margin-bottom: 0;
+  }
+  #catalogs-launch .catalogs-launch-img {
+    order: 3;
+  }
+  #catalogs-launch .catalogs-launch-img img {
+    width: 100%;
+    max-height: none;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  #catalogs-launch .catalogs-launch-cta {
+    order: 4;
+    margin-top: 0.25rem;
+  }
 }
 
 .sectors-grid .card-sector:before {

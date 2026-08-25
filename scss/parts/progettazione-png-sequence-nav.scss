@@ -566,8 +566,13 @@
     }
 
     &__ergonomia {
-      padding-top: 72px;
-      padding-bottom: 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh;
+      min-height: 100svh;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
     }
 
     &__ergonomia-carousel {
@@ -596,8 +601,13 @@
     }
 
     &__compositions {
-      padding-top: 48px;
-      padding-bottom: 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh;
+      min-height: 100svh;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
     }
 
     &__composition-overlay {

@@ -20,7 +20,7 @@ $img = $get_value('img');
         <div class="row align-items-center">
             <div class="col-12 col-lg-5 position-relative">
                 <h2 class="h2 sp-mb-3 sp-lg-mb-4 fw-light catalogs-launch-title"><?php echo $title; ?></h2>
-                <div class="sp-mb-3 sp-lg-mb-4 fw-normal">
+                <div class="catalogs-launch-text sp-mb-3 sp-lg-mb-4 fw-normal">
                     <?php echo $txt; ?>
                 </div>
                 <?php
@@ -51,13 +51,13 @@ $img = $get_value('img');
                 <?php endif; ?>
                 <?php endif; ?>
             </div>
-            <div class="col-12 col-lg-6 offset-lg-1 catalogs-launch-img">
+            <div class="col-8 offset-2 col-lg-6 offset-lg-1 catalogs-launch-img">
                 <?php
                 if($img) :
                     $img_url = $img['url'];
                     $img_alt = $img['alt'];
                 ?>
-                    <img src="<?php echo $img_url; ?>" alt="<?php echo $img_alt; ?>" class="w-100">
+                    <img src="<?php echo $img_url; ?>" alt="<?php echo $img_alt; ?>">
                 <?php
                 endif;
                 ?>

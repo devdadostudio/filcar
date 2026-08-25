@@ -1,8 +1,12 @@
 #catalogs-launch {
   .catalogs-launch-img {
     img {
+      display: block;
+      width: auto;
       max-width: 100%;
+      height: auto;
       max-height: 80vh;
+      margin-left: auto;
     }
   }
   .catalogs-launch-title {
@@ -33,9 +37,8 @@
   }
   .catalogs-launch-cta {
     @include media-breakpoint-down(lg) {
-      position: absolute;
       display: block;
-      width: calc(100% - 24px);
+      width: 100%;
     }
     > a {
       background:
@@ -94,6 +97,45 @@
         opacity: 1;
         transform: translateY(0);
       }
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    .row {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: start;
+      row-gap: 1rem;
+    }
+
+    .row > .col-12:first-child {
+      display: contents;
+    }
+
+    .catalogs-launch-title {
+      order: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .catalogs-launch-text {
+      order: 2;
+      margin-bottom: 0;
+    }
+
+    .catalogs-launch-img {
+      order: 3;
+
+      img {
+        width: 100%;
+        max-height: none;
+        margin-right: auto;
+        margin-left: auto;
+      }
+    }
+
+    .catalogs-launch-cta {
+      order: 4;
+      margin-top: 0.25rem;
     }
   }
 }
