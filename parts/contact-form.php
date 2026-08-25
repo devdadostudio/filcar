@@ -23,8 +23,8 @@ $page_title = get_the_title();
 		<div class="row g-3 g-lg-4 align-items-stretch sp-px-2">
 
 			<div class="col-12 col-lg-6 sp-lg-mb-4">
-				<div class="contact-form-block__media position-relative h-100">
-					<figure class="contact-form-block__figure mb-0 h-100 position-relative">
+				<div class="contact-form-block__media position-relative">
+					<figure class="contact-form-block__figure mb-0 position-relative">
 
 						<?php if ($img_url) : ?>
 							<img class="contact-form-block__img d-none d-md-block" src="<?php echo esc_url($img_url); ?>" alt="<?php echo esc_attr($block_title ?: 'Contatti'); ?>">
@@ -87,7 +87,7 @@ $page_title = get_the_title();
 			</div>
 
 			<div class="col-12 col-lg-6 sp-lg-mb-4">
-				<div class="contact-form-block__content h-100 d-flex flex-column sp-pt-2sp-lg-pt-4 sp-xl-pt-6 sp-lg-pl-4 sp-xl-pl-6 sp-lg-pr-4 sp-xl-pr-6 justify-content-center">
+				<div class="contact-form-block__content d-flex flex-column sp-pt-2sp-lg-pt-4 sp-xl-pt-6 sp-lg-pl-4 sp-xl-pl-6 sp-lg-pr-4 sp-xl-pr-6 justify-content-center">
 
 					<?php 
                     $page_title = get_the_title();
