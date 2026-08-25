@@ -27,6 +27,9 @@
         visibility: hidden;
         color: #ffffff;
         transition: 0.3s ease-in-out;
+        @include media-breakpoint-down(sxl) {
+            font-size: 32px;
+        }
         @include media-breakpoint-down(lg) {
             font-size: 25px;
             top: 15px;

@@ -4,7 +4,7 @@
             <h2 class="h6 text-secondary text-uppercase semibold">Correlati</h2>
         </div>
         <div class="row">
-            <div class="col-6 col-xl-3">
+            <div class="col-6 col-md-4 col-xl-3">
                 <div class="product-card">
                     <div class="product-card-inner">
 
@@ -25,7 +25,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-xl-3">
+            <div class="col-6 col-md-4 col-xl-3">
                 <div class="product-card">
                     <div class="product-card-inner">
 

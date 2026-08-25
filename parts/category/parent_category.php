@@ -37,7 +37,7 @@ $taxonomy = $args['taxonomy'];
                 <?php
                 for($i = 0; $i < $children_c; $i++) {
                     $child = $children[$i];
-                    get_template_part('parts/card/card', 'cat-prod', ['card_class' => 'col-6 col-lg-3', 'term_id' => $child->term_id, 'taxonomy' => $taxonomy]);
+                    get_template_part('parts/card/card', 'cat-prod', ['card_class' => 'col-6 col-md-4 col-xl-3', 'term_id' => $child->term_id, 'taxonomy' => $taxonomy]);
                 }
                 ?>
             </div>
