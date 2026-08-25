@@ -229,7 +229,8 @@
   }
 
   @include media-breakpoint-down(lg) {
-    --hero-video-slider-mobile-height: calc(100svh - var(--site-header-height, 48px));
+    --hero-video-slider-mobile-height: calc(100vh - 48px);
+    --hero-video-slider-mobile-height: calc(100lvh - 48px);
     --hero-video-slider-mobile-bottom-height: 224px;
     --hero-video-slider-mobile-video-top: clamp(136px, 21svh, 168px);
     height: var(--hero-video-slider-mobile-height);
