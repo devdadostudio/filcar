@@ -5,7 +5,7 @@ $args = wp_parse_args($args ?? [], [
     'items' => [],
     'class' => '',
     'inner_class' => '',
-    'col_class' => 'col-12 col-lg-4',
+    'col_class' => 'col-12 col-lg-5',
     'after' => '',
     'container' => true,
     'mobile_bg' => false,
@@ -35,30 +35,32 @@ $inner_classes = array_filter([
         <div class="row">
             <div class="<?php echo esc_attr($args['col_class']); ?>">
                 <div class="<?php echo esc_attr(implode(' ', $inner_classes)); ?>">
-                    <?php if (!empty($items)) : ?>
-                        <?php foreach ($items as $index => $item) : ?>
-                            <?php
-                            $label = isset($item['label']) ? (string) $item['label'] : '';
-                            $url = isset($item['url']) ? (string) $item['url'] : '';
-                            $is_last = $index === count($items) - 1;
+                    <div class="sp-pr-5">
+                        <?php if (!empty($items)) : ?>
+                            <?php foreach ($items as $index => $item) : ?>
+                                <?php
+                                $label = isset($item['label']) ? (string) $item['label'] : '';
+                                $url = isset($item['url']) ? (string) $item['url'] : '';
+                                $is_last = $index === count($items) - 1;
 
-                            if ($label === '') {
-                                continue;
-                            }
-                            ?>
-                            <?php if ($index > 0) : ?>
-                                <i class="site-breadcrumb__separator icon-filcar-icon-chevron-forward" aria-hidden="true"></i>
-                            <?php endif; ?>
+                                if ($label === '') {
+                                    continue;
+                                }
+                                ?>
+                                <?php if ($index > 0) : ?>
+                                    <i class="site-breadcrumb__separator icon-filcar-icon-chevron-forward" aria-hidden="true"></i>
+                                <?php endif; ?>
 
-                            <?php if (!$is_last && $url !== '') : ?>
-                                <a href="<?php echo esc_url($url); ?>"><?php echo esc_html($label); ?></a>
-                            <?php else : ?>
-                                <span class="breadcrumb_last"<?php echo $is_last ? ' aria-current="page"' : ''; ?>><?php echo esc_html($label); ?></span>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                    <?php elseif ($args['use_yoast'] && function_exists('yoast_breadcrumb')) : ?>
-                        <?php yoast_breadcrumb(); ?>
-                    <?php endif; ?>
+                                <?php if (!$is_last && $url !== '') : ?>
+                                    <a href="<?php echo esc_url($url); ?>"><?php echo esc_html($label); ?></a>
+                                <?php else : ?>
+                                    <span class="breadcrumb_last"<?php echo $is_last ? ' aria-current="page"' : ''; ?>><?php echo esc_html($label); ?></span>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php elseif ($args['use_yoast'] && function_exists('yoast_breadcrumb')) : ?>
+                            <?php yoast_breadcrumb(); ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
             <?php echo $args['after']; ?>
