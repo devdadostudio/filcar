@@ -82,12 +82,21 @@ $compatibility_c = count($compatibility);
         $table_features = get_field('table_features_features_block');
 
         if (!function_exists('build_tech_table_grid_template')) {
-            function build_tech_table_grid_template($table_config) {
-                $w_mod       = 'minmax(140px, 1.6fr)';
-                $w_fit       = 'minmax(44px, 0.55fr)';
-                $w_spec      = 'minmax(110px, 1.2fr)';
-                $w_canalina  = 'minmax(60px, 0.8fr)';
-                $w_accessory = 'minmax(40px, 0.55fr)';
+            function build_tech_table_grid_template($table_config, $mode = 'desktop') {
+                if ($mode === 'mobile') {
+                    // Larghezze fisse sotto i 768px: la tabella scrolla in orizzontale
+                    $w_mod       = '140px';
+                    $w_fit       = '44px';
+                    $w_spec      = '110px';
+                    $w_canalina  = '60px';
+                    $w_accessory = '40px';
+                } else {
+                    $w_mod       = 'minmax(140px, 1.6fr)';
+                    $w_fit       = 'minmax(44px, 0.55fr)';
+                    $w_spec      = 'minmax(110px, 1.2fr)';
+                    $w_canalina  = 'minmax(60px, 0.8fr)';
+                    $w_accessory = 'minmax(40px, 0.55fr)';
+                }
 
                 $grid_parts = [];
                 $grid_parts[] = $w_mod;
@@ -114,7 +123,8 @@ $compatibility_c = count($compatibility);
 
         if (!function_exists('render_tech_table_v2')) {
             function render_tech_table_v2($table_config, $rows, $title = 'Specifiche tecniche') {
-                $grid_template_columns = build_tech_table_grid_template($table_config);
+                $grid_template_desktop = build_tech_table_grid_template($table_config, 'desktop');
+                $grid_template_mobile  = build_tech_table_grid_template($table_config, 'mobile');
 
                 $fit_columns       = $table_config['fit_group']['columns'] ?? [];
                 $spec_columns      = $table_config['spec_columns'] ?? [];
@@ -130,7 +140,10 @@ $compatibility_c = count($compatibility);
                         <div class="table-scroll">
                             <div
                                 class="fake-table tech-table"
-                                style="grid-template-columns: <?php echo esc_attr($grid_template_columns); ?>;"
+                                style="
+                                    --grid-desktop: <?php echo esc_attr($grid_template_desktop); ?>;
+                                    --grid-mobile: <?php echo esc_attr($grid_template_mobile); ?>;
+                                "
                             >
 
                                 <div class="cell corner table-2 head-rowspan-2 has-separator" style="grid-row: span 2;">

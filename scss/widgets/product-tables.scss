@@ -87,6 +87,15 @@ $tableHeight: 80px;
   }
 }
 
+/* Tabella tech: colonne mobile sotto i 768px, colonne desktop da md in su */
+.tech-table {
+  grid-template-columns: var(--grid-mobile);
+
+  @include media-breakpoint-up(md) {
+    grid-template-columns: var(--grid-desktop);
+  }
+}
+
 .cell {
   padding: 6px 8px;
   /* border-right: 1px solid #ddd;
