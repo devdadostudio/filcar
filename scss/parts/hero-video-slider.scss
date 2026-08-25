@@ -229,40 +229,54 @@
   }
 
   @include media-breakpoint-down(lg) {
-    min-height: auto;
+    --hero-video-slider-mobile-height: calc(100svh - var(--site-header-height, 48px));
+    --hero-video-slider-mobile-bottom-height: 224px;
+    --hero-video-slider-mobile-video-top: clamp(136px, 21svh, 168px);
+    height: var(--hero-video-slider-mobile-height);
+    min-height: 0;
     background: #17191b;
 
     &__stage,
     &__slide {
-      position: relative;
-      min-height: 443px;
+      position: absolute;
+      inset: 0;
+      height: var(--hero-video-slider-mobile-height);
+      min-height: 0;
     }
 
     &__slide:not(.is-active) {
-      display: none;
+      display: block;
     }
 
     &__video {
-      top: 158px;
-      height: 256px;
+      top: var(--hero-video-slider-mobile-video-top);
+      right: auto;
+      bottom: auto;
+      left: 50%;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      transform: translateX(-50%);
     }
 
     &__shade {
       background:
         linear-gradient(
           180deg,
-          #17191b 0,
-          #17191b 158px,
-          rgba(23, 25, 27, 0.08) 258px,
-          #17191b 100%
+          rgba(23, 25, 27, 0.88) 0,
+          rgba(23, 25, 27, 0.88) var(--hero-video-slider-mobile-video-top),
+          rgba(23, 25, 27, 0.08) calc(var(--hero-video-slider-mobile-video-top) + 82px),
+          rgba(23, 25, 27, 0.2) 58%,
+          rgba(23, 25, 27, 0.92) 100%
         ),
-        linear-gradient(180deg, rgba(23, 25, 27, 0) 40%, #17191b 100%);
+        linear-gradient(180deg, rgba(23, 25, 27, 0.08) 0, #17191b 100%);
     }
 
     &__content {
-      min-height: 443px;
+      height: var(--hero-video-slider-mobile-height);
+      min-height: 0;
       align-items: flex-start;
-      padding: 62px 24px 0;
+      padding: 56px 24px 0;
     }
 
     &__copy {
@@ -281,7 +295,7 @@
     &__cta {
       position: absolute !important;
       right: 24px;
-      bottom: 24px;
+      bottom: calc(var(--hero-video-slider-mobile-bottom-height) + 24px);
       left: 24px;
       min-height: 43px;
       margin-top: 0;
@@ -289,9 +303,9 @@
     }
 
     &__bottom {
-      position: relative;
-      display: block;
-      height: auto;
+      position: absolute;
+      display: flex;
+      height: var(--hero-video-slider-mobile-bottom-height);
     }
 
     &__bottom-grid {
@@ -323,7 +337,7 @@
     &__news {
       order: 2;
       min-height: 78px;
-      margin-top: 40px;
+      margin-top: 28px;
       margin-bottom: 0;
       margin-left: auto;
       padding: 33px 42px 10px 10px;
