@@ -163,7 +163,6 @@
   }
 
   &__card-title {
-    @extend .p-small;
     display: block;
     max-width: 220px;
     color: rgba(255, 255, 255, 0.86);
@@ -182,6 +181,13 @@
   &__card:hover &__card-icon {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  @include media-breakpoint-down(lg) {
+    &__card-icon {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   @include media-breakpoint-down(sxl) {

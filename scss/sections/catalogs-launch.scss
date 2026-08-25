@@ -71,6 +71,12 @@
           transition:
             opacity 200ms ease,
             transform 200ms ease;
+
+          @include media-breakpoint-down(lg) {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
         i {
           margin-left: -2px;

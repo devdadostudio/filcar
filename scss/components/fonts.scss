@@ -577,6 +577,23 @@ h7,
   }
 }
 
+.button {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 125%;
+  letter-spacing: 0;
+  font-family: "Inter", sans-serif;
+  @include media-breakpoint-down($breakpoint0) {
+    font-size: 16px;
+  }
+  @include media-breakpoint-down($breakpoint1) {
+    font-size: 14px;
+  }
+  @include media-breakpoint-down($breakpoint2) {
+    font-size: 14px;
+  }
+}
+
 .h0 {
   font-size: 88px;
   font-weight: 400;

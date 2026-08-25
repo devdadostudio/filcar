@@ -40,7 +40,7 @@ $img = $get_value('img');
                             echo wp_get_attachment_image($cta_img, 'full', false, ['class' => 'catalogs-launch-cta-img']);
                         endif;
                         ?>
-                        <div class="catalogs-launch-cta-txt sp-py-3 p-small text-white">
+                        <div class="catalogs-launch-cta-txt sp-py-3 button text-white">
                             <?php echo $cta_txt; ?>
                             <div class="catalogs-launch-cta-arrow">
                                 <i class="icon-filcar-icon-arrow-downr"></i>

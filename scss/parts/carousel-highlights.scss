@@ -267,13 +267,21 @@
       transition: none;
     }
 
+    &__media,
+    &__image {
+      pointer-events: none;
+    }
+
     &__card:hover,
+    &__card:active,
+    &__card:focus,
     &__card:focus-visible {
       .carousel-highlights__media {
         height: var(--carousel-highlight-media-height);
       }
 
-      .carousel-highlights__image--base {
+      .carousel-highlights__image--base,
+      .carousel-highlights__image--base:not(:only-child) {
         opacity: 1;
       }
 

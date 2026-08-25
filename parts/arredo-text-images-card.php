@@ -139,7 +139,7 @@ $section_classes = [
                     </span>
                 <?php endif; ?>
                 <span class="hero-sector__card-copy">
-                    <span class="hero-sector__card-title p-big"><?php echo wp_kses_post($card_label); ?></span>
+                    <span class="hero-sector__card-title button"><?php echo wp_kses_post($card_label); ?></span>
                     <i class="hero-sector__card-icon icon icon-filcar-icon-arrow-downr" aria-hidden="true"></i>
                 </span>
             </a>

@@ -97,7 +97,7 @@ $get_media_alt = static function ($media) {
                             <?php endif; ?>
 
                             <span class="hero-sector__card-copy">
-                                <span class="hero-sector__card-title p-big"><?php echo esc_html($card_title); ?></span>
+                                <span class="hero-sector__card-title button"><?php echo esc_html($card_title); ?></span>
                                 <i class="hero-sector__card-icon icon icon-filcar-icon-arrow-downr" aria-hidden="true"></i>
                             </span>
                         </a>

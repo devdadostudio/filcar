@@ -334,7 +334,7 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
 
                                                     <?php if ($floating_cta_title) : ?>
                                                         <span class="hero-sector__card-copy">
-                                                            <span class="hero-sector__card-title p-big"><?php echo esc_html($floating_cta_title); ?></span>
+                                                            <span class="hero-sector__card-title button"><?php echo esc_html($floating_cta_title); ?></span>
                                                             <?php if ($floating_cta_url) : ?>
                                                                 <i class="hero-sector__card-icon icon icon-filcar-icon-arrow-downr" aria-hidden="true"></i>
                                                             <?php endif; ?>
