@@ -771,10 +771,13 @@ document.addEventListener("DOMContentLoaded", function () {
         e.target.closest("a").getAttribute("href") !== "#" &&
         e.target.closest("a").getAttribute("href") !== "";
 
-      // Se NON è un link vero, ferma la propagazione così Bootstrap non sente il click
-      if (!isRealLink) {
+      // Ferma Bootstrap: i link reali devono navigare senza animare la chiusura del megamenu.
+      if (isRealLink) {
         e.stopPropagation();
+        return;
       }
+
+      e.stopPropagation();
     });
   });
 
@@ -939,6 +942,11 @@ document.addEventListener("DOMContentLoaded", function () {
           const isLink =
             e.target.closest("a") &&
             e.target.closest("a").getAttribute("href") !== "#";
+
+          if (isLink) {
+            e.stopPropagation();
+            return;
+          }
 
           if (!isLink) {
             e.stopPropagation();
