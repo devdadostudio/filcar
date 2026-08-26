@@ -189,7 +189,7 @@ $render_line_block = static function ($slug, $group_name, $block_id) use ($term,
                                 <?php echo wp_kses_post($hero_title); ?>
                             </h1>
                             <?php if (!empty($hero_cta_text)) : ?>
-                                <div class="cta-content">
+                                <div class="cta-content sp-mt-9">
                                     <a href="#prodotti" class="btn btn-outline-primary">
                                         <?php echo esc_html($hero_cta_text); ?> <i class="icon icon-filcar-icon-arrow-downr"></i>
                                     </a>
