@@ -1,0 +1,135 @@
+.category-second-level-launch {
+  padding-top: clamp(76px, 9vh, 132px);
+  padding-bottom: clamp(86px, 10vh, 150px);
+  color: $primary;
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: clamp(24px, 3vw, 48px);
+    margin-bottom: clamp(42px, 5.6vh, 72px);
+
+    &::after {
+      content: "";
+      flex: 1 1 auto;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.28;
+    }
+  }
+
+  &__heading {
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  &__list {
+    display: grid;
+    gap: clamp(18px, 1.45vw, 28px);
+  }
+
+  &__card {
+    --expandable-card-height: clamp(312px, 25.2vw, 420px);
+    height: auto;
+    min-height: var(--expandable-card-height);
+    border-radius: 6px;
+    background: $grey500;
+    cursor: default;
+    overflow: hidden;
+    transition: none;
+  }
+
+  &__media,
+  .expandable-cards__card.is-active &__media {
+    left: 0;
+    right: auto;
+    width: 46%;
+    opacity: 0.95;
+    transition: none;
+  }
+
+  .expandable-cards__bg-image {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  &__content {
+    min-height: var(--expandable-card-height);
+    padding-left: calc(46% + clamp(46px, 5vw, 86px));
+    padding-right: clamp(38px, 5vw, 86px);
+    transition: none;
+  }
+
+  .expandable-cards__reveal {
+    position: static;
+    width: min(100%, 390px);
+    margin-top: clamp(24px, 2.8vw, 46px);
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition: none;
+  }
+
+  .expandable-cards__description {
+    margin-bottom: clamp(42px, 5.2vw, 76px);
+  }
+
+  .expandable-cards__link {
+    width: auto;
+    max-width: 100%;
+    white-space: nowrap;
+  }
+
+  .expandable-cards__toggle,
+  .expandable-cards__mobile-arrow,
+  .expandable-cards__mobile-description {
+    display: none;
+  }
+
+  @include media-breakpoint-down(lg) {
+    padding-top: 64px;
+    padding-bottom: 72px;
+
+    &__head {
+      margin-bottom: 32px;
+    }
+
+    &__list {
+      gap: 18px;
+    }
+
+    &__card,
+    &__card.is-active {
+      height: auto;
+      min-height: 0;
+      background: $grey500;
+      overflow: hidden;
+    }
+
+    &__media,
+    .expandable-cards__card.is-active &__media {
+      position: relative;
+      inset: auto !important;
+      width: 100% !important;
+      height: 280px !important;
+      opacity: 0.95;
+      border-radius: 0;
+    }
+
+    &__content {
+      min-height: 0;
+      padding: 26px;
+    }
+
+    .expandable-cards__reveal {
+      display: block;
+      width: 100%;
+      margin-top: 24px;
+    }
+
+    .expandable-cards__description {
+      margin-bottom: 28px;
+    }
+  }
+}

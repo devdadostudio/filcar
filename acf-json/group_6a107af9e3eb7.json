@@ -3,6 +3,27 @@
     "title": "Campi categoria elementi arredo",
     "fields": [
         {
+            "key": "field_categoria_elemento_arredo_primo_livello",
+            "label": "Categoria primo livello",
+            "name": "categoria_primo_livello",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Attiva i campi usati dal layout della categoria di primo livello.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "Categoria di primo livello",
+            "ui_off_text": "",
+            "ui": 1
+        },
+        {
             "key": "field_6a1989541dc5a",
             "label": "Immagine categoria",
             "name": "img_cat",
@@ -10,7 +31,15 @@
             "type": "image",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_categoria_elemento_arredo_primo_livello",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -27,6 +56,139 @@
             "mime_types": "",
             "allow_in_bindings": 0,
             "preview_size": "medium"
+        },
+        {
+            "key": "field_categoria_elemento_arredo_hero_simple_text_img",
+            "label": "Hero semplice con testo e immagine",
+            "name": "hero_simple_text_img",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "Campi usati dalla hero della categoria di primo livello, coerenti con il blocco settori.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_categoria_elemento_arredo_primo_livello",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_categoria_elemento_arredo_hero_simple_subtitle",
+                    "label": "Sottotitolo",
+                    "name": "subtitle",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_categoria_elemento_arredo_hero_simple_title",
+                    "label": "Titolo",
+                    "name": "title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Se vuoto, viene usato il nome della categoria.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_categoria_elemento_arredo_hero_simple_txt_cta",
+                    "label": "Testo CTA",
+                    "name": "txt_cta",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_categoria_elemento_arredo_hero_simple_link_cta",
+                    "label": "Link CTA",
+                    "name": "link_cta",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_categoria_elemento_arredo_hero_simple_img",
+                    "label": "Immagine",
+                    "name": "img",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "Se vuota, viene usata Immagine categoria come fallback.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "allow_in_bindings": 0,
+                    "preview_size": "medium"
+                }
+            ]
         },
         {
             "key": "field_6a14423652267",
@@ -57,7 +219,20 @@
             "type": "select",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_categoria_elemento_arredo_primo_livello",
+                        "operator": "!=",
+                        "value": "1"
+                    },
+                    {
+                        "field": "field_6a14423652267",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -89,6 +264,16 @@
             "conditional_logic": [
                 [
                     {
+                        "field": "field_categoria_elemento_arredo_primo_livello",
+                        "operator": "!=",
+                        "value": "1"
+                    },
+                    {
+                        "field": "field_6a14423652267",
+                        "operator": "!=",
+                        "value": "1"
+                    },
+                    {
                         "field": "field_6a107afacefc9",
                         "operator": "==",
                         "value": "link"
@@ -113,6 +298,16 @@
             "required": 0,
             "conditional_logic": [
                 [
+                    {
+                        "field": "field_categoria_elemento_arredo_primo_livello",
+                        "operator": "!=",
+                        "value": "1"
+                    },
+                    {
+                        "field": "field_6a14423652267",
+                        "operator": "!=",
+                        "value": "1"
+                    },
                     {
                         "field": "field_6a107afacefc9",
                         "operator": "==",
@@ -142,6 +337,16 @@
             "required": 0,
             "conditional_logic": [
                 [
+                    {
+                        "field": "field_categoria_elemento_arredo_primo_livello",
+                        "operator": "!=",
+                        "value": "1"
+                    },
+                    {
+                        "field": "field_6a14423652267",
+                        "operator": "!=",
+                        "value": "1"
+                    },
                     {
                         "field": "field_6a107afacefc9",
                         "operator": "==",
@@ -218,6 +423,13 @@
             "instructions": "",
             "required": 0,
             "conditional_logic": [
+                [
+                    {
+                        "field": "field_categoria_elemento_arredo_primo_livello",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ],
                 [
                     {
                         "field": "field_6a14423652267",
@@ -472,6 +684,13 @@
             "conditional_logic": [
                 [
                     {
+                        "field": "field_categoria_elemento_arredo_primo_livello",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ],
+                [
+                    {
                         "field": "field_6a14423652267",
                         "operator": "==",
                         "value": "1"
@@ -506,6 +725,261 @@
                     "layout": "block",
                     "prefix_label": 0,
                     "prefix_name": 0
+                }
+            ]
+        },
+        {
+            "key": "field_categoria_elemento_arredo_second_level_categories_launch",
+            "label": "Lancio categorie secondo livello",
+            "name": "second_level_categories_launch",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "Configura le card editoriali del lancio alle categorie di secondo livello.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_categoria_elemento_arredo_primo_livello",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_categoria_elemento_arredo_second_level_categories_launch_label",
+                    "label": "Titolo sezione",
+                    "name": "section_label",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "Prodotti",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_categoria_elemento_arredo_second_level_categories_launch_cards",
+                    "label": "Card",
+                    "name": "cards",
+                    "aria-label": "",
+                    "type": "repeater",
+                    "instructions": "Se vuoto, vengono mostrate automaticamente le categorie figlie dirette con i dati della categoria.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "block",
+                    "pagination": 0,
+                    "min": 0,
+                    "max": 0,
+                    "collapsed": "field_categoria_elemento_arredo_second_level_categories_launch_card_title",
+                    "button_label": "Aggiungi card",
+                    "rows_per_page": 20,
+                    "sub_fields": [
+                        {
+                            "key": "field_categoria_elemento_arredo_second_level_categories_launch_card_term",
+                            "label": "Categoria di destinazione",
+                            "name": "term",
+                            "aria-label": "",
+                            "type": "taxonomy",
+                            "instructions": "Scegli una categoria di secondo livello figlia della categoria corrente.",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "taxonomy": "categoria-elemento-arredo",
+                            "field_type": "select",
+                            "allow_null": 0,
+                            "add_term": 0,
+                            "save_terms": 0,
+                            "load_terms": 0,
+                            "return_format": "object",
+                            "multiple": 0,
+                            "allow_in_bindings": 0,
+                            "bidirectional": 0,
+                            "bidirectional_target": []
+                        },
+                        {
+                            "key": "field_categoria_elemento_arredo_second_level_categories_launch_card_cta_link",
+                            "label": "Link CTA",
+                            "name": "cta_link",
+                            "aria-label": "",
+                            "type": "link",
+                            "instructions": "Opzionale. Se vuoto, la CTA punta alla categoria selezionata.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array",
+                            "allow_in_bindings": 0
+                        },
+                        {
+                            "key": "field_categoria_elemento_arredo_second_level_categories_launch_card_label",
+                            "label": "Label",
+                            "name": "label",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "Es. Linea",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "Linea",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_categoria_elemento_arredo_second_level_categories_launch_card_title",
+                            "label": "Titolo",
+                            "name": "title",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "Se vuoto, viene usato il nome della categoria.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_categoria_elemento_arredo_second_level_categories_launch_card_product_icon",
+                            "label": "Logo linea",
+                            "name": "product_icon",
+                            "aria-label": "",
+                            "type": "select",
+                            "instructions": "Se vuoto, prova a dedurlo dallo slug della categoria.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "": "Automatico / nessuno",
+                                "icon-logo-mono": "Mono",
+                                "icon-logo-dual": "Dual",
+                                "icon-logo-infinity": "Infinity"
+                            },
+                            "default_value": "",
+                            "return_format": "value",
+                            "multiple": 0,
+                            "allow_null": 0,
+                            "allow_in_bindings": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "create_options": 0,
+                            "save_options": 0
+                        },
+                        {
+                            "key": "field_categoria_elemento_arredo_second_level_categories_launch_card_text",
+                            "label": "Testo",
+                            "name": "text",
+                            "aria-label": "",
+                            "type": "wysiwyg",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "tabs": "all",
+                            "toolbar": "basic",
+                            "media_upload": 0,
+                            "delay": 0,
+                            "allow_in_bindings": 0
+                        },
+                        {
+                            "key": "field_categoria_elemento_arredo_second_level_categories_launch_card_image",
+                            "label": "Immagine",
+                            "name": "image",
+                            "aria-label": "",
+                            "type": "image",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array",
+                            "library": "all",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": "",
+                            "allow_in_bindings": 0,
+                            "preview_size": "medium"
+                        },
+                        {
+                            "key": "field_categoria_elemento_arredo_second_level_categories_launch_card_cta_text",
+                            "label": "Testo CTA",
+                            "name": "cta_text",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "Scopri",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        }
+                    ]
                 }
             ]
         },
@@ -749,5 +1223,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1780058502
+    "modified": 1780069400
 }

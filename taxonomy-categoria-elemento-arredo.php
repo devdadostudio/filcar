@@ -11,10 +11,19 @@ if (!$term || is_wp_error($term) || !($term instanceof WP_Term)) {
 $term_key = $term->taxonomy . '_' . $term->term_id;
 $parent_term = !empty($term->parent) ? get_term($term->parent, $term->taxonomy) : null;
 
-$hero_image = function_exists('get_field') ? get_field('img_cat', $term_key) : null;
+$hero_simple = function_exists('get_field') ? get_field('hero_simple_text_img', $term_key) : [];
+$hero_simple = is_array($hero_simple) ? $hero_simple : [];
+$legacy_hero_subtitle = function_exists('get_field') ? get_field('subtitle_hero', $term_key) : '';
+$legacy_hero_text = function_exists('get_field') ? get_field('txt_hero', $term_key) : '';
+$fallback_hero_image = function_exists('get_field') ? get_field('img_cat', $term_key) : null;
+$hero_image = !empty($hero_simple['img']) && is_array($hero_simple['img']) ? $hero_simple['img'] : $fallback_hero_image;
 $hero_image_id = is_array($hero_image) && !empty($hero_image['ID']) ? (int) $hero_image['ID'] : 0;
 $hero_image_alt = is_array($hero_image) && !empty($hero_image['alt']) ? $hero_image['alt'] : $term->name;
+$hero_subtitle = $hero_simple['subtitle'] ?? $legacy_hero_subtitle;
+$hero_title = !empty($hero_simple['title']) ? $hero_simple['title'] : $term->name;
+$hero_cta_text = !empty($hero_simple['txt_cta']) ? $hero_simple['txt_cta'] : __('Scopri', 'filcar');
 $is_linea = function_exists('get_field') ? (bool) get_field('linea', $term_key) : false;
+$is_first_level = empty($term->parent);
 
 $term_value_has_content = static function ($value) use (&$term_value_has_content) {
     if (is_array($value)) {
@@ -156,7 +165,71 @@ $render_line_block = static function ($slug, $group_name, $block_id) use ($term,
 ?>
 
 <main id="main-content-category" class="bg-primary">
-    <?php if ($is_linea) : ?>
+    <?php if ($is_first_level) : ?>
+        <section class="position-relative section-hero-product section-hero-cat-prod-second bg-grey-300 d-flex align-items-center">
+            <?php
+            get_template_part('parts/breadcrumbs', null, [
+                'variant' => 'light',
+                'layout' => 'overlay',
+                'class' => 'product-hero__breadcrumb category-second-hero__breadcrumb',
+                'mobile_bg' => true,
+            ]);
+            ?>
+
+            <div class="container-fluid-left-llg position-relative text-container category-second-hero__inner">
+                <div class="row align-items-center">
+                    <div class="col-12 col-lg-4 order-2 order-lg-1">
+                        <div class="product-hero__content category-second-hero__content">
+                            <?php if (!empty($hero_subtitle)) : ?>
+                                <div class="product-3 fw-semibold text-uppercase sp-mb-3">
+                                    <?php echo wp_kses_post($hero_subtitle); ?>
+                                </div>
+                            <?php endif; ?>
+                            <h1 class="h1 extralight sp-mb-3 sp-sxl-mb-4 sp-uxl-mb-5">
+                                <?php echo wp_kses_post($hero_title); ?>
+                            </h1>
+                            <?php if (!empty($hero_cta_text)) : ?>
+                                <div class="cta-content">
+                                    <a href="#prodotti" class="btn btn-outline-primary">
+                                        <?php echo esc_html($hero_cta_text); ?> <i class="icon icon-filcar-icon-arrow-downr"></i>
+                                    </a>
+                                </div>
+                            <?php elseif (!empty($legacy_hero_text) || !empty($term->description)) : ?>
+                                <div class="p-big fw-normal">
+                                    <?php echo wp_kses_post($legacy_hero_text ?: wpautop($term->description)); ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-7 offset-lg-1 order-1 order-lg-2 sp-mb-8 sp-lg-mb-0 category-second-hero__visual-col">
+                        <div class="category-second-hero__visual">
+                            <figure class="category-second-hero__image respimg sp-mb-0">
+                                <?php
+                                if ($hero_image_id) {
+                                    echo wp_get_attachment_image($hero_image_id, 'full', false, [
+                                        'alt' => esc_attr($hero_image_alt),
+                                    ]);
+                                } else {
+                                    echo '<img src="https://placehold.co/900x900" alt="' . esc_attr($term->name) . '">';
+                                }
+                                ?>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <?php
+        $render_line_block('technical-text-scroll', 'technical_text_scroll_block', 'categoria-' . $term->term_id . '-technical-text');
+        $render_line_block('arredo-text-images-card', 'arredo_text_images_card', 'categoria-' . $term->term_id . '-arredo');
+        get_template_part('parts/category/second-level-launch', null, [
+            'term' => $term,
+            'field_source' => $term_key,
+            'content' => function_exists('get_field') ? get_field('second_level_categories_launch', $term_key) : [],
+        ]);
+        ?>
+    <?php elseif ($is_linea) : ?>
         <?php
         $render_line_block('hero-image-hotspots', 'hero_image_hotspots', 'linea-' . $term->term_id . '-hero');
         $render_line_block('technical-text-scroll', 'technical_text_scroll_block', 'linea-' . $term->term_id . '-technical-text');

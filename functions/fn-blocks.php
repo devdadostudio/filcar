@@ -1422,7 +1422,12 @@ add_filter('acf/get_field_groups', function ($field_groups) {
         return $field_groups;
     }
 
-    return array_values(array_filter($field_groups, static function ($group) {
-        return !empty($group['key']) && $group['key'] === 'group_6a107af9e3eb7';
+    $allowed_field_group_keys = [
+        'group_6a107af9e3eb7',
+        'group_6a184ba68b7ff',
+    ];
+
+    return array_values(array_filter($field_groups, static function ($group) use ($allowed_field_group_keys) {
+        return !empty($group['key']) && in_array($group['key'], $allowed_field_group_keys, true);
     }));
 });
