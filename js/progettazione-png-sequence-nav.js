@@ -5,62 +5,51 @@
     const blocks = document.querySelectorAll(".js-progettazione-sequence-nav");
     if (!blocks.length) return;
 
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
     blocks.forEach((block) => {
       if (block.dataset.sequenceNavReady === "true") return;
 
-      const scroll = block.querySelector(".js-sequence-anchor-scroll");
       const media = block.querySelector(".js-sequence-anchor-media");
-      const canvas = block.querySelector(".js-sequence-anchor-canvas");
       const points = Array.from(
         block.querySelectorAll(".js-sequence-anchor-point"),
       );
+      const switchImages = Array.from(
+        block.querySelectorAll(".js-sequence-anchor-switch-image"),
+      );
       const links = Array.from(block.querySelectorAll(".sequence-anchor-link"));
       const navWrap = block.querySelector(".js-sequence-anchor-nav-wrap");
-      const floatingCard = block.querySelector(".js-sequence-anchor-floating-card");
       const sections = Array.from(
         block.querySelectorAll(".js-sequence-anchor-section"),
       );
+      const imageSwitch = block.querySelector(".js-sequence-anchor-image-switch");
+      const pinnedStage = block.querySelector(".js-sequence-pinned-stage");
+      const pinnedPoints = Array.from(
+        block.querySelectorAll(".js-sequence-pinned-point"),
+      );
+      const compositionItems = Array.from(
+        block.querySelectorAll(".js-sequence-composition-item"),
+      );
+      const compositionTrack = block.querySelector(".js-sequence-composition-track");
+      const pinnedInner = block.querySelector(".progettazione-sequence-nav__pinned-inner");
       const ergonomiaCarousels = Array.from(
         block.querySelectorAll(".js-sequence-ergonomia-carousel"),
       );
 
-      if (!scroll || !media || !canvas || !points.length || !links.length) {
-        return;
-      }
+      if (!points.length || !links.length) return;
 
       block.dataset.sequenceNavReady = "true";
 
-      const ctx = canvas.getContext("2d");
-      const frameScript = block.querySelector(".js-sequence-anchor-frames");
       const smoother = window.ScrollSmoother ? window.ScrollSmoother.get() : null;
-      let frameUrls = [];
-      const frames = [];
-      let loadedFrames = 0;
-      let currentSequenceProgress = 0;
-      let sequenceTrigger = null;
+      const isPinnedComposition = block.classList.contains(
+        "progettazione-sequence-nav--pinned_composition",
+      );
       let currentActiveId = "";
       let navLockUntil = 0;
-      let lastCanvasWidth = 0;
-      let lastCanvasHeight = 0;
-      let resizeRefreshFrame = null;
-      let sourceFrameWidth = 1200;
-      let sourceFrameHeight = 675;
-      let sourceFrameSizeReady = false;
-
-      if (frameScript) {
-        try {
-          frameUrls = JSON.parse(frameScript.textContent);
-        } catch (error) {
-          frameUrls = [];
-        }
-      }
-
-      const isMobileViewport = () =>
-        window.matchMedia("(max-width: 1024px)").matches;
+      let pinnedTrigger = null;
+      let pinnedStepPositions = [];
+      let pinnedAnchorPositions = [];
+      let pinnedTimelineDuration = 1;
+      let pinnedTimeline = null;
+      let scrollToPinnedIndex = null;
 
       const getHeaderHeight = () => {
         const header = document.querySelector(".flc-main-nav");
@@ -102,253 +91,48 @@
         });
       };
 
-      const pointStops = points.map((point, index) => {
-        const fallback = index / Math.max(points.length - 1, 1);
-        const value = parseFloat(point.dataset.sequenceProgress);
-
-        return Number.isFinite(value) ? gsap.utils.clamp(0, 1, value) : fallback;
-      });
-      const sequenceStartProgress = pointStops[0] ?? 0;
-      const rawSequenceEndProgress = pointStops[pointStops.length - 1] ?? 1;
-      const sequenceEndProgress =
-        rawSequenceEndProgress > sequenceStartProgress
-          ? rawSequenceEndProgress
-          : 1;
-      const sequenceProgressSpan = Math.max(
-        sequenceEndProgress - sequenceStartProgress,
-        0.0001,
-      );
-      const scrollProgressToFrameProgress = (progress) =>
-        gsap.utils.clamp(
-          0,
-          1,
-          sequenceStartProgress +
-            gsap.utils.clamp(0, 1, progress) * sequenceProgressSpan,
-        );
-      const frameProgressToScrollProgress = (progress) =>
-        gsap.utils.clamp(
-          0,
-          1,
-          (gsap.utils.clamp(0, 1, progress) - sequenceStartProgress) /
-            sequenceProgressSpan,
-        );
-
-      const resizeCanvas = () => {
-        const width = Math.round(canvas.clientWidth || canvas.width);
-        const height = Math.round(canvas.clientHeight || canvas.height);
-        const ratio = Math.min(window.devicePixelRatio || 1, 2);
-
-        if (width === lastCanvasWidth && height === lastCanvasHeight) {
-          return false;
-        }
-
-        lastCanvasWidth = width;
-        lastCanvasHeight = height;
-        canvas.width = Math.round(width * ratio);
-        canvas.height = Math.round(height * ratio);
-        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-
-        return true;
-      };
-
-      const applySourceFrameSize = (image) => {
-        if (
-          sourceFrameSizeReady ||
-          !image ||
-          !image.naturalWidth ||
-          !image.naturalHeight
-        ) {
-          return;
-        }
-
-        sourceFrameSizeReady = true;
-        sourceFrameWidth = image.naturalWidth;
-        sourceFrameHeight = image.naturalHeight;
-
-        canvas.width = sourceFrameWidth;
-        canvas.height = sourceFrameHeight;
-        canvas.setAttribute("width", sourceFrameWidth);
-        canvas.setAttribute("height", sourceFrameHeight);
-
-        if (canvas.parentElement) {
-          canvas.parentElement.style.aspectRatio = `${sourceFrameWidth} / ${sourceFrameHeight}`;
-        }
-
-        lastCanvasWidth = 0;
-        lastCanvasHeight = 0;
-        syncCanvasSize(true);
-      };
-
-      const syncCanvasSize = (refreshTriggers = false) => {
-        const resized = resizeCanvas();
-        renderSequence(currentSequenceProgress);
-
-        if (!refreshTriggers || !resized) return;
-
-        if (resizeRefreshFrame) {
-          window.cancelAnimationFrame(resizeRefreshFrame);
-        }
-
-        resizeRefreshFrame = window.requestAnimationFrame(() => {
-          resizeRefreshFrame = null;
-          ScrollTrigger.refresh();
-        });
-      };
-
-      const drawPolygon = (pointsList, fill, stroke) => {
-        ctx.beginPath();
-        pointsList.forEach((point, index) => {
-          if (index === 0) {
-            ctx.moveTo(point.x, point.y);
-            return;
-          }
-
-          ctx.lineTo(point.x, point.y);
-        });
-        ctx.closePath();
-        ctx.fillStyle = fill;
-        ctx.fill();
-        ctx.strokeStyle = stroke;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      };
-
-      const drawCube = (progress) => {
-        const width = canvas.clientWidth || canvas.width;
-        const height = canvas.clientHeight || canvas.height;
-        const centerX = width / 2;
-        const centerY = height / 2 + height * 0.03;
-        const size = Math.min(width, height) * 0.34;
-        const rotation = progress * Math.PI * 2.15 + Math.PI * 0.16;
-        const pitch = Math.PI * (0.18 + progress * 0.12);
-        const vertices = [
-          [-1, -1, -1],
-          [1, -1, -1],
-          [1, 1, -1],
-          [-1, 1, -1],
-          [-1, -1, 1],
-          [1, -1, 1],
-          [1, 1, 1],
-          [-1, 1, 1],
-        ].map(([x, y, z]) => {
-          const rotatedX = x * Math.cos(rotation) - z * Math.sin(rotation);
-          const rotatedZ = x * Math.sin(rotation) + z * Math.cos(rotation);
-          const pitchedY = y * Math.cos(pitch) - rotatedZ * Math.sin(pitch);
-          const pitchedZ = y * Math.sin(pitch) + rotatedZ * Math.cos(pitch);
-          const perspective = 2.8 / (2.8 + pitchedZ);
-
-          return {
-            x: centerX + rotatedX * size * perspective,
-            y: centerY + pitchedY * size * perspective,
-            z: pitchedZ,
-          };
-        });
-        const faces = [
-          { indexes: [0, 1, 2, 3], color: "rgba(0, 133, 221, 0.34)" },
-          { indexes: [4, 7, 6, 5], color: "rgba(255, 255, 255, 0.13)" },
-          { indexes: [0, 4, 5, 1], color: "rgba(0, 133, 221, 0.52)" },
-          { indexes: [1, 5, 6, 2], color: "rgba(255, 255, 255, 0.22)" },
-          { indexes: [2, 6, 7, 3], color: "rgba(0, 133, 221, 0.22)" },
-          { indexes: [3, 7, 4, 0], color: "rgba(255, 255, 255, 0.08)" },
-        ];
-
-        ctx.clearRect(0, 0, width, height);
-        ctx.save();
-        ctx.shadowColor = "rgba(0, 0, 0, 0.36)";
-        ctx.shadowBlur = 42;
-        ctx.shadowOffsetY = 28;
-
-        faces
-          .map((face) => ({
-            ...face,
-            z:
-              face.indexes.reduce((sum, index) => sum + vertices[index].z, 0) /
-              face.indexes.length,
-          }))
-          .sort((a, b) => a.z - b.z)
-          .forEach((face) => {
-            drawPolygon(
-              face.indexes.map((index) => vertices[index]),
-              face.color,
-              "rgba(255, 255, 255, 0.42)",
-            );
-          });
-
-        ctx.restore();
-      };
-
-      const drawImageFrame = (progress) => {
-        const width = canvas.clientWidth || canvas.width;
-        const height = canvas.clientHeight || canvas.height;
-        const frameIndex = Math.round(progress * Math.max(frames.length - 1, 0));
-        const image = frames[frameIndex];
-
-        if (!image || !image.complete) {
-          drawCube(progress);
-          return;
-        }
-
-        const scale = Math.min(
-          width / image.naturalWidth,
-          height / image.naturalHeight,
-        );
-        const drawWidth = image.naturalWidth * scale;
-        const drawHeight = image.naturalHeight * scale;
-
-        ctx.clearRect(0, 0, width, height);
-        ctx.drawImage(
-          image,
-          (width - drawWidth) / 2,
-          (height - drawHeight) / 2,
-          drawWidth,
-          drawHeight,
-        );
-      };
-
-      const renderSequence = (progress) => {
-        currentSequenceProgress = progress;
-
-        if (frames.length && loadedFrames === frames.length) {
-          drawImageFrame(progress);
-          return;
-        }
-
-        drawCube(progress);
-      };
-
-      const setActivePoint = (progress) => {
-        let activeIndex = 0;
-        let activeDistance = Number.POSITIVE_INFINITY;
-
-        pointStops.forEach((stop, index) => {
-          const distance = Math.abs(progress - stop);
-
-          if (distance < activeDistance) {
-            activeDistance = distance;
-            activeIndex = index;
-          }
-        });
-
-        points.forEach((point, index) => {
-          const isActive = index === activeIndex;
+      const setActivePoint = (index) => {
+        points.forEach((point, pointIndex) => {
+          const isActive = pointIndex === index;
           point.classList.toggle("is-active", isActive);
-          point.classList.toggle("is-before", index < activeIndex);
+          point.classList.toggle("is-before", pointIndex < index);
 
           if (isActive) setActiveNav(point.dataset.anchorId);
         });
+
+        switchImages.forEach((image) => {
+          const isActive =
+            parseInt(image.dataset.imageIndex || "-1", 10) === index;
+
+          image.classList.toggle("is-active", isActive);
+          image.style.opacity = isActive ? "1" : "0";
+          image.setAttribute("aria-hidden", isActive ? "false" : "true");
+        });
       };
 
-      const scrollToY = (y, onComplete, immediate = false) => {
+      const getPinnedScrollY = (index) => {
+        if (!pinnedTrigger || pinnedPoints.length < 2) return null;
+        const position =
+          pinnedAnchorPositions[index] ?? pinnedStepPositions[index] ?? index;
+
+        return (
+          pinnedTrigger.start +
+          (pinnedTrigger.end - pinnedTrigger.start) *
+            (position / Math.max(pinnedTimelineDuration, 0.001))
+        );
+      };
+
+      switchImages.forEach((image) => {
+        image.style.position = "absolute";
+        image.style.inset = "0";
+        image.style.margin = "0";
+        image.style.pointerEvents = "none";
+      });
+
+      const scrollToY = (y, immediate = true) => {
         if (smoother) {
           smoother.scrollTo(y, !immediate);
-
-          if (onComplete) {
-            window.setTimeout(() => {
-              ScrollTrigger.update();
-              onComplete();
-            }, immediate ? 0 : 800);
-          }
-
+          window.setTimeout(() => ScrollTrigger.update(), immediate ? 0 : 800);
           return;
         }
 
@@ -358,7 +142,6 @@
               scrollTo: { y, autoKill: false },
             });
             ScrollTrigger.update();
-            if (onComplete) onComplete();
             return;
           }
 
@@ -368,7 +151,6 @@
             ease: "power2.out",
             overwrite: "auto",
             onUpdate: () => ScrollTrigger.update(),
-            onComplete,
           });
           return;
         }
@@ -377,132 +159,276 @@
           top: y,
           behavior: immediate ? "auto" : "smooth",
         });
-
-        if (onComplete) {
-          window.setTimeout(onComplete, immediate ? 0 : 800);
-        }
       };
 
-      const scrollToSection = (target) => {
+      const scrollToSection = (target, immediate = true, align = "top") => {
+        if (!target) return;
+
+        const rect = target.getBoundingClientRect();
+        const scrollTop = getScrollTop();
         const offset = getHeaderHeight() + 8;
-        const y = target.getBoundingClientRect().top + getScrollTop() - offset;
-        scrollToY(y, null, true);
+        const y =
+          align === "center"
+            ? rect.top + scrollTop - (window.innerHeight - rect.height) / 2
+            : rect.top + scrollTop - offset;
+
+        scrollToY(y, immediate);
       };
 
-      const getSequenceScrollY = (progress) => {
-        if (!sequenceTrigger) return getScrollTop();
-
-        ScrollTrigger.update();
-
-        return (
-          sequenceTrigger.start +
-          frameProgressToScrollProgress(progress) *
-            (sequenceTrigger.end - sequenceTrigger.start)
-        );
-      };
-
-      const forceSequenceState = (progress, anchorId) => {
-        const safeProgress = gsap.utils.clamp(0, 1, progress);
-
-        navLockUntil = Date.now() + 950;
-        renderSequence(safeProgress);
-        setActivePoint(safeProgress);
-        setActiveNav(anchorId);
-      };
-
-      resizeCanvas();
-      renderSequence(sequenceStartProgress);
-      setActivePoint(sequenceStartProgress);
-
-      const canvasResizeObserver =
-        "ResizeObserver" in window
-          ? new ResizeObserver(() => syncCanvasSize(false))
-          : null;
-
-      if (canvasResizeObserver) {
-        canvasResizeObserver.observe(canvas);
-        canvasResizeObserver.observe(canvas.parentElement);
+      if (imageSwitch) {
+        imageSwitch.style.position = "relative";
+        imageSwitch.style.width = "100%";
+        imageSwitch.style.aspectRatio = "1800 / 1956";
+        imageSwitch.style.overflow = "hidden";
       }
 
-      frameUrls.forEach((url, index) => {
-        const image = new Image();
-        image.onload = () => {
-          if (index === 0) {
-            applySourceFrameSize(image);
+      if (isPinnedComposition && pinnedStage && compositionTrack) {
+        const setPinnedActivePoint = (index) => {
+          setActivePoint(index);
+
+          pinnedPoints.forEach((point, pointIndex) => {
+            point.classList.toggle("is-active", pointIndex === index);
+          });
+
+          compositionItems.forEach((item, itemIndex) => {
+            item.classList.toggle("is-active", itemIndex <= index);
+          });
+        };
+        const getPinnedIndexFromTime = (time) => {
+          let index = 0;
+
+          pinnedAnchorPositions.forEach((position, positionIndex) => {
+            if (time >= position - 0.55) {
+              index = positionIndex;
+            }
+          });
+
+          return index;
+        };
+        const getCompositionTrackShift = (index) => {
+          const item = compositionItems[index];
+          const mediaRect = compositionTrack.parentElement?.getBoundingClientRect();
+          const itemRect = item?.getBoundingClientRect();
+
+          if (!item || !mediaRect || !itemRect) return 0;
+
+          return mediaRect.width / 2 - (item.offsetLeft + itemRect.width / 2);
+        };
+        pinnedStepPositions = pinnedPoints.map((_, index) => index);
+        pinnedAnchorPositions = pinnedPoints.map((_, index) => (index === 0 ? 0 : index + 0.22));
+
+        const createPinnedTimeline = ({
+          scrub,
+          trackStart,
+          collapseItems = true,
+          itemDuration = 0.85,
+          itemStart = 0.08,
+          revealDuration = null,
+          revealStart = null,
+          recenterOnRefresh = false,
+          pinInner = false,
+        }) => {
+          if (pinInner && pinnedInner) {
+            pinnedStage.style.minHeight = "100vh";
+            pinnedStage.style.minHeight = "100svh";
+            pinnedInner.style.position = "relative";
+            pinnedInner.style.top = "auto";
           }
 
-          loadedFrames += 1;
-          renderSequence(currentSequenceProgress);
+          gsap.set(pinnedPoints, { autoAlpha: 0, x: 56 });
+          gsap.set(pinnedPoints[0], { autoAlpha: 1, x: 0 });
+          gsap.set(compositionItems, collapseItems ? { autoAlpha: 0, width: 0, x: 56 } : { autoAlpha: 0, width: "auto", x: 56 });
+          gsap.set(compositionItems[0], { autoAlpha: 1, width: "auto", x: 0 });
+
+          if (!collapseItems) {
+            gsap.set(compositionTrack, { x: 0 });
+            gsap.set(compositionTrack, { x: () => getCompositionTrackShift(0) });
+          }
+
+          const timeline = gsap.timeline({
+            defaults: { ease: "power2.out" },
+            scrollTrigger: {
+              trigger: pinnedStage,
+              start: "top top",
+              end: () =>
+                pinInner
+                  ? `+=${Math.max(window.innerHeight * (pinnedPoints.length + 0.8), 1600)}`
+                  : "bottom bottom",
+              pin: pinInner && pinnedInner ? pinnedInner : false,
+              pinSpacing: pinInner,
+              anticipatePin: pinInner ? 1 : 0,
+              scrub,
+              invalidateOnRefresh: true,
+              onRefresh: () => {
+                if (!recenterOnRefresh) return;
+
+                const timelineTime = pinnedTimeline?.time() ?? 0;
+                const index = getPinnedIndexFromTime(timelineTime);
+
+                gsap.set(compositionTrack, { x: () => getCompositionTrackShift(index) });
+              },
+              onUpdate: (self) => {
+                const timelineTime = self.progress * pinnedTimelineDuration;
+                const index = getPinnedIndexFromTime(timelineTime);
+
+                if (Date.now() > navLockUntil) setPinnedActivePoint(index);
+              },
+            },
+          });
+
+          pinnedTimeline = timeline;
+          pinnedTrigger = timeline.scrollTrigger;
+
+          pinnedPoints.forEach((point, index) => {
+            const position = index;
+
+            if (index > 0) {
+              const itemTweenVars = {
+                width: "auto",
+                x: 0,
+                duration: itemDuration,
+              };
+
+              if (revealDuration === null) {
+                itemTweenVars.autoAlpha = 1;
+              }
+
+              timeline
+                .to(pinnedPoints[index - 1], { autoAlpha: 0, x: -42, duration: 0.48 }, position - 0.42)
+                .fromTo(
+                  pinnedPoints[index],
+                  { autoAlpha: 0, x: 64 },
+                  { autoAlpha: 1, x: 0, duration: 0.78 },
+                  position,
+                )
+                .fromTo(
+                  compositionItems[index],
+                  collapseItems ? { autoAlpha: 0, width: 0, x: 64 } : { autoAlpha: 0, width: "auto", x: 64 },
+                  itemTweenVars,
+                  position + itemStart,
+                );
+
+              if (revealDuration !== null) {
+                timeline.to(
+                  compositionItems[index],
+                  { autoAlpha: 1, duration: revealDuration, ease: "power1.out" },
+                  position + (revealStart ?? itemStart),
+                );
+              }
+
+              if (trackStart !== null) {
+                timeline.to(
+                  compositionTrack,
+                  { x: () => getCompositionTrackShift(index), duration: 0.95, ease: "power2.inOut" },
+                  position + trackStart,
+                );
+              }
+            }
+          });
+
+          timeline.to({ hold: 0 }, { hold: 1, duration: 1.1 }, pinnedPoints.length - 0.15);
+          pinnedTimelineDuration = timeline.duration();
+          setPinnedActivePoint(getPinnedIndexFromTime(timeline.time()));
+
+          return () => {
+            if (pinnedTimeline === timeline) {
+              pinnedTimeline = null;
+              pinnedTrigger = null;
+            }
+
+            timeline.scrollTrigger?.kill();
+            timeline.kill();
+
+            if (pinInner && pinnedInner) {
+              pinnedStage.style.minHeight = "";
+              pinnedInner.style.position = "";
+              pinnedInner.style.top = "";
+            }
+          };
         };
-        frames.push(image);
-        image.src = url;
-      });
 
-      if (!reduceMotion) {
-        if (isMobileViewport()) {
-          sequenceTrigger = ScrollTrigger.create({
-            trigger: scroll,
-            start: "top top",
-            end: () => `+=${Math.max(points.length * 75, 260)}%`,
-            scrub: 0.65,
-            pin: scroll,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            onRefreshInit: () => {
-              resizeCanvas();
-              renderSequence(currentSequenceProgress);
-            },
-            onUpdate: (self) => {
-              const progress = scrollProgressToFrameProgress(self.progress);
-              renderSequence(progress);
-              setActivePoint(progress);
-            },
-          });
-        } else {
-          sequenceTrigger = ScrollTrigger.create({
-            trigger: media,
-            start: "center center",
-            endTrigger: points[points.length - 1],
-            end: "center center",
-            scrub: 0.65,
-            pin: media,
-            pinSpacing: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            onRefreshInit: () => {
-              resizeCanvas();
-              renderSequence(currentSequenceProgress);
-            },
-            onUpdate: (self) => {
-              const progress = scrollProgressToFrameProgress(self.progress);
-              renderSequence(progress);
-              setActivePoint(progress);
-            },
-          });
-        }
+        const pinnedMatchMedia = gsap.matchMedia();
+        pinnedMatchMedia.add("(min-width: 992px)", () =>
+          createPinnedTimeline({
+            scrub: 0.5,
+            trackStart: null,
+            collapseItems: true,
+            itemDuration: 0.85,
+            itemStart: 0.08,
+            pinInner: true,
+          }),
+        );
+        pinnedMatchMedia.add("(max-width: 991px)", () =>
+          createPinnedTimeline({
+            scrub: 0.2,
+            trackStart: -0.42,
+            collapseItems: false,
+            itemDuration: 0.9,
+            itemStart: -0.48,
+            revealDuration: 0.28,
+            revealStart: -0.52,
+            recenterOnRefresh: true,
+          }),
+        );
 
-        if (floatingCard && !isMobileViewport()) {
-          const compositionsSection = sections.find(
-            (section) => section.dataset.anchorId === "composizioni"
+        compositionItems.forEach((item) => {
+          const image = item.querySelector("img");
+
+          if (!image || image.complete) return;
+
+          image.addEventListener(
+            "load",
+            () => ScrollTrigger.refresh(),
+            { once: true },
           );
-          const endSection =
-            compositionsSection ||
-            sections.find((section) => section.dataset.anchorId === "elementi") ||
-            sections[sections.length - 1] ||
-            scroll;
+        });
+
+        scrollToPinnedIndex = (index) => {
+          const targetY = getPinnedScrollY(index);
+          const position =
+            pinnedAnchorPositions[index] ?? pinnedStepPositions[index] ?? index;
+          const progress = gsap.utils.clamp(
+            0,
+            1,
+            position / Math.max(pinnedTimelineDuration, 0.001),
+          );
+
+          navLockUntil = Date.now() + 250;
+          setPinnedActivePoint(index);
+          pinnedTimeline?.progress(progress);
+
+          if (targetY === null) return;
+          scrollToY(targetY, true);
+          window.requestAnimationFrame(() => {
+            pinnedTimeline?.progress(progress);
+            ScrollTrigger.update();
+            setPinnedActivePoint(index);
+          });
+        };
+
+        points.forEach((point, index) => {
+          point.addEventListener("click", () => scrollToPinnedIndex(index));
+        });
+      } else {
+        points.forEach((point, index) => {
+          point.addEventListener("click", () => {
+            navLockUntil = Date.now() + 500;
+            setActivePoint(index);
+            scrollToSection(point, true, "center");
+          });
 
           ScrollTrigger.create({
-            trigger: floatingCard,
-            start: "bottom bottom-=24",
-            endTrigger: endSection,
-            end: "top bottom-=24",
-            pin: floatingCard,
-            pinSpacing: false,
-            pinReparent: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
+            trigger: point,
+            start: "center center",
+            end: "+=1",
+            onEnter: () => {
+              if (Date.now() > navLockUntil) setActivePoint(index);
+            },
+            onEnterBack: () => {
+              if (Date.now() > navLockUntil) setActivePoint(index);
+            },
           });
-        }
+        });
       }
 
       sections.forEach((section) => {
@@ -523,33 +449,28 @@
         link.addEventListener("click", (event) => {
           event.preventDefault();
 
-          const type = link.dataset.type;
-
-          if (type === "sequence") {
-            const progress = parseFloat(link.dataset.sequenceProgress || "0");
-            const safeProgress = Number.isFinite(progress) ? progress : 0;
-            const anchorId = link.dataset.anchorId;
-
-            forceSequenceState(safeProgress, anchorId);
-
-            if (!sequenceTrigger) return;
-
-            const targetY = getSequenceScrollY(safeProgress);
-
-            scrollToY(
-              targetY,
-              () => {
-                forceSequenceState(safeProgress, anchorId);
-                ScrollTrigger.update();
-              },
-              true,
+          if (link.dataset.type === "sequence") {
+            const point = points.find(
+              (item) => item.dataset.anchorId === link.dataset.anchorId,
             );
+            const index = point ? points.indexOf(point) : 0;
+
+            navLockUntil = Date.now() + (isPinnedComposition ? 700 : 500);
+            setActivePoint(index);
+
+            if (isPinnedComposition) {
+              scrollToPinnedIndex?.(index);
+              return;
+            }
+
+            scrollToSection(point, true, "center");
             return;
           }
 
           const target = document.querySelector(link.dataset.target);
           if (!target) return;
 
+          navLockUntil = Date.now() + 500;
           setActiveNav(target.dataset.anchorId);
           scrollToSection(target);
         });
@@ -581,11 +502,7 @@
         setSlide(currentIndex);
       });
 
-      window.addEventListener(
-        "resize",
-        () => syncCanvasSize(true),
-        { passive: true },
-      );
+      setActivePoint(0);
     });
   }
 

@@ -100,7 +100,8 @@
 
   &__scroll {
     position: relative;
-    padding-bottom: clamp(100px, 15vh, 180px);
+    padding-top: clamp(64px, 8vh, 128px);
+    padding-bottom: clamp(180px, 24vh, 320px);
   }
 
   &__floating-card {
@@ -131,38 +132,171 @@
   }
 
   &__media {
-    position: relative;
+    position: sticky;
+    top: clamp(88px, 11vh, 132px);
     min-width: 0;
     padding-top: clamp(18px, 2.2vh, 34px);
   }
 
-  &__canvas-wrap {
+  &__image-switch {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9;
+    max-height: 78vh;
+    margin: 0 auto;
+    aspect-ratio: 1800 / 1956;
     overflow: hidden;
-    border-radius: 4px;
-    //background: $grey200;
   }
 
-  &__canvas {
-    display: block;
+  &__switch-image {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 260ms ease;
+    pointer-events: none;
+
+    &.is-active {
+      opacity: 1;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center bottom;
+    }
+  }
+
+  &__pinned-stage {
+    position: relative;
+    min-height: 480vh;
+    min-height: 480svh;
+    overflow: visible;
+  }
+
+  &__pinned-inner {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding-top: clamp(118px, 16vh, 210px);
+    padding-bottom: clamp(34px, 4.8vh, 68px);
+  }
+
+  &__pinned-copy {
+    position: absolute;
+    top: clamp(118px, 19vh, 250px);
+    left: 0;
+    right: 0;
+    z-index: 2;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  &__pinned-point {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     width: 100%;
-    height: 100%;
+    margin: 0;
+    color: $white;
+    opacity: 0;
+
+    &.is-active {
+      opacity: 1;
+    }
+  }
+
+  &__pinned-number {
+    display: block;
+    margin-bottom: clamp(18px, 2vh, 32px);
+    color: $secondary;
+  }
+
+  &__pinned-title {
+    margin: 0;
+  }
+
+  &__pinned-text {
+    margin: clamp(28px, 3.4vh, 48px) 0 0;
+    color: rgba($white, 0.78);
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &__composition-media {
+    position: relative;
+    z-index: 1;
+    width: 100vw;
+    margin-top: clamp(52px, 7vh, 96px);
+    margin-left: calc(50% - 50vw);
+    overflow: visible;
+  }
+
+  &__composition-track {
+    position: relative;
+    left: 50%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: max-content;
+    max-width: none;
+    transform: translateX(-50%);
+    will-change: transform;
+  }
+
+  &__composition-item {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: none;
+    margin: 0;
+    overflow: hidden;
+    opacity: 0;
+    height: min(48vh, 540px);
+
+    img {
+      display: block;
+      width: auto;
+      height: 100%;
+      max-width: none;
+      object-fit: contain;
+      object-position: center bottom;
+    }
+  }
+
+  @include media-breakpoint-down(sxl) {
+    &__composition-item {
+      img {
+        height: min(39vh, 430px);
+      }
+    }
   }
 
   &__sidebar {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: clamp(220px, 34vh, 420px);
-    padding-top: clamp(116px, 14vh, 180px);
-    padding-bottom: clamp(220px, 30vh, 380px);
+    gap: clamp(260px, 38vh, 500px);
+    padding-top: clamp(180px, 24vh, 320px);
+    padding-bottom: clamp(320px, 42vh, 620px);
   }
 
   &__point {
     max-width: 560px;
     color: $white;
+    cursor: pointer;
+  }
+
+  &__point.is-active &__point-number {
+    color: $secondary;
   }
 
   &__point-head {
@@ -409,6 +543,13 @@
     }
   }
 
+  &--pinned_composition {
+    .progettazione-sequence-nav__scroll {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+
   @include media-breakpoint-down(llg) {
     overflow: visible;
 
@@ -436,11 +577,13 @@
     }
 
     &__media {
+      position: relative;
+      top: auto;
       z-index: 2;
       padding-top: 0;
     }
 
-    &__canvas-wrap {
+    &__image-switch {
       width: min(100%, 620px);
       margin: 0 auto;
     }
@@ -475,6 +618,34 @@
     &__point-title,
     &__point-text {
       max-width: none;
+    }
+
+    &__pinned-inner {
+      padding-top: clamp(96px, 15vh, 150px);
+      padding-bottom: 42px;
+    }
+
+    &__pinned-copy {
+      top: clamp(94px, 14vh, 140px);
+    }
+
+    &__pinned-point {
+      left: 0;
+      right: 0;
+    }
+
+    &__pinned-text {
+      margin-top: 20px;
+    }
+
+    &__composition-item {
+      max-width: none;
+      height: min(42vh, 430px);
+
+      img {
+        width: auto;
+        height: 100%;
+      }
     }
 
     &__ergonomia-carousel {
@@ -548,13 +719,36 @@
       padding-bottom: 34px;
     }
 
-    &__canvas-wrap {
+    &__image-switch {
       width: min(100%, 360px);
     }
 
     &__sidebar {
       width: min(100%, 360px);
       min-height: 220px;
+    }
+
+    &__pinned-inner {
+      padding-top: 112px;
+      padding-bottom: 34px;
+    }
+
+    &__pinned-copy {
+      top: 108px;
+    }
+
+    &__pinned-text {
+      margin-top: 16px;
+    }
+
+    &__composition-item {
+      max-width: none;
+      height: min(32vh, 250px);
+
+      img {
+        width: auto;
+        height: 100%;
+      }
     }
 
     &__point-head {
@@ -613,6 +807,33 @@
     &__composition-overlay {
       min-height: 86px;
       padding: 14px 16px;
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    &--pinned_composition {
+      .progettazione-sequence-nav__composition-media {
+        width: 100vw;
+        margin-right: calc(50% - 50vw);
+        margin-left: calc(50% - 50vw);
+        overflow: visible;
+      }
+
+      .progettazione-sequence-nav__composition-track {
+        left: 0;
+        justify-content: center;
+        transform: none;
+      }
+    }
+
+    &__composition-item {
+      max-width: none;
+      height: min(24vh, 180px);
+
+      img {
+        width: auto;
+        height: 100%;
+      }
     }
   }
 }

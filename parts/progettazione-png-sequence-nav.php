@@ -30,14 +30,6 @@ $get_value = static function ($name, $key = '') use ($block, $field_values, $fie
     return $value;
 };
 
-$normalize_relative_path = static function ($path) {
-    $path = trim((string) $path);
-    $path = ltrim($path, '/');
-    $path = preg_replace('#/+#', '/', $path);
-
-    return $path ?: '';
-};
-
 $get_image_data = static function ($image) {
     $image_url = '';
     $image_alt = '';
@@ -73,7 +65,10 @@ if ($queried_object instanceof WP_Term) {
 
 $theme_variant = $get_value('theme_variant', 'field_progettazione_png_sequence_nav_theme_variant');
 $theme_variant = in_array($theme_variant, ['dark', 'light'], true) ? $theme_variant : 'dark';
-$section_class = 'progettazione-sequence-nav progettazione-sequence-nav--' . $theme_variant . ' js-progettazione-sequence-nav';
+$sequence_layout = $get_value('sequence_layout', 'field_progettazione_png_sequence_nav_sequence_layout');
+$sequence_layout = in_array($sequence_layout, ['standard', 'pinned_composition'], true) ? $sequence_layout : 'standard';
+$is_pinned_composition = $sequence_layout === 'pinned_composition';
+$section_class = 'progettazione-sequence-nav progettazione-sequence-nav--' . $theme_variant . ' progettazione-sequence-nav--' . $sequence_layout . ' js-progettazione-sequence-nav';
 
 $intro_label = $get_value('intro_label', 'field_progettazione_png_sequence_nav_intro_label');
 $intro_title = $get_value('intro_title', 'field_progettazione_png_sequence_nav_intro_title');
@@ -102,7 +97,9 @@ $has_floating_cta = $floating_cta_title || $floating_cta_image_url;
 $sequence_points = $get_value('sequence_points', 'field_progettazione_png_sequence_nav_sequence_points');
 $sequence_points = is_array($sequence_points) ? array_values($sequence_points) : [];
 $sequence_points = array_slice($sequence_points, 0, 3);
-
+$sequence_point_images = array_map(static function ($point) use ($get_image_data) {
+    return is_array($point) ? $get_image_data($point['image'] ?? null) : ['', ''];
+}, $sequence_points);
 $section_ergonomia_title = $get_value('ergonomia_title', 'field_progettazione_png_sequence_nav_ergonomia_title');
 $section_ergonomia_text = $get_value('ergonomia_text', 'field_progettazione_png_sequence_nav_ergonomia_text');
 $ergonomia_slides = $get_value('ergonomia_slides', 'field_progettazione_png_sequence_nav_ergonomia_slides');
@@ -141,43 +138,6 @@ $composition_text = $get_value('compositions_text', 'field_progettazione_png_seq
 $has_ergonomia = trim((string) $section_ergonomia_title) !== '' || trim((string) $section_ergonomia_text) !== '' || !empty($ergonomia_slides);
 $has_elements = $show_elements && !empty($element_terms);
 $has_compositions = !empty($compositions);
-
-$frames_folder = $normalize_relative_path((string) $get_value('frames_folder', 'field_progettazione_png_sequence_nav_frames_folder'));
-$frame_urls = [];
-$frame_width = 1200;
-$frame_height = 675;
-
-if ($frames_folder) {
-    $frames_dir = trailingslashit(get_template_directory()) . $frames_folder;
-    $frames_uri = trailingslashit(get_template_directory_uri()) . $frames_folder;
-
-    if (is_dir($frames_dir)) {
-        $frame_files = [];
-
-        foreach (['png', 'webp', 'jpg', 'jpeg'] as $extension) {
-            $matches = glob(trailingslashit($frames_dir) . '*.' . $extension);
-            $frame_files = array_merge($frame_files, is_array($matches) ? $matches : []);
-        }
-
-        natsort($frame_files);
-        $frame_files = array_values($frame_files);
-
-        if (!empty($frame_files[0]) && is_file($frame_files[0])) {
-            $frame_size = getimagesize($frame_files[0]);
-
-            if (is_array($frame_size) && !empty($frame_size[0]) && !empty($frame_size[1])) {
-                $frame_width = (int) $frame_size[0];
-                $frame_height = (int) $frame_size[1];
-            }
-        }
-
-        foreach ($frame_files as $frame_file) {
-            if (is_file($frame_file)) {
-                $frame_urls[] = trailingslashit($frames_uri) . basename($frame_file);
-            }
-        }
-    }
-}
 
 $nav_items = [
     [
@@ -243,17 +203,6 @@ foreach ($nav_items as $nav_item) {
         $compositions_number = $nav_item['number'];
     }
 }
-
-$frame_to_progress = static function ($frame_number, $fallback_progress) use ($frame_urls) {
-    if (!is_numeric($frame_number) || empty($frame_urls)) {
-        return $fallback_progress;
-    }
-
-    $frame_index = (int) $frame_number - 1;
-    $last_index = max(count($frame_urls) - 1, 1);
-
-    return max(0, min(1, $frame_index / $last_index));
-};
 ?>
 
 <section id="<?php echo esc_attr($block_id); ?>" class="<?php echo esc_attr($section_class); ?>">
@@ -269,11 +218,7 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
                             data-anchor-id="<?php echo esc_attr($item['id']); ?>"
                             data-type="<?php echo esc_attr($item['type']); ?>"
                             <?php if ($item['type'] === 'sequence') : ?>
-                                <?php
-                                $nav_point = $sequence_points[$index] ?? [];
-                                $nav_progress = $frame_to_progress($nav_point['sequence_frame'] ?? null, $item['progress']);
-                                ?>
-                                data-sequence-progress="<?php echo esc_attr(max(0, min(1, $nav_progress))); ?>"
+                                data-sequence-index="<?php echo esc_attr($index); ?>"
                             <?php endif; ?>
                         >
                             <span class="number-3 anchor-number text-white"><?php echo esc_html($item['number']); ?></span><?php echo esc_html($item['label']); ?>
@@ -286,69 +231,123 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
         <div class="progettazione-sequence-nav__content">
 
             <div class="progettazione-sequence-nav__scroll js-sequence-anchor-scroll">
-                <div class="container-fluid">
-                    <div class="progettazione-sequence-nav__stage">
-                        <div class="progettazione-sequence-nav__media js-sequence-anchor-media">
-                            <div class="progettazione-sequence-nav__canvas-wrap" style="aspect-ratio: <?php echo esc_attr($frame_width . ' / ' . $frame_height); ?>;">
-                                <canvas class="progettazione-sequence-nav__canvas js-sequence-anchor-canvas" width="<?php echo esc_attr($frame_width); ?>" height="<?php echo esc_attr($frame_height); ?>" aria-label="<?php esc_attr_e('Sequenza di progettazione', 'filcar'); ?>"></canvas>
-                            </div>
-                        </div>
-
-                        <aside class="progettazione-sequence-nav__sidebar" aria-label="<?php esc_attr_e('Punti della sequenza', 'filcar'); ?>">
-                            <?php for ($index = 0; $index < 3; $index++) :
-                                $point = $sequence_points[$index] ?? [];
-                                $number = str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT);
-                                $title = $point['title'] ?? '';
-                                $text = $point['text'] ?? '';
-                                $progress = $frame_to_progress($point['sequence_frame'] ?? null, $index / 2);
-                                $progress = max(0, min(1, $progress));
-                                $anchor_id = $nav_items[$index]['id'];
-                            ?>
-                                <article id="<?php echo esc_attr($block_id . '-' . $anchor_id); ?>" class="progettazione-sequence-nav__point js-sequence-anchor-point" data-sequence-progress="<?php echo esc_attr($progress); ?>" data-anchor-id="<?php echo esc_attr($anchor_id); ?>">
-                                    <div class="progettazione-sequence-nav__point-head">
-                                        <span class="progettazione-sequence-nav__point-number number-3 semibold"><?php echo esc_html($number); ?></span>
-
-                                        <?php if ($title) : ?>
-                                            <h3 class="progettazione-sequence-nav__point-title h6"><?php echo esc_html($title); ?></h3>
-                                        <?php endif; ?>
-                                    </div>
-
-                                    <?php if ($text) : ?>
-                                        <div class="progettazione-sequence-nav__point-text p-normal"><?php echo wp_kses_post(wpautop($text)); ?></div>
-                                    <?php endif; ?>
-
-                                    <?php // TODO: floating CTA temporaneamente disattivata; riattivare se torna utile nella sequenza PNG. ?>
-                                    <?php if (false && $index === 0 && $has_floating_cta) : ?>
-                                        <div class="progettazione-sequence-nav__floating-card js-sequence-anchor-floating-card">
-                                            <div class="hero-sector__card-item">
-                                                <?php if ($floating_cta_url) : ?>
-                                                    <a class="hero-sector__card progettazione-sequence-nav__floating-card-link<?php echo !$floating_cta_image_url ? ' progettazione-sequence-nav__floating-card-link--no-media' : ''; ?>" href="<?php echo esc_url($floating_cta_url); ?>" target="<?php echo esc_attr($floating_cta_target); ?>"<?php echo $floating_cta_target === '_blank' ? ' rel="noopener"' : ''; ?>>
-                                                <?php else : ?>
-                                                    <div class="hero-sector__card progettazione-sequence-nav__floating-card-link<?php echo !$floating_cta_image_url ? ' progettazione-sequence-nav__floating-card-link--no-media' : ''; ?>">
+                <?php if ($is_pinned_composition) : ?>
+                    <div class="progettazione-sequence-nav__pinned-stage js-sequence-pinned-stage">
+                        <div class="container-fluid progettazione-sequence-nav__pinned-inner">
+                            <div class="progettazione-sequence-nav__pinned-copy">
+                                <?php for ($index = 0; $index < 3; $index++) :
+                                    $point = $sequence_points[$index] ?? [];
+                                    $number = str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT);
+                                    $title = $point['title'] ?? '';
+                                    $text = $point['text'] ?? '';
+                                    $anchor_id = $nav_items[$index]['id'];
+                                ?>
+                                    <article id="<?php echo esc_attr($block_id . '-' . $anchor_id); ?>" class="progettazione-sequence-nav__pinned-point js-sequence-anchor-point js-sequence-pinned-point<?php echo $index === 0 ? ' is-active' : ''; ?>" data-image-index="<?php echo esc_attr($index); ?>" data-anchor-id="<?php echo esc_attr($anchor_id); ?>">
+                                        <div class="row">
+                                            <div class="col-12 col-lg-8 offset-lg-2">
+                                                <span class="progettazione-sequence-nav__pinned-number number-3 semibold"><?php echo esc_html($number); ?></span>
+                                                <?php if ($title) : ?>
+                                                    <h3 class="progettazione-sequence-nav__pinned-title h4 light"><?php echo wp_kses_post($title); ?></h3>
                                                 <?php endif; ?>
-                                                    <?php if ($floating_cta_image_url) : ?>
-                                                        <span class="hero-sector__card-media">
-                                                            <img src="<?php echo esc_url($floating_cta_image_url); ?>" alt="<?php echo esc_attr($floating_cta_image_alt); ?>" loading="lazy">
-                                                        </span>
-                                                    <?php endif; ?>
-
-                                                    <?php if ($floating_cta_title) : ?>
-                                                        <span class="hero-sector__card-copy">
-                                                            <span class="hero-sector__card-title button"><?php echo esc_html($floating_cta_title); ?></span>
-                                                            <?php if ($floating_cta_url) : ?>
-                                                                <i class="hero-sector__card-icon icon icon-filcar-icon-arrow-downr" aria-hidden="true"></i>
-                                                            <?php endif; ?>
-                                                        </span>
-                                                    <?php endif; ?>
-                                                <?php echo $floating_cta_url ? '</a>' : '</div>'; ?>
+                                                <?php if ($text) : ?>
+                                                    <div class="progettazione-sequence-nav__pinned-text p-big light"><?php echo wp_kses_post(wpautop($text)); ?></div>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
-                                    <?php endif; ?>
-                                </article>
-                            <?php endfor; ?>
-                        </aside>
+                                    </article>
+                                <?php endfor; ?>
+                            </div>
+
+                            <div class="progettazione-sequence-nav__composition-media">
+                                <div class="progettazione-sequence-nav__composition-track js-sequence-composition-track">
+                                    <?php foreach ($sequence_point_images as $image_index => $image_data) :
+                                        [$image_url, $image_alt] = $image_data;
+
+                                        if (!$image_url) {
+                                            continue;
+                                        }
+                                        ?>
+                                        <figure class="progettazione-sequence-nav__composition-item js-sequence-composition-item<?php echo $image_index === 0 ? ' is-active' : ''; ?>" data-image-index="<?php echo esc_attr($image_index); ?>">
+                                            <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>" loading="eager">
+                                        </figure>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                <?php else : ?>
+                    <div class="container-fluid">
+                        <div class="progettazione-sequence-nav__stage">
+                            <div class="progettazione-sequence-nav__media js-sequence-anchor-media">
+                                <div class="progettazione-sequence-nav__image-switch js-sequence-anchor-image-switch" style="position: relative; width: 100%; aspect-ratio: 1800 / 1956; overflow: hidden;">
+                                    <?php foreach ($sequence_point_images as $image_index => $image_data) :
+                                        [$image_url, $image_alt] = $image_data;
+
+                                        if (!$image_url) {
+                                            continue;
+                                        }
+                                        ?>
+                                        <figure class="progettazione-sequence-nav__switch-image js-sequence-anchor-switch-image<?php echo $image_index === 0 ? ' is-active' : ''; ?>" data-image-index="<?php echo esc_attr($image_index); ?>" style="position: absolute; inset: 0; margin: 0; opacity: <?php echo $image_index === 0 ? '1' : '0'; ?>; pointer-events: none;">
+                                            <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>" loading="<?php echo $image_index === 0 ? 'eager' : 'lazy'; ?>" style="display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom;">
+                                        </figure>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+
+                            <aside class="progettazione-sequence-nav__sidebar" aria-label="<?php esc_attr_e('Punti della sequenza', 'filcar'); ?>">
+                                <?php for ($index = 0; $index < 3; $index++) :
+                                    $point = $sequence_points[$index] ?? [];
+                                    $number = str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT);
+                                    $title = $point['title'] ?? '';
+                                    $text = $point['text'] ?? '';
+                                    $anchor_id = $nav_items[$index]['id'];
+                                ?>
+                                    <article id="<?php echo esc_attr($block_id . '-' . $anchor_id); ?>" class="progettazione-sequence-nav__point js-sequence-anchor-point" data-image-index="<?php echo esc_attr($index); ?>" data-anchor-id="<?php echo esc_attr($anchor_id); ?>">
+                                        <div class="progettazione-sequence-nav__point-head">
+                                            <span class="progettazione-sequence-nav__point-number number-3 semibold"><?php echo esc_html($number); ?></span>
+
+                                            <?php if ($title) : ?>
+                                                <h3 class="progettazione-sequence-nav__point-title h6"><?php echo wp_kses_post($title); ?></h3>
+                                            <?php endif; ?>
+                                        </div>
+
+                                        <?php if ($text) : ?>
+                                            <div class="progettazione-sequence-nav__point-text p-normal"><?php echo wp_kses_post(wpautop($text)); ?></div>
+                                        <?php endif; ?>
+
+                                        <?php // TODO: floating CTA temporaneamente disattivata; riattivare se torna utile nella sequenza PNG. ?>
+                                        <?php if (false && $index === 0 && $has_floating_cta) : ?>
+                                            <div class="progettazione-sequence-nav__floating-card js-sequence-anchor-floating-card">
+                                                <div class="hero-sector__card-item">
+                                                    <?php if ($floating_cta_url) : ?>
+                                                        <a class="hero-sector__card progettazione-sequence-nav__floating-card-link<?php echo !$floating_cta_image_url ? ' progettazione-sequence-nav__floating-card-link--no-media' : ''; ?>" href="<?php echo esc_url($floating_cta_url); ?>" target="<?php echo esc_attr($floating_cta_target); ?>"<?php echo $floating_cta_target === '_blank' ? ' rel="noopener"' : ''; ?>>
+                                                    <?php else : ?>
+                                                        <div class="hero-sector__card progettazione-sequence-nav__floating-card-link<?php echo !$floating_cta_image_url ? ' progettazione-sequence-nav__floating-card-link--no-media' : ''; ?>">
+                                                    <?php endif; ?>
+                                                        <?php if ($floating_cta_image_url) : ?>
+                                                            <span class="hero-sector__card-media">
+                                                                <img src="<?php echo esc_url($floating_cta_image_url); ?>" alt="<?php echo esc_attr($floating_cta_image_alt); ?>" loading="lazy">
+                                                            </span>
+                                                        <?php endif; ?>
+
+                                                        <?php if ($floating_cta_title) : ?>
+                                                            <span class="hero-sector__card-copy">
+                                                                <span class="hero-sector__card-title button"><?php echo esc_html($floating_cta_title); ?></span>
+                                                                <?php if ($floating_cta_url) : ?>
+                                                                    <i class="hero-sector__card-icon icon icon-filcar-icon-arrow-downr" aria-hidden="true"></i>
+                                                                <?php endif; ?>
+                                                            </span>
+                                                        <?php endif; ?>
+                                                    <?php echo $floating_cta_url ? '</a>' : '</div>'; ?>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    </article>
+                                <?php endfor; ?>
+                            </aside>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <?php if ($has_ergonomia) : ?>
@@ -438,7 +437,7 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
                         <div class="col-12 col-lg-6">
                             <div class="progettazione-sequence-nav__compositions-title">
                                 <div class="progettazione-sequence-nav__compositions-number number-2"><?php echo esc_html($compositions_number); ?></div>
-                                <h2 class="progettazione-sequence-nav__compositions-heading subtitle-1"><?php echo esc_html($compositions_title ?: __('Composizioni', 'filcar')); ?></h2>
+                                <h2 class="progettazione-sequence-nav__compositions-heading subtitle-1"><?php echo $compositions_title ?: __('Composizioni', 'filcar'); ?></h2>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
@@ -478,7 +477,4 @@ $frame_to_progress = static function ($frame_number, $fallback_progress) use ($f
         </div>
     </div>
 
-    <?php if (!empty($frame_urls)) : ?>
-        <script type="application/json" class="js-sequence-anchor-frames"><?php echo wp_json_encode($frame_urls); ?></script>
-    <?php endif; ?>
 </section>

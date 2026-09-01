@@ -131,27 +131,6 @@ $render_line_block = static function ($slug, $group_name, $block_id) use ($term,
         }
     }
 
-    if ($group_name === 'progettazione_png_sequence_nav') {
-        $current_frames_folder = trim((string) ($values['frames_folder'] ?? ''));
-        $default_frames_folder = 'assets/img/progettazione-sequence';
-        $should_use_term_folder = $current_frames_folder === '' || $current_frames_folder === $default_frames_folder;
-
-        if ($should_use_term_folder) {
-            $term_frames_folders = [
-                'assets/sequenza-' . $term->slug,
-                'assets/img/sequenza-' . $term->slug,
-                'assets/img/progettazione-sequence-' . $term->slug,
-            ];
-
-            foreach ($term_frames_folders as $term_frames_folder) {
-                if (is_dir(trailingslashit(get_template_directory()) . $term_frames_folder)) {
-                    $values['frames_folder'] = $term_frames_folder;
-                    break;
-                }
-            }
-        }
-    }
-
     if (!$line_block_has_content($values, $group_name)) {
         return;
     }
