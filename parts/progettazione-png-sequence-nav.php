@@ -244,7 +244,7 @@ foreach ($nav_items as $nav_item) {
                                 ?>
                                     <article id="<?php echo esc_attr($block_id . '-' . $anchor_id); ?>" class="progettazione-sequence-nav__pinned-point js-sequence-anchor-point js-sequence-pinned-point<?php echo $index === 0 ? ' is-active' : ''; ?>" data-image-index="<?php echo esc_attr($index); ?>" data-anchor-id="<?php echo esc_attr($anchor_id); ?>">
                                         <div class="row">
-                                            <div class="col-12 col-lg-8 offset-lg-2">
+                                            <div class="col-10 offset-1 col-lg-8 offset-lg-2">
                                                 <span class="progettazione-sequence-nav__pinned-number number-3 semibold"><?php echo esc_html($number); ?></span>
                                                 <?php if ($title) : ?>
                                                     <h3 class="progettazione-sequence-nav__pinned-title h4 light"><?php echo wp_kses_post($title); ?></h3>
