@@ -19,7 +19,16 @@
       let maxX = 0;
       let cardStops = [];
       let activeIndex = 0;
+      let currentX = 0;
       let resizeFrame = null;
+      let dragStartClientX = 0;
+      let dragStartClientY = 0;
+      let dragStartX = 0;
+      let dragLastDeltaX = 0;
+      let dragPointerId = null;
+      let isPointerDown = false;
+      let isDragging = false;
+      const mobileQuery = window.matchMedia("(max-width: 991.98px)");
 
       const setControls = () => {
         if (!prev || !next) return;
@@ -70,10 +79,11 @@
       };
 
       const setTrackPosition = (x, animate = true) => {
+        currentX = Math.max(0, Math.min(x, maxX));
         track.style.transition = animate
           ? "transform 650ms cubic-bezier(0.22, 1, 0.36, 1)"
           : "none";
-        track.style.transform = `translate3d(${-x}px, 0, 0)`;
+        track.style.transform = `translate3d(${-currentX}px, 0, 0)`;
       };
 
       const goToCard = (index, animate = true) => {
@@ -86,6 +96,84 @@
 
       prev?.addEventListener("click", () => goToCard(activeIndex - 1));
       next?.addEventListener("click", () => goToCard(activeIndex + 1));
+
+      const getNearestStopIndex = (x) => {
+        if (!cardStops.length) return 0;
+
+        return cardStops.reduce((nearestIndex, stop, index) => {
+          const nearestDistance = Math.abs(cardStops[nearestIndex] - x);
+          const distance = Math.abs(stop - x);
+
+          return distance < nearestDistance ? index : nearestIndex;
+        }, 0);
+      };
+
+      const stopDrag = () => {
+        if (!isPointerDown) return;
+
+        isPointerDown = false;
+        if (
+          dragPointerId !== null &&
+          (!viewport.hasPointerCapture || viewport.hasPointerCapture(dragPointerId))
+        ) {
+          viewport.releasePointerCapture?.(dragPointerId);
+        }
+        dragPointerId = null;
+
+        if (!isDragging) return;
+
+        isDragging = false;
+        block.classList.remove("is-dragging");
+
+        if (Math.abs(dragLastDeltaX) > 24) {
+          goToCard(activeIndex + (dragLastDeltaX > 0 ? 1 : -1), true);
+          return;
+        }
+
+        goToCard(getNearestStopIndex(currentX), true);
+      };
+
+      viewport.style.touchAction = "pan-y";
+      viewport.style.userSelect = "none";
+      viewport.style.webkitUserSelect = "none";
+      viewport.style.webkitTouchCallout = "none";
+
+      viewport.addEventListener("pointerdown", (event) => {
+        if (!mobileQuery.matches || maxX <= 1 || event.button > 0) return;
+
+        isPointerDown = true;
+        isDragging = false;
+        dragStartClientX = event.clientX;
+        dragStartClientY = event.clientY;
+        dragStartX = currentX;
+        dragLastDeltaX = 0;
+        dragPointerId = event.pointerId;
+        viewport.setPointerCapture?.(event.pointerId);
+      });
+
+      viewport.addEventListener("pointermove", (event) => {
+        if (!isPointerDown || !mobileQuery.matches) return;
+
+        const deltaX = dragStartClientX - event.clientX;
+        const deltaY = dragStartClientY - event.clientY;
+
+        if (!isDragging && Math.abs(deltaX) <= 2) return;
+        if (!isDragging && Math.abs(deltaY) > Math.abs(deltaX) * 1.25) {
+          stopDrag();
+          return;
+        }
+
+        isDragging = true;
+        dragLastDeltaX = deltaX;
+        block.classList.add("is-dragging");
+        event.preventDefault();
+        setTrackPosition(dragStartX + deltaX, false);
+        setActiveByIndex(getNearestStopIndex(currentX));
+      });
+
+      viewport.addEventListener("pointerup", stopDrag);
+      viewport.addEventListener("pointercancel", stopDrag);
+      viewport.addEventListener("lostpointercapture", stopDrag);
 
       const refreshCarousel = () => {
         measure();
