@@ -21,6 +21,7 @@
         block.querySelectorAll(".js-sequence-anchor-section"),
       );
       const imageSwitch = block.querySelector(".js-sequence-anchor-image-switch");
+      const stage = block.querySelector(".progettazione-sequence-nav__stage");
       const pinnedStage = block.querySelector(".js-sequence-pinned-stage");
       const pinnedPoints = Array.from(
         block.querySelectorAll(".js-sequence-pinned-point"),
@@ -50,6 +51,10 @@
       let pinnedTimelineDuration = 1;
       let pinnedTimeline = null;
       let scrollToPinnedIndex = null;
+      let standardMobileTrigger = null;
+      let standardMobileTimeline = null;
+      let standardMobileDuration = 1;
+      let scrollToStandardMobileIndex = null;
 
       const getHeaderHeight = () => {
         const header = document.querySelector(".flc-main-nav");
@@ -410,24 +415,135 @@
           point.addEventListener("click", () => scrollToPinnedIndex(index));
         });
       } else {
-        points.forEach((point, index) => {
-          point.addEventListener("click", () => {
-            navLockUntil = Date.now() + 500;
-            setActivePoint(index);
-            scrollToSection(point, true, "center");
+        const getStandardMobileIndexFromTime = (time) => {
+          let index = 0;
+
+          points.forEach((_, pointIndex) => {
+            if (time >= pointIndex - 0.38) {
+              index = pointIndex;
+            }
           });
 
-          ScrollTrigger.create({
-            trigger: point,
-            start: "center center",
-            end: "+=1",
-            onEnter: () => {
-              if (Date.now() > navLockUntil) setActivePoint(index);
-            },
-            onEnterBack: () => {
-              if (Date.now() > navLockUntil) setActivePoint(index);
+          return index;
+        };
+
+        const getStandardMobileScrollY = (index) => {
+          if (!standardMobileTrigger || points.length < 2) return null;
+
+          return (
+            standardMobileTrigger.start +
+            (standardMobileTrigger.end - standardMobileTrigger.start) *
+              (index / Math.max(standardMobileDuration, 0.001))
+          );
+        };
+
+        const standardMatchMedia = gsap.matchMedia();
+
+        standardMatchMedia.add("(min-width: 992px)", () => {
+          const triggers = points.map((point, index) => {
+            point.addEventListener("click", () => {
+              navLockUntil = Date.now() + 500;
+              setActivePoint(index);
+              scrollToSection(point, true, "center");
+            });
+
+            return ScrollTrigger.create({
+              trigger: point,
+              start: "center center",
+              end: "+=1",
+              onEnter: () => {
+                if (Date.now() > navLockUntil) setActivePoint(index);
+              },
+              onEnterBack: () => {
+                if (Date.now() > navLockUntil) setActivePoint(index);
+              },
+            });
+          });
+
+          return () => {
+            triggers.forEach((trigger) => trigger.kill());
+          };
+        });
+
+        standardMatchMedia.add("(max-width: 991px)", () => {
+          if (!stage) return null;
+
+          gsap.set(points, { autoAlpha: 0, y: 18 });
+          gsap.set(points[0], { autoAlpha: 1, y: 0 });
+
+          const timeline = gsap.timeline({
+            defaults: { ease: "power2.out" },
+            scrollTrigger: {
+              trigger: stage,
+              start: "top top",
+              end: () => `+=${Math.max(window.innerHeight * points.length, 1200)}`,
+              pin: stage,
+              pinSpacing: true,
+              anticipatePin: 1,
+              scrub: 0.45,
+              invalidateOnRefresh: true,
+              onUpdate: (self) => {
+                const timelineTime = self.progress * standardMobileDuration;
+                const index = getStandardMobileIndexFromTime(timelineTime);
+
+                if (Date.now() > navLockUntil) setActivePoint(index);
+              },
             },
           });
+
+          standardMobileTimeline = timeline;
+          standardMobileTrigger = timeline.scrollTrigger;
+
+          points.forEach((point, index) => {
+            if (index === 0) return;
+
+            timeline
+              .to(points[index - 1], { autoAlpha: 0, y: -14, duration: 0.42 }, index - 0.34)
+              .fromTo(
+                point,
+                { autoAlpha: 0, y: 18 },
+                { autoAlpha: 1, y: 0, duration: 0.58 },
+                index,
+              );
+          });
+
+          timeline.to({ hold: 0 }, { hold: 1, duration: 0.7 }, points.length - 0.05);
+          standardMobileDuration = timeline.duration();
+          setActivePoint(0);
+
+          scrollToStandardMobileIndex = (index) => {
+            const targetY = getStandardMobileScrollY(index);
+            const progress = gsap.utils.clamp(
+              0,
+              1,
+              index / Math.max(standardMobileDuration, 0.001),
+            );
+
+            navLockUntil = Date.now() + 300;
+            setActivePoint(index);
+            standardMobileTimeline?.progress(progress);
+
+            if (targetY === null) return;
+
+            scrollToY(targetY, true);
+            window.requestAnimationFrame(() => {
+              standardMobileTimeline?.progress(progress);
+              ScrollTrigger.update();
+              setActivePoint(index);
+            });
+          };
+
+          return () => {
+            if (standardMobileTimeline === timeline) {
+              standardMobileTimeline = null;
+              standardMobileTrigger = null;
+              scrollToStandardMobileIndex = null;
+            }
+
+            timeline.scrollTrigger?.kill();
+            timeline.kill();
+            gsap.set(points, { clearProps: "opacity,visibility,transform" });
+          };
         });
       }
 
@@ -460,6 +576,11 @@
 
             if (isPinnedComposition) {
               scrollToPinnedIndex?.(index);
+              return;
+            }
+
+            if (scrollToStandardMobileIndex) {
+              scrollToStandardMobileIndex(index);
               return;
             }
 
