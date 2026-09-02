@@ -19674,6 +19674,7 @@ body {
 }
 .carousel-highlights__viewport {
   width: 100%;
+  min-height: max(var(--carousel-highlight-media-height) + 70px, var(--carousel-highlight-media-hover-height) + 280px);
   overflow: visible;
 }
 .carousel-highlights__track {
@@ -19837,6 +19838,9 @@ body {
   }
   .carousel-highlights__title {
     margin-bottom: 24px;
+  }
+  .carousel-highlights__viewport {
+    min-height: 0;
   }
   .carousel-highlights__card {
     flex-basis: var(--carousel-highlight-card-unit);

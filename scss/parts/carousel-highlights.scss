@@ -36,6 +36,10 @@
 
   &__viewport {
     width: 100%;
+    min-height: max(
+      calc(var(--carousel-highlight-media-height) + 70px),
+      calc(var(--carousel-highlight-media-hover-height) + 280px)
+    );
     overflow: visible;
   }
 
@@ -234,6 +238,10 @@
 
     &__title {
       margin-bottom: 24px;
+    }
+
+    &__viewport {
+      min-height: 0;
     }
 
     &__card {
