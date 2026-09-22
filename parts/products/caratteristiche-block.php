@@ -235,7 +235,9 @@ $compatibility_c = count($compatibility);
 
                                 <?php foreach ($accessori_columns as $i => $col) :
                                     $separator_class = $i < count($accessori_columns) - 1 ? 'has-separator-lighter' : '';
-                                    $tooltip = $col['tooltip'] ?? '';
+                                    $tooltip = $col['tooltip'] ?? [];
+                                    $tooltip_title = is_array($tooltip) ? ($tooltip['title'] ?? '') : '';
+                                    $tooltip_text  = is_array($tooltip) ? ($tooltip['text'] ?? '') : '';
                                     ?>
                                     <div class="cell head-l2 table-2 <?php echo $separator_class; ?> <?php echo $tooltip ? 'has-tooltip' : ''; ?>">
                                         <span class="cell-label"><?php echo esc_html($col['label']); ?></span>

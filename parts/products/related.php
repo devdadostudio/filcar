@@ -1,5 +1,6 @@
 <?php
 $related = get_field('related');
+$related = is_array($related) ? $related : [];
 $related_c = count($related);
 if($related_c > 0) :
 ?>

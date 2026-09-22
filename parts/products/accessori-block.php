@@ -8,6 +8,7 @@
     $grid_template_mobile = '180px 180px 200px 230px';
     $grid_template_desktop = 'minmax(110px,1fr) minmax(110px,1fr) minmax(260px,2fr) minmax(150px,1fr)';
     $accessori_rows = get_field('table_accessories');
+    $accessori_rows = is_array($accessori_rows) ? $accessori_rows : [];
     ?>
     <div class="container-fluid-left">
 
@@ -30,7 +31,9 @@
                         <?php endfor; ?>
                     </div>
 
-                    <?php foreach ($accessori_rows as $row) : ?>
+                    <?php foreach ($accessori_rows as $row) :
+                        $link = isset($row['link']) && is_array($row['link']) ? $row['link'] : [];
+                    ?>
                         <div class="table-row">
 
                             <div class="cell first-col table-2 text-secondary has-separator accessory-mod">
@@ -47,8 +50,8 @@
                                 <?php echo $row['desc']; ?>
                             </div>
                             <div class="cell accessory-cta-cell">
-                                <?php if ($row && $row['link']['url']) : ?>
-                                <a href="<?php echo esc_url($row['link']['url']); ?>" class="btn btn-secondary-1 w-icon accessory-btn text-capitalize">
+                                <?php if (!empty($link['url'])) : ?>
+                                <a href="<?php echo esc_url($link['url']); ?>" class="btn btn-secondary-1 w-icon accessory-btn text-capitalize">
                                     <span>
                                         Vedi prodotto
                                         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
